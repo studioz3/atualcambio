@@ -60,7 +60,7 @@ export const blocks: LegalBlock[] = [
       },
       {
         "type": "p",
-        "text": "Use esse formulário para enviar sua denúncia: Clique Aqui!"
+        "text": "Envie sua denúncia pelos canais abaixo, com o máximo de detalhes possível:"
       },
       {
         "type": "p",
@@ -72,7 +72,7 @@ export const blocks: LegalBlock[] = [
       },
       {
         "type": "p",
-        "text": "Ao finalizar o relato via formulário, você receberá um número de protocolo para acompanhar o andamento da apuração, mesmo que tenha optado pelo anonimato."
+        "text": "Ao registrar o relato, você receberá um número de protocolo para acompanhar o andamento da apuração, mesmo que tenha optado pelo anonimato."
       }
     ]
   }
