@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AAtualRouteImport } from './routes/a-atual'
+import { Route as CodigoDeCondutaRouteImport } from './routes/codigo-de-conduta'
 import { Route as ConteudoRouteImport } from './routes/conteudo'
 import { Route as CotacoesRouteImport } from './routes/cotacoes'
 import { Route as EmpresasRouteImport } from './routes/empresas'
@@ -26,6 +27,11 @@ const IndexRoute = IndexRouteImport.update({
 const AAtualRoute = AAtualRouteImport.update({
   id: '/a-atual',
   path: '/a-atual',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CodigoDeCondutaRoute = CodigoDeCondutaRouteImport.update({
+  id: '/codigo-de-conduta',
+  path: '/codigo-de-conduta',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConteudoRoute = ConteudoRouteImport.update({
@@ -62,6 +68,7 @@ const TermosRoute = TermosRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/a-atual': typeof AAtualRoute
+  '/codigo-de-conduta': typeof CodigoDeCondutaRoute
   '/conteudo': typeof ConteudoRoute
   '/cotacoes': typeof CotacoesRoute
   '/empresas': typeof EmpresasRoute
@@ -72,6 +79,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/a-atual': typeof AAtualRoute
+  '/codigo-de-conduta': typeof CodigoDeCondutaRoute
   '/conteudo': typeof ConteudoRoute
   '/cotacoes': typeof CotacoesRoute
   '/empresas': typeof EmpresasRoute
@@ -83,6 +91,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/a-atual': typeof AAtualRoute
+  '/codigo-de-conduta': typeof CodigoDeCondutaRoute
   '/conteudo': typeof ConteudoRoute
   '/cotacoes': typeof CotacoesRoute
   '/empresas': typeof EmpresasRoute
@@ -95,6 +104,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/a-atual'
+    | '/codigo-de-conduta'
     | '/conteudo'
     | '/cotacoes'
     | '/empresas'
@@ -105,6 +115,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/a-atual'
+    | '/codigo-de-conduta'
     | '/conteudo'
     | '/cotacoes'
     | '/empresas'
@@ -115,6 +126,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/a-atual'
+    | '/codigo-de-conduta'
     | '/conteudo'
     | '/cotacoes'
     | '/empresas'
@@ -126,6 +138,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AAtualRoute: typeof AAtualRoute
+  CodigoDeCondutaRoute: typeof CodigoDeCondutaRoute
   ConteudoRoute: typeof ConteudoRoute
   CotacoesRoute: typeof CotacoesRoute
   EmpresasRoute: typeof EmpresasRoute
@@ -148,6 +161,13 @@ declare module '@tanstack/react-router' {
       path: '/a-atual'
       fullPath: '/a-atual'
       preLoaderRoute: typeof AAtualRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/codigo-de-conduta': {
+      id: '/codigo-de-conduta'
+      path: '/codigo-de-conduta'
+      fullPath: '/codigo-de-conduta'
+      preLoaderRoute: typeof CodigoDeCondutaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/conteudo': {
@@ -198,6 +218,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AAtualRoute: AAtualRoute,
+  CodigoDeCondutaRoute: CodigoDeCondutaRoute,
   ConteudoRoute: ConteudoRoute,
   CotacoesRoute: CotacoesRoute,
   EmpresasRoute: EmpresasRoute,
