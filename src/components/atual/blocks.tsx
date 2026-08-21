@@ -1,3 +1,5 @@
+import bancoCentral from "@/assets/banco-central.png.asset.json";
+import abracam from "@/assets/abracam.png.asset.json";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Section, SectionHeading, ActionButton, Eyebrow } from "./primitives";
@@ -63,16 +65,19 @@ export function SecuritySection() {
           ))}
         </div>
       </div>
-      <div className="mt-14 flex flex-wrap items-center gap-8 border-t border-white/10 pt-10">
+      <div className="mt-14 flex flex-wrap items-center gap-10 border-t border-white/10 pt-10">
         <img
-          src="/brand/acreditacao.png"
-          alt="Selos de acreditação da Atual Câmbio"
+          src={bancoCentral.url}
+          alt="Autorizada pelo Banco Central do Brasil"
           loading="lazy"
-          className="h-10 w-auto opacity-90"
+          className="block h-12 w-auto max-w-full shrink-0 object-contain opacity-90"
         />
-        <p className="text-xs text-white/50">
-          [AGUARDANDO VALIDAÇÃO] descrição textual e links oficiais de cada acreditação.
-        </p>
+        <img
+          src={abracam.url}
+          alt="Associada à ABRACAM"
+          loading="lazy"
+          className="block h-8 w-auto max-w-full shrink-0 object-contain opacity-90"
+        />
       </div>
     </Section>
   );
