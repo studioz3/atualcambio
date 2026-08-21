@@ -6,6 +6,34 @@ import { ArrowRight, ArrowUpRight, ShieldCheck, Smartphone } from "lucide-react"
 import { Container, Eyebrow, ActionButton, ActionLink, Section, SectionHeading } from "./primitives";
 import { cn } from "@/lib/utils";
 
+/* ---------- AccreditationSeals ---------- */
+export function AccreditationSeals({
+  className,
+  size = "md",
+}: {
+  className?: string;
+  size?: "sm" | "md";
+}) {
+  const bc = size === "sm" ? "h-9" : "h-12";
+  const ab = size === "sm" ? "h-6" : "h-8";
+  return (
+    <div className={cn("flex flex-wrap items-center gap-x-10 gap-y-6", className)}>
+      <img
+        src={bancoCentral.url}
+        alt="Autorizada pelo Banco Central do Brasil"
+        loading="lazy"
+        className={cn("block w-auto max-w-full shrink-0 object-contain opacity-90", bc)}
+      />
+      <img
+        src={abracam.url}
+        alt="Associada à ABRACAM"
+        loading="lazy"
+        className={cn("block w-auto max-w-full shrink-0 object-contain opacity-90", ab)}
+      />
+    </div>
+  );
+}
+
 /* ---------- Hero ---------- */
 export function Hero({
   eyebrow,
@@ -15,6 +43,7 @@ export function Hero({
   secondary,
   image,
   imageAlt,
+  seals = false,
   children,
 }: {
   eyebrow?: string;
@@ -24,8 +53,10 @@ export function Hero({
   secondary?: ReactNode;
   image?: string;
   imageAlt?: string;
+  seals?: boolean;
   children?: ReactNode;
 }) {
+
   return (
     <section className="surface-navy relative overflow-hidden">
       {image ? (
