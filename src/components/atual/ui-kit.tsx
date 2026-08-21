@@ -351,20 +351,8 @@ export function ComplianceBlock({
           ))}
         </div>
       </div>
-      <div className="mt-14 flex flex-wrap items-center gap-10 border-t border-white/10 pt-10">
-        <img
-          src={bancoCentral.url}
-          alt="Autorizada pelo Banco Central do Brasil"
-          loading="lazy"
-          className="block h-12 w-auto max-w-full shrink-0 object-contain opacity-90"
-        />
-        <img
-          src={abracam.url}
-          alt="Associada à ABRACAM"
-          loading="lazy"
-          className="block h-8 w-auto max-w-full shrink-0 object-contain opacity-90"
-        />
-      </div>
+      <AccreditationSeals className="mt-14 border-t border-white/10 pt-10" />
+
     </Section>
   );
 }
