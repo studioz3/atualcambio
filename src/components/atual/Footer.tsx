@@ -30,7 +30,16 @@ const columns = [
       { label: "Perguntas frequentes", to: "/", hash: "faq" },
     ],
   },
+  {
+    title: "Legal",
+    items: [
+      { label: "Privacidade e LGPD", to: "/privacidade" },
+      { label: "Termos de Uso", to: "/termos" },
+      { label: "Segurança e compliance", to: "/a-atual", hash: "seguranca" },
+    ],
+  },
 ];
+
 
 export function Footer() {
   return (
@@ -43,7 +52,7 @@ export function Footer() {
         className="pointer-events-none absolute -right-16 -bottom-24 w-[420px] opacity-[0.06]"
       />
       <Container>
-        <div className="relative grid gap-12 py-16 md:grid-cols-[1.2fr_2fr] md:py-24">
+        <div className="relative grid gap-12 py-16 md:grid-cols-[1fr_2fr] md:py-24">
           <div>
             <Logo src="/brand/logo-v2.svg" className="h-6 w-auto" />
             <p className="font-display mt-6 max-w-xs text-lg leading-tight text-white">
@@ -67,7 +76,7 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="grid gap-10 sm:grid-cols-3">
+          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
             {columns.map((col) => (
               <nav key={col.title} aria-label={col.title}>
                 <p className="eyebrow text-gold">{col.title}</p>
@@ -97,9 +106,16 @@ export function Footer() {
               [AGUARDANDO VALIDAÇÃO] razão social, CNPJ, endereços e textos regulatórios completos.
             </span>
           </p>
-          <p className="mt-4 text-xs text-white/40">
-            © {new Date().getFullYear()} Atual Câmbio. Todos os direitos reservados.
-          </p>
+          <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs text-white/40">
+            <span>© {new Date().getFullYear()} Atual Câmbio. Todos os direitos reservados.</span>
+            <Link to="/privacidade" className="transition-colors hover:text-white">
+              Privacidade e LGPD
+            </Link>
+            <Link to="/termos" className="transition-colors hover:text-white">
+              Termos de Uso
+            </Link>
+          </div>
+
         </div>
       </Container>
     </footer>
