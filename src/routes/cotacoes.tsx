@@ -49,9 +49,7 @@ function Cotacoes() {
         <div className="mt-12">
           <QuoteBoard />
         </div>
-        <p className="mt-8 text-xs text-muted-foreground">
-          [AGUARDANDO API ONZ] cotação de moedas, USDT e USDC, e carimbo de atualização.
-        </p>
+        {/* [AGUARDANDO API ONZ] cotação de moedas, USDT e USDC, e carimbo de atualização. */}
       </Section>
 
       <SpecialistCta

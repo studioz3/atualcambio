@@ -77,10 +77,7 @@ function AAtual() {
             </div>
           ))}
         </div>
-        <p className="mt-10 text-xs text-muted-foreground">
-          [AGUARDANDO VALIDAÇÃO] história institucional, números da companhia, liderança e fotos reais
-          da equipe.
-        </p>
+        {/* [AGUARDANDO VALIDAÇÃO] história institucional, números, liderança e fotos reais da equipe. */}
       </Section>
 
       <SecuritySection />

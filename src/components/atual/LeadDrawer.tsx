@@ -85,9 +85,8 @@ export function LeadDrawer({
         track("whatsapp_click", { produto: lead.produto });
         window.open(url, "_blank", "noopener,noreferrer");
       } else {
-        toast.success("Recebemos seus dados. Um especialista vai continuar com você.", {
-          description: "[AGUARDANDO VALIDAÇÃO] número oficial de WhatsApp para o handoff automático.",
-        });
+        // [AGUARDANDO VALIDAÇÃO] número oficial de WhatsApp para o handoff automático.
+        toast.success("Recebemos seus dados. Um especialista vai continuar com você.");
       }
       onOpenChange(false);
     } catch {
