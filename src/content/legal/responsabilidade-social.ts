@@ -11,7 +11,12 @@ export const blocks: LegalBlock[] = [
   {
     "id": "nossos-pilares-de-atuacao",
     "title": "Nossos Pilares de Atuação",
-    "body": []
+    "body": [
+      {
+        "type": "p",
+        "text": "Nossa atuação socioambiental está organizada nos pilares descritos a seguir."
+      }
+    ]
   },
   {
     "id": "1-sustentabilidade-ambiental-e-climatica",

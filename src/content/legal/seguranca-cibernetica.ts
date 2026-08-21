@@ -34,7 +34,7 @@ export const blocks: LegalBlock[] = [
       {
         "type": "ul",
         "items": [
-          "Resolução CMN nº 4.658/, versão vigente e atualizada;",
+          "Resolução CMN nº 4.658/2018, versão vigente e atualizada;",
           "Resolução CMN nº 4.193/93."
         ]
       }
