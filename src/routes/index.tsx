@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import heroImg from "@/assets/hero.jpg";
+import heroAsset from "@/assets/hero-selfie.jpg.asset.json";
 import especialistaImg from "@/assets/card-especialista.jpg";
 import cardEmpresas from "@/assets/card-empresas.jpg";
 import cardRemessas from "@/assets/card-remessas.jpg";
@@ -137,8 +137,9 @@ function Home() {
           </ActionLink>
         }
         seals
-        image={heroImg}
-        imageAlt="Profissional observando o skyline de uma cidade global a partir de um escritório"
+        image={heroAsset.url}
+        imageAlt="Cliente da Atual usando o celular ao ar livre durante uma viagem"
+
       />
 
       <TrustPillars items={pillars} />

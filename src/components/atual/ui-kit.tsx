@@ -72,11 +72,14 @@ export function Hero({
             alt={imageAlt ?? ""}
             width={1600}
             height={1200}
-            className="size-full object-cover opacity-75"
+            className="size-full object-cover opacity-75 saturate-[0.85]"
           />
+          {/* lente azul institucional */}
+          <div className="absolute inset-0 bg-navy/55 mix-blend-multiply" />
           <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/80 to-navy/10" />
         </div>
       ) : null}
+
       <Container>
         <div className="relative grid gap-12 py-20 md:py-28 lg:min-h-[680px] lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:py-36">
           <div className="max-w-2xl">
@@ -94,16 +97,19 @@ export function Hero({
             ) : null}
           </div>
           {image ? (
-            <div className="lg:hidden">
+            <div className="relative overflow-hidden rounded-xl lg:hidden">
               <img
                 src={image}
                 alt={imageAlt ?? ""}
                 width={1600}
                 height={1200}
-                className="aspect-[4/3] w-full rounded-xl object-cover"
+                className="aspect-[4/3] w-full object-cover saturate-[0.85]"
               />
+              <div className="absolute inset-0 bg-navy/50 mix-blend-multiply" />
+              <div className="absolute inset-0 bg-gradient-to-t from-navy/70 to-transparent" />
             </div>
           ) : null}
+
           {children}
         </div>
       </Container>
