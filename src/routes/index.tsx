@@ -47,10 +47,15 @@ function Home() {
           <div className="relative grid gap-12 py-20 md:py-28 lg:min-h-[620px] lg:grid-cols-2 lg:items-center lg:py-32">
             <div className="max-w-xl">
               <Eyebrow>{brand.positioning}</Eyebrow>
-              <h1 className="font-display mt-6 text-[40px] leading-[1.05] font-bold text-white md:text-[64px]">
+              <h1 className="font-display mt-6 text-[38px] leading-[1.05] font-bold text-white md:text-[60px]">
                 Câmbio global,
-do seu jeito
+                <br />
+                do seu jeito
               </h1>
+              <p className="mt-6 max-w-md text-base leading-relaxed text-white/70">
+                {brand.explanation}
+              </p>
+
               <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/75">{brand.valueProp}</p>
               <div className="mt-10 flex flex-wrap gap-3">
                 <ActionButton
