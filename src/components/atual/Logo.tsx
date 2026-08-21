@@ -1,3 +1,5 @@
+import { cn } from "@/lib/utils";
+
 export function Logo({
   className = "h-7 w-auto",
   src = "/brand/logo-simple.svg",
@@ -9,9 +11,10 @@ export function Logo({
     <img
       src={src}
       alt="Atual Câmbio"
-      className={className}
-      width={644}
-      height={118}
+      className={cn("block w-auto max-w-full shrink-0 object-contain object-left", className)}
+      style={{ aspectRatio: "644 / 118" }}
+      loading="eager"
+      decoding="async"
     />
   );
 }
