@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AAtualRouteImport } from './routes/a-atual'
+import { Route as CanalDeDenunciasRouteImport } from './routes/canal-de-denuncias'
 import { Route as CodigoDeCondutaRouteImport } from './routes/codigo-de-conduta'
 import { Route as ConteudoRouteImport } from './routes/conteudo'
 import { Route as CotacoesRouteImport } from './routes/cotacoes'
@@ -27,6 +28,11 @@ const IndexRoute = IndexRouteImport.update({
 const AAtualRoute = AAtualRouteImport.update({
   id: '/a-atual',
   path: '/a-atual',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CanalDeDenunciasRoute = CanalDeDenunciasRouteImport.update({
+  id: '/canal-de-denuncias',
+  path: '/canal-de-denuncias',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CodigoDeCondutaRoute = CodigoDeCondutaRouteImport.update({
@@ -68,6 +74,7 @@ const TermosRoute = TermosRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/a-atual': typeof AAtualRoute
+  '/canal-de-denuncias': typeof CanalDeDenunciasRoute
   '/codigo-de-conduta': typeof CodigoDeCondutaRoute
   '/conteudo': typeof ConteudoRoute
   '/cotacoes': typeof CotacoesRoute
@@ -79,6 +86,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/a-atual': typeof AAtualRoute
+  '/canal-de-denuncias': typeof CanalDeDenunciasRoute
   '/codigo-de-conduta': typeof CodigoDeCondutaRoute
   '/conteudo': typeof ConteudoRoute
   '/cotacoes': typeof CotacoesRoute
@@ -91,6 +99,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/a-atual': typeof AAtualRoute
+  '/canal-de-denuncias': typeof CanalDeDenunciasRoute
   '/codigo-de-conduta': typeof CodigoDeCondutaRoute
   '/conteudo': typeof ConteudoRoute
   '/cotacoes': typeof CotacoesRoute
@@ -104,6 +113,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/a-atual'
+    | '/canal-de-denuncias'
     | '/codigo-de-conduta'
     | '/conteudo'
     | '/cotacoes'
@@ -115,6 +125,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/a-atual'
+    | '/canal-de-denuncias'
     | '/codigo-de-conduta'
     | '/conteudo'
     | '/cotacoes'
@@ -126,6 +137,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/a-atual'
+    | '/canal-de-denuncias'
     | '/codigo-de-conduta'
     | '/conteudo'
     | '/cotacoes'
@@ -138,6 +150,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AAtualRoute: typeof AAtualRoute
+  CanalDeDenunciasRoute: typeof CanalDeDenunciasRoute
   CodigoDeCondutaRoute: typeof CodigoDeCondutaRoute
   ConteudoRoute: typeof ConteudoRoute
   CotacoesRoute: typeof CotacoesRoute
@@ -161,6 +174,13 @@ declare module '@tanstack/react-router' {
       path: '/a-atual'
       fullPath: '/a-atual'
       preLoaderRoute: typeof AAtualRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/canal-de-denuncias': {
+      id: '/canal-de-denuncias'
+      path: '/canal-de-denuncias'
+      fullPath: '/canal-de-denuncias'
+      preLoaderRoute: typeof CanalDeDenunciasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/codigo-de-conduta': {
@@ -218,6 +238,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AAtualRoute: AAtualRoute,
+  CanalDeDenunciasRoute: CanalDeDenunciasRoute,
   CodigoDeCondutaRoute: CodigoDeCondutaRoute,
   ConteudoRoute: ConteudoRoute,
   CotacoesRoute: CotacoesRoute,
