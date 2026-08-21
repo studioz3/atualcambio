@@ -97,16 +97,19 @@ export function Hero({
             ) : null}
           </div>
           {image ? (
-            <div className="lg:hidden">
+            <div className="relative overflow-hidden rounded-xl lg:hidden">
               <img
                 src={image}
                 alt={imageAlt ?? ""}
                 width={1600}
                 height={1200}
-                className="aspect-[4/3] w-full rounded-xl object-cover"
+                className="aspect-[4/3] w-full object-cover saturate-[0.85]"
               />
+              <div className="absolute inset-0 bg-navy/50 mix-blend-multiply" />
+              <div className="absolute inset-0 bg-gradient-to-t from-navy/70 to-transparent" />
             </div>
           ) : null}
+
           {children}
         </div>
       </Container>
