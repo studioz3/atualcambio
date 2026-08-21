@@ -30,7 +30,16 @@ const columns = [
       { label: "Perguntas frequentes", to: "/", hash: "faq" },
     ],
   },
+  {
+    title: "Legal",
+    items: [
+      { label: "Privacidade e LGPD", to: "/privacidade" },
+      { label: "Termos de Uso", to: "/termos" },
+      { label: "Segurança e compliance", to: "/a-atual", hash: "seguranca" },
+    ],
+  },
 ];
+
 
 export function Footer() {
   return (
