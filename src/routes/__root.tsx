@@ -28,7 +28,7 @@ function NotFoundComponent() {
         </p>
         <Link
           to="/"
-          className="mt-8 inline-flex min-h-12 items-center rounded-sm bg-gold px-6 text-sm font-semibold text-navy"
+          className="mt-8 inline-flex min-h-12 items-center rounded-sm bg-gold px-6 text-sm font-semibold text-gold-foreground"
         >
           Voltar para a home
         </Link>
@@ -57,7 +57,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
               router.invalidate();
               reset();
             }}
-            className="inline-flex min-h-12 items-center rounded-sm bg-gold px-6 text-sm font-semibold text-navy"
+            className="inline-flex min-h-12 items-center rounded-sm bg-gold px-6 text-sm font-semibold text-gold-foreground"
           >
             Tentar novamente
           </button>

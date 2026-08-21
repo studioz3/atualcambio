@@ -28,6 +28,7 @@
   --color-navy: var(--navy);
   --color-navy-soft: var(--navy-soft);
   --color-gold: var(--gold);
+  --color-gold-foreground: var(--gold-foreground);
   --color-gold-soft: var(--gold-soft);
   --color-offwhite: var(--offwhite);
   --color-line: var(--line);
@@ -60,6 +61,8 @@
   --navy: oklch(0.2149 0.0729 256.96);
   --navy-soft: oklch(0.2749 0.0629 256.96);
   --gold: oklch(0.7377 0.1369 86.25);
+  /* Regra de design: botão dourado sempre com texto branco */
+  --gold-foreground: oklch(1 0 0);
   --gold-soft: oklch(0.6825 0.1131 82.84);
   --offwhite: oklch(0.9753 0.004 106.47);
   --line: oklch(0.9507 0.0066 106.53);
@@ -72,7 +75,7 @@
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.2593 0.0144 261.67);
   --primary: oklch(0.7377 0.1369 86.25);
-  --primary-foreground: oklch(0.2149 0.0729 256.96);
+  --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.9753 0.004 106.47);
   --secondary-foreground: oklch(0.2149 0.0729 256.96);
   --muted: oklch(0.9753 0.004 106.47);
