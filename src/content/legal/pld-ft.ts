@@ -30,12 +30,6 @@ export const blocks: LegalBlock[] = [
       {
         "type": "p",
         "text": "Principais Regulamentações: Lei nº 9.613/1988 • Circular nº 3.978/2020 • Carta Circular nº 4.001/2020 • Instrução CVM 617 • Lei nº 14.478/2022 (Marco Legal dos Criptoativos) • Resolução BCB nº 519/2025 • Resolução BCB nº 520/2025 • Resolução BCB nº 521/2025"
-      },
-      {
-        "type": "ul",
-        "items": [
-          "* *"
-        ]
       }
     ]
   },
