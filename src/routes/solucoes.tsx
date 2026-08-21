@@ -1,0 +1,82 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { Check } from "lucide-react";
+import { Container, Section, SectionHeading, Eyebrow, ActionButton } from "@/components/atual/primitives";
+import { SpecialistCta, FaqSection } from "@/components/atual/blocks";
+import { useLead } from "@/components/atual/LeadProvider";
+import { solutions, brand } from "@/content/site";
+
+export const Route = createFileRoute("/solucoes")({
+  head: () => ({
+    meta: [
+      { title: "Soluções | Atual Câmbio" },
+      {
+        name: "description",
+        content:
+          "Remessas internacionais, USDT e USDC, câmbio turismo e Conta Atual: soluções de câmbio com atendimento consultivo.",
+      },
+      { property: "og:title", content: "Soluções de câmbio | Atual Câmbio" },
+      {
+        property: "og:description",
+        content: "Remessas, stablecoins, câmbio turismo e a plataforma digital da Atual.",
+      },
+    ],
+  }),
+  component: Solucoes,
+});
+
+function Solucoes() {
+  const { openLead } = useLead();
+
+  return (
+    <>
+      <section className="surface-navy">
+        <Container>
+          <div className="max-w-2xl py-20 md:py-28">
+            <Eyebrow>Soluções</Eyebrow>
+            <h1 className="font-display mt-6 text-[34px] leading-[1.08] font-bold text-white md:text-[52px]">
+              Do envio simples à operação recorrente
+            </h1>
+            <p className="mt-6 text-lg leading-relaxed text-white/75">{brand.explanation}</p>
+          </div>
+        </Container>
+      </section>
+
+      {solutions.map((item, index) => (
+        <Section key={item.id} id={item.id} tone={index % 2 === 0 ? "light" : "offwhite"}>
+          <div className="grid gap-12 lg:grid-cols-[1fr_1fr]">
+            <SectionHeading
+              eyebrow={`0${index + 1}`}
+              title={item.title}
+              description={item.summary}
+            />
+            <div className="self-center">
+              <ul className="space-y-4">
+                {item.bullets.map((bullet) => (
+                  <li key={bullet} className="flex items-start gap-3 text-base text-graphite">
+                    <Check className="mt-1 size-4 shrink-0 text-gold" aria-hidden />
+                    {bullet}
+                  </li>
+                ))}
+              </ul>
+              <ActionButton
+                className="mt-8"
+                event="lead_solution"
+                onClick={() => openLead({ context: item.title })}
+              >
+                Falar sobre {item.title.toLowerCase()}
+              </ActionButton>
+              {item.id === "conta" ? (
+                <p className="mt-6 text-xs text-muted-foreground">
+                  [AGUARDANDO API ONZ] onboarding, deeplinks e telas reais do app.
+                </p>
+              ) : null}
+            </div>
+          </div>
+        </Section>
+      ))}
+
+      <FaqSection />
+      <SpecialistCta context="Soluções" />
+    </>
+  );
+}
