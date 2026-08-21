@@ -115,11 +115,18 @@ export function Footer() {
           <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs text-white/40">
             <span>© {new Date().getFullYear()} Atual Câmbio. Todos os direitos reservados.</span>
             <Link to="/privacidade" className="transition-colors hover:text-white">
-              Privacidade e LGPD
+              Privacidade
             </Link>
             <Link to="/termos" className="transition-colors hover:text-white">
               Termos de Uso
             </Link>
+            <Link to="/ouvidoria" className="transition-colors hover:text-white">
+              Ouvidoria
+            </Link>
+            <Link to="/canal-de-denuncias" className="transition-colors hover:text-white">
+              Canal de denúncias
+            </Link>
+
           </div>
 
         </div>
