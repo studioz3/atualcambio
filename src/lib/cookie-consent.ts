@@ -10,6 +10,7 @@ export type CookieConsent = {
 
 export const CONSENT_STORAGE_KEY = "atual:cookie-consent";
 export const CONSENT_OPEN_EVENT = "atual:cookie-preferences";
+export const CONSENT_CHANGE_EVENT = "atual:cookie-consent-change";
 
 export const cookieCategories: {
   id: CookieCategory;
@@ -65,6 +66,7 @@ export function writeConsent(value: { analytics: boolean; marketing: boolean }):
     } catch {
       /* armazenamento indisponível */
     }
+    window.dispatchEvent(new CustomEvent(CONSENT_CHANGE_EVENT, { detail: consent }));
   }
   return consent;
 }
