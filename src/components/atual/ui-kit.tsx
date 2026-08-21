@@ -270,8 +270,8 @@ export function NewsCard({
   title: string;
   excerpt: string;
   date: string;
-  image?: string;
-  imageAlt?: string;
+  image?: string | undefined;
+  imageAlt?: string | undefined;
 }) {
   return (
     <article className="group flex flex-col">
