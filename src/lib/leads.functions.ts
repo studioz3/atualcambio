@@ -1,32 +1,62 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
+export const leadStatuses = [
+  "Novo",
+  "Contatado",
+  "Qualificado",
+  "Cliente",
+  "Negócio fechado",
+  "Perdido",
+] as const;
+
+export type LeadStatus = (typeof leadStatuses)[number];
+
 const leadSchema = z.object({
-  profile: z.enum(["pf", "pj"]),
-  name: z.string().min(2),
-  company: z.string().optional(),
-  whatsapp: z.string().min(8),
-  email: z.string().email(),
-  need: z.string().min(1),
-  currency: z.string().min(1),
-  range: z.string().min(1),
-  context: z.string().optional(),
+  nome: z.string().trim().min(2).max(120),
+  email: z.string().trim().email().max(200),
+  whatsapp: z.string().trim().min(8).max(30),
+  tipo_cliente: z.enum(["pf", "pj"]),
+  empresa: z.string().trim().max(160).optional(),
+  produto: z.string().trim().min(1).max(80),
+  operacao: z.string().trim().max(120).optional(),
+  moeda: z.string().trim().max(40).optional(),
+  faixa_valor: z.string().trim().max(80).optional(),
+  finalidade: z.string().trim().max(300).optional(),
+  prazo: z.string().trim().max(80).optional(),
+  source_url: z.string().trim().max(500).optional(),
+  utm_source: z.string().trim().max(120).optional(),
+  utm_medium: z.string().trim().max(120).optional(),
+  utm_campaign: z.string().trim().max(120).optional(),
 });
 
 export type LeadInput = z.infer<typeof leadSchema>;
 
+export type LeadRecord = LeadInput & {
+  id: string;
+  status: LeadStatus;
+  consultor: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
 /**
- * Recebe o lead antes de qualquer handoff comercial.
- * [AGUARDANDO VALIDAÇÃO] persistência em banco de leads e integração com CRM.
- * O CRM não é dependência estrutural do site: o lead é sempre registrado aqui primeiro.
+ * Registro do lead — sempre executado ANTES de qualquer handoff (WhatsApp/CRM).
+ * [AGUARDANDO VALIDAÇÃO] persistência definitiva em banco de leads e integração com CRM.
+ * O CRM não é dependência estrutural: o lead é registrado aqui primeiro.
  */
 export const submitLead = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => leadSchema.parse(data))
   .handler(async ({ data }) => {
-    console.info("[lead]", {
+    const now = new Date().toISOString();
+    const lead: LeadRecord = {
       ...data,
+      id: crypto.randomUUID(),
       status: "Novo",
-      receivedAt: new Date().toISOString(),
-    });
-    return { ok: true as const };
+      consultor: null,
+      created_at: now,
+      updated_at: now,
+    };
+    console.info("[lead]", lead);
+    return { ok: true as const, id: lead.id, status: lead.status };
   });
