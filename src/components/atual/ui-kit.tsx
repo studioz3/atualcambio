@@ -72,11 +72,14 @@ export function Hero({
             alt={imageAlt ?? ""}
             width={1600}
             height={1200}
-            className="size-full object-cover opacity-75"
+            className="size-full object-cover opacity-75 saturate-[0.85]"
           />
+          {/* lente azul institucional */}
+          <div className="absolute inset-0 bg-navy/55 mix-blend-multiply" />
           <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/80 to-navy/10" />
         </div>
       ) : null}
+
       <Container>
         <div className="relative grid gap-12 py-20 md:py-28 lg:min-h-[680px] lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:py-36">
           <div className="max-w-2xl">
