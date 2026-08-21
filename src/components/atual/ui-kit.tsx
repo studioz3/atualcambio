@@ -85,6 +85,10 @@ export function Hero({
                 {secondary}
               </div>
             ) : null}
+            {seals ? (
+              <AccreditationSeals size="sm" className="mt-10 border-t border-white/10 pt-8" />
+            ) : null}
+
           </div>
           {image ? (
             <div className="lg:hidden">
