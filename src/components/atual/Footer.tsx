@@ -106,9 +106,16 @@ export function Footer() {
               [AGUARDANDO VALIDAÇÃO] razão social, CNPJ, endereços e textos regulatórios completos.
             </span>
           </p>
-          <p className="mt-4 text-xs text-white/40">
-            © {new Date().getFullYear()} Atual Câmbio. Todos os direitos reservados.
-          </p>
+          <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs text-white/40">
+            <span>© {new Date().getFullYear()} Atual Câmbio. Todos os direitos reservados.</span>
+            <Link to="/privacidade" className="transition-colors hover:text-white">
+              Privacidade e LGPD
+            </Link>
+            <Link to="/termos" className="transition-colors hover:text-white">
+              Termos de Uso
+            </Link>
+          </div>
+
         </div>
       </Container>
     </footer>
