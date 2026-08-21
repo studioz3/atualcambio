@@ -6,6 +6,7 @@ import {
   readConsent,
   writeConsent,
 } from "@/lib/cookie-consent";
+import { applyAnalyticsConsent } from "@/lib/analytics";
 
 export function CookieBanner() {
   const [visible, setVisible] = useState(false);
@@ -15,6 +16,7 @@ export function CookieBanner() {
 
   useEffect(() => {
     const consent = readConsent();
+    applyAnalyticsConsent(consent);
     if (consent) {
       setAnalytics(consent.analytics);
       setMarketing(consent.marketing);
@@ -36,7 +38,7 @@ export function CookieBanner() {
   }, []);
 
   const save = useCallback((value: { analytics: boolean; marketing: boolean }) => {
-    writeConsent(value);
+    applyAnalyticsConsent(writeConsent(value));
     setAnalytics(value.analytics);
     setMarketing(value.marketing);
     setPanelOpen(false);

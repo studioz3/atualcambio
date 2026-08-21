@@ -111,6 +111,12 @@ export const solutions = [
   },
 ];
 
+export const trustBar = [
+  "Autorizada pelo Banco Central",
+  "Atendimento especializado",
+  "Pessoas e empresas",
+];
+
 export const trust = [
   "Instituição autorizada a operar no mercado de câmbio",
   "Compliance e prevenção à lavagem de dinheiro",

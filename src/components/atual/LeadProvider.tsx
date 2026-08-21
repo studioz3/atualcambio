@@ -1,7 +1,12 @@
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
 import { LeadDrawer } from "./LeadDrawer";
+import type { LeadIntentId } from "@/lib/lead-intents";
 
-type LeadOptions = { context?: string | undefined; profile?: "pf" | "pj" | undefined };
+type LeadOptions = {
+  intent?: LeadIntentId | undefined;
+  context?: string | undefined;
+  profile?: "pf" | "pj" | undefined;
+};
 
 type LeadContextValue = {
   openLead: (options?: LeadOptions) => void;
@@ -30,6 +35,7 @@ export function LeadProvider({ children }: { children: ReactNode }) {
       <LeadDrawer
         open={open}
         onOpenChange={setOpen}
+        intentId={options.intent}
         context={options.context}
         initialProfile={options.profile}
       />
