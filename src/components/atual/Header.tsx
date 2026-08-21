@@ -132,13 +132,13 @@ export function Header() {
                 <ActionButton
                   onClick={() => {
                     setOpen(false);
-                    openLead({ context: "Abrir Conta Atual" });
+                    openLead({ intent: "conta", context: "Abrir Conta Atual" });
                   }}
-                  event="open_account"
+                  event="open_account_click"
                 >
                   Abrir Conta Atual
                 </ActionButton>
-                <ActionLink href={links.account} variant="secondaryDark" event="account_login">
+                <ActionLink href={links.account} variant="secondaryDark" event="login_click">
                   Acessar conta
                 </ActionLink>
               </div>
@@ -146,9 +146,6 @@ export function Header() {
           </Container>
         </div>
       ) : null}
-      <span className="sr-only">
-        <X aria-hidden />
-      </span>
     </header>
   );
 }
