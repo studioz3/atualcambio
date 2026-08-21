@@ -1,4 +1,4 @@
-import type { LegalBlock, LegalNode } from "@/components/atual/LegalPage";
+import type { LegalBlock } from "@/components/atual/LegalPage";
 
 export const intro: string[] = [
   "Última atualização: 30/03/2026"

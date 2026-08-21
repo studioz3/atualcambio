@@ -1,4 +1,4 @@
-import type { LegalBlock, LegalNode } from "@/components/atual/LegalPage";
+import type { LegalBlock } from "@/components/atual/LegalPage";
 
 export const intro: string[] = [
   "O nosso canal de última instância para garantir os seus direitos.",
