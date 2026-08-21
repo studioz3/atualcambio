@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
 import { LeadDrawer } from "./LeadDrawer";
 
-type LeadOptions = { context?: string; profile?: "pf" | "pj" };
+type LeadOptions = { context?: string | undefined; profile?: "pf" | "pj" | undefined };
 
 type LeadContextValue = {
   openLead: (options?: LeadOptions) => void;

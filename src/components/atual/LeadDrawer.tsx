@@ -39,8 +39,8 @@ export function LeadDrawer({
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  context?: string;
-  initialProfile?: "pf" | "pj";
+  context?: string | undefined;
+  initialProfile?: "pf" | "pj" | undefined;
 }) {
   const [profile, setProfile] = useState<"pf" | "pj">(initialProfile);
   const [loading, setLoading] = useState(false);
@@ -66,12 +66,12 @@ export function LeadDrawer({
     };
 
     const nextErrors: Record<string, string> = {};
-    if (data.name.length < 2) nextErrors.name = "Informe seu nome completo.";
+    if (data.name.length < 2) nextErrors['name'] = "Informe seu nome completo.";
     if (profile === "pj" && (data.company?.length ?? 0) < 2)
-      nextErrors.company = "Informe o nome da empresa.";
+      nextErrors['company'] = "Informe o nome da empresa.";
     if (data.whatsapp.replace(/\D/g, "").length < 10)
-      nextErrors.whatsapp = "Informe um WhatsApp com DDD.";
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(data.email)) nextErrors.email = "Informe um e-mail válido.";
+      nextErrors['whatsapp'] = "Informe um WhatsApp com DDD.";
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(data.email)) nextErrors['email'] = "Informe um e-mail válido.";
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
 
@@ -129,20 +129,20 @@ export function LeadDrawer({
             ))}
           </div>
 
-          <Field label="Nome" name="name" error={errors.name} autoComplete="name" />
+          <Field label="Nome" name="name" error={errors['name']} autoComplete="name" />
           {profile === "pj" ? (
-            <Field label="Empresa" name="company" error={errors.company} autoComplete="organization" />
+            <Field label="Empresa" name="company" error={errors['company']} autoComplete="organization" />
           ) : null}
           <Field
             label="WhatsApp"
             name="whatsapp"
             type="tel"
             inputMode="tel"
-            error={errors.whatsapp}
+            error={errors['whatsapp']}
             hint="Com DDD. Usamos apenas para falar sobre a sua operação."
             autoComplete="tel"
           />
-          <Field label="E-mail" name="email" type="email" error={errors.email} autoComplete="email" />
+          <Field label="E-mail" name="email" type="email" error={errors['email']} autoComplete="email" />
 
           <div>
             <label className={labelClass} htmlFor="need">
@@ -201,9 +201,9 @@ function Field({
 }: {
   label: string;
   name: string;
-  error?: string;
-  hint?: string;
-  type?: string;
+  error?: string | undefined;
+  hint?: string | undefined;
+  type?: string | undefined;
 } & React.InputHTMLAttributes<HTMLInputElement>) {
   const describedBy = [hint ? `${name}-hint` : null, error ? `${name}-error` : null]
     .filter(Boolean)
