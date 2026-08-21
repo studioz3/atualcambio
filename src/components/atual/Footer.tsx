@@ -2,51 +2,60 @@ import { Link } from "@tanstack/react-router";
 import { Container } from "./primitives";
 import { Logo } from "./Logo";
 import { links } from "@/content/site";
+import { openCookiePreferences } from "@/lib/cookie-consent";
+import { track } from "@/lib/analytics";
 
-const columns = [
+type FooterLink = { label: string; to: string; hash?: string };
+
+const columns: { title: string; items: FooterLink[] }[] = [
+  {
+    title: "Institucional",
+    items: [
+      { label: "Home", to: "/" },
+      { label: "Quem somos", to: "/a-atual" },
+      { label: "Contato", to: "/", hash: "especialista" },
+    ],
+  },
+  {
+    title: "Serviços",
+    items: [
+      { label: "Câmbio comercial", to: "/empresas" },
+      { label: "Câmbio turismo", to: "/solucoes", hash: "turismo" },
+      { label: "Comércio exterior", to: "/empresas" },
+    ],
+  },
   {
     title: "Soluções",
     items: [
+      { label: "Consultoria cambial", to: "/", hash: "especialista" },
       { label: "Remessas internacionais", to: "/solucoes", hash: "remessas" },
       { label: "USDT / USDC", to: "/solucoes", hash: "stablecoins" },
-      { label: "Câmbio turismo", to: "/solucoes", hash: "turismo" },
       { label: "Conta Atual", to: "/solucoes", hash: "conta" },
     ],
   },
   {
-    title: "Institucional",
+    title: "Conteúdo",
     items: [
-      { label: "A Atual", to: "/a-atual" },
-      { label: "Para empresas", to: "/empresas" },
-      { label: "Segurança e compliance", to: "/a-atual", hash: "seguranca" },
-      { label: "Conteúdo", to: "/conteudo" },
+      { label: "Momento Atual", to: "/", hash: "momento-atual" },
+      { label: "Notícias", to: "/conteudo" },
+      { label: "Newsletter", to: "/conteudo", hash: "newsletter" },
     ],
   },
   {
-    title: "Atendimento",
+    title: "Ética e compliance",
     items: [
-      { label: "Cotações", to: "/cotacoes" },
-      { label: "Falar com especialista", to: "/", hash: "especialista" },
-      { label: "Perguntas frequentes", to: "/", hash: "faq" },
-    ],
-  },
-  {
-    title: "Legal e compliance",
-    items: [
-      { label: "Política de Privacidade", to: "/privacidade" },
       { label: "Termos de Uso", to: "/termos" },
+      { label: "Política de Privacidade", to: "/privacidade" },
       { label: "Política de Cookies", to: "/cookies" },
       { label: "Código de Conduta", to: "/codigo-de-conduta" },
+      { label: "Relatórios de Ouvidoria", to: "/ouvidoria" },
+      { label: "Responsabilidade Social", to: "/responsabilidade-social" },
+      { label: "Canal de Denúncias", to: "/canal-de-denuncias" },
+      { label: "Política de Segurança Cibernética", to: "/seguranca-cibernetica" },
       { label: "PLD/FT", to: "/pld-ft" },
-      { label: "Segurança cibernética", to: "/seguranca-cibernetica" },
-      { label: "Responsabilidade social (PRSAC)", to: "/responsabilidade-social" },
-      { label: "Ouvidoria", to: "/ouvidoria" },
-      { label: "Canal de denúncias", to: "/canal-de-denuncias" },
     ],
   },
 ];
-
-
 
 export function Footer() {
   return (
@@ -59,31 +68,51 @@ export function Footer() {
         className="pointer-events-none absolute -right-16 -bottom-24 w-[420px] opacity-[0.06]"
       />
       <Container>
-        <div className="relative grid gap-12 py-16 md:grid-cols-[1fr_2fr] md:py-24">
+        <div className="relative grid gap-12 py-16 md:grid-cols-[1fr_2.4fr] md:py-24">
           <div>
             <Logo src="/brand/logo-v2.svg" className="h-6 w-auto" />
             <p className="font-display mt-6 max-w-xs text-lg leading-tight text-white">
               Se você pensa global, você é Atual.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+
+            <p className="eyebrow mt-10 text-gold">Conta Atual</p>
+            <div className="mt-4 flex flex-wrap gap-3">
               <a
                 href={links.appStore}
-                data-event="app_store"
+                data-event="app_store_click"
+                onClick={() => track("app_store_click", { origem: "footer" })}
+                className="inline-flex min-h-11 items-center rounded-sm border border-white/25 px-4 text-sm text-white transition-colors hover:border-gold hover:text-gold"
+              >
+                Google Play
+              </a>
+              <a
+                href={links.googlePlay}
+                data-event="google_play_click"
+                onClick={() => track("google_play_click", { origem: "footer" })}
                 className="inline-flex min-h-11 items-center rounded-sm border border-white/25 px-4 text-sm text-white transition-colors hover:border-gold hover:text-gold"
               >
                 App Store
               </a>
               <a
-                href={links.googlePlay}
-                data-event="google_play"
+                href={links.account}
+                data-event="login_click"
+                onClick={() => track("login_click", { origem: "footer" })}
                 className="inline-flex min-h-11 items-center rounded-sm border border-white/25 px-4 text-sm text-white transition-colors hover:border-gold hover:text-gold"
               >
-                Google Play
+                Acessar conta
               </a>
             </div>
+            <p className="mt-3 text-xs text-white/40">[AGUARDANDO ONZ] deeplinks do aplicativo.</p>
+
+            <p className="eyebrow mt-10 text-gold">Atendimento e Ouvidoria</p>
+            <ul className="mt-4 space-y-2 text-sm text-white/70">
+              <li>Ouvidoria: 0800 770-5422</li>
+              <li>Segunda a sexta, das 9h às 18h</li>
+              <li>contato@atualcambio.com.br</li>
+            </ul>
           </div>
 
-          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
             {columns.map((col) => (
               <nav key={col.title} aria-label={col.title}>
                 <p className="eyebrow text-gold">{col.title}</p>
@@ -121,15 +150,24 @@ export function Footer() {
             <Link to="/termos" className="transition-colors hover:text-white">
               Termos de Uso
             </Link>
+            <Link to="/cookies" className="transition-colors hover:text-white">
+              Política de Cookies
+            </Link>
+            <button
+              type="button"
+              onClick={openCookiePreferences}
+              data-event="cookies_abrir_preferencias"
+              className="underline-offset-4 transition-colors hover:text-white hover:underline"
+            >
+              Preferências de Cookies
+            </button>
             <Link to="/ouvidoria" className="transition-colors hover:text-white">
               Ouvidoria
             </Link>
             <Link to="/canal-de-denuncias" className="transition-colors hover:text-white">
               Canal de denúncias
             </Link>
-
           </div>
-
         </div>
       </Container>
     </footer>
