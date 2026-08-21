@@ -129,7 +129,7 @@ export function IntentCard({
           to={to}
           {...(hash ? { hash } : {})}
           data-event="intent_selected"
-          className="min-h-11 self-center text-sm text-muted-foreground underline-offset-4 hover:text-navy hover:underline"
+          className="inline-flex min-h-11 items-center text-sm text-muted-foreground underline-offset-4 hover:text-navy hover:underline"
         >
           Saiba mais
         </Link>
