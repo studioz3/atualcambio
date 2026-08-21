@@ -81,23 +81,27 @@ export function LegalPage({
             {blocks.map((block) => (
               <article key={block.id} id={block.id} className="scroll-mt-28">
                 <h2 className="text-xl font-bold text-navy md:text-2xl">{block.title}</h2>
-                {block.paragraphs.map((text) => (
-                  <p key={text} className="mt-4 text-base leading-[1.65] text-muted-foreground">
-                    {text}
-                  </p>
-                ))}
-                {block.items ? (
-                  <ul className="mt-5 space-y-3">
-                    {block.items.map((item) => (
-                      <li
-                        key={item}
-                        className="border-l-2 border-gold/60 pl-4 text-sm leading-relaxed text-muted-foreground"
-                      >
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                ) : null}
+                {toNodes(block).map((node, i) =>
+                  node.type === "p" ? (
+                    <p
+                      key={`${block.id}-p-${i}`}
+                      className="mt-4 text-base leading-[1.65] text-muted-foreground"
+                    >
+                      {node.text}
+                    </p>
+                  ) : (
+                    <ul key={`${block.id}-ul-${i}`} className="mt-5 space-y-3">
+                      {node.items.map((item) => (
+                        <li
+                          key={item}
+                          className="border-l-2 border-gold/60 pl-4 text-sm leading-relaxed text-muted-foreground"
+                        >
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  ),
+                )}
               </article>
             ))}
 
