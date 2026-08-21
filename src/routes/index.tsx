@@ -52,11 +52,10 @@ function Home() {
                 <br />
                 do seu jeito
               </h1>
-              <p className="mt-6 max-w-md text-base leading-relaxed text-white/70">
-                {brand.explanation}
+              <p className="mt-6 max-w-md text-lg leading-relaxed text-white/75">
+                {brand.valueProp}
               </p>
 
-              <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/75">{brand.valueProp}</p>
               <div className="mt-10 flex flex-wrap gap-3">
                 <ActionButton
                   size="lg"
