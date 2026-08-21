@@ -88,14 +88,14 @@ export function Header() {
             <ActionLink
               href={links.account}
               variant="textLight"
-              event="account_login"
-              className="hidden px-3 text-sm md:inline-flex"
+              event="login_click"
+              className="px-3 text-sm"
             >
-              Acessar conta
+              Acessar
             </ActionLink>
             <ActionButton
-              onClick={() => openLead({ context: "Abrir Conta Atual" })}
-              event="open_account"
+              onClick={() => openLead({ intent: "conta", context: "Abrir Conta Atual" })}
+              event="open_account_click"
               className="hidden sm:inline-flex"
             >
               Abrir Conta Atual
@@ -107,9 +107,10 @@ export function Header() {
               onClick={() => setOpen((v) => !v)}
               className="grid size-11 place-items-center rounded-sm text-white lg:hidden"
             >
-              {open ? <Menu className="size-6 rotate-90" /> : <Menu className="size-6" />}
+              {open ? <X className="size-6" /> : <Menu className="size-6" />}
             </button>
           </div>
+
         </div>
       </Container>
 
