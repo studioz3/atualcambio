@@ -117,6 +117,24 @@ export const trustBar = [
   "Pessoas e empresas",
 ];
 
+export const pillars = [
+  {
+    id: "seguranca",
+    title: "Segurança",
+    text: "Instituição autorizada e regulada pelo Banco Central, com processos estruturados de compliance e segurança.",
+  },
+  {
+    id: "tecnologia",
+    title: "Tecnologia",
+    text: "Plataforma digital para simplificar e agilizar suas operações.",
+  },
+  {
+    id: "atendimento",
+    title: "Atendimento",
+    text: "Especialistas para orientar quando sua operação precisar de acompanhamento.",
+  },
+] as const;
+
 export const trust = [
   "Instituição autorizada a operar no mercado de câmbio",
   "Compliance e prevenção à lavagem de dinheiro",
@@ -140,24 +158,44 @@ export const security = [
 
 export const faq = [
   {
-    q: "Quem pode operar com a Atual?",
-    a: "Pessoas físicas e empresas que precisem enviar, receber ou converter valores em moeda estrangeira, após o processo de cadastro e identificação.",
+    q: "Qual a diferença entre dólar comercial e dólar turismo?",
+    a: "O dólar comercial é a referência usada em operações entre empresas e instituições, como importação, exportação e pagamentos internacionais. O dólar turismo se refere à moeda destinada a viagens, incluindo espécie. São mercados diferentes, com custos e finalidades diferentes.",
   },
   {
-    q: "Preciso ir até uma loja para operar?",
-    a: "Não necessariamente. A Conta Atual permite operar de forma digital. O atendimento presencial e consultivo continua disponível quando você preferir orientação.",
-  },
-  {
-    q: "Quais documentos são necessários?",
-    a: "A documentação depende do tipo de operação e do perfil do cliente. Um especialista indica exatamente o que é necessário antes de qualquer envio de documento.",
+    q: "A Atual entrega moeda estrangeira?",
+    a: "Sim. A Atual atende operações de câmbio turismo, incluindo moeda em espécie. A disponibilidade por moeda e a forma de retirada ou entrega são confirmadas pelo especialista durante o atendimento.",
   },
   {
     q: "Como funciona a cotação?",
-    a: "A cotação é apresentada no momento da operação e considera a moeda, o valor e a finalidade. Os valores exibidos no site são informativos e sempre acompanhados do horário de atualização.",
+    a: "A cotação é apresentada no momento da operação e considera a moeda, o valor e a finalidade. Informações exibidas no site têm caráter informativo e sempre acompanham o horário de atualização.",
   },
   {
-    q: "A Atual opera com stablecoins?",
-    a: "Sim. As operações com USDT e USDC seguem o mesmo padrão de identificação, conformidade e atendimento das demais operações.",
+    q: "Posso enviar dinheiro para o exterior?",
+    a: "Sim. A Atual opera remessas internacionais para pessoas físicas e empresas, após cadastro, identificação e verificação da finalidade da operação.",
+  },
+  {
+    q: "Quanto tempo leva uma remessa internacional?",
+    a: "O prazo depende da moeda, do país de destino, do banco recebedor e do horário de fechamento da operação. O especialista informa a estimativa aplicável ao seu caso antes do envio.",
+  },
+  {
+    q: "A Atual atende empresas?",
+    a: "Sim. A Atual atende empresas em importação, exportação, pagamentos e recebimentos internacionais, com acompanhamento consultivo e apoio na documentação exigida.",
+  },
+  {
+    q: "A Atual é autorizada pelo Banco Central?",
+    a: "Sim. A Atual é autorizada a operar no mercado de câmbio brasileiro, sujeita à regulação e supervisão do Banco Central do Brasil, e é associada à ABRACAM.",
+  },
+  {
+    q: "Quais documentos podem ser necessários?",
+    a: "A documentação varia conforme o tipo de operação, o valor e o perfil do cliente. Um especialista indica exatamente o que é necessário antes de qualquer envio de documento.",
+  },
+  {
+    q: "Posso comprar e vender USDT e USDC?",
+    a: "Sim. As operações com USDT e USDC seguem o mesmo padrão de identificação, conformidade e atendimento das demais operações da Atual.",
+  },
+  {
+    q: "Como abro minha Conta Atual?",
+    a: "A abertura é feita pelo aplicativo da Atual, com cadastro e identificação. Se preferir, um especialista acompanha você durante o processo.",
   },
 ];
 
