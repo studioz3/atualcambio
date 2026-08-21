@@ -49,68 +49,17 @@ export const blocks: LegalBlock[] = [
         "text": "Nossa equipe está pronta para atender você de forma gratuita:"
       },
       {
-        "type": "p",
-        "text": "Telefone (0800):"
+        "type": "ul",
+        "items": [
+          "Telefone (0800): 0800 770-5422 — ligação gratuita de telefones fixos e celulares.",
+          "Horário de funcionamento: de segunda a sexta-feira, das 9h às 18h, exceto feriados nacionais.",
+          "E-mail: ouvidoria@atualcambio.com.br",
+          "Atendimento presencial: Ag. Iguatemi Sorocaba — Av. Prof. Izoraida Marques Peres, 256, Campolim, CEP 18048-110, Shopping Iguatemi, Sorocaba-SP."
+        ]
       },
       {
         "type": "p",
-        "text": "0800 000 0000 (Ligação gratuita de telefones fixos e celulares)"
-      },
-      {
-        "type": "p",
-        "text": "Horário de Funcionamento:"
-      },
-      {
-        "type": "p",
-        "text": "De segunda a sexta-feira, das [INSERIR HORÁRIO, ex: 09h às 18h], exceto feriados nacionais."
-      },
-      {
-        "type": "p",
-        "text": "E-mail:"
-      },
-      {
-        "type": "p",
-        "text": "ouvidoria@atualcambio.com.br"
-      },
-      {
-        "type": "p",
-        "text": "Formulário Eletrônico:"
-      },
-      {
-        "type": "p",
-        "text": "[Inserir Link ou Botão: “Abrir chamado na Ouvidoria”]"
-      },
-      {
-        "type": "p",
-        "text": "Atenção: Se este é o seu primeiro contato com a Atual Câmbio para tirar dúvidas, realizar cotações, relatar um problema ou fazer uma reclamação inicial, por favor, acesse primeiro o nosso [Link para a página do SAC / Fale Conosco]."
-      },
-      {
-        "type": "p",
-        "text": "# Ag. Iguatemi Sorocaba"
-      },
-      {
-        "type": "p",
-        "text": "Av. Prof. Izoraida Marques Peres, 256"
-      },
-      {
-        "type": "p",
-        "text": "Campolim CEP 18048-110"
-      },
-      {
-        "type": "p",
-        "text": "Shopping Iguatemi"
-      },
-      {
-        "type": "p",
-        "text": "Sorocaba-SP"
-      },
-      {
-        "type": "p",
-        "text": "Tel.:"
-      },
-      {
-        "type": "p",
-        "text": "Whatsapp:"
+        "text": "Atenção: se este é o seu primeiro contato com a Atual Câmbio para tirar dúvidas, realizar cotações, relatar um problema ou fazer uma reclamação inicial, fale antes com a nossa Central de Atendimento pelo e-mail contato@atualcambio.com.br ou pelo telefone 0800 770-5422."
       }
     ]
   }
