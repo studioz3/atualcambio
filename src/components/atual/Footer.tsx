@@ -1,5 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Container } from "./primitives";
+import { AccreditationSeals } from "./ui-kit";
+
 import { Logo } from "./Logo";
 import { links } from "@/content/site";
 import { openCookiePreferences } from "@/lib/cookie-consent";
