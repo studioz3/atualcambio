@@ -8,7 +8,7 @@
  * Design System v1 — Atual Câmbio
  * Cores institucionais: Navy #01183A / Dourado #D0A32E
  * Neutros: #FFFFFF, #F7F7F4, #EFEFEA, #73777F, #20242B
- * Tipografia: Syncopate (display/labels) + Montserrat (interface)
+ * Tipografia: Montserrat (títulos + interface) + Syncopate (apenas eyebrows/labels)
  */
 
 @theme inline {
@@ -19,7 +19,8 @@
   --radius-2xl: 16px;
   --radius-3xl: 16px;
 
-  --font-display: "Syncopate", "Montserrat", sans-serif;
+  --font-display: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+  --font-eyebrow: "Syncopate", "Montserrat", sans-serif;
   --font-sans: "Montserrat", ui-sans-serif, system-ui, sans-serif;
 
   --color-background: var(--background);
@@ -104,6 +105,35 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-sans);
+    letter-spacing: -0.01em;
+  }
+
+  h1,
+  h2 {
+    font-weight: 700;
+  }
+
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 600;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font-family: var(--font-sans);
+  }
+
   :focus-visible {
     outline: 2px solid var(--color-gold);
     outline-offset: 2px;
@@ -132,7 +162,7 @@
 }
 
 @utility eyebrow {
-  font-family: var(--font-display);
+  font-family: var(--font-eyebrow);
   font-size: 0.6875rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
