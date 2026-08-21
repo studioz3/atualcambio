@@ -78,17 +78,17 @@ export function Footer() {
             <p className="eyebrow mt-10 text-gold">Conta Atual</p>
             <div className="mt-4 flex flex-wrap gap-3">
               <a
-                href={links.appStore}
-                data-event="app_store_click"
-                onClick={() => track("app_store_click", { origem: "footer" })}
+                href={links.googlePlay}
+                data-event="google_play_click"
+                onClick={() => track("google_play_click", { origem: "footer" })}
                 className="inline-flex min-h-11 items-center rounded-sm border border-white/25 px-4 text-sm text-white transition-colors hover:border-gold hover:text-gold"
               >
                 Google Play
               </a>
               <a
-                href={links.googlePlay}
-                data-event="google_play_click"
-                onClick={() => track("google_play_click", { origem: "footer" })}
+                href={links.appStore}
+                data-event="app_store_click"
+                onClick={() => track("app_store_click", { origem: "footer" })}
                 className="inline-flex min-h-11 items-center rounded-sm border border-white/25 px-4 text-sm text-white transition-colors hover:border-gold hover:text-gold"
               >
                 App Store
