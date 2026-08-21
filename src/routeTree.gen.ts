@@ -10,33 +10,91 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AAtualRouteImport } from './routes/a-atual'
+import { Route as ConteudoRouteImport } from './routes/conteudo'
+import { Route as CotacoesRouteImport } from './routes/cotacoes'
+import { Route as EmpresasRouteImport } from './routes/empresas'
+import { Route as SolucoesRouteImport } from './routes/solucoes'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AAtualRoute = AAtualRouteImport.update({
+  id: '/a-atual',
+  path: '/a-atual',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConteudoRoute = ConteudoRouteImport.update({
+  id: '/conteudo',
+  path: '/conteudo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CotacoesRoute = CotacoesRouteImport.update({
+  id: '/cotacoes',
+  path: '/cotacoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EmpresasRoute = EmpresasRouteImport.update({
+  id: '/empresas',
+  path: '/empresas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SolucoesRoute = SolucoesRouteImport.update({
+  id: '/solucoes',
+  path: '/solucoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/a-atual': typeof AAtualRoute
+  '/conteudo': typeof ConteudoRoute
+  '/cotacoes': typeof CotacoesRoute
+  '/empresas': typeof EmpresasRoute
+  '/solucoes': typeof SolucoesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/a-atual': typeof AAtualRoute
+  '/conteudo': typeof ConteudoRoute
+  '/cotacoes': typeof CotacoesRoute
+  '/empresas': typeof EmpresasRoute
+  '/solucoes': typeof SolucoesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/a-atual': typeof AAtualRoute
+  '/conteudo': typeof ConteudoRoute
+  '/cotacoes': typeof CotacoesRoute
+  '/empresas': typeof EmpresasRoute
+  '/solucoes': typeof SolucoesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    '/' | '/a-atual' | '/conteudo' | '/cotacoes' | '/empresas' | '/solucoes'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/a-atual' | '/conteudo' | '/cotacoes' | '/empresas' | '/solucoes'
+  id:
+    | '__root__'
+    | '/'
+    | '/a-atual'
+    | '/conteudo'
+    | '/cotacoes'
+    | '/empresas'
+    | '/solucoes'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AAtualRoute: typeof AAtualRoute
+  ConteudoRoute: typeof ConteudoRoute
+  CotacoesRoute: typeof CotacoesRoute
+  EmpresasRoute: typeof EmpresasRoute
+  SolucoesRoute: typeof SolucoesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +106,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/a-atual': {
+      id: '/a-atual'
+      path: '/a-atual'
+      fullPath: '/a-atual'
+      preLoaderRoute: typeof AAtualRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/conteudo': {
+      id: '/conteudo'
+      path: '/conteudo'
+      fullPath: '/conteudo'
+      preLoaderRoute: typeof ConteudoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cotacoes': {
+      id: '/cotacoes'
+      path: '/cotacoes'
+      fullPath: '/cotacoes'
+      preLoaderRoute: typeof CotacoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/empresas': {
+      id: '/empresas'
+      path: '/empresas'
+      fullPath: '/empresas'
+      preLoaderRoute: typeof EmpresasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/solucoes': {
+      id: '/solucoes'
+      path: '/solucoes'
+      fullPath: '/solucoes'
+      preLoaderRoute: typeof SolucoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AAtualRoute: AAtualRoute,
+  ConteudoRoute: ConteudoRoute,
+  CotacoesRoute: CotacoesRoute,
+  EmpresasRoute: EmpresasRoute,
+  SolucoesRoute: SolucoesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
