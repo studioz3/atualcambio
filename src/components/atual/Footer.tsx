@@ -1,7 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Container } from "./primitives";
 import { AccreditationSeals } from "./ui-kit";
-
 import { Logo } from "./Logo";
 import { links } from "@/content/site";
 import { openCookiePreferences } from "@/lib/cookie-consent";
@@ -32,7 +31,7 @@ const columns: { title: string; items: FooterLink[] }[] = [
       { label: "Consultoria cambial", to: "/", hash: "especialista" },
       { label: "Remessas internacionais", to: "/solucoes", hash: "remessas" },
       { label: "USDT / USDC", to: "/solucoes", hash: "stablecoins" },
-      { label: "Conta Atual", to: "/solucoes", hash: "conta" },
+      { label: "Conta Atual", to: "/", hash: "conta-atual" },
     ],
   },
   {
@@ -59,64 +58,51 @@ const columns: { title: string; items: FooterLink[] }[] = [
   },
 ];
 
+const appLinks = [
+  { label: "Google Play", href: links.googlePlay, event: "google_play_click" },
+  { label: "App Store", href: links.appStore, event: "app_store_click" },
+  { label: "Acessar conta", href: links.account, event: "login_click" },
+];
+
 export function Footer() {
   return (
-    <footer className="surface-navy relative overflow-hidden">
-      <img
-        src="/brand/simbolo.png"
-        alt=""
-        aria-hidden
-        loading="lazy"
-        className="pointer-events-none absolute -right-16 -bottom-24 w-[420px] opacity-[0.06]"
-      />
+    <footer className="surface-navy relative isolate">
+      {/* Supergraphic: símbolo oficial da Atual em grande escala e baixa opacidade */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+        <img
+          src="/brand/simbolo.png"
+          alt=""
+          loading="lazy"
+          className="absolute -right-24 bottom-[-12%] h-[520px] w-auto max-w-none object-contain opacity-[0.05]"
+        />
+      </div>
+
       <Container>
-        <div className="relative grid gap-12 py-16 md:grid-cols-[1fr_2.4fr] md:py-24">
+        <div className="relative grid gap-14 py-16 md:py-24 lg:grid-cols-[minmax(240px,1fr)_2.6fr]">
+          {/* Coluna 1 — marca */}
           <div>
-            <Logo className="h-7 w-auto" />
-            <p className="font-display mt-6 max-w-xs text-lg leading-tight text-white">
+            <Logo className="h-8 w-auto" />
+            <p className="display-h4 mt-6 max-w-xs text-white">
               Se você pensa global, você é Atual.
             </p>
 
             <p className="eyebrow mt-10 text-gold">Conta Atual</p>
             <div className="mt-4 flex flex-wrap gap-3">
-              <a
-                href={links.googlePlay}
-                data-event="google_play_click"
-                onClick={() => track("google_play_click", { origem: "footer" })}
-                className="inline-flex min-h-11 items-center rounded-sm border border-white/25 px-4 text-sm text-white transition-colors hover:border-gold hover:text-gold"
-              >
-                Google Play
-              </a>
-              <a
-                href={links.appStore}
-                data-event="app_store_click"
-                onClick={() => track("app_store_click", { origem: "footer" })}
-                className="inline-flex min-h-11 items-center rounded-sm border border-white/25 px-4 text-sm text-white transition-colors hover:border-gold hover:text-gold"
-              >
-                App Store
-              </a>
-              <a
-                href={links.account}
-                data-event="login_click"
-                onClick={() => track("login_click", { origem: "footer" })}
-                className="inline-flex min-h-11 items-center rounded-sm border border-white/25 px-4 text-sm text-white transition-colors hover:border-gold hover:text-gold"
-              >
-                Acessar conta
-              </a>
+              {appLinks.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  data-event={item.event}
+                  onClick={() => track(item.event, { origem: "footer" })}
+                  className="inline-flex min-h-11 items-center rounded-sm border border-white/25 px-4 text-sm text-white transition-colors hover:border-gold hover:text-gold"
+                >
+                  {item.label}
+                </a>
+              ))}
             </div>
-            <p className="mt-3 text-xs text-white/40">[AGUARDANDO ONZ] deeplinks do aplicativo.</p>
-
-            <p className="eyebrow mt-10 text-gold">Atendimento e Ouvidoria</p>
-            <ul className="mt-4 space-y-2 text-sm text-white/70">
-              <li>Ouvidoria: 0800 770-5422</li>
-              <li>Segunda a sexta, das 9h às 18h</li>
-              <li>contato@atualcambio.com.br</li>
-            </ul>
-
-            <AccreditationSeals size="sm" className="mt-10" />
           </div>
 
-
+          {/* Colunas 2 a 6 */}
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
             {columns.map((col) => (
               <nav key={col.title} aria-label={col.title}>
@@ -139,15 +125,41 @@ export function Footer() {
           </div>
         </div>
 
+        {/* Atendimento e regulação */}
+        <div className="relative grid gap-10 border-t border-white/10 py-12 md:grid-cols-2">
+          <div>
+            <p className="eyebrow text-gold">Atendimento e Ouvidoria</p>
+            <ul className="mt-5 space-y-2 text-sm text-white/70">
+              <li>Ouvidoria: 0800 770-5422</li>
+              <li>Segunda a sexta, das 9h às 18h</li>
+              <li>
+                <a
+                  href="mailto:contato@atualcambio.com.br"
+                  className="transition-colors hover:text-white"
+                >
+                  contato@atualcambio.com.br
+                </a>
+              </li>
+              <li>
+                <Link to="/canal-de-denuncias" className="transition-colors hover:text-white">
+                  Canal de Denúncias
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <p className="eyebrow text-gold">Regulação</p>
+            <p className="mt-5 max-w-xl text-sm leading-relaxed text-white/70">
+              Atual Câmbio — instituição autorizada a operar no mercado de câmbio brasileiro,
+              sujeita à regulação e supervisão do Banco Central do Brasil, e associada à ABRACAM.
+            </p>
+            <AccreditationSeals size="sm" className="mt-7" />
+          </div>
+        </div>
+
+        {/* Base legal */}
         <div className="relative border-t border-white/10 py-8">
-          <p className="max-w-3xl text-xs leading-relaxed text-white/55">
-            Atual Câmbio — instituição autorizada a operar no mercado de câmbio brasileiro, sujeita à
-            regulação e supervisão do Banco Central do Brasil.{" "}
-            <span className="text-white/40">
-              [AGUARDANDO VALIDAÇÃO] razão social, CNPJ, endereços e textos regulatórios completos.
-            </span>
-          </p>
-          <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs text-white/40">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-xs text-white/45">
             <span>© {new Date().getFullYear()} Atual Câmbio. Todos os direitos reservados.</span>
             <Link to="/privacidade" className="transition-colors hover:text-white">
               Privacidade
@@ -170,7 +182,7 @@ export function Footer() {
               Ouvidoria
             </Link>
             <Link to="/canal-de-denuncias" className="transition-colors hover:text-white">
-              Canal de denúncias
+              Canal de Denúncias
             </Link>
           </div>
         </div>
