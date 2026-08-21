@@ -137,8 +137,9 @@ function Home() {
           </ActionLink>
         }
         seals
-        image={heroImg}
-        imageAlt="Profissional observando o skyline de uma cidade global a partir de um escritório"
+        image={heroAsset.url}
+        imageAlt="Cliente da Atual usando o celular ao ar livre durante uma viagem"
+
       />
 
       <TrustPillars items={pillars} />
