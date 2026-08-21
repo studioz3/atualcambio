@@ -80,8 +80,10 @@ function Home() {
             Acessar minha conta
           </ActionLink>
         }
+        seals
         image={heroImg}
         imageAlt="Profissional observando o skyline de uma cidade global a partir de um escritório"
+
       />
       <TrustBar items={trustBar} />
 

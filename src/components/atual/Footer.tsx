@@ -1,5 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Container } from "./primitives";
+import { AccreditationSeals } from "./ui-kit";
+
 import { Logo } from "./Logo";
 import { links } from "@/content/site";
 import { openCookiePreferences } from "@/lib/cookie-consent";
@@ -110,7 +112,10 @@ export function Footer() {
               <li>Segunda a sexta, das 9h às 18h</li>
               <li>contato@atualcambio.com.br</li>
             </ul>
+
+            <AccreditationSeals size="sm" className="mt-10" />
           </div>
+
 
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
             {columns.map((col) => (
