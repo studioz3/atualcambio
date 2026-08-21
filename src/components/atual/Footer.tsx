@@ -52,7 +52,7 @@ export function Footer() {
         className="pointer-events-none absolute -right-16 -bottom-24 w-[420px] opacity-[0.06]"
       />
       <Container>
-        <div className="relative grid gap-12 py-16 md:grid-cols-[1.2fr_2fr] md:py-24">
+        <div className="relative grid gap-12 py-16 md:grid-cols-[1fr_2fr] md:py-24">
           <div>
             <Logo src="/brand/logo-v2.svg" className="h-6 w-auto" />
             <p className="font-display mt-6 max-w-xs text-lg leading-tight text-white">
@@ -76,7 +76,7 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="grid gap-10 sm:grid-cols-3">
+          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
             {columns.map((col) => (
               <nav key={col.title} aria-label={col.title}>
                 <p className="eyebrow text-gold">{col.title}</p>
