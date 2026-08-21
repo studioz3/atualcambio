@@ -11,10 +11,16 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AAtualRouteImport } from './routes/a-atual'
+import { Route as CanalDeDenunciasRouteImport } from './routes/canal-de-denuncias'
+import { Route as CodigoDeCondutaRouteImport } from './routes/codigo-de-conduta'
 import { Route as ConteudoRouteImport } from './routes/conteudo'
 import { Route as CotacoesRouteImport } from './routes/cotacoes'
 import { Route as EmpresasRouteImport } from './routes/empresas'
+import { Route as OuvidoriaRouteImport } from './routes/ouvidoria'
+import { Route as PldFtRouteImport } from './routes/pld-ft'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
+import { Route as ResponsabilidadeSocialRouteImport } from './routes/responsabilidade-social'
+import { Route as SegurancaCiberneticaRouteImport } from './routes/seguranca-cibernetica'
 import { Route as SolucoesRouteImport } from './routes/solucoes'
 import { Route as TermosRouteImport } from './routes/termos'
 
@@ -26,6 +32,16 @@ const IndexRoute = IndexRouteImport.update({
 const AAtualRoute = AAtualRouteImport.update({
   id: '/a-atual',
   path: '/a-atual',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CanalDeDenunciasRoute = CanalDeDenunciasRouteImport.update({
+  id: '/canal-de-denuncias',
+  path: '/canal-de-denuncias',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CodigoDeCondutaRoute = CodigoDeCondutaRouteImport.update({
+  id: '/codigo-de-conduta',
+  path: '/codigo-de-conduta',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConteudoRoute = ConteudoRouteImport.update({
@@ -43,9 +59,29 @@ const EmpresasRoute = EmpresasRouteImport.update({
   path: '/empresas',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OuvidoriaRoute = OuvidoriaRouteImport.update({
+  id: '/ouvidoria',
+  path: '/ouvidoria',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PldFtRoute = PldFtRouteImport.update({
+  id: '/pld-ft',
+  path: '/pld-ft',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PrivacidadeRoute = PrivacidadeRouteImport.update({
   id: '/privacidade',
   path: '/privacidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResponsabilidadeSocialRoute = ResponsabilidadeSocialRouteImport.update({
+  id: '/responsabilidade-social',
+  path: '/responsabilidade-social',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SegurancaCiberneticaRoute = SegurancaCiberneticaRouteImport.update({
+  id: '/seguranca-cibernetica',
+  path: '/seguranca-cibernetica',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SolucoesRoute = SolucoesRouteImport.update({
@@ -62,20 +98,32 @@ const TermosRoute = TermosRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/a-atual': typeof AAtualRoute
+  '/canal-de-denuncias': typeof CanalDeDenunciasRoute
+  '/codigo-de-conduta': typeof CodigoDeCondutaRoute
   '/conteudo': typeof ConteudoRoute
   '/cotacoes': typeof CotacoesRoute
   '/empresas': typeof EmpresasRoute
+  '/ouvidoria': typeof OuvidoriaRoute
+  '/pld-ft': typeof PldFtRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/responsabilidade-social': typeof ResponsabilidadeSocialRoute
+  '/seguranca-cibernetica': typeof SegurancaCiberneticaRoute
   '/solucoes': typeof SolucoesRoute
   '/termos': typeof TermosRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/a-atual': typeof AAtualRoute
+  '/canal-de-denuncias': typeof CanalDeDenunciasRoute
+  '/codigo-de-conduta': typeof CodigoDeCondutaRoute
   '/conteudo': typeof ConteudoRoute
   '/cotacoes': typeof CotacoesRoute
   '/empresas': typeof EmpresasRoute
+  '/ouvidoria': typeof OuvidoriaRoute
+  '/pld-ft': typeof PldFtRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/responsabilidade-social': typeof ResponsabilidadeSocialRoute
+  '/seguranca-cibernetica': typeof SegurancaCiberneticaRoute
   '/solucoes': typeof SolucoesRoute
   '/termos': typeof TermosRoute
 }
@@ -83,10 +131,16 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/a-atual': typeof AAtualRoute
+  '/canal-de-denuncias': typeof CanalDeDenunciasRoute
+  '/codigo-de-conduta': typeof CodigoDeCondutaRoute
   '/conteudo': typeof ConteudoRoute
   '/cotacoes': typeof CotacoesRoute
   '/empresas': typeof EmpresasRoute
+  '/ouvidoria': typeof OuvidoriaRoute
+  '/pld-ft': typeof PldFtRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/responsabilidade-social': typeof ResponsabilidadeSocialRoute
+  '/seguranca-cibernetica': typeof SegurancaCiberneticaRoute
   '/solucoes': typeof SolucoesRoute
   '/termos': typeof TermosRoute
 }
@@ -95,30 +149,48 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/a-atual'
+    | '/canal-de-denuncias'
+    | '/codigo-de-conduta'
     | '/conteudo'
     | '/cotacoes'
     | '/empresas'
+    | '/ouvidoria'
+    | '/pld-ft'
     | '/privacidade'
+    | '/responsabilidade-social'
+    | '/seguranca-cibernetica'
     | '/solucoes'
     | '/termos'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/a-atual'
+    | '/canal-de-denuncias'
+    | '/codigo-de-conduta'
     | '/conteudo'
     | '/cotacoes'
     | '/empresas'
+    | '/ouvidoria'
+    | '/pld-ft'
     | '/privacidade'
+    | '/responsabilidade-social'
+    | '/seguranca-cibernetica'
     | '/solucoes'
     | '/termos'
   id:
     | '__root__'
     | '/'
     | '/a-atual'
+    | '/canal-de-denuncias'
+    | '/codigo-de-conduta'
     | '/conteudo'
     | '/cotacoes'
     | '/empresas'
+    | '/ouvidoria'
+    | '/pld-ft'
     | '/privacidade'
+    | '/responsabilidade-social'
+    | '/seguranca-cibernetica'
     | '/solucoes'
     | '/termos'
   fileRoutesById: FileRoutesById
@@ -126,10 +198,16 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AAtualRoute: typeof AAtualRoute
+  CanalDeDenunciasRoute: typeof CanalDeDenunciasRoute
+  CodigoDeCondutaRoute: typeof CodigoDeCondutaRoute
   ConteudoRoute: typeof ConteudoRoute
   CotacoesRoute: typeof CotacoesRoute
   EmpresasRoute: typeof EmpresasRoute
+  OuvidoriaRoute: typeof OuvidoriaRoute
+  PldFtRoute: typeof PldFtRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
+  ResponsabilidadeSocialRoute: typeof ResponsabilidadeSocialRoute
+  SegurancaCiberneticaRoute: typeof SegurancaCiberneticaRoute
   SolucoesRoute: typeof SolucoesRoute
   TermosRoute: typeof TermosRoute
 }
@@ -148,6 +226,20 @@ declare module '@tanstack/react-router' {
       path: '/a-atual'
       fullPath: '/a-atual'
       preLoaderRoute: typeof AAtualRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/canal-de-denuncias': {
+      id: '/canal-de-denuncias'
+      path: '/canal-de-denuncias'
+      fullPath: '/canal-de-denuncias'
+      preLoaderRoute: typeof CanalDeDenunciasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/codigo-de-conduta': {
+      id: '/codigo-de-conduta'
+      path: '/codigo-de-conduta'
+      fullPath: '/codigo-de-conduta'
+      preLoaderRoute: typeof CodigoDeCondutaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/conteudo': {
@@ -171,11 +263,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EmpresasRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ouvidoria': {
+      id: '/ouvidoria'
+      path: '/ouvidoria'
+      fullPath: '/ouvidoria'
+      preLoaderRoute: typeof OuvidoriaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pld-ft': {
+      id: '/pld-ft'
+      path: '/pld-ft'
+      fullPath: '/pld-ft'
+      preLoaderRoute: typeof PldFtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/privacidade': {
       id: '/privacidade'
       path: '/privacidade'
       fullPath: '/privacidade'
       preLoaderRoute: typeof PrivacidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/responsabilidade-social': {
+      id: '/responsabilidade-social'
+      path: '/responsabilidade-social'
+      fullPath: '/responsabilidade-social'
+      preLoaderRoute: typeof ResponsabilidadeSocialRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/seguranca-cibernetica': {
+      id: '/seguranca-cibernetica'
+      path: '/seguranca-cibernetica'
+      fullPath: '/seguranca-cibernetica'
+      preLoaderRoute: typeof SegurancaCiberneticaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/solucoes': {
@@ -198,10 +318,16 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AAtualRoute: AAtualRoute,
+  CanalDeDenunciasRoute: CanalDeDenunciasRoute,
+  CodigoDeCondutaRoute: CodigoDeCondutaRoute,
   ConteudoRoute: ConteudoRoute,
   CotacoesRoute: CotacoesRoute,
   EmpresasRoute: EmpresasRoute,
+  OuvidoriaRoute: OuvidoriaRoute,
+  PldFtRoute: PldFtRoute,
   PrivacidadeRoute: PrivacidadeRoute,
+  ResponsabilidadeSocialRoute: ResponsabilidadeSocialRoute,
+  SegurancaCiberneticaRoute: SegurancaCiberneticaRoute,
   SolucoesRoute: SolucoesRoute,
   TermosRoute: TermosRoute,
 }

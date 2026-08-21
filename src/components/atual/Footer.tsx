@@ -31,14 +31,20 @@ const columns = [
     ],
   },
   {
-    title: "Legal",
+    title: "Legal e compliance",
     items: [
-      { label: "Privacidade e LGPD", to: "/privacidade" },
+      { label: "Política de Privacidade", to: "/privacidade" },
       { label: "Termos de Uso", to: "/termos" },
-      { label: "Segurança e compliance", to: "/a-atual", hash: "seguranca" },
+      { label: "Código de Conduta", to: "/codigo-de-conduta" },
+      { label: "PLD/FT", to: "/pld-ft" },
+      { label: "Segurança cibernética", to: "/seguranca-cibernetica" },
+      { label: "Responsabilidade social (PRSAC)", to: "/responsabilidade-social" },
+      { label: "Ouvidoria", to: "/ouvidoria" },
+      { label: "Canal de denúncias", to: "/canal-de-denuncias" },
     ],
   },
 ];
+
 
 
 export function Footer() {
@@ -109,11 +115,18 @@ export function Footer() {
           <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs text-white/40">
             <span>© {new Date().getFullYear()} Atual Câmbio. Todos os direitos reservados.</span>
             <Link to="/privacidade" className="transition-colors hover:text-white">
-              Privacidade e LGPD
+              Privacidade
             </Link>
             <Link to="/termos" className="transition-colors hover:text-white">
               Termos de Uso
             </Link>
+            <Link to="/ouvidoria" className="transition-colors hover:text-white">
+              Ouvidoria
+            </Link>
+            <Link to="/canal-de-denuncias" className="transition-colors hover:text-white">
+              Canal de denúncias
+            </Link>
+
           </div>
 
         </div>

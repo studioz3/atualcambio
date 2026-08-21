@@ -2,12 +2,26 @@ import type { ReactNode } from "react";
 import { Container, Eyebrow, Section } from "./primitives";
 import { SpecialistCta } from "./blocks";
 
+export type LegalNode =
+  | { type: "p"; text: string }
+  | { type: "ul"; items: string[] };
+
 export type LegalBlock = {
   id: string;
   title: string;
-  paragraphs: string[];
+  /** Estrutura nova, fiel ao documento original */
+  body?: LegalNode[];
+  /** Estrutura legada */
+  paragraphs?: string[];
   items?: string[];
 };
+
+function toNodes(block: LegalBlock): LegalNode[] {
+  if (block.body) return block.body;
+  const nodes: LegalNode[] = (block.paragraphs ?? []).map((text) => ({ type: "p", text }) as const);
+  if (block.items?.length) nodes.push({ type: "ul", items: block.items });
+  return nodes;
+}
 
 export function LegalPage({
   eyebrow,
@@ -19,11 +33,13 @@ export function LegalPage({
 }: {
   eyebrow: string;
   title: string;
-  intro: string;
-  updatedNote: string;
+  intro: string | string[];
+  updatedNote?: string;
   blocks: LegalBlock[];
   footnote?: ReactNode;
 }) {
+  const introParagraphs = Array.isArray(intro) ? intro : [intro];
+
   return (
     <>
       <section className="surface-navy">
@@ -33,8 +49,12 @@ export function LegalPage({
             <h1 className="font-display mt-6 text-[32px] leading-[1.1] font-bold text-white md:text-[48px]">
               {title}
             </h1>
-            <p className="mt-6 text-lg leading-relaxed text-white/75">{intro}</p>
-            <p className="mt-6 text-xs text-white/45">{updatedNote}</p>
+            {introParagraphs.map((text) => (
+              <p key={text} className="mt-6 text-lg leading-relaxed text-white/75">
+                {text}
+              </p>
+            ))}
+            {updatedNote ? <p className="mt-6 text-xs text-white/45">{updatedNote}</p> : null}
           </div>
         </Container>
       </section>
@@ -61,23 +81,27 @@ export function LegalPage({
             {blocks.map((block) => (
               <article key={block.id} id={block.id} className="scroll-mt-28">
                 <h2 className="text-xl font-bold text-navy md:text-2xl">{block.title}</h2>
-                {block.paragraphs.map((text) => (
-                  <p key={text} className="mt-4 text-base leading-[1.65] text-muted-foreground">
-                    {text}
-                  </p>
-                ))}
-                {block.items ? (
-                  <ul className="mt-5 space-y-3">
-                    {block.items.map((item) => (
-                      <li
-                        key={item}
-                        className="border-l-2 border-gold/60 pl-4 text-sm leading-relaxed text-muted-foreground"
-                      >
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                ) : null}
+                {toNodes(block).map((node, i) =>
+                  node.type === "p" ? (
+                    <p
+                      key={`${block.id}-p-${i}`}
+                      className="mt-4 text-base leading-[1.65] text-muted-foreground"
+                    >
+                      {node.text}
+                    </p>
+                  ) : (
+                    <ul key={`${block.id}-ul-${i}`} className="mt-5 space-y-3">
+                      {node.items.map((item) => (
+                        <li
+                          key={item}
+                          className="border-l-2 border-gold/60 pl-4 text-sm leading-relaxed text-muted-foreground"
+                        >
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  ),
+                )}
               </article>
             ))}
 
