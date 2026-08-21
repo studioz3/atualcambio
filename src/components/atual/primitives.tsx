@@ -68,18 +68,15 @@ export function SectionHeading({
     <div className={cn("max-w-2xl", className)}>
       {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
       <h2
-        className={cn(
-          "mt-4 text-[28px] leading-[1.12] font-bold tracking-tight md:text-[40px]",
-          tone === "light-text" ? "text-white" : "text-navy",
-        )}
+        className={cn("display-h2 mt-4", tone === "light-text" ? "text-white" : "text-navy")}
       >
         {title}
       </h2>
       {description ? (
         <p
           className={cn(
-            "mt-5 text-base leading-[1.55] md:text-lg",
-            tone === "light-text" ? "text-white/72" : "text-muted-foreground",
+            "body-lg mt-6",
+            tone === "light-text" ? "text-white/80" : "text-muted-foreground",
           )}
         >
           {description}
