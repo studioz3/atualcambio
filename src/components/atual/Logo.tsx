@@ -1,8 +1,9 @@
 import { cn } from "@/lib/utils";
+import atualMarca from "@/assets/atual-marca.png.asset.json";
 
 export function Logo({
   className = "h-7 w-auto",
-  src = "/brand/logo-simple.svg",
+  src = atualMarca.url,
 }: {
   className?: string;
   src?: string;

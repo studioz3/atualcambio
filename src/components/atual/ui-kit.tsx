@@ -1,3 +1,5 @@
+import bancoCentral from "@/assets/banco-central.png.asset.json";
+import abracam from "@/assets/abracam.png.asset.json";
 import type { ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, ArrowUpRight, ShieldCheck, Smartphone } from "lucide-react";
@@ -314,12 +316,18 @@ export function ComplianceBlock({
           ))}
         </div>
       </div>
-      <div className="mt-14 flex flex-wrap items-center gap-8 border-t border-white/10 pt-10">
+      <div className="mt-14 flex flex-wrap items-center gap-10 border-t border-white/10 pt-10">
         <img
-          src="/brand/acreditacao.png"
-          alt="Associada à ABRACAM e autorizada pelo Banco Central do Brasil"
+          src={bancoCentral.url}
+          alt="Autorizada pelo Banco Central do Brasil"
           loading="lazy"
-          className="h-12 w-auto opacity-80"
+          className="block h-12 w-auto max-w-full shrink-0 object-contain opacity-90"
+        />
+        <img
+          src={abracam.url}
+          alt="Associada à ABRACAM"
+          loading="lazy"
+          className="block h-8 w-auto max-w-full shrink-0 object-contain opacity-90"
         />
       </div>
     </Section>
