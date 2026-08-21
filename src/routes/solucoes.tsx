@@ -65,11 +65,7 @@ function Solucoes() {
               >
                 Falar sobre {item.title.toLowerCase()}
               </ActionButton>
-              {item.id === "conta" ? (
-                <p className="mt-6 text-xs text-muted-foreground">
-                  [AGUARDANDO API ONZ] onboarding, deeplinks e telas reais do app.
-                </p>
-              ) : null}
+              {/* [AGUARDANDO API ONZ] onboarding, deeplinks e telas reais do app. */}
             </div>
           </div>
         </Section>

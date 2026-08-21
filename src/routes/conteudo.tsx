@@ -73,9 +73,7 @@ function Conteudo() {
           ))}
         </div>
 
-        <p className="mt-12 text-xs text-muted-foreground">
-          [AGUARDANDO VALIDAÇÃO] fonte de conteúdo (CMS ou API) e datas reais de publicação.
-        </p>
+        {/* [AGUARDANDO VALIDAÇÃO] fonte de conteúdo (CMS ou API) e datas reais de publicação. */}
       </Section>
 
       <SpecialistCta context="Conteúdo" />
