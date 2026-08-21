@@ -3,6 +3,7 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Section, SectionHeading, ActionButton, Eyebrow } from "./primitives";
 import { useLead } from "./LeadProvider";
 import { intents, faq, security, editorial } from "@/content/site";
+import { track } from "@/lib/analytics";
 import {
   Accordion,
   AccordionContent,
@@ -86,7 +87,9 @@ export function FaqSection() {
         <Accordion type="single" collapsible className="w-full">
           {faq.map((item) => (
             <AccordionItem key={item.q} value={item.q} className="border-b border-line">
-              <AccordionTrigger className="py-6 text-left text-base font-medium text-navy hover:no-underline">
+              <AccordionTrigger
+                onClick={() => track("faq_open", { pergunta: item.q })}
+                className="py-6 text-left text-base font-medium text-navy hover:no-underline">
                 {item.q}
               </AccordionTrigger>
               <AccordionContent className="pb-6 text-sm leading-relaxed text-muted-foreground">
