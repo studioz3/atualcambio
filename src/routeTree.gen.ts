@@ -19,6 +19,7 @@ import { Route as EmpresasRouteImport } from './routes/empresas'
 import { Route as OuvidoriaRouteImport } from './routes/ouvidoria'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as ResponsabilidadeSocialRouteImport } from './routes/responsabilidade-social'
+import { Route as SegurancaCiberneticaRouteImport } from './routes/seguranca-cibernetica'
 import { Route as SolucoesRouteImport } from './routes/solucoes'
 import { Route as TermosRouteImport } from './routes/termos'
 
@@ -72,6 +73,11 @@ const ResponsabilidadeSocialRoute = ResponsabilidadeSocialRouteImport.update({
   path: '/responsabilidade-social',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SegurancaCiberneticaRoute = SegurancaCiberneticaRouteImport.update({
+  id: '/seguranca-cibernetica',
+  path: '/seguranca-cibernetica',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SolucoesRoute = SolucoesRouteImport.update({
   id: '/solucoes',
   path: '/solucoes',
@@ -94,6 +100,7 @@ export interface FileRoutesByFullPath {
   '/ouvidoria': typeof OuvidoriaRoute
   '/privacidade': typeof PrivacidadeRoute
   '/responsabilidade-social': typeof ResponsabilidadeSocialRoute
+  '/seguranca-cibernetica': typeof SegurancaCiberneticaRoute
   '/solucoes': typeof SolucoesRoute
   '/termos': typeof TermosRoute
 }
@@ -108,6 +115,7 @@ export interface FileRoutesByTo {
   '/ouvidoria': typeof OuvidoriaRoute
   '/privacidade': typeof PrivacidadeRoute
   '/responsabilidade-social': typeof ResponsabilidadeSocialRoute
+  '/seguranca-cibernetica': typeof SegurancaCiberneticaRoute
   '/solucoes': typeof SolucoesRoute
   '/termos': typeof TermosRoute
 }
@@ -123,6 +131,7 @@ export interface FileRoutesById {
   '/ouvidoria': typeof OuvidoriaRoute
   '/privacidade': typeof PrivacidadeRoute
   '/responsabilidade-social': typeof ResponsabilidadeSocialRoute
+  '/seguranca-cibernetica': typeof SegurancaCiberneticaRoute
   '/solucoes': typeof SolucoesRoute
   '/termos': typeof TermosRoute
 }
@@ -139,6 +148,7 @@ export interface FileRouteTypes {
     | '/ouvidoria'
     | '/privacidade'
     | '/responsabilidade-social'
+    | '/seguranca-cibernetica'
     | '/solucoes'
     | '/termos'
   fileRoutesByTo: FileRoutesByTo
@@ -153,6 +163,7 @@ export interface FileRouteTypes {
     | '/ouvidoria'
     | '/privacidade'
     | '/responsabilidade-social'
+    | '/seguranca-cibernetica'
     | '/solucoes'
     | '/termos'
   id:
@@ -167,6 +178,7 @@ export interface FileRouteTypes {
     | '/ouvidoria'
     | '/privacidade'
     | '/responsabilidade-social'
+    | '/seguranca-cibernetica'
     | '/solucoes'
     | '/termos'
   fileRoutesById: FileRoutesById
@@ -182,6 +194,7 @@ export interface RootRouteChildren {
   OuvidoriaRoute: typeof OuvidoriaRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
   ResponsabilidadeSocialRoute: typeof ResponsabilidadeSocialRoute
+  SegurancaCiberneticaRoute: typeof SegurancaCiberneticaRoute
   SolucoesRoute: typeof SolucoesRoute
   TermosRoute: typeof TermosRoute
 }
@@ -258,6 +271,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResponsabilidadeSocialRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/seguranca-cibernetica': {
+      id: '/seguranca-cibernetica'
+      path: '/seguranca-cibernetica'
+      fullPath: '/seguranca-cibernetica'
+      preLoaderRoute: typeof SegurancaCiberneticaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/solucoes': {
       id: '/solucoes'
       path: '/solucoes'
@@ -286,6 +306,7 @@ const rootRouteChildren: RootRouteChildren = {
   OuvidoriaRoute: OuvidoriaRoute,
   PrivacidadeRoute: PrivacidadeRoute,
   ResponsabilidadeSocialRoute: ResponsabilidadeSocialRoute,
+  SegurancaCiberneticaRoute: SegurancaCiberneticaRoute,
   SolucoesRoute: SolucoesRoute,
   TermosRoute: TermosRoute,
 }
