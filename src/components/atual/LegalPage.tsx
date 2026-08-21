@@ -2,12 +2,26 @@ import type { ReactNode } from "react";
 import { Container, Eyebrow, Section } from "./primitives";
 import { SpecialistCta } from "./blocks";
 
+export type LegalNode =
+  | { type: "p"; text: string }
+  | { type: "ul"; items: string[] };
+
 export type LegalBlock = {
   id: string;
   title: string;
-  paragraphs: string[];
+  /** Estrutura nova, fiel ao documento original */
+  body?: LegalNode[];
+  /** Estrutura legada */
+  paragraphs?: string[];
   items?: string[];
 };
+
+function toNodes(block: LegalBlock): LegalNode[] {
+  if (block.body) return block.body;
+  const nodes: LegalNode[] = (block.paragraphs ?? []).map((text) => ({ type: "p", text }) as const);
+  if (block.items?.length) nodes.push({ type: "ul", items: block.items });
+  return nodes;
+}
 
 export function LegalPage({
   eyebrow,
@@ -19,11 +33,13 @@ export function LegalPage({
 }: {
   eyebrow: string;
   title: string;
-  intro: string;
-  updatedNote: string;
+  intro: string | string[];
+  updatedNote?: string;
   blocks: LegalBlock[];
   footnote?: ReactNode;
 }) {
+  const introParagraphs = Array.isArray(intro) ? intro : [intro];
+
   return (
     <>
       <section className="surface-navy">
