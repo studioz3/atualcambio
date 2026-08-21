@@ -276,8 +276,25 @@ function Home() {
               </a>
             </div>
           </div>
-          {/* Substitua por screenshots reais: <AppMockup screenshot={appScreenshot} /> */}
-          <AppMockup />
+          {/* Screenshots reais do app Atual */}
+          <div className="relative flex items-center justify-center gap-4 lg:gap-0">
+            <AppMockup
+              screenshot={appExtrato.url}
+              screenshotAlt="Extrato da Conta Atual no aplicativo"
+              className="hidden max-w-[210px] rotate-[-6deg] opacity-90 lg:block lg:-mr-16"
+            />
+            <AppMockup
+              screenshot={appInicio.url}
+              screenshotAlt="Tela inicial da Conta Atual com saldo e atalhos"
+              className="relative z-10 max-w-[250px] lg:max-w-[270px]"
+            />
+            <AppMockup
+              screenshot={appMercados.url}
+              screenshotAlt="Cotações de USDC e USDT no aplicativo Atual"
+              className="hidden max-w-[210px] rotate-[6deg] opacity-90 lg:block lg:-ml-16"
+            />
+          </div>
+
         </div>
       </Section>
 
