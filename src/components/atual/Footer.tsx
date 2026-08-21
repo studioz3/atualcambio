@@ -31,14 +31,20 @@ const columns = [
     ],
   },
   {
-    title: "Legal",
+    title: "Legal e compliance",
     items: [
-      { label: "Privacidade e LGPD", to: "/privacidade" },
+      { label: "Política de Privacidade", to: "/privacidade" },
       { label: "Termos de Uso", to: "/termos" },
-      { label: "Segurança e compliance", to: "/a-atual", hash: "seguranca" },
+      { label: "Código de Conduta", to: "/codigo-de-conduta" },
+      { label: "PLD/FT", to: "/pld-ft" },
+      { label: "Segurança cibernética", to: "/seguranca-cibernetica" },
+      { label: "Responsabilidade social (PRSAC)", to: "/responsabilidade-social" },
+      { label: "Ouvidoria", to: "/ouvidoria" },
+      { label: "Canal de denúncias", to: "/canal-de-denuncias" },
     ],
   },
 ];
+
 
 
 export function Footer() {
