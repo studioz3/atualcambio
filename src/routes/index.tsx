@@ -48,7 +48,8 @@ function Home() {
             <div className="max-w-xl">
               <Eyebrow>{brand.positioning}</Eyebrow>
               <h1 className="font-display mt-6 text-[40px] leading-[1.05] font-bold text-white md:text-[64px]">
-                Câmbio com autonomia digital e gente de verdade
+                Câmbio global,
+do seu jeito
               </h1>
               <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/75">{brand.valueProp}</p>
               <div className="mt-10 flex flex-wrap gap-3">

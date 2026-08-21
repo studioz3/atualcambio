@@ -1,11 +1,17 @@
-export function Logo({ className = "h-7 w-auto" }: { className?: string }) {
+export function Logo({
+  className = "h-7 w-auto",
+  src = "/brand/logo-simple.svg",
+}: {
+  className?: string;
+  src?: string;
+}) {
   return (
     <img
-      src="/brand/logo-v2.svg"
+      src={src}
       alt="Atual Câmbio"
       className={className}
-      width={1143}
-      height={142}
+      width={644}
+      height={118}
     />
   );
 }

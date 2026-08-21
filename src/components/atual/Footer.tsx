@@ -45,7 +45,7 @@ export function Footer() {
       <Container>
         <div className="relative grid gap-12 py-16 md:grid-cols-[1.2fr_2fr] md:py-24">
           <div>
-            <Logo className="h-6 w-auto" />
+            <Logo src="/brand/logo-v2.svg" className="h-6 w-auto" />
             <p className="font-display mt-6 max-w-xs text-lg leading-tight text-white">
               Se você pensa global, você é Atual.
             </p>

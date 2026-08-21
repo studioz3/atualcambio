@@ -69,7 +69,7 @@ export function SectionHeading({
       {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
       <h2
         className={cn(
-          "font-display mt-4 text-[28px] leading-[1.1] font-bold md:text-[40px]",
+          "mt-4 text-[28px] leading-[1.12] font-bold tracking-tight md:text-[40px]",
           tone === "light-text" ? "text-white" : "text-navy",
         )}
       >
