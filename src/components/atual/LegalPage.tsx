@@ -49,8 +49,12 @@ export function LegalPage({
             <h1 className="font-display mt-6 text-[32px] leading-[1.1] font-bold text-white md:text-[48px]">
               {title}
             </h1>
-            <p className="mt-6 text-lg leading-relaxed text-white/75">{intro}</p>
-            <p className="mt-6 text-xs text-white/45">{updatedNote}</p>
+            {introParagraphs.map((text) => (
+              <p key={text} className="mt-6 text-lg leading-relaxed text-white/75">
+                {text}
+              </p>
+            ))}
+            {updatedNote ? <p className="mt-6 text-xs text-white/45">{updatedNote}</p> : null}
           </div>
         </Container>
       </section>
