@@ -15,6 +15,7 @@ import { Header } from "@/components/atual/Header";
 import { Footer } from "@/components/atual/Footer";
 import { LeadProvider } from "@/components/atual/LeadProvider";
 import { Toaster } from "@/components/ui/sonner";
+import { CookieBanner } from "@/components/atual/CookieBanner";
 
 function NotFoundComponent() {
   return (
@@ -131,6 +132,7 @@ function RootComponent() {
           <Outlet />
         </main>
         <Footer />
+        <CookieBanner />
         <Toaster position="top-center" />
       </LeadProvider>
     </QueryClientProvider>

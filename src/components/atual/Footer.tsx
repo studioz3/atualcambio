@@ -35,6 +35,7 @@ const columns = [
     items: [
       { label: "Política de Privacidade", to: "/privacidade" },
       { label: "Termos de Uso", to: "/termos" },
+      { label: "Política de Cookies", to: "/cookies" },
       { label: "Código de Conduta", to: "/codigo-de-conduta" },
       { label: "PLD/FT", to: "/pld-ft" },
       { label: "Segurança cibernética", to: "/seguranca-cibernetica" },
