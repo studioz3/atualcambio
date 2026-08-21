@@ -116,7 +116,7 @@ export function CookieBanner() {
             type="button"
             data-event="cookies_aceitar_todos"
             onClick={() => save({ analytics: true, marketing: true })}
-            className="inline-flex min-h-12 items-center rounded-sm bg-gold px-6 text-sm font-semibold text-navy transition-opacity hover:opacity-90"
+            className="inline-flex min-h-12 items-center rounded-sm bg-gold px-6 text-sm font-semibold text-gold-foreground transition-opacity hover:opacity-90"
           >
             Aceitar todos
           </button>
