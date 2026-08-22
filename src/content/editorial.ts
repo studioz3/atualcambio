@@ -347,7 +347,390 @@ export const ctaStablecoins: ArticleCta = {
 
 const now = "2026-08-20T12:00:00.000Z";
 
+/** CTA editorial (sem oferta comercial) — leva à newsletter da própria editoria. */
+function ctaEditorial(id: EditoriaId): ArticleCta {
+  const nome = editoriaMap[id].name;
+  return {
+    title: `Acompanhe o ${nome}`,
+    description:
+      "Receba os próximos conteúdos desta editoria por e-mail. Sem oferta comercial: só conteúdo.",
+    label: `Acompanhe o ${nome}`,
+    to: `/newsletter?editoria=${id}`,
+  };
+}
+
 export const articles: Article[] = [
+  {
+    id: "ma-000",
+    editoria: "momento-atual",
+    categoria: "Editorial",
+    titulo: "O mundo muda antes da cotação",
+    slug: "o-mundo-muda-antes-da-cotacao",
+    subtitulo:
+      "Economia, política e mercados não acontecem em compartimentos separados. O Momento Atual nasce para conectar os fatos antes que eles cheguem às nossas decisões.",
+    resumo:
+      "O manifesto inaugural do Momento Atual: por que economia, política e mercados precisam ser lidos juntos — e o que isso muda nas decisões de quem vive em um mundo conectado.",
+    imagem_principal: maManifesto,
+    imagem_alt:
+      "Profissional lendo o caderno de mercados diante da vista de um centro financeiro ao entardecer",
+    conteudo: [
+      {
+        type: "paragrafo",
+        text: "Uma decisão tomada em Washington pode aparecer alguns minutos depois na cotação do dólar em São Paulo. Uma eleição pode alterar expectativas antes mesmo de alterar leis. Uma guerra a milhares de quilômetros pode mudar o preço de uma commodity, afetar empresas, pressionar inflação e chegar ao custo de vida de quem nunca acompanhou aquela região do mapa.",
+      },
+      {
+        type: "paragrafo",
+        text: "O mundo não avisa quando uma notícia deixa de ser apenas uma notícia e passa a afetar nossas escolhas. É exatamente nesse espaço que nasce o Momento Atual.",
+      },
+      {
+        type: "paragrafo",
+        text: "Não para prever o futuro. Não para transformar cada movimento de mercado em urgência. E muito menos para tentar explicar o mundo inteiro em uma manchete. O objetivo é outro: entender o que aconteceu, por que aconteceu e o que isso pode mudar.",
+      },
+      { type: "subtitulo", text: "Os acontecimentos estão conectados" },
+      {
+        type: "paragrafo",
+        text: "Durante muito tempo, economia parecia assunto de economista. Política, assunto de político. Mercado financeiro, assunto de investidor. Comércio exterior, assunto de grandes empresas. Tecnologia, assunto de especialistas. Essa divisão faz cada vez menos sentido.",
+      },
+      {
+        type: "lista",
+        items: [
+          "Uma decisão de juros nos Estados Unidos influencia fluxos internacionais de capital.",
+          "Uma mudança tecnológica pode alterar cadeias produtivas inteiras.",
+          "Uma nova regulamentação pode criar ou destruir mercados.",
+          "Uma eleição muda expectativas.",
+          "Uma crise diplomática pode afetar moedas, energia, alimentos e empresas.",
+        ],
+      },
+      {
+        type: "paragrafo",
+        text: "E tudo isso chega, cedo ou tarde, às decisões de pessoas comuns. Viajar ou esperar. Importar agora ou depois. Investir ou manter liquidez. Comprar um imóvel no exterior. Enviar recursos para um filho estudando em outro país. Planejar a expansão de uma empresa. Nenhuma dessas decisões acontece isoladamente. Existe sempre um contexto.",
+      },
+      { type: "subtitulo", text: "Informação não é previsão" },
+      {
+        type: "paragrafo",
+        text: "Existe uma enorme diferença entre tentar adivinhar o que vai acontecer e compreender os fatores que estão em movimento. O Momento Atual não nasce para dizer “o dólar vai subir” ou “o mercado vai cair”. Nasce para fazer perguntas melhores.",
+      },
+      {
+        type: "lista",
+        items: [
+          "O que mudou?",
+          "Por que o mercado reagiu?",
+          "Que forças estão atuando?",
+          "Quais cenários estão sendo considerados?",
+          "Quem pode ser afetado?",
+          "O que ainda não sabemos?",
+        ],
+      },
+      {
+        type: "citacao",
+        text: "Boa informação não elimina a incerteza. Ela torna a incerteza mais compreensível.",
+      },
+      { type: "subtitulo", text: "Menos ruído. Mais contexto." },
+      {
+        type: "paragrafo",
+        text: "Vivemos cercados de informação. O problema deixou de ser acesso. O problema passou a ser seleção. A mesma notícia aparece dezenas de vezes, muitas vezes sem explicar por que merece nossa atenção. Um indicador econômico pode gerar manchetes completamente diferentes dependendo de quem o interpreta. Um movimento de mercado pode ser transformado em euforia ou pânico em poucos minutos.",
+      },
+      {
+        type: "paragrafo",
+        text: "O Momento Atual quer ocupar outro lugar. O da informação que ajuda a organizar o cenário. Dados com fonte. Contexto histórico quando ele for necessário. Perspectivas diferentes quando houver debate. E a disposição de dizer: ainda é cedo para saber. Num mundo cheio de opiniões instantâneas, reconhecer os limites da informação também é uma forma de inteligência.",
+      },
+      { type: "subtitulo", text: "Economia é uma história sobre pessoas" },
+      {
+        type: "paragrafo",
+        text: "Por trás de juros, moedas, inflação e índices existem decisões humanas. Famílias tentando organizar o orçamento. Empresas escolhendo onde investir. Governos definindo prioridades. Empreendedores assumindo riscos. Pessoas mudando de país. Investidores buscando proteção. Profissionais tentando compreender como uma transformação global pode afetar sua carreira.",
+      },
+      {
+        type: "paragrafo",
+        text: "Por isso, queremos falar de economia sem tratá-la apenas como uma coleção de números. E falar de política sem reduzi-la à disputa política. O que nos interessa é a consequência. A conexão entre o fato e a vida real.",
+      },
+      { type: "subtitulo", text: "O que você vai encontrar aqui" },
+      {
+        type: "paragrafo",
+        text: "O Momento Atual vai acompanhar temas como economia global, câmbio, juros, inflação, empresas, tecnologia, comércio internacional, política econômica, geopolítica, regulação e transformações de mercado.",
+      },
+      {
+        type: "paragrafo",
+        text: "Algumas vezes, uma notícia exigirá um texto longo. Em outras, um gráfico explicará melhor. Às vezes será necessário ouvir um especialista. Em outras, bastará mostrar um número que passou despercebido. O formato muda. O compromisso não: informação para decidir com contexto.",
+      },
+      { type: "subtitulo", text: "Porque o mundo não espera" },
+      {
+        type: "paragrafo",
+        text: "As decisões acontecem mesmo quando não temos todas as respostas. O empresário precisa decidir. O investidor precisa avaliar. A família precisa planejar. O viajante precisa organizar a viagem. Quem vive em um mundo conectado precisa entender um pouco mais do que acontece fora da própria rotina.",
+      },
+      {
+        type: "paragrafo",
+        text: "Não para viver preocupado com cada notícia. Mas para reconhecer aquelas que realmente importam. É essa a proposta do Momento Atual. Observar o mundo. Conectar os fatos. Separar sinal de ruído. E ajudar você a entender o presente antes de tomar a próxima decisão.",
+      },
+      { type: "citacao", text: "Momento Atual. Informação para decidir com contexto." },
+    ],
+    autor: "Redação Atual",
+    data: "2026-08-22T09:00:00.000Z",
+    fonte: [],
+    video_url: null,
+    audio_url: null,
+    imagem_social: null,
+    seo_title: "O mundo muda antes da cotação | Momento Atual",
+    meta_description:
+      "O Momento Atual nasce para conectar economia, política e mercados e explicar por que os acontecimentos do mundo importam para nossas decisões.",
+    cta: ctaEditorial("momento-atual"),
+    destaque: true,
+    status: "publicado",
+    created_at: now,
+    updated_at: now,
+  },
+  {
+    id: "cw-000",
+    editoria: "cripto-wine",
+    categoria: "Manifesto",
+    titulo: "O futuro também envelhece em barris",
+    slug: "o-futuro-tambem-envelhece-em-barris",
+    subtitulo:
+      "Um universo fala de terroir, safra e tradição. O outro, de blockchain, dados e transformação. O Cripto Wine nasce justamente onde esses mundos começam a se encontrar.",
+    resumo:
+      "O manifesto inaugural do Cripto Wine: o que acontece quando vinho, tecnologia, cultura e mercado sentam à mesma mesa.",
+    imagem_principal: cwManifesto,
+    imagem_alt: "Produtor e enóloga conferindo barris de carvalho em uma adega iluminada",
+    conteudo: [
+      {
+        type: "paragrafo",
+        text: "Um bom vinho pode levar décadas para alcançar seu melhor momento. A tecnologia, ao contrário, parece envelhecer em meses. Um universo respeita o tempo. O outro tenta acelerá-lo.",
+      },
+      {
+        type: "paragrafo",
+        text: "Um fala de solo, clima, safra, produtores e tradição. O outro fala de blockchain, inteligência artificial, rastreabilidade, tokens e redes digitais. À primeira vista, vinho e tecnologia parecem pertencer a mundos completamente diferentes. Mas basta olhar um pouco mais de perto. Os dois falam de algo parecido: valor.",
+      },
+      { type: "subtitulo", text: "O que torna alguma coisa valiosa?" },
+      {
+        type: "paragrafo",
+        text: "No vinho, valor pode nascer de uma combinação quase impossível de reproduzir. Uma região específica. Uma safra excepcional. Um produtor. Uma história. Poucas garrafas. Décadas de reputação.",
+      },
+      {
+        type: "lista",
+        items: [
+          "Quem garante a autenticidade?",
+          "Como provar a origem?",
+          "Como registrar uma transação?",
+          "Como criar confiança entre pessoas que não se conhecem?",
+          "Como transformar algo físico em informação verificável?",
+        ],
+      },
+      {
+        type: "paragrafo",
+        text: "São perguntas diferentes. Mas existe uma palavra comum entre elas: confiança.",
+      },
+      { type: "subtitulo", text: "A tecnologia já entrou na adega" },
+      {
+        type: "paragrafo",
+        text: "Talvez ainda não percebamos, mas a indústria do vinho é também uma indústria de tecnologia. Sensores ajudam produtores a compreender solo e clima. Dados orientam decisões no campo. Inteligência artificial começa a participar de processos de produção, distribuição e recomendação. Blockchain é estudado como ferramenta de rastreabilidade. Novas plataformas mudam a maneira como vinhos são comercializados. Mercados internacionais conectam consumidores a pequenos produtores que antes dependiam de estruturas tradicionais de distribuição.",
+      },
+      {
+        type: "paragrafo",
+        text: "Até a velha pergunta — “Essa garrafa é realmente o que diz ser?” — ganha novas respostas. A tecnologia não elimina tradição. Em muitos casos, pode ajudá-la a sobreviver.",
+      },
+      { type: "subtitulo", text: "O vinho também é um mercado global" },
+      {
+        type: "paragrafo",
+        text: "Uma garrafa pode nascer na Borgonha, ser comprada por um distribuidor em Londres, passar por um armazém na Bélgica e terminar numa mesa em São Paulo. No caminho existem moedas, impostos, logística, regulação, seguros, armazenamento, comércio internacional e decisões de preço. Por trás da experiência romântica de abrir uma garrafa existe uma cadeia econômica sofisticada.",
+      },
+      {
+        type: "paragrafo",
+        text: "É também por isso que o vinho é tão interessante. Ele pode ser agricultura. Pode ser cultura. Pode ser luxo. Pode ser gastronomia. Pode ser turismo. Pode ser colecionismo. Pode ser negócio. E, em alguns casos, pode até ser ativo. Essa multiplicidade faz dele um ponto de encontro extraordinário para conversas sobre o mundo.",
+      },
+      { type: "subtitulo", text: "E onde entra o “Cripto”?" },
+      {
+        type: "paragrafo",
+        text: "Não queremos transformar vinho em criptomoeda. Nem transformar cada garrafa em um investimento. O nome Cripto Wine nasce de uma provocação: o que acontece quando colocamos tradição e futuro na mesma mesa?",
+      },
+      {
+        type: "lista",
+        items: [
+          "Blockchain e autenticidade",
+          "Tecnologia e produção",
+          "Rastreabilidade e novos modelos de distribuição",
+          "Mercado global e tokenização",
+          "Colecionismo, comportamento, marcas e luxo",
+          "Cultura, viagens, negócios — e, claro, vinho",
+        ],
+      },
+      {
+        type: "paragrafo",
+        text: "Mas sem tratar tecnologia como solução mágica. E sem tratar tradição como algo intocável.",
+      },
+      { type: "subtitulo", text: "Conversas que não cabem numa categoria" },
+      {
+        type: "paragrafo",
+        text: "Algumas das histórias mais interessantes acontecem justamente nas fronteiras. Um produtor centenário adotando inteligência artificial. Uma startup tentando combater falsificações de grandes rótulos. Um jovem enólogo recuperando uma variedade esquecida. Uma região tradicional tentando sobreviver às mudanças climáticas. Uma plataforma conectando pequenos produtores diretamente a consumidores do outro lado do mundo. Uma garrafa histórica batendo recordes num leilão.",
+      },
+      {
+        type: "paragrafo",
+        text: "Uma tecnologia nova tentando responder a uma pergunta tão antiga quanto o comércio: como sabemos que algo é autêntico? É nesse território que queremos estar.",
+      },
+      { type: "subtitulo", text: "Pessoas antes de tendências" },
+      {
+        type: "paragrafo",
+        text: "Apesar do nome, o Cripto Wine não será um programa sobre tecnologia. Nem apenas sobre vinho. Será principalmente sobre pessoas: produtores, enólogos, empreendedores, pesquisadores, colecionadores, chefs, sommeliers, criadores e investidores. Pessoas que estão transformando mercados, preservando tradições ou simplesmente fazendo perguntas interessantes.",
+      },
+      {
+        type: "paragrafo",
+        text: "Porque inovação sem história raramente produz uma boa conversa. E tradição sem curiosidade corre o risco de virar apenas nostalgia.",
+      },
+      { type: "subtitulo", text: "Uma mesa aberta" },
+      {
+        type: "paragrafo",
+        text: "O vinho sempre teve esse poder: colocar pessoas diferentes ao redor da mesma mesa. Talvez seja justamente por isso que ele seja um bom ponto de partida para discutir mudanças tão grandes. Não queremos decidir se o futuro será melhor que o passado. Queremos descobrir o que acontece quando os dois se encontram. Com uma garrafa aberta. Algumas perguntas. E disposição para conversar.",
+      },
+      {
+        type: "citacao",
+        text: "Cripto Wine. Onde vinho, tecnologia, cultura e mercado se encontram — quando tradição e futuro sentam à mesma mesa.",
+      },
+    ],
+    autor: "Redação Atual",
+    data: "2026-08-22T09:00:00.000Z",
+    fonte: [],
+    video_url: null,
+    audio_url: null,
+    imagem_social: null,
+    seo_title: "O futuro também envelhece em barris | Cripto Wine",
+    meta_description:
+      "Vinho, tecnologia, cultura e mercado se encontram no manifesto inaugural do Cripto Wine.",
+    cta: ctaEditorial("cripto-wine"),
+    destaque: true,
+    status: "publicado",
+    created_at: now,
+    updated_at: now,
+  },
+  {
+    id: "va-000",
+    editoria: "vida-atual",
+    categoria: "Manifesto",
+    titulo: "Viver melhor também é estar atualizado",
+    slug: "viver-melhor-tambem-e-estar-atualizado",
+    subtitulo:
+      "Nunca tivemos tantos dados sobre saúde, sono, alimentação, movimento e longevidade. E talvez nunca tenha sido tão difícil separar o que realmente importa.",
+    resumo:
+      "O manifesto inaugural do Vida Atual: wellness, longevidade, comportamento e tecnologia sem promessas fáceis.",
+    imagem_principal: vaManifesto,
+    imagem_alt: "Pessoas de idades diferentes caminhando e se alongando em um parque pela manhã",
+    conteudo: [
+      {
+        type: "paragrafo",
+        text: "Quantos passos você deu hoje? Quanto tempo dormiu? Qual foi sua frequência cardíaca? Quanto tempo passou sentado? Como está sua alimentação? Quando foi sua última atividade física?",
+      },
+      {
+        type: "paragrafo",
+        text: "Nunca soubemos tanto sobre o próprio corpo. Relógios medem. Aplicativos registram. Pesquisas avançam. Novas dietas aparecem. Novos tratamentos surgem. Novas promessas também.",
+      },
+      {
+        type: "paragrafo",
+        text: "O paradoxo é evidente: quanto mais informação temos sobre como viver melhor, mais difícil parece saber em que informação confiar. É desse paradoxo que nasce o Vida Atual.",
+      },
+      { type: "subtitulo", text: "Wellness virou uma indústria" },
+      {
+        type: "paragrafo",
+        text: "Durante muito tempo, saúde significava principalmente ausência de doença. Hoje, a conversa é muito maior: sono, movimento, alimentação, saúde mental, longevidade, relacionamentos, trabalho, estresse, tecnologia e qualidade de vida.",
+      },
+      {
+        type: "paragrafo",
+        text: "Um mercado inteiro surgiu ao redor dessas preocupações. Aplicativos, wearables, academias, suplementos, clínicas, terapias, alimentos funcionais, programas de longevidade, retiros e plataformas de saúde. Novos negócios aparecem praticamente todos os dias prometendo ajudar alguém a viver melhor. Alguns representam avanços reais. Outros representam apenas uma nova embalagem para ideias antigas. Saber distinguir uma coisa da outra tornou-se parte do desafio.",
+      },
+      { type: "subtitulo", text: "Viver mais não é a única questão" },
+      {
+        type: "paragrafo",
+        text: "A ciência permitiu ampliar significativamente a expectativa de vida em muitas partes do mundo. Mas uma nova pergunta ganhou importância: como queremos viver esses anos adicionais?",
+      },
+      {
+        type: "lista",
+        items: [
+          "Mobilidade e autonomia",
+          "Cognição e saúde emocional",
+          "Relações sociais e propósito",
+          "Qualidade do sono e capacidade física",
+        ],
+      },
+      { type: "citacao", text: "Não basta viver mais. Queremos viver melhor." },
+      { type: "subtitulo", text: "Tecnologia pode ajudar. Mas não resolve tudo." },
+      {
+        type: "paragrafo",
+        text: "O relógio pode dizer que você dormiu seis horas. Ele não consegue organizar sua rotina por você. Um aplicativo pode contar seus passos. Ele não faz você caminhar. Uma ferramenta pode medir sua frequência cardíaca. Ela não substitui um profissional de saúde quando há um problema. Inteligência artificial pode ampliar o acesso à informação. Mas informação sem contexto também pode confundir.",
+      },
+      {
+        type: "paragrafo",
+        text: "O Vida Atual quer olhar para tecnologia com curiosidade, não com deslumbramento. Perguntar: isso realmente melhora a vida? Para quem? Com qual evidência? Com quais limitações?",
+      },
+      { type: "subtitulo", text: "Menos promessa. Mais contexto." },
+      {
+        type: "paragrafo",
+        text: "O universo do wellness é especialmente fértil em soluções definitivas. A dieta definitiva. O suplemento definitivo. O treino definitivo. O hábito que “muda tudo”. A rotina perfeita. O segredo da longevidade.",
+      },
+      {
+        type: "paragrafo",
+        text: "A realidade costuma ser menos espetacular. O corpo humano é complexo. Pessoas são diferentes. Contextos são diferentes. E ciência raramente cabe numa legenda. Por isso, queremos evitar certezas fáceis. Quando houver pesquisa, queremos entender a pesquisa. Quando houver tendência, queremos entender de onde ela veio. Quando houver especialista, queremos saber sua área. Quando houver dúvida, queremos dizer que existe dúvida.",
+      },
+      { type: "subtitulo", text: "Saúde é também comportamento" },
+      {
+        type: "paragrafo",
+        text: "Sabemos muito sobre o que seria bom fazer: dormir melhor, mover o corpo, comer de forma equilibrada, diminuir o estresse, construir relações. Mas saber não significa fazer. É aí que comportamento se torna tão interessante quanto biologia.",
+      },
+      {
+        type: "lista",
+        items: [
+          "Por que criamos hábitos? Por que abandonamos alguns?",
+          "Por que uma tecnologia ajuda uma pessoa e atrapalha outra?",
+          "Como o ambiente influencia nossas escolhas?",
+          "O que trabalho, cidades, telas e redes sociais estão fazendo com nossa qualidade de vida?",
+        ],
+      },
+      {
+        type: "paragrafo",
+        text: "São questões de saúde. Mas também são questões culturais, econômicas e sociais.",
+      },
+      { type: "subtitulo", text: "O mundo também muda a maneira como vivemos" },
+      {
+        type: "paragrafo",
+        text: "Trabalho remoto. Inteligência artificial. Envelhecimento populacional. Mudanças nas cidades. Novos modelos de família. Viagens. Mudanças climáticas. Novos medicamentos. Novos alimentos. Novas formas de exercício. A vida contemporânea está transformando aquilo que entendemos por bem-estar.",
+      },
+      {
+        type: "paragrafo",
+        text: "Por isso o nome: Vida Atual. Não porque exista uma maneira “moderna” correta de viver. Mas porque entender o nosso tempo ajuda a entender algumas das escolhas que fazemos dentro dele.",
+      },
+      { type: "subtitulo", text: "O que queremos investigar" },
+      {
+        type: "paragrafo",
+        text: "O Vida Atual vai acompanhar temas como wellness, longevidade, movimento, sono, alimentação, saúde mental, comportamento, tecnologia, trabalho, qualidade de vida, envelhecimento e tendências internacionais.",
+      },
+      {
+        type: "paragrafo",
+        text: "Sempre com um princípio importante: o conteúdo editorial não substitui orientação profissional individual. Nosso papel é ajudar a compreender ideias, pesquisas, tendências e mudanças. Não diagnosticar. Não prescrever. Não vender soluções milagrosas.",
+      },
+      { type: "subtitulo", text: "Estar atualizado não significa correr atrás de tudo" },
+      {
+        type: "paragrafo",
+        text: "Talvez essa seja a ideia mais importante deste projeto. Ser atual não é adotar cada novidade. Não é comprar cada tecnologia. Não é seguir cada tendência. Às vezes, estar atualizado significa justamente saber o que ignorar. Entender melhor. Escolher melhor. Fazer perguntas melhores.",
+      },
+      {
+        type: "paragrafo",
+        text: "E reconhecer que algumas das coisas mais importantes para a qualidade de vida continuam surpreendentemente simples: movimento, sono, relações, tempo, natureza e propósito. O futuro certamente vai trazer novas ferramentas. Mas nossa pergunta continuará sendo a mesma: isso nos ajuda a viver melhor?",
+      },
+      {
+        type: "citacao",
+        text: "Vida Atual. Informação para viver melhor em um mundo que muda rápido.",
+      },
+    ],
+    autor: "Redação Atual",
+    data: "2026-08-22T09:00:00.000Z",
+    fonte: [],
+    video_url: null,
+    audio_url: null,
+    imagem_social: null,
+    seo_title: "Viver melhor também é estar atualizado | Vida Atual",
+    meta_description:
+      "O manifesto inaugural do Vida Atual sobre wellness, longevidade, comportamento, tecnologia e qualidade de vida.",
+    cta: ctaEditorial("vida-atual"),
+    destaque: true,
+    status: "publicado",
+    created_at: now,
+    updated_at: now,
+  },
   {
     id: "ma-001",
     editoria: "momento-atual",
