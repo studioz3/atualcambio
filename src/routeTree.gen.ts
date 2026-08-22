@@ -22,6 +22,7 @@ import { Route as OuvidoriaRouteImport } from './routes/ouvidoria'
 import { Route as PldFtRouteImport } from './routes/pld-ft'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as ResponsabilidadeSocialRouteImport } from './routes/responsabilidade-social'
+import { Route as SegurancaRouteImport } from './routes/seguranca'
 import { Route as SegurancaCiberneticaRouteImport } from './routes/seguranca-cibernetica'
 import { Route as SolucoesRouteImport } from './routes/solucoes'
 import { Route as StablecoinsRouteImport } from './routes/stablecoins'
@@ -92,6 +93,11 @@ const ResponsabilidadeSocialRoute = ResponsabilidadeSocialRouteImport.update({
   path: '/responsabilidade-social',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SegurancaRoute = SegurancaRouteImport.update({
+  id: '/seguranca',
+  path: '/seguranca',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SegurancaCiberneticaRoute = SegurancaCiberneticaRouteImport.update({
   id: '/seguranca-cibernetica',
   path: '/seguranca-cibernetica',
@@ -127,6 +133,7 @@ export interface FileRoutesByFullPath {
   '/pld-ft': typeof PldFtRoute
   '/privacidade': typeof PrivacidadeRoute
   '/responsabilidade-social': typeof ResponsabilidadeSocialRoute
+  '/seguranca': typeof SegurancaRoute
   '/seguranca-cibernetica': typeof SegurancaCiberneticaRoute
   '/solucoes': typeof SolucoesRoute
   '/stablecoins': typeof StablecoinsRoute
@@ -146,6 +153,7 @@ export interface FileRoutesByTo {
   '/pld-ft': typeof PldFtRoute
   '/privacidade': typeof PrivacidadeRoute
   '/responsabilidade-social': typeof ResponsabilidadeSocialRoute
+  '/seguranca': typeof SegurancaRoute
   '/seguranca-cibernetica': typeof SegurancaCiberneticaRoute
   '/solucoes': typeof SolucoesRoute
   '/stablecoins': typeof StablecoinsRoute
@@ -166,6 +174,7 @@ export interface FileRoutesById {
   '/pld-ft': typeof PldFtRoute
   '/privacidade': typeof PrivacidadeRoute
   '/responsabilidade-social': typeof ResponsabilidadeSocialRoute
+  '/seguranca': typeof SegurancaRoute
   '/seguranca-cibernetica': typeof SegurancaCiberneticaRoute
   '/solucoes': typeof SolucoesRoute
   '/stablecoins': typeof StablecoinsRoute
@@ -187,6 +196,7 @@ export interface FileRouteTypes {
     | '/pld-ft'
     | '/privacidade'
     | '/responsabilidade-social'
+    | '/seguranca'
     | '/seguranca-cibernetica'
     | '/solucoes'
     | '/stablecoins'
@@ -206,6 +216,7 @@ export interface FileRouteTypes {
     | '/pld-ft'
     | '/privacidade'
     | '/responsabilidade-social'
+    | '/seguranca'
     | '/seguranca-cibernetica'
     | '/solucoes'
     | '/stablecoins'
@@ -225,6 +236,7 @@ export interface FileRouteTypes {
     | '/pld-ft'
     | '/privacidade'
     | '/responsabilidade-social'
+    | '/seguranca'
     | '/seguranca-cibernetica'
     | '/solucoes'
     | '/stablecoins'
@@ -245,6 +257,7 @@ export interface RootRouteChildren {
   PldFtRoute: typeof PldFtRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
   ResponsabilidadeSocialRoute: typeof ResponsabilidadeSocialRoute
+  SegurancaRoute: typeof SegurancaRoute
   SegurancaCiberneticaRoute: typeof SegurancaCiberneticaRoute
   SolucoesRoute: typeof SolucoesRoute
   StablecoinsRoute: typeof StablecoinsRoute
@@ -344,6 +357,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResponsabilidadeSocialRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/seguranca': {
+      id: '/seguranca'
+      path: '/seguranca'
+      fullPath: '/seguranca'
+      preLoaderRoute: typeof SegurancaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/seguranca-cibernetica': {
       id: '/seguranca-cibernetica'
       path: '/seguranca-cibernetica'
@@ -389,6 +409,7 @@ const rootRouteChildren: RootRouteChildren = {
   PldFtRoute: PldFtRoute,
   PrivacidadeRoute: PrivacidadeRoute,
   ResponsabilidadeSocialRoute: ResponsabilidadeSocialRoute,
+  SegurancaRoute: SegurancaRoute,
   SegurancaCiberneticaRoute: SegurancaCiberneticaRoute,
   SolucoesRoute: SolucoesRoute,
   StablecoinsRoute: StablecoinsRoute,
