@@ -79,6 +79,22 @@ export const ANALYTICS_EVENTS = [
   "about_specialist_click",
   "about_content_click",
   "about_open_account_click",
+  "contact_page_view",
+  "contact_commercial_click",
+  "contact_whatsapp_click",
+  "contact_phone_click",
+  "contact_email_click",
+  "contact_ombudsman_click",
+  "contact_whistleblower_click",
+  "contact_security_click",
+  "specialist_page_view",
+  "specialist_customer_type",
+  "specialist_subject_selected",
+  "specialist_form_start",
+  "specialist_form_step_2",
+  "specialist_form_complete",
+  "specialist_lead_saved",
+  "specialist_whatsapp_click",
 ] as const;
 
 export type AnalyticsEvent = (typeof ANALYTICS_EVENTS)[number];

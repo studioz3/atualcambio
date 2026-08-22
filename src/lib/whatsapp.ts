@@ -48,6 +48,9 @@ export function getUtm() {
     utm_source: pick("utm_source"),
     utm_medium: pick("utm_medium"),
     utm_campaign: pick("utm_campaign"),
+    utm_content: pick("utm_content"),
+    utm_term: pick("utm_term"),
+    referrer: (document.referrer || undefined)?.slice(0, 500),
     dispositivo: getDevice(),
     timestamp: new Date().toISOString(),
   };
