@@ -8,6 +8,7 @@ import {
   type Article,
   type Editoria,
   type EditorialTone,
+  type EditorialSection,
   editoriaMap,
   formatDate,
 } from "@/content/editorial";
@@ -458,5 +459,76 @@ export function NewsletterCallout({ editoria }: { editoria?: Editoria }) {
         </div>
       </Container>
     </section>
+  );
+}
+
+/* ---------- Blocos conceituais de uma editoria ---------- */
+export function EditorialSections({
+  sections,
+  dark = false,
+}: {
+  sections: EditorialSection[];
+  dark?: boolean;
+}) {
+  return (
+    <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {sections.map((s) => (
+        <article
+          key={s.id}
+          className={cn(
+            "group flex flex-col overflow-hidden rounded-xl border",
+            dark ? "border-white/12 bg-white/[0.04]" : "border-line bg-offwhite",
+          )}
+        >
+          {s.image ? (
+            <div className="relative overflow-hidden">
+              <img
+                src={s.image}
+                alt={s.imageAlt ?? ""}
+                width={1408}
+                height={1056}
+                loading="lazy"
+                className="aspect-[16/10] w-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
+              />
+              <span className="absolute top-4 left-4 rounded-full bg-black/70 px-3 py-1 text-[10px] font-semibold tracking-[0.14em] text-gold uppercase">
+                Em breve
+              </span>
+            </div>
+          ) : (
+            <div
+              className={cn(
+                "flex aspect-[16/10] flex-col justify-between p-7",
+                dark
+                  ? "bg-[linear-gradient(140deg,rgba(255,255,255,0.10),rgba(255,255,255,0))]"
+                  : "bg-[linear-gradient(140deg,rgba(1,24,58,0.07),rgba(1,24,58,0))]",
+              )}
+            >
+              <span className="text-[10px] font-semibold tracking-[0.14em] text-gold uppercase">
+                Em breve
+              </span>
+              <span
+                className={cn(
+                  "font-display text-3xl leading-[1.05] font-bold tracking-[-0.02em]",
+                  dark ? "text-white/25" : "text-navy/20",
+                )}
+              >
+                {s.label}
+              </span>
+            </div>
+          )}
+          <div className="flex flex-1 flex-col p-7">
+            <h3 className={cn("display-h4", dark ? "text-white" : "text-navy")}>{s.title}</h3>
+            <p
+              className={cn(
+                "mt-3 text-sm leading-relaxed",
+                dark ? "text-white/70" : "text-muted-foreground",
+              )}
+            >
+              {s.description}
+            </p>
+          </div>
+        </article>
+      ))}
+    </div>
   );
 }
