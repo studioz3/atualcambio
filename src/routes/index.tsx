@@ -26,6 +26,8 @@ import {
 } from "@/components/atual/ui-kit";
 import { FaqSection } from "@/components/atual/blocks";
 import { QuoteBoard } from "@/components/atual/QuoteBoard";
+import { StoreBadges } from "@/components/atual/StoreBadges";
+
 import { useLead } from "@/components/atual/LeadProvider";
 import { track } from "@/lib/analytics";
 import { brand, pillars, security, editorial, links } from "@/content/site";

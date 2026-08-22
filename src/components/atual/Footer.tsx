@@ -58,11 +58,8 @@ const columns: { title: string; items: FooterLink[] }[] = [
   },
 ];
 
-const appLinks = [
-  { label: "Google Play", href: links.googlePlay, event: "google_play_click" },
-  { label: "App Store", href: links.appStore, event: "app_store_click" },
-  { label: "Acessar conta", href: links.account, event: "login_click" },
-];
+const appLinks = [{ label: "Acessar conta", href: links.account, event: "login_click" }];
+
 
 export function Footer() {
   return (
