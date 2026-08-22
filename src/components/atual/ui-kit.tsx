@@ -83,8 +83,12 @@ export function Hero({
       <Container>
         <div className="relative grid gap-12 py-20 md:py-28 lg:min-h-[680px] lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:py-36">
           <div className="max-w-2xl">
-            {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
-            <h1 className="display-hero mt-7 text-white">{title}</h1>
+            {eyebrow ? (
+              <p className="font-display text-sm font-bold tracking-[0.01em] text-gold sm:text-base">
+                {eyebrow}
+              </p>
+            ) : null}
+            <h1 className="display-hero mt-6 text-white lg:whitespace-nowrap">{title}</h1>
             <p className="body-lg mt-8 max-w-xl text-white/85">{description}</p>
             {primary || secondary ? (
               <div className="mt-12 flex flex-wrap gap-4">
