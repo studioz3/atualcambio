@@ -121,11 +121,32 @@ function Conteudo() {
         </Section>
       ) : null}
 
+      <section className="surface-navy border-b border-white/10 py-12 md:py-16">
+        <Container>
+          <p className="font-display text-xs font-bold tracking-[0.14em] text-gold uppercase">
+            Três editorias
+          </p>
+          <div className="mt-8 grid gap-8 md:grid-cols-3">
+            {editorias.map((e) => (
+              <a
+                key={e.id}
+                href={`#${e.id}`}
+                className="group border-t border-white/15 pt-5 transition-colors hover:border-gold"
+              >
+                <h2 className="display-h4 text-white group-hover:text-gold">{e.name}</h2>
+                <p className="mt-2 text-sm leading-relaxed text-white/70">{e.shortDescription}</p>
+              </a>
+            ))}
+          </div>
+        </Container>
+      </section>
+
       {editorias.map((editoria, i) => (
         <EditoriaBlock
           key={editoria.id}
           editoria={editoria}
           articles={publishedArticles(editoria.id)}
+          index={i}
           reverse={i % 2 === 1}
         />
       ))}
