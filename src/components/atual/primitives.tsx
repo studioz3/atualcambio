@@ -25,7 +25,7 @@ export function Section({
   id,
 }: {
   children: ReactNode;
-  tone?: "light" | "offwhite" | "navy";
+  tone?: "light" | "offwhite" | "navy" | "ink";
   className?: string;
   id?: string;
 }) {
@@ -34,6 +34,7 @@ export function Section({
       id={id}
       className={cn(
         "section-y",
+        tone === "ink" && "surface-ink",
         tone === "navy" && "surface-navy",
         tone === "offwhite" && "surface-offwhite",
         tone === "light" && "bg-background text-graphite",

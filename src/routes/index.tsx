@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import heroAsset from "@/assets/hero-banner-2.jpg.asset.json";
-import appMao from "@/assets/app-mao.png.asset.json";
+import appMao from "@/assets/app-mao-2.png.asset.json";
 
 import especialistaImg from "@/assets/card-especialista.jpg";
 import cardEmpresas from "@/assets/card-empresas.jpg";
@@ -231,7 +231,7 @@ function Home() {
       </Section>
 
       {/* Conta Atual */}
-      <Section tone="navy" id="conta-atual">
+      <Section tone="ink" id="conta-atual">
         <div className="grid items-center gap-14 lg:grid-cols-[1.1fr_0.9fr]">
           <div>
             <SectionHeading
@@ -283,7 +283,7 @@ function Home() {
               src={appMao.url}
               alt="Mão segurando smartphone com a Conta Atual aberta"
               loading="lazy"
-              className="h-auto w-[145%] max-w-none object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.45)] sm:w-[125%] lg:my-[-18%] lg:w-[210%] lg:-mr-[24vw]"
+              className="h-auto w-[125%] max-w-none object-contain sm:w-[110%] lg:my-[-14%] lg:w-[150%] lg:-mr-[12vw]"
             />
           </div>
 
