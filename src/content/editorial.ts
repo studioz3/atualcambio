@@ -17,6 +17,12 @@ import edtVidaAtual from "@/assets/edt-vida-atual.jpg";
 import editorial1 from "@/assets/editorial-1.jpg";
 import editorial2 from "@/assets/editorial-2.jpg";
 import editorial3 from "@/assets/editorial-3.jpg";
+import cwPodcast from "@/assets/cw-podcast.jpg";
+import cwTecnologia from "@/assets/cw-tecnologia.jpg";
+import cwCultura from "@/assets/cw-cultura.jpg";
+import vaMovimento from "@/assets/va-movimento.jpg";
+import vaLongevidade from "@/assets/va-longevidade.jpg";
+import vaComportamento from "@/assets/va-comportamento.jpg";
 
 export const SITE_URL = "https://atualcambio.lovable.app";
 
