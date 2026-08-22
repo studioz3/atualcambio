@@ -279,21 +279,21 @@ function Stablecoins() {
 
       {/* Produto real como prova */}
       <Section tone="ink" id="app">
-        <div className="grid items-center gap-14 lg:grid-cols-[0.75fr_1.25fr]">
-          <SectionHeading
-            tone="light-text"
-            eyebrow="No app"
-            title="Veja antes de confirmar."
-            description="Consulte o ativo, a cotação e as informações da operação diretamente pela Conta Atual."
-          />
+        <div className="relative grid items-center gap-14 lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="relative z-10">
+            <SectionHeading
+              tone="light-text"
+              eyebrow="No app"
+              title="Veja antes de confirmar."
+              description="Consulte o ativo, a cotação e as informações da operação diretamente pela Conta Atual."
+            />
+          </div>
           <img
             src={appTelas.url}
             alt="Três telas da Conta Atual: saldo, mercados com USDT e USDC, e extrato de operações"
-            className="mx-auto block h-auto w-full min-w-0 max-w-[680px] object-contain lg:max-w-none lg:scale-[1.18] lg:origin-right xl:scale-[1.28]"
+            className="relative z-0 mx-auto block h-auto w-full min-w-0 max-w-[680px] object-contain lg:max-w-none lg:origin-right lg:scale-[1.08] xl:scale-[1.15]"
             loading="lazy"
           />
-
-
         </div>
       </Section>
 
