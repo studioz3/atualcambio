@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import heroAsset from "@/assets/hero-banner-3.png.asset.json";
+import heroMobile from "@/assets/hero-mobile.jpg.asset.json";
 import appMao from "@/assets/app-mao-2.png.asset.json";
 
 import especialistaImg from "@/assets/card-especialista.jpg";
@@ -141,6 +142,7 @@ function Home() {
         }
         seals
         image={heroAsset.url}
+        mobileImage={heroMobile.url}
         imageAlt="Atendimento internacional da Atual Câmbio com globo conectado ao fundo"
 
       />
