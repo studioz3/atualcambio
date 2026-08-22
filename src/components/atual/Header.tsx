@@ -122,14 +122,31 @@ export function Header() {
           <Container>
             <nav className="flex flex-col py-4" aria-label="Menu mobile">
               {nav.map((item) => (
-                <Link
-                  key={item.label}
-                  to={item.to}
-                  onClick={() => setOpen(false)}
-                  className="min-h-12 border-b border-white/8 py-3 text-base text-white/90"
-                >
-                  {item.label}
-                </Link>
+                <div key={item.label} className="border-b border-white/8">
+                  <Link
+                    to={item.to}
+                    onClick={() => setOpen(false)}
+                    className="block min-h-12 py-3 text-base text-white/90"
+                  >
+                    {item.label}
+                  </Link>
+                  {"items" in item && item.items ? (
+                    <ul className="pb-3">
+                      {item.items.map((sub) => (
+                        <li key={sub.label}>
+                          <Link
+                            to={sub.to}
+                            hash={sub.hash}
+                            onClick={() => setOpen(false)}
+                            className="block min-h-11 py-2.5 pl-4 text-sm text-white/65"
+                          >
+                            {sub.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </div>
               ))}
               <div className="flex flex-col gap-3 pt-5 pb-6">
                 <ActionButton
