@@ -465,7 +465,7 @@ export function CTASection({
 }) {
   return (
     <Section tone="navy" id="cta">
-      <div className="grid items-end gap-12 lg:grid-cols-[minmax(0,1.9fr)_auto]">
+      <div className="grid items-start gap-10">
         <SectionHeading tone="light-text" eyebrow="Atendimento" title={title} description={description} className="max-w-3xl" />
         <div className="flex flex-wrap gap-4">
           <ActionButton size="lg" event="open_account_click" onClick={onPrimary}>
