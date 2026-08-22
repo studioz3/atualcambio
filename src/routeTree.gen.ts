@@ -19,6 +19,7 @@ import { Route as ConteudoRouteImport } from './routes/conteudo'
 import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as CotacoesRouteImport } from './routes/cotacoes'
 import { Route as EmpresasRouteImport } from './routes/empresas'
+import { Route as FaleComEspecialistaRouteImport } from './routes/fale-com-especialista'
 import { Route as OuvidoriaRouteImport } from './routes/ouvidoria'
 import { Route as PldFtRouteImport } from './routes/pld-ft'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
@@ -78,6 +79,11 @@ const CotacoesRoute = CotacoesRouteImport.update({
 const EmpresasRoute = EmpresasRouteImport.update({
   id: '/empresas',
   path: '/empresas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaleComEspecialistaRoute = FaleComEspecialistaRouteImport.update({
+  id: '/fale-com-especialista',
+  path: '/fale-com-especialista',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OuvidoriaRoute = OuvidoriaRouteImport.update({
@@ -142,6 +148,7 @@ export interface FileRoutesByFullPath {
   '/cookies': typeof CookiesRoute
   '/cotacoes': typeof CotacoesRoute
   '/empresas': typeof EmpresasRoute
+  '/fale-com-especialista': typeof FaleComEspecialistaRoute
   '/ouvidoria': typeof OuvidoriaRoute
   '/pld-ft': typeof PldFtRoute
   '/privacidade': typeof PrivacidadeRoute
@@ -164,6 +171,7 @@ export interface FileRoutesByTo {
   '/cookies': typeof CookiesRoute
   '/cotacoes': typeof CotacoesRoute
   '/empresas': typeof EmpresasRoute
+  '/fale-com-especialista': typeof FaleComEspecialistaRoute
   '/ouvidoria': typeof OuvidoriaRoute
   '/pld-ft': typeof PldFtRoute
   '/privacidade': typeof PrivacidadeRoute
@@ -187,6 +195,7 @@ export interface FileRoutesById {
   '/cookies': typeof CookiesRoute
   '/cotacoes': typeof CotacoesRoute
   '/empresas': typeof EmpresasRoute
+  '/fale-com-especialista': typeof FaleComEspecialistaRoute
   '/ouvidoria': typeof OuvidoriaRoute
   '/pld-ft': typeof PldFtRoute
   '/privacidade': typeof PrivacidadeRoute
@@ -211,6 +220,7 @@ export interface FileRouteTypes {
     | '/cookies'
     | '/cotacoes'
     | '/empresas'
+    | '/fale-com-especialista'
     | '/ouvidoria'
     | '/pld-ft'
     | '/privacidade'
@@ -233,6 +243,7 @@ export interface FileRouteTypes {
     | '/cookies'
     | '/cotacoes'
     | '/empresas'
+    | '/fale-com-especialista'
     | '/ouvidoria'
     | '/pld-ft'
     | '/privacidade'
@@ -255,6 +266,7 @@ export interface FileRouteTypes {
     | '/cookies'
     | '/cotacoes'
     | '/empresas'
+    | '/fale-com-especialista'
     | '/ouvidoria'
     | '/pld-ft'
     | '/privacidade'
@@ -278,6 +290,7 @@ export interface RootRouteChildren {
   CookiesRoute: typeof CookiesRoute
   CotacoesRoute: typeof CotacoesRoute
   EmpresasRoute: typeof EmpresasRoute
+  FaleComEspecialistaRoute: typeof FaleComEspecialistaRoute
   OuvidoriaRoute: typeof OuvidoriaRoute
   PldFtRoute: typeof PldFtRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
@@ -360,6 +373,13 @@ declare module '@tanstack/react-router' {
       path: '/empresas'
       fullPath: '/empresas'
       preLoaderRoute: typeof EmpresasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/fale-com-especialista': {
+      id: '/fale-com-especialista'
+      path: '/fale-com-especialista'
+      fullPath: '/fale-com-especialista'
+      preLoaderRoute: typeof FaleComEspecialistaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ouvidoria': {
@@ -446,6 +466,7 @@ const rootRouteChildren: RootRouteChildren = {
   CookiesRoute: CookiesRoute,
   CotacoesRoute: CotacoesRoute,
   EmpresasRoute: EmpresasRoute,
+  FaleComEspecialistaRoute: FaleComEspecialistaRoute,
   OuvidoriaRoute: OuvidoriaRoute,
   PldFtRoute: PldFtRoute,
   PrivacidadeRoute: PrivacidadeRoute,

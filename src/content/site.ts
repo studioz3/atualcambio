@@ -27,6 +27,36 @@ export const links = {
   whatsapp: null as string | null, // [AGUARDANDO VALIDAÇÃO] número oficial
 };
 
+/**
+ * Dados de contato oficiais e validados.
+ * Campos ainda não confirmados ficam `null` e NÃO são exibidos no frontend.
+ */
+export const contact = {
+  email: "contato@atualcambio.com.br",
+  phone: null as string | null,
+  whatsapp: null as string | null,
+  hours: "Segunda a sexta, das 9h às 18h, exceto feriados nacionais.",
+  address: {
+    label: "Ag. Iguatemi Sorocaba",
+    lines: [
+      "Av. Prof. Izoraida Marques Peres, 256 — Campolim",
+      "Shopping Iguatemi — Sorocaba/SP — CEP 18048-110",
+    ],
+    full:
+      "Av. Prof. Izoraida Marques Peres, 256 — Campolim, Shopping Iguatemi, Sorocaba/SP, CEP 18048-110",
+    mapUrl:
+      "https://www.google.com/maps/search/?api=1&query=Av.+Prof.+Izoraida+Marques+Peres,+256,+Campolim,+Sorocaba+SP",
+  },
+  ouvidoria: {
+    phone: "0800 770-5422",
+    email: "ouvidoria@atualcambio.com.br",
+    hours: "Segunda a sexta, das 9h às 18h, exceto feriados nacionais.",
+  },
+  whistleblower: {
+    email: "denuncias@atualcambio.com.br",
+  },
+} as const;
+
 export const nav = [
   {
     label: "Soluções",

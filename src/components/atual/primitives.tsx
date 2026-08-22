@@ -142,11 +142,17 @@ export function ActionLink({
   children,
   event,
   external,
-}: ButtonBaseProps & { to?: string; href?: string; external?: boolean }) {
+  onClick,
+}: ButtonBaseProps & {
+  to?: string;
+  href?: string;
+  external?: boolean;
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>;
+}) {
   const classes = cn(buttonVariants({ variant, size }), className);
   if (to) {
     return (
-      <Link to={to} data-event={event} className={classes}>
+      <Link to={to} data-event={event} className={classes} onClick={onClick}>
         {children}
       </Link>
     );
@@ -156,6 +162,7 @@ export function ActionLink({
       href={href}
       data-event={event}
       className={classes}
+      onClick={onClick}
       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
     >
       {children}

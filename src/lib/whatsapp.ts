@@ -20,6 +20,7 @@ export function buildWhatsappMessage(lead: LeadInput): string {
   }
   if (lead.finalidade) parts.push(`Finalidade: ${lead.finalidade}.`);
   if (lead.prazo && lead.prazo !== "Sem data definida") parts.push(`Prazo: ${lead.prazo}.`);
+  if (lead.mensagem) parts.push(lead.mensagem);
 
   return parts.join(" ");
 }
@@ -48,6 +49,9 @@ export function getUtm() {
     utm_source: pick("utm_source"),
     utm_medium: pick("utm_medium"),
     utm_campaign: pick("utm_campaign"),
+    utm_content: pick("utm_content"),
+    utm_term: pick("utm_term"),
+    referrer: (document.referrer || undefined)?.slice(0, 500),
     dispositivo: getDevice(),
     timestamp: new Date().toISOString(),
   };
