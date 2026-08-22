@@ -5,9 +5,7 @@ import heroApp from "@/assets/app-mao-2.png.asset.json";
 /**
  * Telas reais do app — basta trocar o import (ou o asset) para atualizar a prova de produto.
  */
-import appInicio from "@/assets/app-inicio.jpg.asset.json";
-import appMercados from "@/assets/app-mercados.jpg.asset.json";
-import appExtrato from "@/assets/app-extrato.jpg.asset.json";
+import appTelas from "@/assets/app-telas-trio.png.asset.json";
 import { Section, SectionHeading, ActionButton, ActionLink } from "@/components/atual/primitives";
 import { Hero, TrustPillars, PathCard, AppMockup, CTASection } from "@/components/atual/ui-kit";
 import { StoreBadges } from "@/components/atual/StoreBadges";
