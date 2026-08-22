@@ -59,7 +59,7 @@ export function Header() {
                       <ChevronDown className="size-3.5" aria-hidden />
                     </Link>
                     {openMenu === item.label ? (
-                      <div className="absolute top-full left-0 w-64 rounded-md border border-white/10 bg-black/95 p-2 backdrop-blur-md shadow-[0_12px_40px_rgba(1,24,58,0.45)]">
+                      <div className="absolute top-full left-0 w-64 rounded-md border border-white/10 bg-navy p-2 shadow-[0_12px_40px_rgba(1,24,58,0.45)]">
                         {item.items.map((sub) => (
                           <Link
                             key={sub.label}
@@ -118,7 +118,7 @@ export function Header() {
       </Container>
 
       {open ? (
-        <div className="border-t border-white/10 bg-black/95 backdrop-blur-md lg:hidden">
+        <div className="border-t border-white/10 bg-navy lg:hidden">
           <Container>
             <nav className="flex flex-col py-4" aria-label="Menu mobile">
               {nav.map((item) => (
