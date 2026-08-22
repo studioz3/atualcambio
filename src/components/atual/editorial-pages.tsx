@@ -37,6 +37,9 @@ export function EditoriaPage({ id }: { id: EditoriaId }) {
     [all, featured, category],
   );
 
+  const dark = editoria.tone !== "wellness";
+  const sections = editoria.sections ?? [];
+
   return (
     <>
       <EditorialHero
@@ -48,88 +51,131 @@ export function EditoriaPage({ id }: { id: EditoriaId }) {
         tone={editoria.tone}
       />
 
-      <Section tone={editoria.tone === "wellness" ? "light" : "light"}>
-        <nav aria-label="Trilha" className="text-xs text-muted-foreground">
-          <Link to="/conteudo" className="hover:text-navy">
-            Conteúdo
-          </Link>{" "}
-          / <span className="text-navy">{editoria.name}</span>
-        </nav>
+      {/* Faixa de promessa + territórios */}
+      <section
+        className={cn(
+          "border-b py-10 md:py-14",
+          editoria.tone === "editorial"
+            ? "surface-navy border-white/10"
+            : editoria.tone === "cultural"
+              ? "surface-ink border-white/10"
+              : "surface-offwhite border-line",
+        )}
+      >
+        <Container>
+          <nav
+            aria-label="Trilha"
+            className={cn("text-xs", dark ? "text-white/55" : "text-muted-foreground")}
+          >
+            <Link to="/conteudo" className="hover:text-gold">
+              Conteúdo
+            </Link>{" "}
+            / <span className={dark ? "text-white/85" : "text-navy"}>{editoria.name}</span>
+          </nav>
+          <div className="mt-7 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+            <p
+              className={cn(
+                "display-h3 max-w-3xl",
+                dark ? "text-white" : "text-navy",
+              )}
+            >
+              {editoria.promise}
+            </p>
+            <ul className="flex flex-wrap gap-2">
+              {editoria.categories.map((cat) => (
+                <li
+                  key={cat}
+                  className={cn(
+                    "rounded-full border px-3 py-1 text-xs",
+                    dark ? "border-white/20 text-white/70" : "border-line text-muted-foreground",
+                  )}
+                >
+                  {cat}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Container>
+      </section>
 
-        <p className="body-lg mt-8 max-w-2xl text-navy">{editoria.promise}</p>
-
-        {featured ? (
-          <div className="mt-14">
+      {featured ? (
+        <Section tone="light">
+          <Eyebrow>Matéria principal</Eyebrow>
+          <div className="mt-8">
             <FeaturedArticle article={featured} />
           </div>
-        ) : null}
+        </Section>
+      ) : null}
 
-        {all.length > 1 ? (
-          <div className="mt-20">
-            <div className="flex flex-wrap items-end justify-between gap-6">
-              <SectionHeading title="Mais recentes" className="max-w-xl" />
-              <CategoryFilter
-                categories={[...new Set(all.map((a) => a.categoria))]}
-                active={category}
-                onChange={setCategory}
-              />
-            </div>
-            <div className="mt-12 grid gap-10 md:grid-cols-2 lg:grid-cols-3">
-              {rest.map((a) => (
-                <ArticleCard key={a.id} article={a} sourcePage={editoria.id} />
-              ))}
-            </div>
-            {rest.length === 0 ? (
-              <p className="mt-10 text-sm text-muted-foreground">
-                Nenhum conteúdo publicado nesta categoria ainda.
-              </p>
-            ) : null}
-          </div>
-        ) : null}
-
-        {editoria.upcoming.length > 0 ? (
-          <div className="mt-24">
+      {sections.length > 0 ? (
+        <section
+          className={cn(
+            "section-y",
+            editoria.tone === "cultural" ? "surface-ink" : "bg-background",
+          )}
+        >
+          <Container>
             <SectionHeading
-              eyebrow="Pauta editorial"
-              title={
-                all.length === 0
-                  ? "A estrutura editorial está pronta. O conteúdo vem a seguir."
-                  : "Em preparação"
-              }
-              description={
-                all.length === 0
-                  ? "Nada aqui foi publicado ainda — apresentamos os territórios que a editoria vai cobrir."
-                  : undefined
-              }
-              className="max-w-2xl"
+              eyebrow="A editoria"
+              title={`O que ${editoria.name} cobre`}
+              description="Os territórios da editoria já estão definidos. Enquanto o conteúdo não é publicado, cada frente aparece marcada como “Em breve” — nada aqui é fictício."
+              tone={editoria.tone === "cultural" ? "light-text" : "dark-text"}
+              className="max-w-3xl"
             />
-            <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {editoria.upcoming.map((u) => (
-                <ComingSoonCard
-                  key={u.title}
-                  title={u.title}
-                  description={u.description}
-                  categoria={u.categoria}
-                />
-              ))}
+            <div className="mt-14">
+              <EditorialSections sections={sections} dark={editoria.tone === "cultural"} />
             </div>
-          </div>
-        ) : null}
+          </Container>
+        </section>
+      ) : null}
 
-        <div className="mt-20 border-t border-line pt-10">
-          <Eyebrow>Territórios</Eyebrow>
-          <ul className="mt-5 flex flex-wrap gap-2">
-            {editoria.categories.map((cat) => (
-              <li
-                key={cat}
-                className="rounded-full border border-line px-3 py-1 text-xs text-muted-foreground"
-              >
-                {cat}
-              </li>
+      {all.length > 1 ? (
+        <Section tone="light">
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <SectionHeading eyebrow="Publicados" title="Mais recentes" className="max-w-xl" />
+            <CategoryFilter
+              categories={[...new Set(all.map((a) => a.categoria))]}
+              active={category}
+              onChange={setCategory}
+            />
+          </div>
+          <div className="mt-12 grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+            {rest.map((a) => (
+              <ArticleCard key={a.id} article={a} sourcePage={editoria.id} />
             ))}
-          </ul>
-        </div>
-      </Section>
+          </div>
+          {rest.length === 0 ? (
+            <p className="mt-10 text-sm text-muted-foreground">
+              Nenhum conteúdo publicado nesta categoria ainda.
+            </p>
+          ) : null}
+        </Section>
+      ) : null}
+
+      {editoria.upcoming.length > 0 ? (
+        <Section tone={sections.length > 0 ? "offwhite" : "light"}>
+          <SectionHeading
+            eyebrow="Pauta editorial"
+            title={all.length === 0 ? "Próximas pautas" : "Em preparação"}
+            description={
+              all.length === 0
+                ? "Formatos já desenhados para a editoria — sem episódios, convidados ou números inventados."
+                : undefined
+            }
+            className="max-w-2xl"
+          />
+          <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {editoria.upcoming.map((u) => (
+              <ComingSoonCard
+                key={u.title}
+                title={u.title}
+                description={u.description}
+                categoria={u.categoria}
+              />
+            ))}
+          </div>
+        </Section>
+      ) : null}
 
       <NewsletterCallout editoria={editoria} />
     </>
