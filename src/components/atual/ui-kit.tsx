@@ -141,10 +141,10 @@ export function TrustPillars({ items }: { items: readonly TrustPillar[] }) {
           {items.map((item) => {
             const Icon = pillarIcons[item.id];
             return (
-              <li key={item.id} className="flex flex-col items-center px-2 text-center">
+              <li key={item.id} className="flex flex-col items-start text-left md:pr-10">
                 <Icon className="size-9 text-gold" aria-hidden />
                 <h3 className="mt-6 text-lg font-bold text-white">{item.title}</h3>
-                <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/75">{item.text}</p>
+                <p className="mt-4 text-sm leading-relaxed text-white/75">{item.text}</p>
               </li>
             );
           })}
