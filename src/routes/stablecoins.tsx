@@ -284,7 +284,7 @@ function Stablecoins() {
             <SectionHeading
               tone="light-text"
               eyebrow="No app"
-              title="Veja antes de confirmar."
+              title="Sua cotação, na palma da mão."
               description="Consulte o ativo, a cotação e as informações da operação diretamente pela Conta Atual."
             />
           </div>
