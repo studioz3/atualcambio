@@ -4,8 +4,7 @@ import { z } from "zod";
 /**
  * Inscrição na newsletter editorial.
  * Consentimento separado do atendimento comercial: um assinante NÃO é
- * classificado como lead comercial qualificado.
- * [AGUARDANDO VALIDAÇÃO] integração com CRM / plataforma de e-mail marketing.
+ * classificado nem convertido automaticamente em lead comercial.
  */
 const newsletterSchema = z
   .object({
@@ -33,13 +32,21 @@ export type NewsletterInput = z.infer<typeof newsletterSchema>;
 export const subscribeNewsletter = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => newsletterSchema.parse(data))
   .handler(async ({ data }) => {
-    const record = {
-      ...data,
-      id: crypto.randomUUID(),
-      tipo: "newsletter" as const,
-      lead_comercial: false as const,
-      created_at: new Date().toISOString(),
-    };
-    console.info("[newsletter]", record);
-    return { ok: true as const, id: record.id };
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { consentimento: _c, ...rest } = data;
+    const row: Record<string, string | boolean | null> = {};
+    for (const [key, value] of Object.entries(rest)) {
+      row[key] = value === undefined ? null : (value as string | boolean);
+    }
+    const { data: saved, error } = await supabaseAdmin
+      .from("newsletter_subscribers")
+      .upsert(row as never, { onConflict: "email" })
+      .select("id")
+      .single();
+
+    if (error || !saved) {
+      console.error("[newsletter] falha ao registrar", error?.message);
+      return { ok: false as const, id: null };
+    }
+    return { ok: true as const, id: saved.id };
   });
