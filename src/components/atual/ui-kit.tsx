@@ -71,9 +71,10 @@ export function Hero({
             src={image}
             alt={imageAlt ?? ""}
             width={1920}
-            height={720}
-            className="size-full object-cover object-center"
+            height={1080}
+            className="ml-auto h-full w-auto max-w-none object-contain object-right"
           />
+
           {/* scrim neutro para legibilidade */}
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent" />
         </div>
