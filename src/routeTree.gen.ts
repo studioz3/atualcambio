@@ -23,6 +23,7 @@ import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as ResponsabilidadeSocialRouteImport } from './routes/responsabilidade-social'
 import { Route as SegurancaCiberneticaRouteImport } from './routes/seguranca-cibernetica'
 import { Route as SolucoesRouteImport } from './routes/solucoes'
+import { Route as StablecoinsRouteImport } from './routes/stablecoins'
 import { Route as TermosRouteImport } from './routes/termos'
 
 const IndexRoute = IndexRouteImport.update({
@@ -95,6 +96,11 @@ const SolucoesRoute = SolucoesRouteImport.update({
   path: '/solucoes',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StablecoinsRoute = StablecoinsRouteImport.update({
+  id: '/stablecoins',
+  path: '/stablecoins',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TermosRoute = TermosRouteImport.update({
   id: '/termos',
   path: '/termos',
@@ -116,6 +122,7 @@ export interface FileRoutesByFullPath {
   '/responsabilidade-social': typeof ResponsabilidadeSocialRoute
   '/seguranca-cibernetica': typeof SegurancaCiberneticaRoute
   '/solucoes': typeof SolucoesRoute
+  '/stablecoins': typeof StablecoinsRoute
   '/termos': typeof TermosRoute
 }
 export interface FileRoutesByTo {
@@ -133,6 +140,7 @@ export interface FileRoutesByTo {
   '/responsabilidade-social': typeof ResponsabilidadeSocialRoute
   '/seguranca-cibernetica': typeof SegurancaCiberneticaRoute
   '/solucoes': typeof SolucoesRoute
+  '/stablecoins': typeof StablecoinsRoute
   '/termos': typeof TermosRoute
 }
 export interface FileRoutesById {
@@ -151,6 +159,7 @@ export interface FileRoutesById {
   '/responsabilidade-social': typeof ResponsabilidadeSocialRoute
   '/seguranca-cibernetica': typeof SegurancaCiberneticaRoute
   '/solucoes': typeof SolucoesRoute
+  '/stablecoins': typeof StablecoinsRoute
   '/termos': typeof TermosRoute
 }
 export interface FileRouteTypes {
@@ -170,6 +179,7 @@ export interface FileRouteTypes {
     | '/responsabilidade-social'
     | '/seguranca-cibernetica'
     | '/solucoes'
+    | '/stablecoins'
     | '/termos'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -187,6 +197,7 @@ export interface FileRouteTypes {
     | '/responsabilidade-social'
     | '/seguranca-cibernetica'
     | '/solucoes'
+    | '/stablecoins'
     | '/termos'
   id:
     | '__root__'
@@ -204,6 +215,7 @@ export interface FileRouteTypes {
     | '/responsabilidade-social'
     | '/seguranca-cibernetica'
     | '/solucoes'
+    | '/stablecoins'
     | '/termos'
   fileRoutesById: FileRoutesById
 }
@@ -222,6 +234,7 @@ export interface RootRouteChildren {
   ResponsabilidadeSocialRoute: typeof ResponsabilidadeSocialRoute
   SegurancaCiberneticaRoute: typeof SegurancaCiberneticaRoute
   SolucoesRoute: typeof SolucoesRoute
+  StablecoinsRoute: typeof StablecoinsRoute
   TermosRoute: typeof TermosRoute
 }
 
@@ -325,6 +338,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SolucoesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/stablecoins': {
+      id: '/stablecoins'
+      path: '/stablecoins'
+      fullPath: '/stablecoins'
+      preLoaderRoute: typeof StablecoinsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/termos': {
       id: '/termos'
       path: '/termos'
@@ -350,6 +370,7 @@ const rootRouteChildren: RootRouteChildren = {
   ResponsabilidadeSocialRoute: ResponsabilidadeSocialRoute,
   SegurancaCiberneticaRoute: SegurancaCiberneticaRoute,
   SolucoesRoute: SolucoesRoute,
+  StablecoinsRoute: StablecoinsRoute,
   TermosRoute: TermosRoute,
 }
 export const routeTree = rootRouteImport
