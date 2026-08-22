@@ -185,16 +185,18 @@ function Empresas() {
         }
         image={empresasHero}
         imageAlt="Equipe corporativa analisando operações internacionais em uma sala de reunião"
-      >
-        <ul className="col-span-full flex flex-wrap gap-x-10 gap-y-3 border-t border-white/12 pt-8 lg:max-w-2xl">
+      />
+
+      <div className="surface-navy">
+        <div className="mx-auto flex max-w-[1240px] flex-wrap gap-x-10 gap-y-3 px-6 py-6 lg:px-8">
           {trust.map((item) => (
-            <li key={item} className="flex items-center gap-2 text-sm text-white/80">
+            <p key={item} className="flex items-center gap-2 text-sm text-white/80">
               <span className="size-1.5 shrink-0 rounded-full bg-gold" aria-hidden />
               {item}
-            </li>
+            </p>
           ))}
-        </ul>
-      </Hero>
+        </div>
+      </div>
 
       {/* 2. Roteador de necessidade */}
       <Section tone="light" id="necessidade">
