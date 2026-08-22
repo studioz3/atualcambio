@@ -25,6 +25,7 @@ import { Route as OuvidoriaRouteImport } from './routes/ouvidoria'
 import { Route as PldFtRouteImport } from './routes/pld-ft'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as QuemSomosRouteImport } from './routes/quem-somos'
+import { Route as RemessasInternacionaisRouteImport } from './routes/remessas-internacionais'
 import { Route as ResponsabilidadeSocialRouteImport } from './routes/responsabilidade-social'
 import { Route as SegurancaRouteImport } from './routes/seguranca'
 import { Route as SegurancaCiberneticaRouteImport } from './routes/seguranca-cibernetica'
@@ -121,6 +122,11 @@ const QuemSomosRoute = QuemSomosRouteImport.update({
   path: '/quem-somos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RemessasInternacionaisRoute = RemessasInternacionaisRouteImport.update({
+  id: '/remessas-internacionais',
+  path: '/remessas-internacionais',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResponsabilidadeSocialRoute = ResponsabilidadeSocialRouteImport.update({
   id: '/responsabilidade-social',
   path: '/responsabilidade-social',
@@ -214,6 +220,7 @@ export interface FileRoutesByFullPath {
   '/pld-ft': typeof PldFtRoute
   '/privacidade': typeof PrivacidadeRoute
   '/quem-somos': typeof QuemSomosRoute
+  '/remessas-internacionais': typeof RemessasInternacionaisRoute
   '/responsabilidade-social': typeof ResponsabilidadeSocialRoute
   '/seguranca': typeof SegurancaRoute
   '/seguranca-cibernetica': typeof SegurancaCiberneticaRoute
@@ -247,6 +254,7 @@ export interface FileRoutesByTo {
   '/pld-ft': typeof PldFtRoute
   '/privacidade': typeof PrivacidadeRoute
   '/quem-somos': typeof QuemSomosRoute
+  '/remessas-internacionais': typeof RemessasInternacionaisRoute
   '/responsabilidade-social': typeof ResponsabilidadeSocialRoute
   '/seguranca': typeof SegurancaRoute
   '/seguranca-cibernetica': typeof SegurancaCiberneticaRoute
@@ -281,6 +289,7 @@ export interface FileRoutesById {
   '/pld-ft': typeof PldFtRoute
   '/privacidade': typeof PrivacidadeRoute
   '/quem-somos': typeof QuemSomosRoute
+  '/remessas-internacionais': typeof RemessasInternacionaisRoute
   '/responsabilidade-social': typeof ResponsabilidadeSocialRoute
   '/seguranca': typeof SegurancaRoute
   '/seguranca-cibernetica': typeof SegurancaCiberneticaRoute
@@ -316,6 +325,7 @@ export interface FileRouteTypes {
     | '/pld-ft'
     | '/privacidade'
     | '/quem-somos'
+    | '/remessas-internacionais'
     | '/responsabilidade-social'
     | '/seguranca'
     | '/seguranca-cibernetica'
@@ -349,6 +359,7 @@ export interface FileRouteTypes {
     | '/pld-ft'
     | '/privacidade'
     | '/quem-somos'
+    | '/remessas-internacionais'
     | '/responsabilidade-social'
     | '/seguranca'
     | '/seguranca-cibernetica'
@@ -382,6 +393,7 @@ export interface FileRouteTypes {
     | '/pld-ft'
     | '/privacidade'
     | '/quem-somos'
+    | '/remessas-internacionais'
     | '/responsabilidade-social'
     | '/seguranca'
     | '/seguranca-cibernetica'
@@ -416,6 +428,7 @@ export interface RootRouteChildren {
   PldFtRoute: typeof PldFtRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
   QuemSomosRoute: typeof QuemSomosRoute
+  RemessasInternacionaisRoute: typeof RemessasInternacionaisRoute
   ResponsabilidadeSocialRoute: typeof ResponsabilidadeSocialRoute
   SegurancaRoute: typeof SegurancaRoute
   SegurancaCiberneticaRoute: typeof SegurancaCiberneticaRoute
@@ -547,6 +560,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof QuemSomosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/remessas-internacionais': {
+      id: '/remessas-internacionais'
+      path: '/remessas-internacionais'
+      fullPath: '/remessas-internacionais'
+      preLoaderRoute: typeof RemessasInternacionaisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/responsabilidade-social': {
       id: '/responsabilidade-social'
       path: '/responsabilidade-social'
@@ -672,6 +692,7 @@ const rootRouteChildren: RootRouteChildren = {
   PldFtRoute: PldFtRoute,
   PrivacidadeRoute: PrivacidadeRoute,
   QuemSomosRoute: QuemSomosRoute,
+  RemessasInternacionaisRoute: RemessasInternacionaisRoute,
   ResponsabilidadeSocialRoute: ResponsabilidadeSocialRoute,
   SegurancaRoute: SegurancaRoute,
   SegurancaCiberneticaRoute: SegurancaCiberneticaRoute,

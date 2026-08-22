@@ -136,6 +136,7 @@ export function ActionButton({
 export function ActionLink({
   to,
   href,
+  search,
   variant,
   size,
   className,
@@ -146,13 +147,20 @@ export function ActionLink({
 }: ButtonBaseProps & {
   to?: string;
   href?: string;
+  search?: Record<string, string | undefined>;
   external?: boolean;
   onClick?: React.MouseEventHandler<HTMLAnchorElement>;
 }) {
   const classes = cn(buttonVariants({ variant, size }), className);
   if (to) {
     return (
-      <Link to={to} data-event={event} className={classes} onClick={onClick}>
+      <Link
+        to={to}
+        {...(search ? { search } : {})}
+        data-event={event}
+        className={classes}
+        onClick={onClick}
+      >
         {children}
       </Link>
     );
