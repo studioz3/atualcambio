@@ -137,7 +137,7 @@ export type TrustPillar = {
 
 export function TrustPillars({ items }: { items: readonly TrustPillar[] }) {
   return (
-    <div className="relative bg-slate-deep">
+    <div className="relative bg-black">
       <Container>
         <ul className="grid gap-12 py-16 md:grid-cols-3 md:gap-10 md:py-20">
           {items.map((item) => {
