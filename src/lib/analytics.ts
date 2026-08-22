@@ -49,6 +49,18 @@ export const ANALYTICS_EVENTS = [
   "account_specialist_start",
   "account_lead_submit",
   "account_whatsapp",
+  "quotes_page_view",
+  "quote_asset_selected",
+  "quote_usd_click",
+  "quote_eur_click",
+  "quote_gbp_click",
+  "quote_usdt_click",
+  "quote_usdc_click",
+  "quote_app_click",
+  "quote_specialist_click",
+  "quote_remittance_click",
+  "quote_business_click",
+  "quote_article_click",
 ] as const;
 
 export type AnalyticsEvent = (typeof ANALYTICS_EVENTS)[number];
