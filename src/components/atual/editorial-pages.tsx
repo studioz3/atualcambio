@@ -182,7 +182,7 @@ export function ArticlePage({ article }: { article: Article }) {
                 {article.categoria}
               </span>
             </div>
-            <h1 className="display-h1 mt-6 text-white">{article.titulo}</h1>
+            <h1 className="display-h2 mt-6 text-white">{article.titulo}</h1>
             <p className="body-lg mt-6 text-white/80">{article.subtitulo}</p>
             <div className="mt-8 flex flex-wrap items-center gap-5 text-sm text-white/60">
               <span>{article.autor}</span>
