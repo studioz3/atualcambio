@@ -238,6 +238,87 @@
   line-height: 1.6;
 }
 
+/* ---------- Regras reutilizáveis de Hero/Banner ---------- */
+@utility hero-shell {
+  min-height: 100svh;
+  height: auto;
+  box-sizing: border-box;
+  @media (min-width: 1024px) {
+    min-height: 680px;
+  }
+}
+
+@utility hero-container {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+  padding-inline: 26px;
+  @media (min-width: 768px) {
+    padding-inline: 32px;
+  }
+  @media (min-width: 1024px) {
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: 48px;
+  }
+}
+
+@utility hero-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.75rem, 12vw, 3.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+  max-width: 12ch;
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+  height: auto;
+  @media (min-width: 768px) {
+    font-size: clamp(3rem, 1.2rem + 4.2vw, 4.75rem);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    max-width: none;
+  }
+}
+
+@utility hero-copy {
+  font-size: clamp(1.125rem, 4.8vw, 1.3125rem);
+  line-height: 1.45;
+  text-wrap: pretty;
+  max-width: 32ch;
+  white-space: normal;
+  overflow: visible;
+  height: auto;
+  @media (min-width: 768px) {
+    font-size: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+    line-height: 1.6;
+    max-width: 36rem;
+  }
+}
+
+@utility hero-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  & > * {
+    width: 100%;
+    min-height: 56px;
+    white-space: normal;
+  }
+  @media (min-width: 768px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+    width: auto;
+    & > * {
+      width: auto;
+    }
+  }
+}
+
 /* Microtipografia — equilíbrio de quebras de linha */
 h1,
 h2,
@@ -247,6 +328,8 @@ h5,
 h6,
 .heading,
 .card-title,
+.hero-title,
+.section-title,
 .display-hero,
 .display-h2,
 .display-h3,
@@ -259,6 +342,8 @@ li,
 figcaption,
 blockquote,
 .body-copy,
+.hero-copy,
 .body-lg {
   text-wrap: pretty;
 }
+
