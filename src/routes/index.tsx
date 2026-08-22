@@ -114,7 +114,6 @@ function Home() {
   return (
     <>
       <Hero
-        eyebrow={brand.positioning}
         title={
           <>
             Seu dinheiro,
