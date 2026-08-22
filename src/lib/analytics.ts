@@ -61,6 +61,16 @@ export const ANALYTICS_EVENTS = [
   "quote_remittance_click",
   "quote_business_click",
   "quote_article_click",
+  "security_page_view",
+  "security_bacen_click",
+  "security_privacy_click",
+  "security_cyber_click",
+  "security_pld_click",
+  "security_whistleblower_click",
+  "security_ombudsman_click",
+  "security_contact_click",
+  "security_specialist_click",
+  "security_open_account_click",
 ] as const;
 
 export type AnalyticsEvent = (typeof ANALYTICS_EVENTS)[number];
