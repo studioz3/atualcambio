@@ -18,7 +18,7 @@ export const brand = {
 
 /** [AGUARDANDO VALIDAÇÃO] destinos externos ainda não confirmados */
 export const links = {
-  account: "#conta-atual", // [AGUARDANDO API ONZ] deeplink de login
+  account: "https://finance.atualcambio.com.br",
   openAccount: "#abrir-conta", // [AGUARDANDO API ONZ] onboarding no app
   appStore: "#app-store", // [AGUARDANDO VALIDAÇÃO]
   googlePlay: "#google-play", // [AGUARDANDO VALIDAÇÃO]
