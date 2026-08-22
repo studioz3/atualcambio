@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import heroAsset from "@/assets/hero-banner-2.jpg.asset.json";
+import heroAsset from "@/assets/hero-banner-3.png.asset.json";
 import appMao from "@/assets/app-mao-2.png.asset.json";
 
 import especialistaImg from "@/assets/card-especialista.jpg";

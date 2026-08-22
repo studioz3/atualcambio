@@ -64,7 +64,7 @@ export function Hero({
   children?: ReactNode;
 }) {
   return (
-    <section className="surface-ink relative overflow-hidden">
+    <section className={cn("relative overflow-hidden", image ? "surface-ink" : "surface-navy")}>
       {image ? (
         <div className="absolute inset-0 hidden lg:block">
           <img
