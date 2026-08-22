@@ -8,6 +8,7 @@ import {
   type Article,
   type Editoria,
   type EditorialTone,
+  type EditorialSection,
   editoriaMap,
   formatDate,
 } from "@/content/editorial";
@@ -282,12 +283,15 @@ export function CategoryFilter({
 export function EditoriaBlock({
   editoria,
   articles,
+  index,
   reverse = false,
 }: {
   editoria: Editoria;
   articles: Article[];
+  index: number;
   reverse?: boolean;
 }) {
+  const light = editoria.tone === "wellness";
   return (
     <section
       className={cn(
@@ -303,47 +307,56 @@ export function EditoriaBlock({
       <Container>
         <div
           className={cn(
-            "grid items-center gap-10 lg:grid-cols-2 lg:gap-16",
+            "grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-20",
             reverse && "lg:[&>*:first-child]:order-2",
           )}
         >
-          <img
-            src={editoria.image}
-            alt={editoria.imageAlt}
-            width={1600}
-            height={1000}
-            loading="lazy"
-            className="aspect-[16/10] w-full rounded-xl object-cover"
-          />
+          <div className="relative">
+            <img
+              src={editoria.image}
+              alt={editoria.imageAlt}
+              width={1600}
+              height={1200}
+              loading="lazy"
+              className="aspect-[4/3] w-full rounded-xl object-cover lg:aspect-[4/4.4]"
+            />
+            <span
+              className={cn(
+                "font-display absolute -top-4 left-4 text-6xl leading-none font-bold tracking-[-0.04em] md:-top-6 md:text-7xl",
+                light ? "text-navy/15" : "text-white/20",
+              )}
+              aria-hidden
+            >
+              {String(index + 1).padStart(2, "0")}
+            </span>
+          </div>
+
           <div>
             <p className="font-display text-xs font-bold tracking-[0.14em] text-gold uppercase">
               {editoria.eyebrow}
             </p>
-            <h2
-              className={cn(
-                "display-h2 mt-4",
-                editoria.tone === "wellness" ? "text-navy" : "text-white",
-              )}
-            >
+            <h2 className={cn("display-h2 mt-4", light ? "text-navy" : "text-white")}>
               {editoria.name}
             </h2>
             <p
               className={cn(
-                "body-lg mt-5",
-                editoria.tone === "wellness" ? "text-muted-foreground" : "text-white/80",
+                "mt-4 text-base font-semibold",
+                light ? "text-navy/70" : "text-white/70",
               )}
             >
+              {editoria.shortDescription}
+            </p>
+            <p className={cn("body-lg mt-6", light ? "text-muted-foreground" : "text-white/80")}>
               {editoria.promise}
             </p>
-            <ul className="mt-7 flex flex-wrap gap-2">
+
+            <ul className="mt-8 flex flex-wrap gap-2">
               {editoria.categories.slice(0, 5).map((cat) => (
                 <li
                   key={cat}
                   className={cn(
                     "rounded-full border px-3 py-1 text-xs",
-                    editoria.tone === "wellness"
-                      ? "border-line text-muted-foreground"
-                      : "border-white/20 text-white/70",
+                    light ? "border-line text-muted-foreground" : "border-white/20 text-white/70",
                   )}
                 >
                   {cat}
@@ -351,54 +364,62 @@ export function EditoriaBlock({
               ))}
             </ul>
 
-            <div className="mt-9 space-y-4">
-              {articles.length > 0
-                ? articles.slice(0, 3).map((a) => (
-                    <Link
-                      key={a.id}
-                      to={`${editoria.path}/$slug`}
-                      params={{ slug: a.slug }}
-                      onClick={() =>
-                        track("article_view", {
-                          editoria: editoria.id,
-                          categoria: a.categoria,
-                          artigo: a.slug,
-                          source_page: "conteudo",
-                        })
-                      }
-                      className={cn(
-                        "flex items-start justify-between gap-6 border-t pt-4 text-sm transition-colors",
-                        editoria.tone === "wellness"
-                          ? "border-line text-navy hover:text-gold-soft"
-                          : "border-white/12 text-white hover:text-gold",
-                      )}
-                    >
-                      <span className="font-semibold">{a.titulo}</span>
-                      <ArrowUpRight className="mt-0.5 size-4 shrink-0 text-gold" aria-hidden />
-                    </Link>
-                  ))
-                : editoria.upcoming.slice(0, 3).map((u) => (
-                    <div
-                      key={u.title}
-                      className={cn(
-                        "flex items-start justify-between gap-6 border-t pt-4 text-sm",
-                        editoria.tone === "wellness"
-                          ? "border-line text-navy"
-                          : "border-white/12 text-white/85",
-                      )}
-                    >
-                      <span className="font-semibold">{u.title}</span>
-                      <span className="shrink-0 text-[11px] font-semibold tracking-[0.12em] text-gold uppercase">
-                        Em breve
-                      </span>
-                    </div>
-                  ))}
+            <div className="mt-10">
+              <p
+                className={cn(
+                  "text-[11px] font-semibold tracking-[0.14em] uppercase",
+                  light ? "text-muted-foreground" : "text-white/50",
+                )}
+              >
+                {articles.length > 0 ? "Conteúdos recentes" : "Na pauta"}
+              </p>
+              <div className="mt-4 space-y-4">
+                {articles.length > 0
+                  ? articles.slice(0, 3).map((a) => (
+                      <Link
+                        key={a.id}
+                        to={`${editoria.path}/$slug`}
+                        params={{ slug: a.slug }}
+                        onClick={() =>
+                          track("article_view", {
+                            editoria: editoria.id,
+                            categoria: a.categoria,
+                            artigo: a.slug,
+                            source_page: "conteudo",
+                          })
+                        }
+                        className={cn(
+                          "flex items-start justify-between gap-6 border-t pt-4 text-sm transition-colors",
+                          light
+                            ? "border-line text-navy hover:text-gold-soft"
+                            : "border-white/12 text-white hover:text-gold",
+                        )}
+                      >
+                        <span className="font-semibold">{a.titulo}</span>
+                        <ArrowUpRight className="mt-0.5 size-4 shrink-0 text-gold" aria-hidden />
+                      </Link>
+                    ))
+                  : (editoria.sections ?? []).slice(0, 4).map((s) => (
+                      <div
+                        key={s.id}
+                        className={cn(
+                          "flex items-start justify-between gap-6 border-t pt-4 text-sm",
+                          light ? "border-line text-navy" : "border-white/12 text-white/85",
+                        )}
+                      >
+                        <span className="font-semibold">{s.title}</span>
+                        <span className="shrink-0 text-[11px] font-semibold tracking-[0.12em] text-gold uppercase">
+                          Em breve
+                        </span>
+                      </div>
+                    ))}
+              </div>
             </div>
 
-            <div className="mt-9">
+            <div className="mt-10">
               <ActionLink
                 to={editoria.path}
-                variant={editoria.tone === "wellness" ? "secondary" : "secondaryDark"}
+                variant={light ? "secondary" : "secondaryDark"}
                 event="editorial_selected"
                 onClick={() =>
                   track("editorial_selected", { editoria: editoria.id, source_page: "conteudo" })
@@ -458,5 +479,76 @@ export function NewsletterCallout({ editoria }: { editoria?: Editoria }) {
         </div>
       </Container>
     </section>
+  );
+}
+
+/* ---------- Blocos conceituais de uma editoria ---------- */
+export function EditorialSections({
+  sections,
+  dark = false,
+}: {
+  sections: EditorialSection[];
+  dark?: boolean;
+}) {
+  return (
+    <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {sections.map((s) => (
+        <article
+          key={s.id}
+          className={cn(
+            "group flex flex-col overflow-hidden rounded-xl border",
+            dark ? "border-white/12 bg-white/[0.04]" : "border-line bg-offwhite",
+          )}
+        >
+          {s.image ? (
+            <div className="relative overflow-hidden">
+              <img
+                src={s.image}
+                alt={s.imageAlt ?? ""}
+                width={1408}
+                height={1056}
+                loading="lazy"
+                className="aspect-[16/10] w-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
+              />
+              <span className="absolute top-4 left-4 rounded-full bg-black/70 px-3 py-1 text-[10px] font-semibold tracking-[0.14em] text-gold uppercase">
+                Em breve
+              </span>
+            </div>
+          ) : (
+            <div
+              className={cn(
+                "flex aspect-[16/10] flex-col justify-between p-7",
+                dark
+                  ? "bg-[linear-gradient(140deg,rgba(255,255,255,0.10),rgba(255,255,255,0))]"
+                  : "bg-[linear-gradient(140deg,rgba(1,24,58,0.07),rgba(1,24,58,0))]",
+              )}
+            >
+              <span className="text-[10px] font-semibold tracking-[0.14em] text-gold uppercase">
+                Em breve
+              </span>
+              <span
+                className={cn(
+                  "font-display text-3xl leading-[1.05] font-bold tracking-[-0.02em]",
+                  dark ? "text-white/25" : "text-navy/20",
+                )}
+              >
+                {s.label}
+              </span>
+            </div>
+          )}
+          <div className="flex flex-1 flex-col p-7">
+            <h3 className={cn("display-h4", dark ? "text-white" : "text-navy")}>{s.title}</h3>
+            <p
+              className={cn(
+                "mt-3 text-sm leading-relaxed",
+                dark ? "text-white/70" : "text-muted-foreground",
+              )}
+            >
+              {s.description}
+            </p>
+          </div>
+        </article>
+      ))}
+    </div>
   );
 }

@@ -17,6 +17,12 @@ import edtVidaAtual from "@/assets/edt-vida-atual.jpg";
 import editorial1 from "@/assets/editorial-1.jpg";
 import editorial2 from "@/assets/editorial-2.jpg";
 import editorial3 from "@/assets/editorial-3.jpg";
+import cwPodcast from "@/assets/cw-podcast.jpg";
+import cwTecnologia from "@/assets/cw-tecnologia.jpg";
+import cwCultura from "@/assets/cw-cultura.jpg";
+import vaMovimento from "@/assets/va-movimento.jpg";
+import vaLongevidade from "@/assets/va-longevidade.jpg";
+import vaComportamento from "@/assets/va-comportamento.jpg";
 
 export const SITE_URL = "https://atualcambio.lovable.app";
 
@@ -78,6 +84,18 @@ export type Editoria = {
   categories: string[];
   /** Pautas em preparação — exibidas como "Em breve", nunca como publicadas. */
   upcoming: { title: string; description: string; categoria: string }[];
+  /** Blocos conceituais da editoria — territórios de cobertura, sem conteúdo publicado. */
+  sections?: EditorialSection[];
+};
+
+/** Território editorial. Enquanto não houver conteúdo real, aparece como "Em breve". */
+export type EditorialSection = {
+  id: string;
+  label: string;
+  title: string;
+  description: string;
+  image?: string;
+  imageAlt?: string;
 };
 
 /* ---------------- Editorias ---------------- */
@@ -123,10 +141,9 @@ export const editorias: Editoria[] = [
     path: "/cripto-wine",
     eyebrow: "Vinho · Tecnologia · Cultura",
     headline: "Cripto Wine",
-    subheadline:
-      "Conversas sobre vinho, mercado, tecnologia e tudo o que conecta esses mundos.",
+    subheadline: "Onde vinho, tecnologia, cultura e mercado se encontram.",
     promise: "Onde vinho, tecnologia, cultura e mercado se encontram.",
-    shortDescription: "Vinho, tecnologia, cultura e negócios.",
+    shortDescription: "Vinho, tecnologia, mercado e cultura.",
     tone: "cultural",
     image: edtCriptoWine,
     imageAlt: "Conversa em uma vinícola com vista para os vinhedos ao entardecer",
@@ -158,6 +175,56 @@ export const editorias: Editoria[] = [
         categoria: "Mercado",
       },
     ],
+    sections: [
+      {
+        id: "podcast",
+        label: "Podcast",
+        title: "Podcast",
+        description:
+          "O formato principal da editoria: conversas longas sobre vinho, mercado e tecnologia, gravadas em vídeo e áudio.",
+        image: cwPodcast,
+        imageAlt: "Mesa de gravação com microfones, fones e taças de vinho em ambiente escuro",
+      },
+      {
+        id: "conversas",
+        label: "Conversas",
+        title: "Conversas",
+        description:
+          "Encontros com quem vive o vinho de perto — produção, importação, curadoria e serviço.",
+        image: cwCultura,
+        imageAlt: "Mesa longa ao entardecer com pessoas conversando à luz de velas",
+      },
+      {
+        id: "mercado",
+        label: "Mercado",
+        title: "Mercado",
+        description:
+          "Importação, exportação, câmbio e comportamento de consumo: o vinho como negócio internacional.",
+      },
+      {
+        id: "tecnologia",
+        label: "Tecnologia",
+        title: "Tecnologia",
+        description:
+          "Rastreabilidade, logística, dados e o que muda na cadeia do vinho quando a tecnologia entra.",
+        image: cwTecnologia,
+        imageAlt: "Profissional com tablet ao lado de tanques de inox em vinícola contemporânea",
+      },
+      {
+        id: "cultura",
+        label: "Cultura",
+        title: "Cultura",
+        description:
+          "Rituais, gastronomia, viagem e o lugar do vinho na conversa contemporânea.",
+      },
+      {
+        id: "vinho",
+        label: "Vinho",
+        title: "Vinho",
+        description:
+          "Regiões, safras, castas e vocabulário — o básico bem explicado, sem esnobismo.",
+      },
+    ],
   },
   {
     id: "vida-atual",
@@ -165,7 +232,7 @@ export const editorias: Editoria[] = [
     path: "/vida-atual",
     eyebrow: "Wellness · Comportamento · Qualidade de vida",
     headline: "Vida Atual",
-    subheadline: "Ideias, tendências e informação para viver melhor.",
+    subheadline: "Informação para viver melhor em um mundo que muda rápido.",
     promise: "Informação para viver melhor em um mundo que muda rápido.",
     shortDescription: "Wellness, comportamento e qualidade de vida.",
     tone: "wellness",
@@ -190,6 +257,56 @@ export const editorias: Editoria[] = [
         description:
           "Curadoria de pesquisas e especialistas — a Atual atua como curadora, não como autoridade médica.",
         categoria: "Longevidade",
+      },
+    ],
+    sections: [
+      {
+        id: "wellness",
+        label: "Wellness",
+        title: "Wellness",
+        description:
+          "Sono, alimentação, descanso e rotina — o cuidado diário tratado com informação, não com promessa.",
+        image: vaComportamento,
+        imageAlt: "Mesa de trabalho clara com notebook, caneca e planta junto à janela",
+      },
+      {
+        id: "longevidade",
+        label: "Longevidade",
+        title: "Longevidade",
+        description:
+          "Viver mais e melhor a partir de fontes confiáveis. A Atual atua como curadora, nunca como autoridade médica.",
+        image: vaLongevidade,
+        imageAlt: "Casal caminhando e conversando em um parque iluminado pelo sol",
+      },
+      {
+        id: "comportamento",
+        label: "Comportamento",
+        title: "Comportamento",
+        description:
+          "Como as pessoas trabalham, se relacionam e organizam a vida em um mundo que muda rápido.",
+      },
+      {
+        id: "movimento",
+        label: "Movimento",
+        title: "Movimento",
+        description:
+          "Exercício, deslocamento e corpo em atividade como parte da rotina, não como exceção.",
+        image: vaMovimento,
+        imageAlt: "Pessoa correndo à beira-mar em uma manhã ensolarada na cidade",
+      },
+      {
+        id: "tecnologia-e-saude",
+        label: "Tecnologia e saúde",
+        title: "Tecnologia e saúde",
+        description:
+          "Dispositivos, dados pessoais e o que a tecnologia realmente muda no cuidado com a saúde.",
+      },
+      {
+        id: "qualidade-de-vida",
+        label: "Qualidade de vida",
+        title: "Qualidade de vida",
+        description:
+          "Tempo, cidade, viagem e escolhas cotidianas de quem vive entre lugares e fusos.",
       },
     ],
   },
