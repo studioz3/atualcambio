@@ -105,12 +105,12 @@ export function Hero({
               <img
                 src={image}
                 alt={imageAlt ?? ""}
-                width={1600}
-                height={1200}
-                className="aspect-[4/3] w-full object-cover saturate-[0.85]"
+                width={1920}
+                height={720}
+                className="aspect-[16/9] w-full object-cover object-right"
               />
-              <div className="absolute inset-0 bg-navy/50 mix-blend-multiply" />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy/70 to-transparent" />
+              <div className="absolute inset-0 bg-navy/20 mix-blend-multiply" />
+              <div className="absolute inset-0 bg-gradient-to-t from-navy/60 to-transparent" />
             </div>
           ) : null}
 
