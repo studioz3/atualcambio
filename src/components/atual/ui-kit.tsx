@@ -72,7 +72,7 @@ export function Hero({
             alt={imageAlt ?? ""}
             width={1920}
             height={720}
-            className="size-full object-cover object-right"
+            className="size-full object-cover object-[72%_45%]"
           />
           {/* lente azul institucional */}
           <div className="absolute inset-0 bg-navy/20 mix-blend-multiply" />
