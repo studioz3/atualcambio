@@ -133,7 +133,8 @@ export function Hero({
 
           {children}
         </div>
-      </Container>
+      </div>
+
     </section>
   );
 }
