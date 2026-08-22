@@ -135,23 +135,16 @@ export type TrustPillar = {
 
 export function TrustPillars({ items }: { items: readonly TrustPillar[] }) {
   return (
-    <div className="surface-navy relative border-t border-white/12">
+    <div className="relative bg-slate-deep">
       <Container>
-        <ul className="grid gap-px overflow-hidden md:grid-cols-3">
+        <ul className="grid gap-12 py-16 md:grid-cols-3 md:gap-10 md:py-20">
           {items.map((item) => {
             const Icon = pillarIcons[item.id];
             return (
-              <li key={item.id} className="flex gap-5 py-10 md:pr-10">
-                <span
-                  className="flex size-12 shrink-0 items-center justify-center rounded-full border border-gold/40 text-gold"
-                  aria-hidden
-                >
-                  <Icon className="size-5" />
-                </span>
-                <div>
-                  <h3 className="display-h4 text-white">{item.title}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-white/70">{item.text}</p>
-                </div>
+              <li key={item.id} className="flex flex-col items-center px-2 text-center">
+                <Icon className="size-9 text-gold" aria-hidden />
+                <h3 className="mt-6 text-lg font-bold text-white">{item.title}</h3>
+                <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/75">{item.text}</p>
               </li>
             );
           })}
