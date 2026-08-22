@@ -1,9 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import heroAsset from "@/assets/hero-banner.jpg.asset.json";
-import appInicio from "@/assets/app-inicio.jpg.asset.json";
-import appMercados from "@/assets/app-mercados.jpg.asset.json";
-import appExtrato from "@/assets/app-extrato.jpg.asset.json";
+import heroAsset from "@/assets/hero-banner-2.jpg.asset.json";
+import appMao from "@/assets/app-mao.png.asset.json";
 
 import especialistaImg from "@/assets/card-especialista.jpg";
 import cardEmpresas from "@/assets/card-empresas.jpg";
@@ -21,7 +19,7 @@ import {
   PhotoIntentCard,
   PathCard,
   NewsCard,
-  AppMockup,
+  
   SpecialistBlock,
   ComplianceBlock,
   CTASection,
@@ -279,22 +277,13 @@ function Home() {
               </a>
             </div>
           </div>
-          {/* Screenshots reais do app Atual */}
-          <div className="relative flex items-center justify-center gap-4 lg:gap-0">
-            <AppMockup
-              screenshot={appExtrato.url}
-              screenshotAlt="Extrato da Conta Atual no aplicativo"
-              className="hidden max-w-[210px] rotate-[-6deg] opacity-90 lg:block lg:-mr-16"
-            />
-            <AppMockup
-              screenshot={appInicio.url}
-              screenshotAlt="Tela inicial da Conta Atual com saldo e atalhos"
-              className="relative z-10 max-w-[250px] lg:max-w-[270px]"
-            />
-            <AppMockup
-              screenshot={appMercados.url}
-              screenshotAlt="Cotações de USDC e USDT no aplicativo Atual"
-              className="hidden max-w-[210px] rotate-[6deg] opacity-90 lg:block lg:-ml-16"
+          {/* Ilustração real do app Atual */}
+          <div className="relative flex items-center justify-center">
+            <img
+              src={appMao.url}
+              alt="Mão segurando smartphone com a Conta Atual aberta"
+              loading="lazy"
+              className="h-auto w-full max-w-[420px] object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.35)]"
             />
           </div>
 
