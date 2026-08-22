@@ -250,7 +250,12 @@ function SegurancaPage() {
     <>
       <Hero
         eyebrow="Segurança"
-        title="Confiança faz parte da operação."
+        title={
+          <>
+            <span className="block">Confiança faz parte</span>
+            <span className="block">da operação.</span>
+          </>
+        }
         description="Tecnologia, processos de compliance e atendimento responsável para proteger cada etapa da relação com a Atual."
         image={heroSeguranca}
         imageAlt="Fachada de vidro de um edifício corporativo ao anoitecer"
