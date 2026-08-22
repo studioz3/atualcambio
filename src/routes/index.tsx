@@ -141,7 +141,7 @@ function Home() {
         }
         seals
         image={heroAsset.url}
-        imageAlt="Cliente da Atual usando o celular ao ar livre durante uma viagem"
+        imageAlt="Atendimento internacional da Atual Câmbio com globo conectado ao fundo"
 
       />
 
