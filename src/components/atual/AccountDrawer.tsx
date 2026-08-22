@@ -149,7 +149,7 @@ export function AccountDrawer({
               alt="Atual Câmbio"
               className="h-10 w-auto shrink-0 object-contain"
             />
-            <SheetTitle className="font-display mt-5 text-[1.75rem] leading-[1.12] font-bold tracking-[-0.02em] text-balance text-white">
+            <SheetTitle className="font-display mt-4 text-xl leading-[1.15] font-bold tracking-[-0.01em] text-balance text-white sm:text-[1.375rem]">
               {step === 3 ? "Tudo certo." : "Abra sua Conta Atual."}
             </SheetTitle>
             {step === 3 ? (
