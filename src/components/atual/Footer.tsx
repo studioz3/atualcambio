@@ -15,6 +15,7 @@ const columns: { title: string; items: FooterLink[] }[] = [
     items: [
       { label: "Home", to: "/" },
       { label: "Quem somos", to: "/a-atual" },
+      { label: "Segurança", to: "/seguranca" },
       { label: "Contato", to: "/", hash: "especialista" },
     ],
   },
