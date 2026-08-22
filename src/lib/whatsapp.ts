@@ -31,6 +31,14 @@ export function buildWhatsappUrl(phone: string | null, message: string): string 
   return `https://wa.me/${digits}?text=${encodeURIComponent(message)}`;
 }
 
+export function getDevice(): "mobile" | "tablet" | "desktop" {
+  if (typeof window === "undefined") return "desktop";
+  const width = window.innerWidth;
+  if (width < 768) return "mobile";
+  if (width < 1024) return "tablet";
+  return "desktop";
+}
+
 export function getUtm() {
   if (typeof window === "undefined") return {};
   const params = new URLSearchParams(window.location.search);
@@ -40,5 +48,7 @@ export function getUtm() {
     utm_source: pick("utm_source"),
     utm_medium: pick("utm_medium"),
     utm_campaign: pick("utm_campaign"),
+    dispositivo: getDevice(),
+    timestamp: new Date().toISOString(),
   };
 }
