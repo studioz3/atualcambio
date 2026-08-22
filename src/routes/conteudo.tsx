@@ -1,22 +1,57 @@
+import { useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import globalImg from "@/assets/global.jpg";
-import { Container, Section, Eyebrow } from "@/components/atual/primitives";
+import edtHub from "@/assets/edt-hub.jpg";
+import { Container, Section, SectionHeading } from "@/components/atual/primitives";
+import {
+  ArticleCard,
+  ContentSearch,
+  EditoriaBlock,
+  NewsletterCallout,
+} from "@/components/atual/editorial-ui";
 import { SpecialistCta } from "@/components/atual/blocks";
-import { editorial } from "@/content/site";
+import {
+  SITE_URL,
+  editorias,
+  publishedArticles,
+  searchArticles,
+  type Article,
+} from "@/content/editorial";
+import { track } from "@/lib/analytics";
 
 export const Route = createFileRoute("/conteudo")({
   head: () => ({
     meta: [
-      { title: "Momento Atual | Conteúdo da Atual Câmbio" },
+      { title: "Conteúdo para quem é Atual | Atual Câmbio" },
       {
         name: "description",
         content:
-          "Leituras sobre câmbio, comércio exterior e stablecoins para decidir com contexto — sem palpite de mercado.",
+          "Economia, cultura, tecnologia e bem-estar em três editorias: Momento Atual, Cripto Wine e Vida Atual.",
       },
-      { property: "og:title", content: "Momento Atual | Conteúdo da Atual Câmbio" },
+      { property: "og:title", content: "Conteúdo para quem é Atual | Atual Câmbio" },
       {
         property: "og:description",
-        content: "Câmbio, comércio exterior e stablecoins explicados com contexto.",
+        content:
+          "Economia, cultura, tecnologia e bem-estar para quem quer entender o mundo por diferentes perspectivas.",
+      },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: `${SITE_URL}/conteudo` },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+    links: [{ rel: "canonical", href: `${SITE_URL}/conteudo` }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: "Conteúdo Atual",
+          url: `${SITE_URL}/conteudo`,
+          hasPart: editorias.map((e) => ({
+            "@type": "CreativeWorkSeries",
+            name: e.name,
+            url: `${SITE_URL}${e.path}`,
+          })),
+        }),
       },
     ],
   }),
@@ -24,57 +59,93 @@ export const Route = createFileRoute("/conteudo")({
 });
 
 function Conteudo() {
-  const [featured, ...rest] = editorial;
+  const [results, setResults] = useState<Article[] | null>(null);
+  const recent = publishedArticles();
+
+  useEffect(() => {
+    track("content_hub_view", { source_page: "conteudo" });
+  }, []);
 
   return (
     <>
-      <section className="surface-navy">
+      <section className="relative overflow-hidden bg-black">
+        <img
+          src={edtHub}
+          alt="Pessoas lendo e conversando em um espaço contemporâneo com um mapa-múndi ao fundo"
+          width={1600}
+          height={1000}
+          className="absolute inset-0 size-full object-cover opacity-50"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/25" />
         <Container>
-          <div className="max-w-2xl py-20 md:py-28">
-            <Eyebrow>Momento Atual</Eyebrow>
-            <h1 className="font-display mt-6 text-[34px] leading-[1.08] font-bold text-white md:text-[52px]">
-              Conteúdo para entender antes de decidir
-            </h1>
+          <div className="relative max-w-2xl pt-[140px] pb-20 md:pt-[190px] md:pb-28">
+            <p className="font-display text-xs font-bold tracking-[0.14em] text-gold uppercase sm:text-sm">
+              Conteúdo
+            </p>
+            <h1 className="hero-title mt-6 text-white">Conteúdo para quem é Atual.</h1>
+            <p className="hero-copy mt-6 text-white/85">
+              Economia, cultura, tecnologia e bem-estar para quem quer entender o mundo por
+              diferentes perspectivas.
+            </p>
+            <div className="mt-10">
+              <ContentSearch
+                onSearch={(q) => setResults(q.trim().length < 2 ? null : searchArticles(q))}
+              />
+            </div>
           </div>
         </Container>
       </section>
 
-      <Section tone="light">
-        {featured ? (
-          <article className="grid items-center gap-10 lg:grid-cols-2">
-            <img
-              src={globalImg}
-              alt="Vista de uma cidade global a partir de um terminal de aeroporto"
-              width={1400}
-              height={900}
-              loading="lazy"
-              className="aspect-[16/10] w-full rounded-xl object-cover"
-            />
-            <div>
-              <Eyebrow>{featured.category}</Eyebrow>
-              <h2 className="font-display mt-4 text-[28px] leading-[1.12] font-bold text-navy md:text-[36px]">
-                {featured.title}
-              </h2>
-              <p className="mt-5 text-base leading-relaxed text-muted-foreground">{featured.excerpt}</p>
-              <p className="mt-6 text-xs text-muted-foreground">{featured.date}</p>
+      {results ? (
+        <Section tone="light">
+          <SectionHeading
+            eyebrow="Busca"
+            title={
+              results.length > 0
+                ? `${results.length} conteúdo${results.length > 1 ? "s" : ""} encontrado${results.length > 1 ? "s" : ""}`
+                : "Nenhum conteúdo encontrado"
+            }
+            description={
+              results.length === 0
+                ? "Tente outro termo. A busca cobre as três editorias e apenas conteúdos publicados."
+                : undefined
+            }
+          />
+          {results.length > 0 ? (
+            <div className="mt-12 grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+              {results.map((a) => (
+                <ArticleCard key={a.id} article={a} showEditoria sourcePage="busca" />
+              ))}
             </div>
-          </article>
-        ) : null}
+          ) : null}
+        </Section>
+      ) : null}
 
-        <div className="mt-20 grid gap-12 md:grid-cols-2">
-          {rest.map((item) => (
-            <article key={item.title}>
-              <div className="aspect-[16/10] rounded-xl bg-line" aria-hidden />
-              <Eyebrow>{item.category}</Eyebrow>
-              <h3 className="mt-3 text-xl leading-snug font-semibold text-navy">{item.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.excerpt}</p>
-              <p className="mt-4 text-xs text-muted-foreground">{item.date}</p>
-            </article>
-          ))}
-        </div>
+      {editorias.map((editoria, i) => (
+        <EditoriaBlock
+          key={editoria.id}
+          editoria={editoria}
+          articles={publishedArticles(editoria.id)}
+          reverse={i % 2 === 1}
+        />
+      ))}
 
-        {/* [AGUARDANDO VALIDAÇÃO] fonte de conteúdo (CMS ou API) e datas reais de publicação. */}
-      </Section>
+      {recent.length > 0 ? (
+        <Section tone="light">
+          <SectionHeading
+            eyebrow="Publicados"
+            title="Mais recentes"
+            description="Conteúdos publicados nas editorias da Atual."
+          />
+          <div className="mt-14 grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+            {recent.slice(0, 6).map((a) => (
+              <ArticleCard key={a.id} article={a} showEditoria sourcePage="conteudo" />
+            ))}
+          </div>
+        </Section>
+      ) : null}
+
+      <NewsletterCallout />
 
       <SpecialistCta context="Conteúdo" />
     </>

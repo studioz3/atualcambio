@@ -31,8 +31,11 @@ import { Route as SolucoesRouteImport } from './routes/solucoes'
 import { Route as StablecoinsRouteImport } from './routes/stablecoins'
 import { Route as TermosRouteImport } from './routes/termos'
 import { Route as CriptoWineIndexRouteImport } from './routes/cripto-wine.index'
+import { Route as CriptoWineSlugRouteImport } from './routes/cripto-wine.$slug'
 import { Route as MomentoAtualIndexRouteImport } from './routes/momento-atual.index'
+import { Route as MomentoAtualSlugRouteImport } from './routes/momento-atual.$slug'
 import { Route as VidaAtualIndexRouteImport } from './routes/vida-atual.index'
+import { Route as VidaAtualSlugRouteImport } from './routes/vida-atual.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -144,14 +147,29 @@ const CriptoWineIndexRoute = CriptoWineIndexRouteImport.update({
   path: '/cripto-wine/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CriptoWineSlugRoute = CriptoWineSlugRouteImport.update({
+  id: '/cripto-wine/$slug',
+  path: '/cripto-wine/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MomentoAtualIndexRoute = MomentoAtualIndexRouteImport.update({
   id: '/momento-atual/',
   path: '/momento-atual/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MomentoAtualSlugRoute = MomentoAtualSlugRouteImport.update({
+  id: '/momento-atual/$slug',
+  path: '/momento-atual/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VidaAtualIndexRoute = VidaAtualIndexRouteImport.update({
   id: '/vida-atual/',
   path: '/vida-atual/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VidaAtualSlugRoute = VidaAtualSlugRouteImport.update({
+  id: '/vida-atual/$slug',
+  path: '/vida-atual/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -177,6 +195,9 @@ export interface FileRoutesByFullPath {
   '/solucoes': typeof SolucoesRoute
   '/stablecoins': typeof StablecoinsRoute
   '/termos': typeof TermosRoute
+  '/cripto-wine/$slug': typeof CriptoWineSlugRoute
+  '/momento-atual/$slug': typeof MomentoAtualSlugRoute
+  '/vida-atual/$slug': typeof VidaAtualSlugRoute
   '/cripto-wine/': typeof CriptoWineIndexRoute
   '/momento-atual/': typeof MomentoAtualIndexRoute
   '/vida-atual/': typeof VidaAtualIndexRoute
@@ -203,6 +224,9 @@ export interface FileRoutesByTo {
   '/solucoes': typeof SolucoesRoute
   '/stablecoins': typeof StablecoinsRoute
   '/termos': typeof TermosRoute
+  '/cripto-wine/$slug': typeof CriptoWineSlugRoute
+  '/momento-atual/$slug': typeof MomentoAtualSlugRoute
+  '/vida-atual/$slug': typeof VidaAtualSlugRoute
   '/cripto-wine': typeof CriptoWineIndexRoute
   '/momento-atual': typeof MomentoAtualIndexRoute
   '/vida-atual': typeof VidaAtualIndexRoute
@@ -230,6 +254,9 @@ export interface FileRoutesById {
   '/solucoes': typeof SolucoesRoute
   '/stablecoins': typeof StablecoinsRoute
   '/termos': typeof TermosRoute
+  '/cripto-wine/$slug': typeof CriptoWineSlugRoute
+  '/momento-atual/$slug': typeof MomentoAtualSlugRoute
+  '/vida-atual/$slug': typeof VidaAtualSlugRoute
   '/cripto-wine/': typeof CriptoWineIndexRoute
   '/momento-atual/': typeof MomentoAtualIndexRoute
   '/vida-atual/': typeof VidaAtualIndexRoute
@@ -258,6 +285,9 @@ export interface FileRouteTypes {
     | '/solucoes'
     | '/stablecoins'
     | '/termos'
+    | '/cripto-wine/$slug'
+    | '/momento-atual/$slug'
+    | '/vida-atual/$slug'
     | '/cripto-wine/'
     | '/momento-atual/'
     | '/vida-atual/'
@@ -284,6 +314,9 @@ export interface FileRouteTypes {
     | '/solucoes'
     | '/stablecoins'
     | '/termos'
+    | '/cripto-wine/$slug'
+    | '/momento-atual/$slug'
+    | '/vida-atual/$slug'
     | '/cripto-wine'
     | '/momento-atual'
     | '/vida-atual'
@@ -310,6 +343,9 @@ export interface FileRouteTypes {
     | '/solucoes'
     | '/stablecoins'
     | '/termos'
+    | '/cripto-wine/$slug'
+    | '/momento-atual/$slug'
+    | '/vida-atual/$slug'
     | '/cripto-wine/'
     | '/momento-atual/'
     | '/vida-atual/'
@@ -337,6 +373,9 @@ export interface RootRouteChildren {
   SolucoesRoute: typeof SolucoesRoute
   StablecoinsRoute: typeof StablecoinsRoute
   TermosRoute: typeof TermosRoute
+  CriptoWineSlugRoute: typeof CriptoWineSlugRoute
+  MomentoAtualSlugRoute: typeof MomentoAtualSlugRoute
+  VidaAtualSlugRoute: typeof VidaAtualSlugRoute
   CriptoWineIndexRoute: typeof CriptoWineIndexRoute
   MomentoAtualIndexRoute: typeof MomentoAtualIndexRoute
   VidaAtualIndexRoute: typeof VidaAtualIndexRoute
@@ -498,6 +537,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CriptoWineIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cripto-wine/$slug': {
+      id: '/cripto-wine/$slug'
+      path: '/cripto-wine/$slug'
+      fullPath: '/cripto-wine/$slug'
+      preLoaderRoute: typeof CriptoWineSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/momento-atual/': {
       id: '/momento-atual/'
       path: '/momento-atual'
@@ -505,11 +551,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MomentoAtualIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/momento-atual/$slug': {
+      id: '/momento-atual/$slug'
+      path: '/momento-atual/$slug'
+      fullPath: '/momento-atual/$slug'
+      preLoaderRoute: typeof MomentoAtualSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/vida-atual/': {
       id: '/vida-atual/'
       path: '/vida-atual'
       fullPath: '/vida-atual/'
       preLoaderRoute: typeof VidaAtualIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vida-atual/$slug': {
+      id: '/vida-atual/$slug'
+      path: '/vida-atual/$slug'
+      fullPath: '/vida-atual/$slug'
+      preLoaderRoute: typeof VidaAtualSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -537,6 +597,9 @@ const rootRouteChildren: RootRouteChildren = {
   SolucoesRoute: SolucoesRoute,
   StablecoinsRoute: StablecoinsRoute,
   TermosRoute: TermosRoute,
+  CriptoWineSlugRoute: CriptoWineSlugRoute,
+  MomentoAtualSlugRoute: MomentoAtualSlugRoute,
+  VidaAtualSlugRoute: VidaAtualSlugRoute,
   CriptoWineIndexRoute: CriptoWineIndexRoute,
   MomentoAtualIndexRoute: MomentoAtualIndexRoute,
   VidaAtualIndexRoute: VidaAtualIndexRoute,
