@@ -107,8 +107,8 @@ function Cotacoes() {
         eyebrow="Cotações"
         title={
           <>
-            O mercado muda.
-            <br />A cotação também.
+            <span className="block lg:whitespace-nowrap">O mercado muda.</span>
+            <span className="block lg:whitespace-nowrap">A cotação também.</span>
           </>
         }
         description="Acompanhe moedas e stablecoins e escolha o melhor caminho para sua operação."
