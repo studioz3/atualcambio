@@ -114,7 +114,7 @@ function QuemSomosPage() {
 
   const openSpecialist = (origem: string) => {
     track("about_specialist_click", { origem });
-    openLead({ intent: "duvida", origem });
+    openLead({ intent: "duvida", context: origem });
   };
 
   return (
