@@ -27,6 +27,8 @@
   --color-foreground: var(--foreground);
   --color-navy: var(--navy);
   --color-navy-soft: var(--navy-soft);
+  --color-slate-deep: var(--slate-deep);
+
   --color-gold: var(--gold);
   --color-gold-foreground: var(--gold-foreground);
   --color-gold-soft: var(--gold-soft);
