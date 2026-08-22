@@ -259,6 +259,56 @@ export const editorias: Editoria[] = [
         categoria: "Longevidade",
       },
     ],
+    sections: [
+      {
+        id: "wellness",
+        label: "Wellness",
+        title: "Wellness",
+        description:
+          "Sono, alimentação, descanso e rotina — o cuidado diário tratado com informação, não com promessa.",
+        image: vaComportamento,
+        imageAlt: "Mesa de trabalho clara com notebook, caneca e planta junto à janela",
+      },
+      {
+        id: "longevidade",
+        label: "Longevidade",
+        title: "Longevidade",
+        description:
+          "Viver mais e melhor a partir de fontes confiáveis. A Atual atua como curadora, nunca como autoridade médica.",
+        image: vaLongevidade,
+        imageAlt: "Casal caminhando e conversando em um parque iluminado pelo sol",
+      },
+      {
+        id: "comportamento",
+        label: "Comportamento",
+        title: "Comportamento",
+        description:
+          "Como as pessoas trabalham, se relacionam e organizam a vida em um mundo que muda rápido.",
+      },
+      {
+        id: "movimento",
+        label: "Movimento",
+        title: "Movimento",
+        description:
+          "Exercício, deslocamento e corpo em atividade como parte da rotina, não como exceção.",
+        image: vaMovimento,
+        imageAlt: "Pessoa correndo à beira-mar em uma manhã ensolarada na cidade",
+      },
+      {
+        id: "tecnologia-e-saude",
+        label: "Tecnologia e saúde",
+        title: "Tecnologia e saúde",
+        description:
+          "Dispositivos, dados pessoais e o que a tecnologia realmente muda no cuidado com a saúde.",
+      },
+      {
+        id: "qualidade-de-vida",
+        label: "Qualidade de vida",
+        title: "Qualidade de vida",
+        description:
+          "Tempo, cidade, viagem e escolhas cotidianas de quem vive entre lugares e fusos.",
+      },
+    ],
   },
 ];
 
