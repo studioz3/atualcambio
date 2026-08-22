@@ -62,6 +62,8 @@
 
   --navy: oklch(0.2149 0.0729 256.96);
   --navy-soft: oklch(0.2749 0.0629 256.96);
+  --slate-deep: oklch(0.3571 0.0384 250.36);
+
   --gold: oklch(0.7377 0.1369 86.25);
   /* Regra de design: botão dourado sempre com texto branco */
   --gold-foreground: oklch(1 0 0);
