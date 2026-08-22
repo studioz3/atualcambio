@@ -794,7 +794,7 @@ export const articles: Article[] = [
     meta_description:
       "Objetivo, calendário, custo total e documentação: como estruturar uma decisão de câmbio sem depender de palpite.",
     cta: ctaRemessas,
-    destaque: true,
+    destaque: false,
     status: "publicado",
     created_at: now,
     updated_at: now,
