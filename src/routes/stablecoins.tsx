@@ -5,11 +5,9 @@ import heroApp from "@/assets/app-mao-2.png.asset.json";
 /**
  * Telas reais do app — basta trocar o import (ou o asset) para atualizar a prova de produto.
  */
-import appInicio from "@/assets/app-inicio.jpg.asset.json";
-import appMercados from "@/assets/app-mercados.jpg.asset.json";
-import appExtrato from "@/assets/app-extrato.jpg.asset.json";
+import appTelas from "@/assets/app-telas-trio.png.asset.json";
 import { Section, SectionHeading, ActionButton, ActionLink } from "@/components/atual/primitives";
-import { Hero, TrustPillars, PathCard, AppMockup, CTASection } from "@/components/atual/ui-kit";
+import { Hero, TrustPillars, PathCard, CTASection } from "@/components/atual/ui-kit";
 import { StoreBadges } from "@/components/atual/StoreBadges";
 import {
   StablecoinLeadForm,
@@ -288,19 +286,12 @@ function Stablecoins() {
             title="Veja antes de confirmar."
             description="Consulte o ativo, a cotação e as informações da operação diretamente pela Conta Atual."
           />
-          <div className="grid grid-cols-2 gap-5 sm:grid-cols-3">
-            <AppMockup screenshot={appInicio.url} screenshotAlt="Tela inicial da Conta Atual" />
-            <AppMockup
-              screenshot={appMercados.url}
-              screenshotAlt="Tela de mercados da Conta Atual com ativos disponíveis"
-              className="sm:mt-10"
-            />
-            <AppMockup
-              screenshot={appExtrato.url}
-              screenshotAlt="Extrato de operações na Conta Atual"
-              className="col-span-2 sm:col-span-1"
-            />
-          </div>
+          <img
+            src={appTelas.url}
+            alt="Três telas da Conta Atual: saldo, mercados com USDT e USDC, e extrato de operações"
+            className="h-auto w-full object-contain"
+            loading="lazy"
+          />
         </div>
       </Section>
 
