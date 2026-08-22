@@ -232,7 +232,7 @@ export const editorias: Editoria[] = [
     path: "/vida-atual",
     eyebrow: "Wellness · Comportamento · Qualidade de vida",
     headline: "Vida Atual",
-    subheadline: "Ideias, tendências e informação para viver melhor.",
+    subheadline: "Informação para viver melhor em um mundo que muda rápido.",
     promise: "Informação para viver melhor em um mundo que muda rápido.",
     shortDescription: "Wellness, comportamento e qualidade de vida.",
     tone: "wellness",
