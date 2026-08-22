@@ -83,8 +83,7 @@ export const leadIntents: LeadIntentConfig[] = [
     produto: "Remessa internacional",
     tipoCliente: "pf",
     event: "remittance_start",
-    to: "/solucoes",
-    hash: "remessas",
+    to: "/remessas-internacionais",
     formTitle: "Remessa internacional",
     fields: [
       { name: "moeda", label: "Moeda", type: "select", options: ["USD", "EUR", "GBP", "CAD", "AUD", "Outra"], required: true },
@@ -112,8 +111,7 @@ export const leadIntents: LeadIntentConfig[] = [
     produto: "Stablecoins",
     tipoCliente: "ambos",
     event: "stablecoin_buy",
-    to: "/solucoes",
-    hash: "stablecoins",
+    to: "/stablecoins",
     formTitle: "Operação com stablecoins",
     fields: [
       { name: "moeda", label: "Ativo", type: "select", options: ["USDT", "USDC"], required: true },
@@ -128,8 +126,7 @@ export const leadIntents: LeadIntentConfig[] = [
     produto: "Câmbio turismo",
     tipoCliente: "pf",
     event: "intent_selected",
-    to: "/solucoes",
-    hash: "turismo",
+    to: "/cambio-turismo",
     formTitle: "Moeda para viagem",
     fields: [
       { name: "moeda", label: "Moeda", type: "select", options: ["USD", "EUR", "GBP", "ARS", "CLP", "Outra"], required: true },
@@ -158,8 +155,7 @@ export const leadIntents: LeadIntentConfig[] = [
     produto: "Conta Atual",
     tipoCliente: "ambos",
     event: "open_account_click",
-    to: "/solucoes",
-    hash: "conta",
+    to: "/conta-atual",
     formTitle: "Abrir Conta Atual",
     fields: [
       { name: "operacao", label: "Vai usar a conta para", type: "select", options: ["Uso pessoal", "Uso da empresa"], required: true },
