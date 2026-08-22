@@ -28,6 +28,8 @@ const leadSchema = z.object({
   utm_source: z.string().trim().max(120).optional(),
   utm_medium: z.string().trim().max(120).optional(),
   utm_campaign: z.string().trim().max(120).optional(),
+  dispositivo: z.enum(["mobile", "tablet", "desktop"]).optional(),
+  timestamp: z.string().trim().max(40).optional(),
 });
 
 export type LeadInput = z.infer<typeof leadSchema>;
