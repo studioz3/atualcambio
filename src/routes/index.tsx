@@ -251,7 +251,7 @@ function Home() {
                 </li>
               ))}
             </ul>
-            <div className="mt-10 flex flex-wrap gap-3">
+            <div className="mt-10 flex flex-wrap items-center gap-4">
               <ActionButton
                 size="lg"
                 event="open_account_click"
@@ -259,23 +259,9 @@ function Home() {
               >
                 Abrir Conta Atual
               </ActionButton>
-              <a
-                href={links.appStore}
-                data-event="app_store_click"
-                onClick={() => track("app_store_click", { origem: "home" })}
-                className="inline-flex min-h-14 items-center rounded-sm border border-white/25 px-6 text-sm text-white transition-colors hover:border-gold hover:text-gold"
-              >
-                App Store
-              </a>
-              <a
-                href={links.googlePlay}
-                data-event="google_play_click"
-                onClick={() => track("google_play_click", { origem: "home" })}
-                className="inline-flex min-h-14 items-center rounded-sm border border-white/25 px-6 text-sm text-white transition-colors hover:border-gold hover:text-gold"
-              >
-                Google Play
-              </a>
+              <StoreBadges origem="home" />
             </div>
+
           </div>
           {/* Ilustração real do app Atual — sangra na borda direita */}
           <div className="relative flex items-center justify-center lg:justify-end">
