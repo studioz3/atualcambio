@@ -135,32 +135,34 @@ export function AccountDrawer({
             aria-hidden
             className="pointer-events-none absolute -right-8 -bottom-10 -z-10 h-44 w-auto object-contain opacity-[0.07]"
           />
-          <div className="flex items-start justify-between gap-4">
+          <button
+            type="button"
+            onClick={() => onOpenChange(false)}
+            aria-label="Fechar"
+            className="absolute top-5 right-4 grid size-11 place-items-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
+          >
+            <X className="size-5" aria-hidden />
+          </button>
+          <div className="flex flex-col items-center text-center">
             <img
               src={BRAND_SYMBOL}
               alt="Atual Câmbio"
-              className="h-9 w-auto shrink-0 object-contain"
+              className="h-10 w-auto shrink-0 object-contain"
             />
-            <button
-              type="button"
-              onClick={() => onOpenChange(false)}
-              aria-label="Fechar"
-              className="-mt-1 -mr-2 grid size-11 shrink-0 place-items-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
-            >
-              <X className="size-5" aria-hidden />
-            </button>
+            <SheetTitle className="font-display mt-5 text-[1.75rem] leading-[1.12] font-bold tracking-[-0.02em] text-balance text-white">
+              {step === 3 ? "Tudo certo." : "Abra sua Conta Atual."}
+            </SheetTitle>
+            {step === 3 ? (
+              <SheetDescription className="mt-3 max-w-[38ch] text-sm leading-relaxed text-pretty text-white/70">
+                Agora você pode continuar a abertura da Conta Atual pelo aplicativo.
+              </SheetDescription>
+            ) : (
+              <SheetDescription className="sr-only">
+                Formulário de abertura da Conta Atual.
+              </SheetDescription>
+            )}
           </div>
-          <p className="mt-6 text-[11px] font-semibold tracking-[0.16em] text-gold uppercase">
-            Conta Atual
-          </p>
-          <SheetTitle className="font-display mt-2 text-[1.75rem] leading-[1.12] font-bold tracking-[-0.02em] text-balance text-white">
-            {step === 3 ? "Tudo certo." : "Abra sua Conta Atual."}
-          </SheetTitle>
-          <SheetDescription className="mt-3 max-w-[38ch] text-sm leading-relaxed text-pretty text-white/70">
-            {step === 3
-              ? "Agora você pode continuar a abertura da Conta Atual pelo aplicativo."
-              : "Comece seu cadastro e continue sua jornada pelo app."}
-          </SheetDescription>
+
         </header>
 
         {step !== 3 ? (
