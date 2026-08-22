@@ -64,7 +64,7 @@ export function Hero({
   children?: ReactNode;
 }) {
   return (
-    <section className="surface-navy relative overflow-hidden">
+    <section className={cn("relative overflow-hidden", image ? "surface-ink" : "surface-navy")}>
       {image ? (
         <div className="absolute inset-0 hidden lg:block">
           <img
@@ -74,10 +74,11 @@ export function Hero({
             height={720}
             className="size-full object-cover object-center"
           />
-          {/* lente azul institucional */}
-          <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/70 to-transparent" />
+          {/* scrim neutro para legibilidade */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent" />
         </div>
       ) : null}
+
 
       <Container>
         <div className="relative grid gap-12 py-20 md:py-28 lg:h-[680px] lg:min-h-[680px] lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:py-24">
@@ -108,8 +109,8 @@ export function Hero({
                 height={720}
                 className="aspect-[16/9] w-full object-cover object-right"
               />
-              <div className="absolute inset-0 bg-navy/20 mix-blend-multiply" />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy/60 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+
             </div>
           ) : null}
 
