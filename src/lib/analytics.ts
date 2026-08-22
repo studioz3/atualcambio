@@ -71,6 +71,14 @@ export const ANALYTICS_EVENTS = [
   "security_contact_click",
   "security_specialist_click",
   "security_open_account_click",
+  "about_page_view",
+  "about_solutions_click",
+  "about_account_click",
+  "about_business_click",
+  "about_security_click",
+  "about_specialist_click",
+  "about_content_click",
+  "about_open_account_click",
 ] as const;
 
 export type AnalyticsEvent = (typeof ANALYTICS_EVENTS)[number];

@@ -21,6 +21,7 @@ import { Route as EmpresasRouteImport } from './routes/empresas'
 import { Route as OuvidoriaRouteImport } from './routes/ouvidoria'
 import { Route as PldFtRouteImport } from './routes/pld-ft'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
+import { Route as QuemSomosRouteImport } from './routes/quem-somos'
 import { Route as ResponsabilidadeSocialRouteImport } from './routes/responsabilidade-social'
 import { Route as SegurancaRouteImport } from './routes/seguranca'
 import { Route as SegurancaCiberneticaRouteImport } from './routes/seguranca-cibernetica'
@@ -88,6 +89,11 @@ const PrivacidadeRoute = PrivacidadeRouteImport.update({
   path: '/privacidade',
   getParentRoute: () => rootRouteImport,
 } as any)
+const QuemSomosRoute = QuemSomosRouteImport.update({
+  id: '/quem-somos',
+  path: '/quem-somos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResponsabilidadeSocialRoute = ResponsabilidadeSocialRouteImport.update({
   id: '/responsabilidade-social',
   path: '/responsabilidade-social',
@@ -132,6 +138,7 @@ export interface FileRoutesByFullPath {
   '/ouvidoria': typeof OuvidoriaRoute
   '/pld-ft': typeof PldFtRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/quem-somos': typeof QuemSomosRoute
   '/responsabilidade-social': typeof ResponsabilidadeSocialRoute
   '/seguranca': typeof SegurancaRoute
   '/seguranca-cibernetica': typeof SegurancaCiberneticaRoute
@@ -152,6 +159,7 @@ export interface FileRoutesByTo {
   '/ouvidoria': typeof OuvidoriaRoute
   '/pld-ft': typeof PldFtRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/quem-somos': typeof QuemSomosRoute
   '/responsabilidade-social': typeof ResponsabilidadeSocialRoute
   '/seguranca': typeof SegurancaRoute
   '/seguranca-cibernetica': typeof SegurancaCiberneticaRoute
@@ -173,6 +181,7 @@ export interface FileRoutesById {
   '/ouvidoria': typeof OuvidoriaRoute
   '/pld-ft': typeof PldFtRoute
   '/privacidade': typeof PrivacidadeRoute
+  '/quem-somos': typeof QuemSomosRoute
   '/responsabilidade-social': typeof ResponsabilidadeSocialRoute
   '/seguranca': typeof SegurancaRoute
   '/seguranca-cibernetica': typeof SegurancaCiberneticaRoute
@@ -195,6 +204,7 @@ export interface FileRouteTypes {
     | '/ouvidoria'
     | '/pld-ft'
     | '/privacidade'
+    | '/quem-somos'
     | '/responsabilidade-social'
     | '/seguranca'
     | '/seguranca-cibernetica'
@@ -215,6 +225,7 @@ export interface FileRouteTypes {
     | '/ouvidoria'
     | '/pld-ft'
     | '/privacidade'
+    | '/quem-somos'
     | '/responsabilidade-social'
     | '/seguranca'
     | '/seguranca-cibernetica'
@@ -235,6 +246,7 @@ export interface FileRouteTypes {
     | '/ouvidoria'
     | '/pld-ft'
     | '/privacidade'
+    | '/quem-somos'
     | '/responsabilidade-social'
     | '/seguranca'
     | '/seguranca-cibernetica'
@@ -256,6 +268,7 @@ export interface RootRouteChildren {
   OuvidoriaRoute: typeof OuvidoriaRoute
   PldFtRoute: typeof PldFtRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
+  QuemSomosRoute: typeof QuemSomosRoute
   ResponsabilidadeSocialRoute: typeof ResponsabilidadeSocialRoute
   SegurancaRoute: typeof SegurancaRoute
   SegurancaCiberneticaRoute: typeof SegurancaCiberneticaRoute
@@ -350,6 +363,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacidadeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/quem-somos': {
+      id: '/quem-somos'
+      path: '/quem-somos'
+      fullPath: '/quem-somos'
+      preLoaderRoute: typeof QuemSomosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/responsabilidade-social': {
       id: '/responsabilidade-social'
       path: '/responsabilidade-social'
@@ -408,6 +428,7 @@ const rootRouteChildren: RootRouteChildren = {
   OuvidoriaRoute: OuvidoriaRoute,
   PldFtRoute: PldFtRoute,
   PrivacidadeRoute: PrivacidadeRoute,
+  QuemSomosRoute: QuemSomosRoute,
   ResponsabilidadeSocialRoute: ResponsabilidadeSocialRoute,
   SegurancaRoute: SegurancaRoute,
   SegurancaCiberneticaRoute: SegurancaCiberneticaRoute,
