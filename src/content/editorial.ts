@@ -141,10 +141,9 @@ export const editorias: Editoria[] = [
     path: "/cripto-wine",
     eyebrow: "Vinho · Tecnologia · Cultura",
     headline: "Cripto Wine",
-    subheadline:
-      "Conversas sobre vinho, mercado, tecnologia e tudo o que conecta esses mundos.",
+    subheadline: "Onde vinho, tecnologia, cultura e mercado se encontram.",
     promise: "Onde vinho, tecnologia, cultura e mercado se encontram.",
-    shortDescription: "Vinho, tecnologia, cultura e negócios.",
+    shortDescription: "Vinho, tecnologia, mercado e cultura.",
     tone: "cultural",
     image: edtCriptoWine,
     imageAlt: "Conversa em uma vinícola com vista para os vinhedos ao entardecer",
