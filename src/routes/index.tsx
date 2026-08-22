@@ -19,7 +19,7 @@ import {
   PhotoIntentCard,
   PathCard,
   NewsCard,
-  AppMockup,
+  
   SpecialistBlock,
   ComplianceBlock,
   CTASection,
