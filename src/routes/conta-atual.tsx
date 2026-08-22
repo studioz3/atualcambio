@@ -195,13 +195,7 @@ function ContaAtual() {
   return (
     <>
       <Hero
-        title={
-          <>
-            Sua Conta Atual,
-            <br />
-            onde você estiver.
-          </>
-        }
+        title="Sua Conta Atual, onde você estiver."
         description="Acesse soluções digitais da Atual, acompanhe suas operações e movimente recursos pelo aplicativo."
         primary={
           <ActionLink size="lg" href={links.account} external event="open_account_click">
