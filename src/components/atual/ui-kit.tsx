@@ -66,7 +66,7 @@ export function Hero({
   children?: ReactNode;
 }) {
   return (
-    <section className={cn("relative overflow-hidden", image ? "surface-ink" : "surface-navy")}>
+    <section className={cn("hero-shell relative overflow-hidden", image ? "surface-ink" : "surface-navy")}>
       {image ? (
         <div className="absolute inset-0 hidden lg:block">
           <img
@@ -91,30 +91,31 @@ export function Hero({
             height={1350}
             className="size-full object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/55 to-black/90" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/92 via-black/70 to-black/92" />
         </div>
       ) : null}
 
-      <Container>
-        <div className="relative grid gap-12 py-20 md:py-28 lg:h-[680px] lg:min-h-[680px] lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:py-24">
-          <div className="max-w-2xl">
+      <div className="hero-container">
+        <div className="relative grid gap-12 pt-[130px] pb-16 md:py-28 lg:h-[680px] lg:min-h-[680px] lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:py-24 lg:pt-24">
+          <div className="w-full max-w-none lg:max-w-2xl">
             {eyebrow ? (
               <p className="font-display text-sm font-bold tracking-[0.01em] text-gold sm:text-base">
                 {eyebrow}
               </p>
             ) : null}
-            <h1 className="display-hero mt-6 text-white lg:whitespace-nowrap">{title}</h1>
-            <p className="body-lg mt-8 max-w-xl text-white/85">{description}</p>
+            <h1 className="hero-title mt-6 text-white lg:whitespace-nowrap">{title}</h1>
+            <p className="hero-copy mt-7 text-white/85 md:mt-8">{description}</p>
             {primary || secondary ? (
-              <div className="mt-12 flex flex-wrap gap-4">
+              <div className="hero-actions mt-9 md:mt-12">
                 {primary}
                 {secondary}
               </div>
             ) : null}
             {seals ? (
-              <AccreditationSeals size="sm" className="mt-14 border-t border-white/12 pt-9" />
+              <AccreditationSeals size="sm" className="mt-11 border-t border-white/12 pt-9 md:mt-14" />
             ) : null}
           </div>
+
           {image && !mobileImage ? (
             <div className="relative overflow-hidden rounded-xl lg:hidden">
               <img
