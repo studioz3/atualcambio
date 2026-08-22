@@ -38,7 +38,7 @@ function LoginCard({ onDone }: { onDone: () => void }) {
     <div className="surface-navy flex min-h-screen items-center justify-center px-6">
       <form
         onSubmit={submit}
-        className="w-full max-w-sm rounded-xl bg-white p-8 shadow-xl"
+        className="w-full max-w-sm rounded-xl bg-white p-8 text-navy shadow-xl"
         autoComplete="on"
       >
         <p className="text-[11px] font-semibold tracking-[0.18em] text-muted-foreground uppercase">
@@ -47,7 +47,7 @@ function LoginCard({ onDone }: { onDone: () => void }) {
         <h1 className="mt-2 text-xl font-bold text-navy">Painel gerencial Atual</h1>
         <div className="mt-6 space-y-4">
           <div>
-            <Label htmlFor="admin-email">E-mail corporativo</Label>
+            <Label htmlFor="admin-email" className="text-navy">E-mail corporativo</Label>
             <Input
               id="admin-email"
               type="email"
@@ -58,7 +58,7 @@ function LoginCard({ onDone }: { onDone: () => void }) {
             />
           </div>
           <div>
-            <Label htmlFor="admin-senha">Senha</Label>
+            <Label htmlFor="admin-senha" className="text-navy">Senha</Label>
             <Input
               id="admin-senha"
               type="password"
