@@ -41,7 +41,15 @@ export const nav = [
   { label: "Para empresas", to: "/empresas" },
   { label: "Cotações", to: "/cotacoes" },
   { label: "Conteúdo", to: "/conteudo" },
-  { label: "A Atual", to: "/a-atual" },
+  {
+    label: "A Atual",
+    to: "/quem-somos",
+    items: [
+      { label: "Quem Somos", to: "/quem-somos", hash: "" },
+      { label: "Segurança", to: "/seguranca", hash: "" },
+      { label: "Contato", to: "/contato", hash: "" },
+    ],
+  },
 ] as const;
 
 export const intents = [
