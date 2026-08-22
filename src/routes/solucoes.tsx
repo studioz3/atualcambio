@@ -1,9 +1,24 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Check } from "lucide-react";
-import { Container, Section, SectionHeading, Eyebrow, ActionButton } from "@/components/atual/primitives";
+import {
+  Container,
+  Section,
+  SectionHeading,
+  Eyebrow,
+  ActionButton,
+  ActionLink,
+} from "@/components/atual/primitives";
 import { SpecialistCta, FaqSection } from "@/components/atual/blocks";
 import { useLead } from "@/components/atual/LeadProvider";
 import { solutions, brand } from "@/content/site";
+
+/** Cada solução tem uma página dedicada. */
+const solutionRoutes: Record<string, string> = {
+  remessas: "/remessas-internacionais",
+  stablecoins: "/stablecoins",
+  turismo: "/cambio-turismo",
+  conta: "/conta-atual",
+};
 
 export const Route = createFileRoute("/solucoes")({
   head: () => ({
@@ -58,14 +73,20 @@ function Solucoes() {
                   </li>
                 ))}
               </ul>
-              <ActionButton
-                className="mt-8"
-                event="lead_solution"
-                onClick={() => openLead({ context: item.title })}
-              >
-                Falar sobre {item.title.toLowerCase()}
-              </ActionButton>
-              {/* [AGUARDANDO API ONZ] onboarding, deeplinks e telas reais do app. */}
+              <div className="mt-8 flex flex-wrap gap-3">
+                {solutionRoutes[item.id] ? (
+                  <ActionLink to={solutionRoutes[item.id]!} event="solution_page_click">
+                    Ver {item.title.toLowerCase()}
+                  </ActionLink>
+                ) : null}
+                <ActionButton
+                  variant="secondary"
+                  event="lead_solution"
+                  onClick={() => openLead({ context: item.title })}
+                >
+                  Falar com especialista
+                </ActionButton>
+              </div>
             </div>
           </div>
         </Section>

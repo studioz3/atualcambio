@@ -23,17 +23,17 @@ const columns: { title: string; items: FooterLink[] }[] = [
     title: "Serviços",
     items: [
       { label: "Câmbio comercial", to: "/empresas" },
-      { label: "Câmbio turismo", to: "/solucoes", hash: "turismo" },
+      { label: "Câmbio turismo", to: "/cambio-turismo" },
       { label: "Comércio exterior", to: "/empresas" },
     ],
   },
   {
     title: "Soluções",
     items: [
-      { label: "Consultoria cambial", to: "/", hash: "especialista" },
-      { label: "Remessas internacionais", to: "/solucoes", hash: "remessas" },
-      { label: "USDT / USDC", to: "/solucoes", hash: "stablecoins" },
-      { label: "Conta Atual", to: "/", hash: "conta-atual" },
+      { label: "Consultoria cambial", to: "/fale-com-especialista" },
+      { label: "Remessas internacionais", to: "/remessas-internacionais" },
+      { label: "USDT / USDC", to: "/stablecoins" },
+      { label: "Conta Atual", to: "/conta-atual" },
     ],
   },
   {

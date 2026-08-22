@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AAtualRouteImport } from './routes/a-atual'
+import { Route as CambioTurismoRouteImport } from './routes/cambio-turismo'
 import { Route as CanalDeDenunciasRouteImport } from './routes/canal-de-denuncias'
 import { Route as CodigoDeCondutaRouteImport } from './routes/codigo-de-conduta'
 import { Route as ContaAtualRouteImport } from './routes/conta-atual'
@@ -25,6 +26,7 @@ import { Route as OuvidoriaRouteImport } from './routes/ouvidoria'
 import { Route as PldFtRouteImport } from './routes/pld-ft'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as QuemSomosRouteImport } from './routes/quem-somos'
+import { Route as RemessasInternacionaisRouteImport } from './routes/remessas-internacionais'
 import { Route as ResponsabilidadeSocialRouteImport } from './routes/responsabilidade-social'
 import { Route as SegurancaRouteImport } from './routes/seguranca'
 import { Route as SegurancaCiberneticaRouteImport } from './routes/seguranca-cibernetica'
@@ -49,6 +51,11 @@ const IndexRoute = IndexRouteImport.update({
 const AAtualRoute = AAtualRouteImport.update({
   id: '/a-atual',
   path: '/a-atual',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CambioTurismoRoute = CambioTurismoRouteImport.update({
+  id: '/cambio-turismo',
+  path: '/cambio-turismo',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CanalDeDenunciasRoute = CanalDeDenunciasRouteImport.update({
@@ -119,6 +126,11 @@ const PrivacidadeRoute = PrivacidadeRouteImport.update({
 const QuemSomosRoute = QuemSomosRouteImport.update({
   id: '/quem-somos',
   path: '/quem-somos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RemessasInternacionaisRoute = RemessasInternacionaisRouteImport.update({
+  id: '/remessas-internacionais',
+  path: '/remessas-internacionais',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResponsabilidadeSocialRoute = ResponsabilidadeSocialRouteImport.update({
@@ -200,6 +212,7 @@ const VidaAtualSlugRoute = VidaAtualSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/a-atual': typeof AAtualRoute
+  '/cambio-turismo': typeof CambioTurismoRoute
   '/canal-de-denuncias': typeof CanalDeDenunciasRoute
   '/codigo-de-conduta': typeof CodigoDeCondutaRoute
   '/conta-atual': typeof ContaAtualRoute
@@ -214,6 +227,7 @@ export interface FileRoutesByFullPath {
   '/pld-ft': typeof PldFtRoute
   '/privacidade': typeof PrivacidadeRoute
   '/quem-somos': typeof QuemSomosRoute
+  '/remessas-internacionais': typeof RemessasInternacionaisRoute
   '/responsabilidade-social': typeof ResponsabilidadeSocialRoute
   '/seguranca': typeof SegurancaRoute
   '/seguranca-cibernetica': typeof SegurancaCiberneticaRoute
@@ -233,6 +247,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/a-atual': typeof AAtualRoute
+  '/cambio-turismo': typeof CambioTurismoRoute
   '/canal-de-denuncias': typeof CanalDeDenunciasRoute
   '/codigo-de-conduta': typeof CodigoDeCondutaRoute
   '/conta-atual': typeof ContaAtualRoute
@@ -247,6 +262,7 @@ export interface FileRoutesByTo {
   '/pld-ft': typeof PldFtRoute
   '/privacidade': typeof PrivacidadeRoute
   '/quem-somos': typeof QuemSomosRoute
+  '/remessas-internacionais': typeof RemessasInternacionaisRoute
   '/responsabilidade-social': typeof ResponsabilidadeSocialRoute
   '/seguranca': typeof SegurancaRoute
   '/seguranca-cibernetica': typeof SegurancaCiberneticaRoute
@@ -267,6 +283,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/a-atual': typeof AAtualRoute
+  '/cambio-turismo': typeof CambioTurismoRoute
   '/canal-de-denuncias': typeof CanalDeDenunciasRoute
   '/codigo-de-conduta': typeof CodigoDeCondutaRoute
   '/conta-atual': typeof ContaAtualRoute
@@ -281,6 +298,7 @@ export interface FileRoutesById {
   '/pld-ft': typeof PldFtRoute
   '/privacidade': typeof PrivacidadeRoute
   '/quem-somos': typeof QuemSomosRoute
+  '/remessas-internacionais': typeof RemessasInternacionaisRoute
   '/responsabilidade-social': typeof ResponsabilidadeSocialRoute
   '/seguranca': typeof SegurancaRoute
   '/seguranca-cibernetica': typeof SegurancaCiberneticaRoute
@@ -302,6 +320,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/a-atual'
+    | '/cambio-turismo'
     | '/canal-de-denuncias'
     | '/codigo-de-conduta'
     | '/conta-atual'
@@ -316,6 +335,7 @@ export interface FileRouteTypes {
     | '/pld-ft'
     | '/privacidade'
     | '/quem-somos'
+    | '/remessas-internacionais'
     | '/responsabilidade-social'
     | '/seguranca'
     | '/seguranca-cibernetica'
@@ -335,6 +355,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/a-atual'
+    | '/cambio-turismo'
     | '/canal-de-denuncias'
     | '/codigo-de-conduta'
     | '/conta-atual'
@@ -349,6 +370,7 @@ export interface FileRouteTypes {
     | '/pld-ft'
     | '/privacidade'
     | '/quem-somos'
+    | '/remessas-internacionais'
     | '/responsabilidade-social'
     | '/seguranca'
     | '/seguranca-cibernetica'
@@ -368,6 +390,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/a-atual'
+    | '/cambio-turismo'
     | '/canal-de-denuncias'
     | '/codigo-de-conduta'
     | '/conta-atual'
@@ -382,6 +405,7 @@ export interface FileRouteTypes {
     | '/pld-ft'
     | '/privacidade'
     | '/quem-somos'
+    | '/remessas-internacionais'
     | '/responsabilidade-social'
     | '/seguranca'
     | '/seguranca-cibernetica'
@@ -402,6 +426,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AAtualRoute: typeof AAtualRoute
+  CambioTurismoRoute: typeof CambioTurismoRoute
   CanalDeDenunciasRoute: typeof CanalDeDenunciasRoute
   CodigoDeCondutaRoute: typeof CodigoDeCondutaRoute
   ContaAtualRoute: typeof ContaAtualRoute
@@ -416,6 +441,7 @@ export interface RootRouteChildren {
   PldFtRoute: typeof PldFtRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
   QuemSomosRoute: typeof QuemSomosRoute
+  RemessasInternacionaisRoute: typeof RemessasInternacionaisRoute
   ResponsabilidadeSocialRoute: typeof ResponsabilidadeSocialRoute
   SegurancaRoute: typeof SegurancaRoute
   SegurancaCiberneticaRoute: typeof SegurancaCiberneticaRoute
@@ -447,6 +473,13 @@ declare module '@tanstack/react-router' {
       path: '/a-atual'
       fullPath: '/a-atual'
       preLoaderRoute: typeof AAtualRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cambio-turismo': {
+      id: '/cambio-turismo'
+      path: '/cambio-turismo'
+      fullPath: '/cambio-turismo'
+      preLoaderRoute: typeof CambioTurismoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/canal-de-denuncias': {
@@ -545,6 +578,13 @@ declare module '@tanstack/react-router' {
       path: '/quem-somos'
       fullPath: '/quem-somos'
       preLoaderRoute: typeof QuemSomosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/remessas-internacionais': {
+      id: '/remessas-internacionais'
+      path: '/remessas-internacionais'
+      fullPath: '/remessas-internacionais'
+      preLoaderRoute: typeof RemessasInternacionaisRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/responsabilidade-social': {
@@ -658,6 +698,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AAtualRoute: AAtualRoute,
+  CambioTurismoRoute: CambioTurismoRoute,
   CanalDeDenunciasRoute: CanalDeDenunciasRoute,
   CodigoDeCondutaRoute: CodigoDeCondutaRoute,
   ContaAtualRoute: ContaAtualRoute,
@@ -672,6 +713,7 @@ const rootRouteChildren: RootRouteChildren = {
   PldFtRoute: PldFtRoute,
   PrivacidadeRoute: PrivacidadeRoute,
   QuemSomosRoute: QuemSomosRoute,
+  RemessasInternacionaisRoute: RemessasInternacionaisRoute,
   ResponsabilidadeSocialRoute: ResponsabilidadeSocialRoute,
   SegurancaRoute: SegurancaRoute,
   SegurancaCiberneticaRoute: SegurancaCiberneticaRoute,
