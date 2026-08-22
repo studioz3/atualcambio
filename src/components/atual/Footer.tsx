@@ -1,3 +1,4 @@
+import { StoreBadges } from "./StoreBadges";
 import { Link } from "@tanstack/react-router";
 import { Container } from "./primitives";
 import { AccreditationSeals } from "./ui-kit";
