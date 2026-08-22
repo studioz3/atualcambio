@@ -45,6 +45,12 @@ function Newsletter() {
 
   useEffect(() => {
     track("newsletter_view", { source_page: "newsletter" });
+    if (typeof window === "undefined") return;
+    const pre = new URLSearchParams(window.location.search).get("editoria");
+    if (pre && ["momento-atual", "cripto-wine", "vida-atual"].includes(pre)) {
+      setPrefs((p) => ({ ...p, [pre as EditoriaId]: true }));
+      track("editorial_selected", { editoria: pre, source_page: "newsletter" });
+    }
   }, []);
 
   const toggle = (id: EditoriaId) => {
