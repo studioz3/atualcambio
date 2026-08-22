@@ -10,6 +10,7 @@ import {
   EditoriaTag,
   FeaturedArticle,
   NewsletterCallout,
+  EditorialSections,
 } from "./editorial-ui";
 import {
   type Article,
@@ -21,6 +22,7 @@ import {
   relatedArticles,
 } from "@/content/editorial";
 import { track } from "@/lib/analytics";
+import { cn } from "@/lib/utils";
 
 /* ================= Página de editoria ================= */
 export function EditoriaPage({ id }: { id: EditoriaId }) {
