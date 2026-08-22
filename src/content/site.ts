@@ -20,8 +20,10 @@ export const brand = {
 export const links = {
   account: "https://finance.atualcambio.com.br",
   openAccount: "#abrir-conta", // [AGUARDANDO API ONZ] onboarding no app
-  appStore: "#app-store", // [AGUARDANDO VALIDAÇÃO]
-  googlePlay: "#google-play", // [AGUARDANDO VALIDAÇÃO]
+  appStore: "https://apps.apple.com/br/app/atual-c%C3%A2mbio/id6764897842?l=en-GB",
+  googlePlay:
+    "https://play.google.com/store/apps/details?id=finance.onz.atual.cambio&hl=pt_BR",
+
   whatsapp: null as string | null, // [AGUARDANDO VALIDAÇÃO] número oficial
 };
 

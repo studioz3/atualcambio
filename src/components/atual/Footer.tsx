@@ -1,3 +1,4 @@
+import { StoreBadges } from "./StoreBadges";
 import { Link } from "@tanstack/react-router";
 import { Container } from "./primitives";
 import { AccreditationSeals } from "./ui-kit";
@@ -58,11 +59,8 @@ const columns: { title: string; items: FooterLink[] }[] = [
   },
 ];
 
-const appLinks = [
-  { label: "Google Play", href: links.googlePlay, event: "google_play_click" },
-  { label: "App Store", href: links.appStore, event: "app_store_click" },
-  { label: "Acessar conta", href: links.account, event: "login_click" },
-];
+const appLinks = [{ label: "Acessar conta", href: links.account, event: "login_click" }];
+
 
 export function Footer() {
   return (
@@ -100,6 +98,8 @@ export function Footer() {
                 </a>
               ))}
             </div>
+            <StoreBadges className="mt-4" origem="footer" size="sm" />
+
           </div>
 
           {/* Colunas 2 a 6 */}
