@@ -186,7 +186,7 @@ function Empresas() {
         image={empresasHero}
         imageAlt="Equipe corporativa analisando operações internacionais em uma sala de reunião"
       >
-        <ul className="col-span-full flex flex-wrap gap-x-10 gap-y-3 border-t border-white/12 pt-8 lg:absolute lg:bottom-10 lg:left-0 lg:pt-6">
+        <ul className="col-span-full flex flex-wrap gap-x-10 gap-y-3 border-t border-white/12 pt-8 lg:max-w-2xl">
           {trust.map((item) => (
             <li key={item} className="flex items-center gap-2 text-sm text-white/80">
               <span className="size-1.5 shrink-0 rounded-full bg-gold" aria-hidden />
