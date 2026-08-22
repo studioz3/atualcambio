@@ -10,16 +10,12 @@ import cardRemessas from "@/assets/card-remessas.jpg";
 import cardStablecoins from "@/assets/card-stablecoins.jpg";
 import cardViagem from "@/assets/card-viagem.jpg";
 import cardCotacoes from "@/assets/card-cotacoes.jpg";
-import editorial1 from "@/assets/editorial-1.jpg";
-import editorial2 from "@/assets/editorial-2.jpg";
-import editorial3 from "@/assets/editorial-3.jpg";
 import { Section, SectionHeading, ActionButton, ActionLink } from "@/components/atual/primitives";
 import {
   Hero,
   TrustPillars,
   PhotoIntentCard,
   PathCard,
-  NewsCard,
   
   SpecialistBlock,
   ComplianceBlock,
@@ -31,7 +27,8 @@ import { StoreBadges } from "@/components/atual/StoreBadges";
 
 import { useLead } from "@/components/atual/LeadProvider";
 import { track } from "@/lib/analytics";
-import { brand, pillars, security, editorial, links } from "@/content/site";
+import { brand, pillars, security, links } from "@/content/site";
+import { editorias, publishedArticles } from "@/content/editorial";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -106,8 +103,6 @@ const intentCards = [
     event: "specialist_start",
   },
 ];
-
-const editorialImages = [editorial1, editorial2, editorial3];
 
 function Home() {
   const { openLead } = useLead();

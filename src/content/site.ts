@@ -70,7 +70,15 @@ export const nav = [
   },
   { label: "Para empresas", to: "/empresas" },
   { label: "Cotações", to: "/cotacoes" },
-  { label: "Conteúdo", to: "/conteudo" },
+  {
+    label: "Conteúdo",
+    to: "/conteudo",
+    items: [
+      { label: "Momento Atual", to: "/momento-atual", hash: "" },
+      { label: "Cripto Wine", to: "/cripto-wine", hash: "" },
+      { label: "Vida Atual", to: "/vida-atual", hash: "" },
+    ],
+  },
   {
     label: "A Atual",
     to: "/quem-somos",
