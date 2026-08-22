@@ -35,7 +35,7 @@ function LoginCard({ onDone }: { onDone: () => void }) {
   };
 
   return (
-    <div className="surface-navy flex min-h-screen items-center justify-center px-6">
+    <div className="flex min-h-screen items-center justify-center bg-navy px-6">
       <form
         onSubmit={submit}
         className="w-full max-w-sm rounded-xl bg-white p-8 text-navy shadow-xl"
