@@ -97,6 +97,8 @@ export function Footer() {
                 </a>
               ))}
             </div>
+            <StoreBadges className="mt-4" origem="footer" size="sm" />
+
           </div>
 
           {/* Colunas 2 a 6 */}
