@@ -277,13 +277,13 @@ function Home() {
               </a>
             </div>
           </div>
-          {/* Ilustração real do app Atual */}
-          <div className="relative flex items-center justify-center">
+          {/* Ilustração real do app Atual — sangra na borda direita */}
+          <div className="relative flex items-center justify-center lg:justify-end">
             <img
               src={appMao.url}
               alt="Mão segurando smartphone com a Conta Atual aberta"
               loading="lazy"
-              className="h-auto w-full max-w-[420px] object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.35)]"
+              className="h-auto w-[125%] max-w-none object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.45)] sm:w-[105%] lg:my-[-8%] lg:w-[150%] lg:-mr-[18vw]"
             />
           </div>
 
