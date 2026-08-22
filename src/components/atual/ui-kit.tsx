@@ -49,6 +49,7 @@ export function Hero({
   primary,
   secondary,
   image,
+  mobileImage,
   imageAlt,
   seals = false,
   children,
@@ -59,6 +60,7 @@ export function Hero({
   primary?: ReactNode;
   secondary?: ReactNode;
   image?: string;
+  mobileImage?: string;
   imageAlt?: string;
   seals?: boolean;
   children?: ReactNode;
@@ -80,6 +82,18 @@ export function Hero({
         </div>
       ) : null}
 
+      {mobileImage ? (
+        <div className="absolute inset-0 lg:hidden">
+          <img
+            src={mobileImage}
+            alt={imageAlt ?? ""}
+            width={1080}
+            height={1350}
+            className="size-full object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/55 to-black/90" />
+        </div>
+      ) : null}
 
       <Container>
         <div className="relative grid gap-12 py-20 md:py-28 lg:h-[680px] lg:min-h-[680px] lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:py-24">
@@ -101,7 +115,7 @@ export function Hero({
               <AccreditationSeals size="sm" className="mt-14 border-t border-white/12 pt-9" />
             ) : null}
           </div>
-          {image ? (
+          {image && !mobileImage ? (
             <div className="relative overflow-hidden rounded-xl lg:hidden">
               <img
                 src={image}
@@ -114,6 +128,7 @@ export function Hero({
 
             </div>
           ) : null}
+
 
           {children}
         </div>
