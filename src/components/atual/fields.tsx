@@ -1,4 +1,9 @@
-import type { ReactNode, SelectHTMLAttributes, InputHTMLAttributes } from "react";
+import type {
+  ReactNode,
+  SelectHTMLAttributes,
+  InputHTMLAttributes,
+  TextareaHTMLAttributes,
+} from "react";
 import { cn } from "@/lib/utils";
 
 const base =
@@ -85,6 +90,33 @@ export function SelectField({
           <option key={option}>{option}</option>
         ))}
       </select>
+    </FieldShell>
+  );
+}
+
+export function TextareaField({
+  label,
+  name,
+  error,
+  hint,
+  className,
+  ...rest
+}: TextareaHTMLAttributes<HTMLTextAreaElement> & {
+  label: string;
+  name: string;
+  error?: string | undefined;
+  hint?: string | undefined;
+}) {
+  return (
+    <FieldShell label={label} htmlFor={name} error={error} hint={hint}>
+      <textarea
+        id={name}
+        name={name}
+        rows={4}
+        aria-invalid={Boolean(error)}
+        className={cn(base, "min-h-32 py-3 leading-relaxed", error && "border-destructive", className)}
+        {...rest}
+      />
     </FieldShell>
   );
 }

@@ -20,6 +20,7 @@ export function buildWhatsappMessage(lead: LeadInput): string {
   }
   if (lead.finalidade) parts.push(`Finalidade: ${lead.finalidade}.`);
   if (lead.prazo && lead.prazo !== "Sem data definida") parts.push(`Prazo: ${lead.prazo}.`);
+  if (lead.mensagem) parts.push(lead.mensagem);
 
   return parts.join(" ");
 }
