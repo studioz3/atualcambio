@@ -289,9 +289,10 @@ function Stablecoins() {
           <img
             src={appTelas.url}
             alt="Três telas da Conta Atual: saldo, mercados com USDT e USDC, e extrato de operações"
-            className="h-auto w-full object-contain"
+            className="mx-auto block h-auto w-full min-w-0 max-w-[560px] object-contain lg:max-w-none"
             loading="lazy"
           />
+
         </div>
       </Section>
 
