@@ -84,6 +84,18 @@ export type Editoria = {
   categories: string[];
   /** Pautas em preparação — exibidas como "Em breve", nunca como publicadas. */
   upcoming: { title: string; description: string; categoria: string }[];
+  /** Blocos conceituais da editoria — territórios de cobertura, sem conteúdo publicado. */
+  sections?: EditorialSection[];
+};
+
+/** Território editorial. Enquanto não houver conteúdo real, aparece como "Em breve". */
+export type EditorialSection = {
+  id: string;
+  label: string;
+  title: string;
+  description: string;
+  image?: string;
+  imageAlt?: string;
 };
 
 /* ---------------- Editorias ---------------- */
