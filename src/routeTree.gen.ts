@@ -30,6 +30,9 @@ import { Route as SegurancaCiberneticaRouteImport } from './routes/seguranca-cib
 import { Route as SolucoesRouteImport } from './routes/solucoes'
 import { Route as StablecoinsRouteImport } from './routes/stablecoins'
 import { Route as TermosRouteImport } from './routes/termos'
+import { Route as CriptoWineIndexRouteImport } from './routes/cripto-wine.index'
+import { Route as MomentoAtualIndexRouteImport } from './routes/momento-atual.index'
+import { Route as VidaAtualIndexRouteImport } from './routes/vida-atual.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -136,6 +139,21 @@ const TermosRoute = TermosRouteImport.update({
   path: '/termos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CriptoWineIndexRoute = CriptoWineIndexRouteImport.update({
+  id: '/cripto-wine/',
+  path: '/cripto-wine/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MomentoAtualIndexRoute = MomentoAtualIndexRouteImport.update({
+  id: '/momento-atual/',
+  path: '/momento-atual/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VidaAtualIndexRoute = VidaAtualIndexRouteImport.update({
+  id: '/vida-atual/',
+  path: '/vida-atual/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -159,6 +177,9 @@ export interface FileRoutesByFullPath {
   '/solucoes': typeof SolucoesRoute
   '/stablecoins': typeof StablecoinsRoute
   '/termos': typeof TermosRoute
+  '/cripto-wine/': typeof CriptoWineIndexRoute
+  '/momento-atual/': typeof MomentoAtualIndexRoute
+  '/vida-atual/': typeof VidaAtualIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -182,6 +203,9 @@ export interface FileRoutesByTo {
   '/solucoes': typeof SolucoesRoute
   '/stablecoins': typeof StablecoinsRoute
   '/termos': typeof TermosRoute
+  '/cripto-wine': typeof CriptoWineIndexRoute
+  '/momento-atual': typeof MomentoAtualIndexRoute
+  '/vida-atual': typeof VidaAtualIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -206,6 +230,9 @@ export interface FileRoutesById {
   '/solucoes': typeof SolucoesRoute
   '/stablecoins': typeof StablecoinsRoute
   '/termos': typeof TermosRoute
+  '/cripto-wine/': typeof CriptoWineIndexRoute
+  '/momento-atual/': typeof MomentoAtualIndexRoute
+  '/vida-atual/': typeof VidaAtualIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -231,6 +258,9 @@ export interface FileRouteTypes {
     | '/solucoes'
     | '/stablecoins'
     | '/termos'
+    | '/cripto-wine/'
+    | '/momento-atual/'
+    | '/vida-atual/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -254,6 +284,9 @@ export interface FileRouteTypes {
     | '/solucoes'
     | '/stablecoins'
     | '/termos'
+    | '/cripto-wine'
+    | '/momento-atual'
+    | '/vida-atual'
   id:
     | '__root__'
     | '/'
@@ -277,6 +310,9 @@ export interface FileRouteTypes {
     | '/solucoes'
     | '/stablecoins'
     | '/termos'
+    | '/cripto-wine/'
+    | '/momento-atual/'
+    | '/vida-atual/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -301,6 +337,9 @@ export interface RootRouteChildren {
   SolucoesRoute: typeof SolucoesRoute
   StablecoinsRoute: typeof StablecoinsRoute
   TermosRoute: typeof TermosRoute
+  CriptoWineIndexRoute: typeof CriptoWineIndexRoute
+  MomentoAtualIndexRoute: typeof MomentoAtualIndexRoute
+  VidaAtualIndexRoute: typeof VidaAtualIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -452,6 +491,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TermosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cripto-wine/': {
+      id: '/cripto-wine/'
+      path: '/cripto-wine'
+      fullPath: '/cripto-wine/'
+      preLoaderRoute: typeof CriptoWineIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/momento-atual/': {
+      id: '/momento-atual/'
+      path: '/momento-atual'
+      fullPath: '/momento-atual/'
+      preLoaderRoute: typeof MomentoAtualIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vida-atual/': {
+      id: '/vida-atual/'
+      path: '/vida-atual'
+      fullPath: '/vida-atual/'
+      preLoaderRoute: typeof VidaAtualIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -477,6 +537,9 @@ const rootRouteChildren: RootRouteChildren = {
   SolucoesRoute: SolucoesRoute,
   StablecoinsRoute: StablecoinsRoute,
   TermosRoute: TermosRoute,
+  CriptoWineIndexRoute: CriptoWineIndexRoute,
+  MomentoAtualIndexRoute: MomentoAtualIndexRoute,
+  VidaAtualIndexRoute: VidaAtualIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
