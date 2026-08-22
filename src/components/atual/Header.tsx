@@ -23,10 +23,13 @@ export function Header() {
   return (
     <header
       className={cn(
-        "surface-navy fixed inset-x-0 top-0 z-50 transition-all duration-200",
-        scrolled ? "border-b border-white/10 shadow-[0_1px_20px_rgba(1,24,58,0.25)]" : "",
+        "fixed inset-x-0 top-0 z-50 text-white transition-all duration-200",
+        scrolled
+          ? "border-b border-white/10 bg-black/70 shadow-[0_1px_20px_rgba(0,0,0,0.35)] backdrop-blur-md"
+          : "bg-transparent",
       )}
     >
+
       <Container>
         <div
           className={cn(
