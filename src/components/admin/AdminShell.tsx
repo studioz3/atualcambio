@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { LayoutDashboard, Users, Mail, LogOut } from "lucide-react";
+import { ChangePasswordDialog } from "./ChangePasswordDialog";
 
 const nav = [
   { to: "/admin", label: "Visão geral", icon: LayoutDashboard, exact: true },
@@ -152,12 +153,14 @@ export function AdminShell({ children, title }: { children: ReactNode; title: st
             </Link>
           ))}
         </nav>
-        <div className="hidden px-5 pt-6 lg:block">
+        <div className="px-5 pb-5 pt-2 lg:pt-6">
           <p className="text-xs text-white/50">{session.data?.email}</p>
           <p className="text-[11px] text-white/40">{session.data?.roles.join(", ")}</p>
+          <div className="mt-3 flex flex-wrap items-center gap-4">
+          <ChangePasswordDialog />
           <button
             type="button"
-            className="mt-3 inline-flex items-center gap-2 text-xs text-white/70 hover:text-gold"
+            className="inline-flex items-center gap-2 text-xs text-white/70 hover:text-gold"
             onClick={async () => {
               await supabase.auth.signOut();
               setHasSession(false);
@@ -166,6 +169,7 @@ export function AdminShell({ children, title }: { children: ReactNode; title: st
           >
             <LogOut className="size-3.5" aria-hidden /> Sair
           </button>
+          </div>
         </div>
       </aside>
 
