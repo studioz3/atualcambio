@@ -231,7 +231,7 @@ function Home() {
       </Section>
 
       {/* Conta Atual */}
-      <Section tone="navy" id="conta-atual">
+      <Section tone="ink" id="conta-atual">
         <div className="grid items-center gap-14 lg:grid-cols-[1.1fr_0.9fr]">
           <div>
             <SectionHeading
