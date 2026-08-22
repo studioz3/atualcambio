@@ -182,6 +182,11 @@
   color: #ffffff;
 }
 
+@utility surface-ink {
+  background-color: #000000;
+  color: #ffffff;
+}
+
 @utility surface-offwhite {
   background-color: var(--color-offwhite);
   color: var(--color-graphite);
