@@ -301,7 +301,7 @@ function Stablecoins() {
       <Section tone="offwhite" id="como-funciona">
         <SectionHeading
           eyebrow="Passo a passo"
-          title={`${operation === "Comprar" ? "Comprar" : "Vender"} stablecoins pela Atual`}
+          title="Compre stablecoins com segurança"
           description="Um fluxo simples, conduzido pelo próprio aplicativo."
         />
         <ol className="mt-12 grid gap-px overflow-hidden rounded-md border border-line bg-line md:grid-cols-2 lg:grid-cols-5">
