@@ -73,14 +73,20 @@ function Solucoes() {
                   </li>
                 ))}
               </ul>
-              <ActionButton
-                className="mt-8"
-                event="lead_solution"
-                onClick={() => openLead({ context: item.title })}
-              >
-                Falar sobre {item.title.toLowerCase()}
-              </ActionButton>
-              {/* [AGUARDANDO API ONZ] onboarding, deeplinks e telas reais do app. */}
+              <div className="mt-8 flex flex-wrap gap-3">
+                {solutionRoutes[item.id] ? (
+                  <ActionLink to={solutionRoutes[item.id]} event="solution_page_click">
+                    Ver {item.title.toLowerCase()}
+                  </ActionLink>
+                ) : null}
+                <ActionButton
+                  variant="secondary"
+                  event="lead_solution"
+                  onClick={() => openLead({ context: item.title })}
+                >
+                  Falar com especialista
+                </ActionButton>
+              </div>
             </div>
           </div>
         </Section>
