@@ -1,9 +1,24 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Check } from "lucide-react";
-import { Container, Section, SectionHeading, Eyebrow, ActionButton } from "@/components/atual/primitives";
+import {
+  Container,
+  Section,
+  SectionHeading,
+  Eyebrow,
+  ActionButton,
+  ActionLink,
+} from "@/components/atual/primitives";
 import { SpecialistCta, FaqSection } from "@/components/atual/blocks";
 import { useLead } from "@/components/atual/LeadProvider";
 import { solutions, brand } from "@/content/site";
+
+/** Cada solução tem uma página dedicada. */
+const solutionRoutes: Record<string, string> = {
+  remessas: "/remessas-internacionais",
+  stablecoins: "/stablecoins",
+  turismo: "/cambio-turismo",
+  conta: "/conta-atual",
+};
 
 export const Route = createFileRoute("/solucoes")({
   head: () => ({
