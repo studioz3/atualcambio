@@ -177,12 +177,12 @@ export function AccountDrawer({
           {step === 1 ? (
             <form onSubmit={onContinue} noValidate className="flex flex-col gap-6">
               <fieldset>
-                <legend className="mb-3 text-sm font-medium text-graphite">Quem vai usar</legend>
+                <legend className="sr-only">Tipo de conta</legend>
                 <div className="grid grid-cols-2 gap-3">
                   {(
                     [
-                      { value: "pf", label: "Pessoa física", hint: "Para minhas operações" },
-                      { value: "pj", label: "Empresa", hint: "Para operações da empresa" },
+                      { value: "pf", label: "Pessoa Física" },
+                      { value: "pj", label: "Pessoa Jurídica" },
                     ] as const
                   ).map((option) => (
                     <button
@@ -191,25 +191,18 @@ export function AccountDrawer({
                       aria-pressed={profile === option.value}
                       onClick={() => setProfile(option.value)}
                       className={cn(
-                        "min-h-[68px] rounded-[10px] border px-4 py-3 text-left transition-colors focus-visible:ring-2 focus-visible:ring-navy/30 focus-visible:outline-none",
+                        "min-h-[48px] rounded-[10px] border px-4 py-3 text-center transition-colors focus-visible:ring-2 focus-visible:ring-navy/30 focus-visible:outline-none",
                         profile === option.value
                           ? "border-navy bg-navy text-white"
                           : "border-line bg-offwhite text-navy hover:border-navy/40",
                       )}
                     >
                       <span className="block text-sm font-semibold">{option.label}</span>
-                      <span
-                        className={cn(
-                          "mt-1 block text-xs leading-snug text-pretty",
-                          profile === option.value ? "text-white/70" : "text-muted-foreground",
-                        )}
-                      >
-                        {option.hint}
-                      </span>
                     </button>
                   ))}
                 </div>
               </fieldset>
+
 
               <Field label="Nome" name="nome" error={errors['nome']}>
                 <input
