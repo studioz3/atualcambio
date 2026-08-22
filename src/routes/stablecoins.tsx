@@ -486,16 +486,35 @@ function Stablecoins() {
         </div>
       </Section>
 
-      <CTASection
-        title="Sua próxima operação pode começar pela Conta Atual."
-        description="Opere com autonomia pelo app ou fale com um especialista quando precisar de orientação."
-        primaryLabel="Abrir Conta Atual"
-        onPrimary={() => {
-          track("open_account_click", { origem: "stablecoins" });
-          window.open(links.account, "_blank", "noopener,noreferrer");
-        }}
-        secondaryHref="#orientacao"
-      />
+      <Section tone="navy" id="cta">
+        <SectionHeading
+          tone="light-text"
+          eyebrow="Comece agora"
+          title="Sua próxima operação pode começar pela Conta Atual."
+          description="Opere com autonomia pelo app ou fale com um especialista quando precisar de orientação."
+          className="max-w-3xl"
+        />
+        <div className="mt-10 flex flex-wrap gap-4">
+          <ActionLink
+            size="lg"
+            href={links.account}
+            external
+            event="open_account_click"
+            className="w-full sm:w-auto"
+          >
+            Abrir Conta Atual
+          </ActionLink>
+          <ActionButton
+            size="lg"
+            variant="secondaryDark"
+            event="stablecoin_help_start"
+            onClick={goToForm}
+            className="w-full sm:w-auto"
+          >
+            Falar com especialista
+          </ActionButton>
+        </div>
+      </Section>
     </>
   );
 }

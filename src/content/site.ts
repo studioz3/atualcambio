@@ -33,7 +33,7 @@ export const nav = [
     to: "/solucoes",
     items: [
       { label: "Remessas internacionais", to: "/solucoes", hash: "remessas" },
-      { label: "USDT / USDC", to: "/solucoes", hash: "stablecoins" },
+      { label: "USDT / USDC", to: "/stablecoins" },
       { label: "Câmbio turismo", to: "/solucoes", hash: "turismo" },
       { label: "Conta Atual", to: "/solucoes", hash: "conta" },
     ],
