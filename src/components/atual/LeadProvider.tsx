@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
 import { LeadDrawer } from "./LeadDrawer";
+import { AccountDrawer } from "./AccountDrawer";
 import type { LeadIntentId } from "@/lib/lead-intents";
 
 type LeadOptions = {
@@ -32,8 +33,14 @@ export function LeadProvider({ children }: { children: ReactNode }) {
   return (
     <LeadContext.Provider value={value}>
       {children}
+      <AccountDrawer
+        open={open && options.intent === "conta"}
+        onOpenChange={setOpen}
+        context={options.context}
+        initialProfile={options.profile}
+      />
       <LeadDrawer
-        open={open}
+        open={open && options.intent !== "conta"}
         onOpenChange={setOpen}
         intentId={options.intent}
         context={options.context}
