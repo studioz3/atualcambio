@@ -81,7 +81,8 @@ export function LeadDetailSheet({
   };
 
   const salvar = useMutation({
-    mutationFn: (payload: Parameters<typeof updateLead>[0]["data"]) => updateLead({ data: payload }),
+    mutationFn: (payload: Record<string, unknown> & { id: string }) =>
+      updateLead({ data: payload as never }),
     onSuccess: () => {
       invalidate();
       toast.success("Lead atualizado.");
