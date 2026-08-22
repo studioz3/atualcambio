@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AAtualRouteImport } from './routes/a-atual'
+import { Route as CambioTurismoRouteImport } from './routes/cambio-turismo'
 import { Route as CanalDeDenunciasRouteImport } from './routes/canal-de-denuncias'
 import { Route as CodigoDeCondutaRouteImport } from './routes/codigo-de-conduta'
 import { Route as ContaAtualRouteImport } from './routes/conta-atual'
@@ -50,6 +51,11 @@ const IndexRoute = IndexRouteImport.update({
 const AAtualRoute = AAtualRouteImport.update({
   id: '/a-atual',
   path: '/a-atual',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CambioTurismoRoute = CambioTurismoRouteImport.update({
+  id: '/cambio-turismo',
+  path: '/cambio-turismo',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CanalDeDenunciasRoute = CanalDeDenunciasRouteImport.update({
@@ -206,6 +212,7 @@ const VidaAtualSlugRoute = VidaAtualSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/a-atual': typeof AAtualRoute
+  '/cambio-turismo': typeof CambioTurismoRoute
   '/canal-de-denuncias': typeof CanalDeDenunciasRoute
   '/codigo-de-conduta': typeof CodigoDeCondutaRoute
   '/conta-atual': typeof ContaAtualRoute
@@ -240,6 +247,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/a-atual': typeof AAtualRoute
+  '/cambio-turismo': typeof CambioTurismoRoute
   '/canal-de-denuncias': typeof CanalDeDenunciasRoute
   '/codigo-de-conduta': typeof CodigoDeCondutaRoute
   '/conta-atual': typeof ContaAtualRoute
@@ -275,6 +283,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/a-atual': typeof AAtualRoute
+  '/cambio-turismo': typeof CambioTurismoRoute
   '/canal-de-denuncias': typeof CanalDeDenunciasRoute
   '/codigo-de-conduta': typeof CodigoDeCondutaRoute
   '/conta-atual': typeof ContaAtualRoute
@@ -311,6 +320,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/a-atual'
+    | '/cambio-turismo'
     | '/canal-de-denuncias'
     | '/codigo-de-conduta'
     | '/conta-atual'
@@ -345,6 +355,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/a-atual'
+    | '/cambio-turismo'
     | '/canal-de-denuncias'
     | '/codigo-de-conduta'
     | '/conta-atual'
@@ -379,6 +390,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/a-atual'
+    | '/cambio-turismo'
     | '/canal-de-denuncias'
     | '/codigo-de-conduta'
     | '/conta-atual'
@@ -414,6 +426,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AAtualRoute: typeof AAtualRoute
+  CambioTurismoRoute: typeof CambioTurismoRoute
   CanalDeDenunciasRoute: typeof CanalDeDenunciasRoute
   CodigoDeCondutaRoute: typeof CodigoDeCondutaRoute
   ContaAtualRoute: typeof ContaAtualRoute
@@ -460,6 +473,13 @@ declare module '@tanstack/react-router' {
       path: '/a-atual'
       fullPath: '/a-atual'
       preLoaderRoute: typeof AAtualRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cambio-turismo': {
+      id: '/cambio-turismo'
+      path: '/cambio-turismo'
+      fullPath: '/cambio-turismo'
+      preLoaderRoute: typeof CambioTurismoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/canal-de-denuncias': {
@@ -678,6 +698,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AAtualRoute: AAtualRoute,
+  CambioTurismoRoute: CambioTurismoRoute,
   CanalDeDenunciasRoute: CanalDeDenunciasRoute,
   CodigoDeCondutaRoute: CodigoDeCondutaRoute,
   ContaAtualRoute: ContaAtualRoute,

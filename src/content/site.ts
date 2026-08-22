@@ -62,9 +62,9 @@ export const nav = [
     label: "Soluções",
     to: "/solucoes",
     items: [
-      { label: "Remessas internacionais", to: "/solucoes", hash: "remessas" },
+      { label: "Remessas internacionais", to: "/remessas-internacionais", hash: "" },
       { label: "USDT / USDC", to: "/stablecoins", hash: "" },
-      { label: "Câmbio turismo", to: "/solucoes", hash: "turismo" },
+      { label: "Câmbio turismo", to: "/cambio-turismo", hash: "" },
       { label: "Conta Atual", to: "/conta-atual", hash: "" },
     ],
   },
@@ -100,19 +100,19 @@ export const intents = [
   {
     title: "Quero enviar dinheiro",
     description: "Remessas para pessoas e famílias no exterior, do jeito simples.",
-    to: "/solucoes",
+    to: "/remessas-internacionais",
     event: "remittance_start",
   },
   {
     title: "Quero comprar USDT",
     description: "Stablecoins com processo claro e liquidação transparente.",
-    to: "/solucoes",
+    to: "/stablecoins",
     event: "stablecoin_buy",
   },
   {
     title: "Quero viajar",
-    description: "Moeda em espécie e soluções de câmbio turismo.",
-    to: "/solucoes",
+    description: "Moeda estrangeira para viagem, com atendimento da Atual.",
+    to: "/cambio-turismo",
     event: "intent_travel",
   },
 ];
