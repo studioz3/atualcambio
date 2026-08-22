@@ -118,7 +118,6 @@ function Cotacoes() {
             href={links.account}
             external
             event="quote_app_click"
-            className="hero-cta"
           >
             Consultar pelo app Atual
           </ActionLink>
