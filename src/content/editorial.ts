@@ -175,6 +175,56 @@ export const editorias: Editoria[] = [
         categoria: "Mercado",
       },
     ],
+    sections: [
+      {
+        id: "podcast",
+        label: "Podcast",
+        title: "Podcast",
+        description:
+          "O formato principal da editoria: conversas longas sobre vinho, mercado e tecnologia, gravadas em vídeo e áudio.",
+        image: cwPodcast,
+        imageAlt: "Mesa de gravação com microfones, fones e taças de vinho em ambiente escuro",
+      },
+      {
+        id: "conversas",
+        label: "Conversas",
+        title: "Conversas",
+        description:
+          "Encontros com quem vive o vinho de perto — produção, importação, curadoria e serviço.",
+        image: cwCultura,
+        imageAlt: "Mesa longa ao entardecer com pessoas conversando à luz de velas",
+      },
+      {
+        id: "mercado",
+        label: "Mercado",
+        title: "Mercado",
+        description:
+          "Importação, exportação, câmbio e comportamento de consumo: o vinho como negócio internacional.",
+      },
+      {
+        id: "tecnologia",
+        label: "Tecnologia",
+        title: "Tecnologia",
+        description:
+          "Rastreabilidade, logística, dados e o que muda na cadeia do vinho quando a tecnologia entra.",
+        image: cwTecnologia,
+        imageAlt: "Profissional com tablet ao lado de tanques de inox em vinícola contemporânea",
+      },
+      {
+        id: "cultura",
+        label: "Cultura",
+        title: "Cultura",
+        description:
+          "Rituais, gastronomia, viagem e o lugar do vinho na conversa contemporânea.",
+      },
+      {
+        id: "vinho",
+        label: "Vinho",
+        title: "Vinho",
+        description:
+          "Regiões, safras, castas e vocabulário — o básico bem explicado, sem esnobismo.",
+      },
+    ],
   },
   {
     id: "vida-atual",
