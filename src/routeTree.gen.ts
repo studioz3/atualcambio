@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AAtualRouteImport } from './routes/a-atual'
 import { Route as CanalDeDenunciasRouteImport } from './routes/canal-de-denuncias'
 import { Route as CodigoDeCondutaRouteImport } from './routes/codigo-de-conduta'
+import { Route as ContaAtualRouteImport } from './routes/conta-atual'
 import { Route as ConteudoRouteImport } from './routes/conteudo'
 import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as CotacoesRouteImport } from './routes/cotacoes'
@@ -44,6 +45,11 @@ const CanalDeDenunciasRoute = CanalDeDenunciasRouteImport.update({
 const CodigoDeCondutaRoute = CodigoDeCondutaRouteImport.update({
   id: '/codigo-de-conduta',
   path: '/codigo-de-conduta',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContaAtualRoute = ContaAtualRouteImport.update({
+  id: '/conta-atual',
+  path: '/conta-atual',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConteudoRoute = ConteudoRouteImport.update({
@@ -112,6 +118,7 @@ export interface FileRoutesByFullPath {
   '/a-atual': typeof AAtualRoute
   '/canal-de-denuncias': typeof CanalDeDenunciasRoute
   '/codigo-de-conduta': typeof CodigoDeCondutaRoute
+  '/conta-atual': typeof ContaAtualRoute
   '/conteudo': typeof ConteudoRoute
   '/cookies': typeof CookiesRoute
   '/cotacoes': typeof CotacoesRoute
@@ -130,6 +137,7 @@ export interface FileRoutesByTo {
   '/a-atual': typeof AAtualRoute
   '/canal-de-denuncias': typeof CanalDeDenunciasRoute
   '/codigo-de-conduta': typeof CodigoDeCondutaRoute
+  '/conta-atual': typeof ContaAtualRoute
   '/conteudo': typeof ConteudoRoute
   '/cookies': typeof CookiesRoute
   '/cotacoes': typeof CotacoesRoute
@@ -149,6 +157,7 @@ export interface FileRoutesById {
   '/a-atual': typeof AAtualRoute
   '/canal-de-denuncias': typeof CanalDeDenunciasRoute
   '/codigo-de-conduta': typeof CodigoDeCondutaRoute
+  '/conta-atual': typeof ContaAtualRoute
   '/conteudo': typeof ConteudoRoute
   '/cookies': typeof CookiesRoute
   '/cotacoes': typeof CotacoesRoute
@@ -169,6 +178,7 @@ export interface FileRouteTypes {
     | '/a-atual'
     | '/canal-de-denuncias'
     | '/codigo-de-conduta'
+    | '/conta-atual'
     | '/conteudo'
     | '/cookies'
     | '/cotacoes'
@@ -187,6 +197,7 @@ export interface FileRouteTypes {
     | '/a-atual'
     | '/canal-de-denuncias'
     | '/codigo-de-conduta'
+    | '/conta-atual'
     | '/conteudo'
     | '/cookies'
     | '/cotacoes'
@@ -205,6 +216,7 @@ export interface FileRouteTypes {
     | '/a-atual'
     | '/canal-de-denuncias'
     | '/codigo-de-conduta'
+    | '/conta-atual'
     | '/conteudo'
     | '/cookies'
     | '/cotacoes'
@@ -224,6 +236,7 @@ export interface RootRouteChildren {
   AAtualRoute: typeof AAtualRoute
   CanalDeDenunciasRoute: typeof CanalDeDenunciasRoute
   CodigoDeCondutaRoute: typeof CodigoDeCondutaRoute
+  ContaAtualRoute: typeof ContaAtualRoute
   ConteudoRoute: typeof ConteudoRoute
   CookiesRoute: typeof CookiesRoute
   CotacoesRoute: typeof CotacoesRoute
@@ -266,6 +279,13 @@ declare module '@tanstack/react-router' {
       path: '/codigo-de-conduta'
       fullPath: '/codigo-de-conduta'
       preLoaderRoute: typeof CodigoDeCondutaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/conta-atual': {
+      id: '/conta-atual'
+      path: '/conta-atual'
+      fullPath: '/conta-atual'
+      preLoaderRoute: typeof ContaAtualRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/conteudo': {
@@ -360,6 +380,7 @@ const rootRouteChildren: RootRouteChildren = {
   AAtualRoute: AAtualRoute,
   CanalDeDenunciasRoute: CanalDeDenunciasRoute,
   CodigoDeCondutaRoute: CodigoDeCondutaRoute,
+  ContaAtualRoute: ContaAtualRoute,
   ConteudoRoute: ConteudoRoute,
   CookiesRoute: CookiesRoute,
   CotacoesRoute: CotacoesRoute,
