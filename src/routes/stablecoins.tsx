@@ -293,7 +293,6 @@ function Stablecoins() {
             loading="lazy"
           />
         </div>
-        </div>
       </Section>
 
       {/* Como comprar / vender */}
