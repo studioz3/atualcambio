@@ -7,14 +7,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, Users, BookOpen, Mail, Settings, LogOut } from "lucide-react";
+import { LayoutDashboard, Users, Mail, LogOut } from "lucide-react";
 
 const nav = [
   { to: "/admin", label: "Visão geral", icon: LayoutDashboard, exact: true },
   { to: "/admin/leads", label: "Leads", icon: Users, exact: false },
   { to: "/admin/newsletter", label: "Newsletter", icon: Mail, exact: false },
-  { to: "/admin/conteudo", label: "Conteúdo", icon: BookOpen, exact: false },
-  { to: "/admin/configuracoes", label: "Configurações", icon: Settings, exact: false },
 ] as const;
 
 function LoginCard({ onDone }: { onDone: () => void }) {
