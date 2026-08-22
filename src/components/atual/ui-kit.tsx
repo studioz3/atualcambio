@@ -66,17 +66,17 @@ export function Hero({
   return (
     <section className="surface-navy relative overflow-hidden">
       {image ? (
-        <div className="absolute inset-y-0 right-0 hidden w-[55%] lg:block">
+        <div className="absolute inset-y-0 right-0 hidden w-[58%] lg:block">
           <img
             src={image}
             alt={imageAlt ?? ""}
-            width={1600}
-            height={1200}
-            className="size-full object-cover opacity-75 saturate-[0.85]"
+            width={1920}
+            height={720}
+            className="size-full object-cover object-right"
           />
           {/* lente azul institucional */}
-          <div className="absolute inset-0 bg-navy/55 mix-blend-multiply" />
-          <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/80 to-navy/10" />
+          <div className="absolute inset-0 bg-navy/20 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/55 to-transparent" />
         </div>
       ) : null}
 
