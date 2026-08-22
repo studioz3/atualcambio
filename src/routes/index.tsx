@@ -10,16 +10,12 @@ import cardRemessas from "@/assets/card-remessas.jpg";
 import cardStablecoins from "@/assets/card-stablecoins.jpg";
 import cardViagem from "@/assets/card-viagem.jpg";
 import cardCotacoes from "@/assets/card-cotacoes.jpg";
-import editorial1 from "@/assets/editorial-1.jpg";
-import editorial2 from "@/assets/editorial-2.jpg";
-import editorial3 from "@/assets/editorial-3.jpg";
 import { Section, SectionHeading, ActionButton, ActionLink } from "@/components/atual/primitives";
 import {
   Hero,
   TrustPillars,
   PhotoIntentCard,
   PathCard,
-  NewsCard,
   
   SpecialistBlock,
   ComplianceBlock,
@@ -31,7 +27,8 @@ import { StoreBadges } from "@/components/atual/StoreBadges";
 
 import { useLead } from "@/components/atual/LeadProvider";
 import { track } from "@/lib/analytics";
-import { brand, pillars, security, editorial, links } from "@/content/site";
+import { brand, pillars, security, links } from "@/content/site";
+import { editorias, publishedArticles } from "@/content/editorial";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -106,8 +103,6 @@ const intentCards = [
     event: "specialist_start",
   },
 ];
-
-const editorialImages = [editorial1, editorial2, editorial3];
 
 function Home() {
   const { openLead } = useLead();
@@ -311,37 +306,58 @@ function Home() {
         }}
       />
 
-      {/* Momento Atual */}
-      <Section tone="light" id="momento-atual">
+      {/* Ecossistema editorial */}
+      <Section tone="light" id="conteudo">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHeading
             eyebrow="Conteúdo"
-            title="Momento Atual"
-            description="Informação para decidir com contexto."
+            title="Conteúdo para quem é Atual."
+            description="Três editorias para entender o mundo por diferentes perspectivas."
             className="max-w-2xl"
           />
           <Link
             to="/conteudo"
-            data-event="article_click"
+            data-event="content_hub_view"
             className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-navy hover:text-gold-soft"
           >
-            Ver conteúdo <ArrowRight className="size-4" aria-hidden />
+            Ver conteúdos <ArrowRight className="size-4" aria-hidden />
           </Link>
         </div>
         <div className="mt-14 grid gap-10 md:grid-cols-3">
-          {editorial.map((item, index) => (
-            <NewsCard
-              key={item.title}
-              category={item.category}
-              title={item.title}
-              excerpt={item.excerpt}
-              date={item.date}
-              image={editorialImages[index]}
-              imageAlt={item.title}
-            />
-          ))}
+          {editorias.map((editoria) => {
+            const latest = publishedArticles(editoria.id)[0];
+            return (
+              <Link
+                key={editoria.id}
+                to={editoria.path}
+                onClick={() => track("editorial_selected", { editoria: editoria.id, source_page: "home" })}
+                className="group flex flex-col"
+              >
+                <div className="overflow-hidden rounded-xl bg-line">
+                  <img
+                    src={editoria.image}
+                    alt={editoria.imageAlt}
+                    width={1600}
+                    height={1000}
+                    loading="lazy"
+                    className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                  />
+                </div>
+                <h3 className="display-h4 mt-6 text-navy group-hover:text-gold-soft">
+                  {editoria.name}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  {editoria.shortDescription}
+                </p>
+                <p className="mt-4 text-xs text-muted-foreground">
+                  {latest ? latest.titulo : "Novos conteúdos em breve"}
+                </p>
+              </Link>
+            );
+          })}
         </div>
       </Section>
+
 
       <FaqSection />
 

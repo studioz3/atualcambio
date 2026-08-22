@@ -20,6 +20,7 @@ import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as CotacoesRouteImport } from './routes/cotacoes'
 import { Route as EmpresasRouteImport } from './routes/empresas'
 import { Route as FaleComEspecialistaRouteImport } from './routes/fale-com-especialista'
+import { Route as NewsletterRouteImport } from './routes/newsletter'
 import { Route as OuvidoriaRouteImport } from './routes/ouvidoria'
 import { Route as PldFtRouteImport } from './routes/pld-ft'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
@@ -30,6 +31,12 @@ import { Route as SegurancaCiberneticaRouteImport } from './routes/seguranca-cib
 import { Route as SolucoesRouteImport } from './routes/solucoes'
 import { Route as StablecoinsRouteImport } from './routes/stablecoins'
 import { Route as TermosRouteImport } from './routes/termos'
+import { Route as CriptoWineIndexRouteImport } from './routes/cripto-wine.index'
+import { Route as CriptoWineSlugRouteImport } from './routes/cripto-wine.$slug'
+import { Route as MomentoAtualIndexRouteImport } from './routes/momento-atual.index'
+import { Route as MomentoAtualSlugRouteImport } from './routes/momento-atual.$slug'
+import { Route as VidaAtualIndexRouteImport } from './routes/vida-atual.index'
+import { Route as VidaAtualSlugRouteImport } from './routes/vida-atual.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -86,6 +93,11 @@ const FaleComEspecialistaRoute = FaleComEspecialistaRouteImport.update({
   path: '/fale-com-especialista',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NewsletterRoute = NewsletterRouteImport.update({
+  id: '/newsletter',
+  path: '/newsletter',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OuvidoriaRoute = OuvidoriaRouteImport.update({
   id: '/ouvidoria',
   path: '/ouvidoria',
@@ -136,6 +148,36 @@ const TermosRoute = TermosRouteImport.update({
   path: '/termos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CriptoWineIndexRoute = CriptoWineIndexRouteImport.update({
+  id: '/cripto-wine/',
+  path: '/cripto-wine/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CriptoWineSlugRoute = CriptoWineSlugRouteImport.update({
+  id: '/cripto-wine/$slug',
+  path: '/cripto-wine/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MomentoAtualIndexRoute = MomentoAtualIndexRouteImport.update({
+  id: '/momento-atual/',
+  path: '/momento-atual/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MomentoAtualSlugRoute = MomentoAtualSlugRouteImport.update({
+  id: '/momento-atual/$slug',
+  path: '/momento-atual/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VidaAtualIndexRoute = VidaAtualIndexRouteImport.update({
+  id: '/vida-atual/',
+  path: '/vida-atual/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VidaAtualSlugRoute = VidaAtualSlugRouteImport.update({
+  id: '/vida-atual/$slug',
+  path: '/vida-atual/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -149,6 +191,7 @@ export interface FileRoutesByFullPath {
   '/cotacoes': typeof CotacoesRoute
   '/empresas': typeof EmpresasRoute
   '/fale-com-especialista': typeof FaleComEspecialistaRoute
+  '/newsletter': typeof NewsletterRoute
   '/ouvidoria': typeof OuvidoriaRoute
   '/pld-ft': typeof PldFtRoute
   '/privacidade': typeof PrivacidadeRoute
@@ -159,6 +202,12 @@ export interface FileRoutesByFullPath {
   '/solucoes': typeof SolucoesRoute
   '/stablecoins': typeof StablecoinsRoute
   '/termos': typeof TermosRoute
+  '/cripto-wine/$slug': typeof CriptoWineSlugRoute
+  '/momento-atual/$slug': typeof MomentoAtualSlugRoute
+  '/vida-atual/$slug': typeof VidaAtualSlugRoute
+  '/cripto-wine/': typeof CriptoWineIndexRoute
+  '/momento-atual/': typeof MomentoAtualIndexRoute
+  '/vida-atual/': typeof VidaAtualIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -172,6 +221,7 @@ export interface FileRoutesByTo {
   '/cotacoes': typeof CotacoesRoute
   '/empresas': typeof EmpresasRoute
   '/fale-com-especialista': typeof FaleComEspecialistaRoute
+  '/newsletter': typeof NewsletterRoute
   '/ouvidoria': typeof OuvidoriaRoute
   '/pld-ft': typeof PldFtRoute
   '/privacidade': typeof PrivacidadeRoute
@@ -182,6 +232,12 @@ export interface FileRoutesByTo {
   '/solucoes': typeof SolucoesRoute
   '/stablecoins': typeof StablecoinsRoute
   '/termos': typeof TermosRoute
+  '/cripto-wine/$slug': typeof CriptoWineSlugRoute
+  '/momento-atual/$slug': typeof MomentoAtualSlugRoute
+  '/vida-atual/$slug': typeof VidaAtualSlugRoute
+  '/cripto-wine': typeof CriptoWineIndexRoute
+  '/momento-atual': typeof MomentoAtualIndexRoute
+  '/vida-atual': typeof VidaAtualIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -196,6 +252,7 @@ export interface FileRoutesById {
   '/cotacoes': typeof CotacoesRoute
   '/empresas': typeof EmpresasRoute
   '/fale-com-especialista': typeof FaleComEspecialistaRoute
+  '/newsletter': typeof NewsletterRoute
   '/ouvidoria': typeof OuvidoriaRoute
   '/pld-ft': typeof PldFtRoute
   '/privacidade': typeof PrivacidadeRoute
@@ -206,6 +263,12 @@ export interface FileRoutesById {
   '/solucoes': typeof SolucoesRoute
   '/stablecoins': typeof StablecoinsRoute
   '/termos': typeof TermosRoute
+  '/cripto-wine/$slug': typeof CriptoWineSlugRoute
+  '/momento-atual/$slug': typeof MomentoAtualSlugRoute
+  '/vida-atual/$slug': typeof VidaAtualSlugRoute
+  '/cripto-wine/': typeof CriptoWineIndexRoute
+  '/momento-atual/': typeof MomentoAtualIndexRoute
+  '/vida-atual/': typeof VidaAtualIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -221,6 +284,7 @@ export interface FileRouteTypes {
     | '/cotacoes'
     | '/empresas'
     | '/fale-com-especialista'
+    | '/newsletter'
     | '/ouvidoria'
     | '/pld-ft'
     | '/privacidade'
@@ -231,6 +295,12 @@ export interface FileRouteTypes {
     | '/solucoes'
     | '/stablecoins'
     | '/termos'
+    | '/cripto-wine/$slug'
+    | '/momento-atual/$slug'
+    | '/vida-atual/$slug'
+    | '/cripto-wine/'
+    | '/momento-atual/'
+    | '/vida-atual/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -244,6 +314,7 @@ export interface FileRouteTypes {
     | '/cotacoes'
     | '/empresas'
     | '/fale-com-especialista'
+    | '/newsletter'
     | '/ouvidoria'
     | '/pld-ft'
     | '/privacidade'
@@ -254,6 +325,12 @@ export interface FileRouteTypes {
     | '/solucoes'
     | '/stablecoins'
     | '/termos'
+    | '/cripto-wine/$slug'
+    | '/momento-atual/$slug'
+    | '/vida-atual/$slug'
+    | '/cripto-wine'
+    | '/momento-atual'
+    | '/vida-atual'
   id:
     | '__root__'
     | '/'
@@ -267,6 +344,7 @@ export interface FileRouteTypes {
     | '/cotacoes'
     | '/empresas'
     | '/fale-com-especialista'
+    | '/newsletter'
     | '/ouvidoria'
     | '/pld-ft'
     | '/privacidade'
@@ -277,6 +355,12 @@ export interface FileRouteTypes {
     | '/solucoes'
     | '/stablecoins'
     | '/termos'
+    | '/cripto-wine/$slug'
+    | '/momento-atual/$slug'
+    | '/vida-atual/$slug'
+    | '/cripto-wine/'
+    | '/momento-atual/'
+    | '/vida-atual/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -291,6 +375,7 @@ export interface RootRouteChildren {
   CotacoesRoute: typeof CotacoesRoute
   EmpresasRoute: typeof EmpresasRoute
   FaleComEspecialistaRoute: typeof FaleComEspecialistaRoute
+  NewsletterRoute: typeof NewsletterRoute
   OuvidoriaRoute: typeof OuvidoriaRoute
   PldFtRoute: typeof PldFtRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
@@ -301,6 +386,12 @@ export interface RootRouteChildren {
   SolucoesRoute: typeof SolucoesRoute
   StablecoinsRoute: typeof StablecoinsRoute
   TermosRoute: typeof TermosRoute
+  CriptoWineSlugRoute: typeof CriptoWineSlugRoute
+  MomentoAtualSlugRoute: typeof MomentoAtualSlugRoute
+  VidaAtualSlugRoute: typeof VidaAtualSlugRoute
+  CriptoWineIndexRoute: typeof CriptoWineIndexRoute
+  MomentoAtualIndexRoute: typeof MomentoAtualIndexRoute
+  VidaAtualIndexRoute: typeof VidaAtualIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -382,6 +473,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FaleComEspecialistaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/newsletter': {
+      id: '/newsletter'
+      path: '/newsletter'
+      fullPath: '/newsletter'
+      preLoaderRoute: typeof NewsletterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/ouvidoria': {
       id: '/ouvidoria'
       path: '/ouvidoria'
@@ -452,6 +550,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TermosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cripto-wine/': {
+      id: '/cripto-wine/'
+      path: '/cripto-wine'
+      fullPath: '/cripto-wine/'
+      preLoaderRoute: typeof CriptoWineIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cripto-wine/$slug': {
+      id: '/cripto-wine/$slug'
+      path: '/cripto-wine/$slug'
+      fullPath: '/cripto-wine/$slug'
+      preLoaderRoute: typeof CriptoWineSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/momento-atual/': {
+      id: '/momento-atual/'
+      path: '/momento-atual'
+      fullPath: '/momento-atual/'
+      preLoaderRoute: typeof MomentoAtualIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/momento-atual/$slug': {
+      id: '/momento-atual/$slug'
+      path: '/momento-atual/$slug'
+      fullPath: '/momento-atual/$slug'
+      preLoaderRoute: typeof MomentoAtualSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vida-atual/': {
+      id: '/vida-atual/'
+      path: '/vida-atual'
+      fullPath: '/vida-atual/'
+      preLoaderRoute: typeof VidaAtualIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vida-atual/$slug': {
+      id: '/vida-atual/$slug'
+      path: '/vida-atual/$slug'
+      fullPath: '/vida-atual/$slug'
+      preLoaderRoute: typeof VidaAtualSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -467,6 +607,7 @@ const rootRouteChildren: RootRouteChildren = {
   CotacoesRoute: CotacoesRoute,
   EmpresasRoute: EmpresasRoute,
   FaleComEspecialistaRoute: FaleComEspecialistaRoute,
+  NewsletterRoute: NewsletterRoute,
   OuvidoriaRoute: OuvidoriaRoute,
   PldFtRoute: PldFtRoute,
   PrivacidadeRoute: PrivacidadeRoute,
@@ -477,6 +618,12 @@ const rootRouteChildren: RootRouteChildren = {
   SolucoesRoute: SolucoesRoute,
   StablecoinsRoute: StablecoinsRoute,
   TermosRoute: TermosRoute,
+  CriptoWineSlugRoute: CriptoWineSlugRoute,
+  MomentoAtualSlugRoute: MomentoAtualSlugRoute,
+  VidaAtualSlugRoute: VidaAtualSlugRoute,
+  CriptoWineIndexRoute: CriptoWineIndexRoute,
+  MomentoAtualIndexRoute: MomentoAtualIndexRoute,
+  VidaAtualIndexRoute: VidaAtualIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
