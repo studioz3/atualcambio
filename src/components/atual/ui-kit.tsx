@@ -117,16 +117,14 @@ export function Hero({
           </div>
 
           {image && !mobileImage ? (
-            <div className="relative overflow-hidden rounded-xl lg:hidden">
+            <div className="relative lg:hidden">
               <img
                 src={image}
                 alt={imageAlt ?? ""}
                 width={1920}
-                height={720}
-                className="aspect-[16/9] w-full object-cover object-right"
+                height={1440}
+                className="mx-auto block max-h-[46svh] w-full object-contain"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-
             </div>
           ) : null}
 
