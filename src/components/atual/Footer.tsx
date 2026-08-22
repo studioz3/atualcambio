@@ -39,10 +39,13 @@ const columns: { title: string; items: FooterLink[] }[] = [
   {
     title: "Conteúdo",
     items: [
-      { label: "Momento Atual", to: "/", hash: "momento-atual" },
-      { label: "Notícias", to: "/conteudo" },
-      { label: "Newsletter", to: "/conteudo", hash: "newsletter" },
+      { label: "Conteúdo", to: "/conteudo" },
+      { label: "Momento Atual", to: "/momento-atual" },
+      { label: "Cripto Wine", to: "/cripto-wine" },
+      { label: "Vida Atual", to: "/vida-atual" },
+      { label: "Newsletter", to: "/newsletter" },
     ],
+
   },
   {
     title: "Ética e compliance",
