@@ -7,7 +7,7 @@ import heroApp from "@/assets/app-mao-2.png.asset.json";
  */
 import appTelas from "@/assets/app-telas-trio.png.asset.json";
 import { Section, SectionHeading, ActionButton, ActionLink } from "@/components/atual/primitives";
-import { Hero, TrustPillars, PathCard, AppMockup, CTASection } from "@/components/atual/ui-kit";
+import { Hero, TrustPillars, PathCard, CTASection } from "@/components/atual/ui-kit";
 import { StoreBadges } from "@/components/atual/StoreBadges";
 import {
   StablecoinLeadForm,
