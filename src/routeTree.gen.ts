@@ -34,8 +34,10 @@ import { Route as SolucoesRouteImport } from './routes/solucoes'
 import { Route as StablecoinsRouteImport } from './routes/stablecoins'
 import { Route as TermosRouteImport } from './routes/termos'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminComportamentoRouteImport } from './routes/admin.comportamento'
 import { Route as AdminLeadsRouteImport } from './routes/admin.leads'
 import { Route as AdminNewsletterRouteImport } from './routes/admin.newsletter'
+import { Route as AdminTrafegoRouteImport } from './routes/admin.trafego'
 import { Route as CriptoWineIndexRouteImport } from './routes/cripto-wine.index'
 import { Route as CriptoWineSlugRouteImport } from './routes/cripto-wine.$slug'
 import { Route as MomentoAtualIndexRouteImport } from './routes/momento-atual.index'
@@ -168,6 +170,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/admin/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminComportamentoRoute = AdminComportamentoRouteImport.update({
+  id: '/admin/comportamento',
+  path: '/admin/comportamento',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminLeadsRoute = AdminLeadsRouteImport.update({
   id: '/admin/leads',
   path: '/admin/leads',
@@ -176,6 +183,11 @@ const AdminLeadsRoute = AdminLeadsRouteImport.update({
 const AdminNewsletterRoute = AdminNewsletterRouteImport.update({
   id: '/admin/newsletter',
   path: '/admin/newsletter',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminTrafegoRoute = AdminTrafegoRouteImport.update({
+  id: '/admin/trafego',
+  path: '/admin/trafego',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CriptoWineIndexRoute = CriptoWineIndexRouteImport.update({
@@ -234,8 +246,10 @@ export interface FileRoutesByFullPath {
   '/solucoes': typeof SolucoesRoute
   '/stablecoins': typeof StablecoinsRoute
   '/termos': typeof TermosRoute
+  '/admin/comportamento': typeof AdminComportamentoRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/newsletter': typeof AdminNewsletterRoute
+  '/admin/trafego': typeof AdminTrafegoRoute
   '/cripto-wine/$slug': typeof CriptoWineSlugRoute
   '/momento-atual/$slug': typeof MomentoAtualSlugRoute
   '/vida-atual/$slug': typeof VidaAtualSlugRoute
@@ -269,8 +283,10 @@ export interface FileRoutesByTo {
   '/solucoes': typeof SolucoesRoute
   '/stablecoins': typeof StablecoinsRoute
   '/termos': typeof TermosRoute
+  '/admin/comportamento': typeof AdminComportamentoRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/newsletter': typeof AdminNewsletterRoute
+  '/admin/trafego': typeof AdminTrafegoRoute
   '/cripto-wine/$slug': typeof CriptoWineSlugRoute
   '/momento-atual/$slug': typeof MomentoAtualSlugRoute
   '/vida-atual/$slug': typeof VidaAtualSlugRoute
@@ -305,8 +321,10 @@ export interface FileRoutesById {
   '/solucoes': typeof SolucoesRoute
   '/stablecoins': typeof StablecoinsRoute
   '/termos': typeof TermosRoute
+  '/admin/comportamento': typeof AdminComportamentoRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/newsletter': typeof AdminNewsletterRoute
+  '/admin/trafego': typeof AdminTrafegoRoute
   '/cripto-wine/$slug': typeof CriptoWineSlugRoute
   '/momento-atual/$slug': typeof MomentoAtualSlugRoute
   '/vida-atual/$slug': typeof VidaAtualSlugRoute
@@ -342,8 +360,10 @@ export interface FileRouteTypes {
     | '/solucoes'
     | '/stablecoins'
     | '/termos'
+    | '/admin/comportamento'
     | '/admin/leads'
     | '/admin/newsletter'
+    | '/admin/trafego'
     | '/cripto-wine/$slug'
     | '/momento-atual/$slug'
     | '/vida-atual/$slug'
@@ -377,8 +397,10 @@ export interface FileRouteTypes {
     | '/solucoes'
     | '/stablecoins'
     | '/termos'
+    | '/admin/comportamento'
     | '/admin/leads'
     | '/admin/newsletter'
+    | '/admin/trafego'
     | '/cripto-wine/$slug'
     | '/momento-atual/$slug'
     | '/vida-atual/$slug'
@@ -412,8 +434,10 @@ export interface FileRouteTypes {
     | '/solucoes'
     | '/stablecoins'
     | '/termos'
+    | '/admin/comportamento'
     | '/admin/leads'
     | '/admin/newsletter'
+    | '/admin/trafego'
     | '/cripto-wine/$slug'
     | '/momento-atual/$slug'
     | '/vida-atual/$slug'
@@ -448,8 +472,10 @@ export interface RootRouteChildren {
   SolucoesRoute: typeof SolucoesRoute
   StablecoinsRoute: typeof StablecoinsRoute
   TermosRoute: typeof TermosRoute
+  AdminComportamentoRoute: typeof AdminComportamentoRoute
   AdminLeadsRoute: typeof AdminLeadsRoute
   AdminNewsletterRoute: typeof AdminNewsletterRoute
+  AdminTrafegoRoute: typeof AdminTrafegoRoute
   CriptoWineSlugRoute: typeof CriptoWineSlugRoute
   MomentoAtualSlugRoute: typeof MomentoAtualSlugRoute
   VidaAtualSlugRoute: typeof VidaAtualSlugRoute
@@ -636,6 +662,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/comportamento': {
+      id: '/admin/comportamento'
+      path: '/admin/comportamento'
+      fullPath: '/admin/comportamento'
+      preLoaderRoute: typeof AdminComportamentoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/leads': {
       id: '/admin/leads'
       path: '/admin/leads'
@@ -648,6 +681,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/newsletter'
       fullPath: '/admin/newsletter'
       preLoaderRoute: typeof AdminNewsletterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/trafego': {
+      id: '/admin/trafego'
+      path: '/admin/trafego'
+      fullPath: '/admin/trafego'
+      preLoaderRoute: typeof AdminTrafegoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cripto-wine/': {
@@ -720,8 +760,10 @@ const rootRouteChildren: RootRouteChildren = {
   SolucoesRoute: SolucoesRoute,
   StablecoinsRoute: StablecoinsRoute,
   TermosRoute: TermosRoute,
+  AdminComportamentoRoute: AdminComportamentoRoute,
   AdminLeadsRoute: AdminLeadsRoute,
   AdminNewsletterRoute: AdminNewsletterRoute,
+  AdminTrafegoRoute: AdminTrafegoRoute,
   CriptoWineSlugRoute: CriptoWineSlugRoute,
   MomentoAtualSlugRoute: MomentoAtualSlugRoute,
   VidaAtualSlugRoute: VidaAtualSlugRoute,

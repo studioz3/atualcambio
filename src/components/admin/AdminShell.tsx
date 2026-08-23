@@ -7,11 +7,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, Users, Mail, LogOut } from "lucide-react";
+import { LayoutDashboard, Users, Mail, LogOut, Globe2, MousePointerClick } from "lucide-react";
 import { ChangePasswordDialog } from "./ChangePasswordDialog";
 
 const nav = [
   { to: "/admin", label: "Visão geral", icon: LayoutDashboard, exact: true },
+  { to: "/admin/trafego", label: "Tráfego", icon: Globe2, exact: false },
+  { to: "/admin/comportamento", label: "Comportamento", icon: MousePointerClick, exact: false },
   { to: "/admin/leads", label: "Leads", icon: Users, exact: false },
   { to: "/admin/newsletter", label: "Newsletter", icon: Mail, exact: false },
 ] as const;
@@ -83,7 +85,15 @@ function LoginCard({ onDone }: { onDone: () => void }) {
   );
 }
 
-export function AdminShell({ children, title }: { children: ReactNode; title: string }) {
+export function AdminShell({
+  children,
+  title,
+  tone = "light",
+}: {
+  children: ReactNode;
+  title: string;
+  tone?: "light" | "cockpit";
+}) {
   const navigate = useNavigate();
   const [hasSession, setHasSession] = useState<boolean | null>(null);
 
@@ -130,8 +140,13 @@ export function AdminShell({ children, title }: { children: ReactNode; title: st
   }
 
   return (
-    <div className="min-h-screen bg-offwhite lg:flex">
-      <aside className="surface-navy lg:sticky lg:top-0 lg:h-screen lg:w-60 lg:shrink-0">
+    <div
+      className={cn(
+        "min-h-screen lg:flex",
+        tone === "cockpit" ? "bg-navy-deep" : "bg-offwhite",
+      )}
+    >
+      <aside className="bg-navy-deep lg:sticky lg:top-0 lg:h-screen lg:w-60 lg:shrink-0 lg:border-r lg:border-white/10">
         <div className="flex items-center justify-between gap-3 px-5 py-4 lg:block">
           <div>
             <p className="text-[10px] font-semibold tracking-[0.2em] text-gold uppercase">Atual</p>
@@ -174,7 +189,14 @@ export function AdminShell({ children, title }: { children: ReactNode; title: st
       </aside>
 
       <main className={cn("min-w-0 flex-1 px-5 py-8 lg:px-10")}>
-        <h1 className="text-2xl font-bold text-navy">{title}</h1>
+        {tone === "cockpit" ? (
+          <p className="text-[10px] font-semibold tracking-[0.24em] text-gold uppercase">
+            Cockpit Atual
+          </p>
+        ) : null}
+        <h1 className={cn("text-2xl font-bold", tone === "cockpit" ? "mt-1 text-white" : "text-navy")}>
+          {title}
+        </h1>
         <div className="mt-6">{children}</div>
       </main>
     </div>
