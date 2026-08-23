@@ -154,7 +154,7 @@ export function EditoriaPage({
               <div className="mt-12">
                 <ActionLink
                   to="/momento-atual/episodios"
-                  variant="outline-light"
+                  variant="secondaryDark"
                   event="podcast_ver_episodios"
                 >
                   Episódios anteriores
