@@ -66,6 +66,7 @@ export function Hero({
   imageAlt?: string;
   seals?: boolean;
   scrim?: "ink" | "navy";
+  zoomImage?: boolean;
   children?: ReactNode;
 }) {
   const navyScrim = scrim === "navy";
