@@ -86,7 +86,7 @@ export const cmsGet = createServerFn({ method: "GET" })
       .select("nome, url")
       .eq("content_id", data.id)
       .order("sort_order");
-    return { row: row as CmsRow, fontes: (fontes ?? []) as { nome: string; url: string | null }[] };
+    return { row: row as unknown as CmsRow, fontes: (fontes ?? []) as { nome: string; url: string | null }[] };
   });
 
 export const cmsSave = createServerFn({ method: "POST" })
@@ -123,7 +123,7 @@ export const cmsSave = createServerFn({ method: "POST" })
       video: data.video ?? null,
       published_at: publishedAt,
       updated_by: context.userId,
-    };
+    } as never;
 
     let id = data.id ?? null;
     if (id) {
@@ -132,7 +132,7 @@ export const cmsSave = createServerFn({ method: "POST" })
     } else {
       const { data: inserted, error } = await context.supabase
         .from("editorial_content")
-        .insert({ ...payload, created_by: context.userId })
+        .insert({ ...(payload as object), created_by: context.userId } as never)
         .select("id")
         .single();
       if (error) throw new Error(error.message);
@@ -142,7 +142,7 @@ export const cmsSave = createServerFn({ method: "POST" })
     await context.supabase.from("editorial_sources").delete().eq("content_id", id);
     if (data.fontes.length > 0) {
       await context.supabase.from("editorial_sources").insert(
-        data.fontes.map((f, i) => ({ content_id: id, nome: f.nome, url: f.url || null, sort_order: i })),
+        data.fontes.map((f, i) => ({ content_id: id!, nome: f.nome, url: f.url || null, sort_order: i })),
       );
     }
 
@@ -155,9 +155,12 @@ export const cmsSetStatus = createServerFn({ method: "POST" })
     z.object({ id: z.string().uuid(), status: statusSchema }).parse(data),
   )
   .handler(async ({ data, context }) => {
-    const patch: Record<string, unknown> = { status: data.status, updated_by: context.userId };
-    if (data.status === "publicado") patch.published_at = new Date().toISOString();
-    const { error } = await context.supabase.from("editorial_content").update(patch).eq("id", data.id);
+    const patch = {
+      status: data.status,
+      updated_by: context.userId,
+      ...(data.status === "publicado" ? { published_at: new Date().toISOString() } : {}),
+    };
+    const { error } = await context.supabase.from("editorial_content").update(patch as never).eq("id", data.id);
     if (error) throw new Error(error.message);
     return { ok: true };
   });
@@ -172,11 +175,11 @@ export const cmsDuplicate = createServerFn({ method: "POST" })
       .eq("id", data.id)
       .single();
     if (error) throw new Error(error.message);
-    const src = row as CmsRow;
+    const src = row as unknown as CmsRow;
     const { data: inserted, error: insErr } = await context.supabase
       .from("editorial_content")
       .insert({
-        ...src,
+        ...(src as object),
         id: undefined,
         titulo: `${src.titulo} (cópia)`,
         slug: `${src.slug}-copia-${Date.now().toString().slice(-5)}`,
@@ -188,7 +191,7 @@ export const cmsDuplicate = createServerFn({ method: "POST" })
         updated_at: undefined,
         created_by: context.userId,
         updated_by: context.userId,
-      })
+      } as never)
       .select("id")
       .single();
     if (insErr) throw new Error(insErr.message);
@@ -202,7 +205,7 @@ export const cmsArchive = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const { error } = await context.supabase
       .from("editorial_content")
-      .update({ deleted_at: new Date().toISOString(), status: "rascunho", updated_by: context.userId })
+      .update({ deleted_at: new Date().toISOString(), status: "rascunho", updated_by: context.userId } as never)
       .eq("id", data.id);
     if (error) throw new Error(error.message);
     return { ok: true };

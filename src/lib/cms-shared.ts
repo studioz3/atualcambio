@@ -151,7 +151,7 @@ export type CmsRow = {
   hero_image: string | null;
   hero_alt: string | null;
   social_image: string | null;
-  corpo: unknown;
+  corpo: CmsBlock[];
   related_cta: string;
   destaque_editoria: boolean;
   destaque_home: boolean;
@@ -161,8 +161,8 @@ export type CmsRow = {
   meta_description: string | null;
   canonical: string | null;
   indexable: boolean;
-  podcast: Record<string, unknown> | null;
-  video: Record<string, unknown> | null;
+  podcast: { audio_url?: string; duracao?: string; plataforma?: string } | null;
+  video: { url?: string; duracao?: string; plataforma?: string } | null;
   published_at: string | null;
   created_at: string;
   updated_at: string;
@@ -197,8 +197,8 @@ export type CmsListItem = Pick<
 
 /** Converte uma linha do banco no formato consumido pelos templates públicos. */
 export function toArticle(row: CmsRow, sources: CmsSource[] = []): Article {
-  const video = (row.video ?? {}) as { url?: string };
-  const podcast = (row.podcast ?? {}) as { audio_url?: string };
+  const video = row.video ?? {};
+  const podcast = row.podcast ?? {};
   return {
     id: row.id,
     editoria: row.editoria,
