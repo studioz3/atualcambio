@@ -84,19 +84,25 @@ export function Hero({
             height={1080}
             className={cn(
               "ml-auto h-full w-auto max-w-none object-contain object-right",
-              navyScrim && "opacity-90 mix-blend-luminosity",
+              navyScrim &&
+                "origin-right -translate-x-[1.5%] scale-[1.06] contrast-[1.1] saturate-[1.08] brightness-[1.03]",
             )}
           />
 
           {/* scrim para legibilidade */}
-          <div
-            className={cn(
-              "absolute inset-0 bg-gradient-to-r",
-              navyScrim
-                ? "from-navy via-navy/70 to-navy/10"
-                : "from-black via-black/60 to-transparent",
-            )}
-          />
+          {navyScrim ? (
+            <>
+              {/* pretos profundos + área de texto limpa */}
+              <div className="absolute inset-0 bg-gradient-to-r from-black via-black/72 via-38% to-transparent" />
+              {/* navy como estrutura, não como filtro uniforme */}
+              <div className="absolute inset-0 bg-gradient-to-r from-navy/55 via-navy/16 to-navy/0" />
+
+              {/* vinheta para profundidade nas bordas */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/35" />
+            </>
+          ) : (
+            <div className="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent" />
+          )}
         </div>
       ) : null}
 
@@ -109,19 +115,20 @@ export function Hero({
             height={1350}
             className={cn(
               "size-full object-cover object-center",
-              navyScrim && "opacity-90 mix-blend-luminosity",
+              navyScrim && "contrast-[1.1] saturate-[1.06]",
             )}
           />
-          <div
-            className={cn(
-              "absolute inset-0 bg-gradient-to-b",
-              navyScrim
-                ? "from-navy/92 via-navy/72 to-navy/94"
-                : "from-black/92 via-black/70 to-black/92",
-            )}
-          />
+          {navyScrim ? (
+            <>
+              <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/76 to-black/92" />
+              <div className="absolute inset-0 bg-gradient-to-b from-navy/38 via-navy/12 to-navy/45" />
+            </>
+          ) : (
+            <div className="absolute inset-0 bg-gradient-to-b from-black/92 via-black/70 to-black/92" />
+          )}
         </div>
       ) : null}
+
 
 
       <div className="hero-container">
