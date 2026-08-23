@@ -9,13 +9,8 @@ import {
   NewsletterCallout,
 } from "@/components/atual/editorial-ui";
 import { SpecialistCta } from "@/components/atual/blocks";
-import {
-  SITE_URL,
-  editorias,
-  publishedArticles,
-  searchArticles,
-  type Article,
-} from "@/content/editorial";
+import { SITE_URL, editorias, editoriaMap, type Article } from "@/content/editorial";
+import { getPublishedList } from "@/lib/editorial.functions";
 import { track } from "@/lib/analytics";
 
 export const Route = createFileRoute("/conteudo")({
@@ -55,12 +50,34 @@ export const Route = createFileRoute("/conteudo")({
       },
     ],
   }),
+  loader: async () => await getPublishedList({ data: {} }),
+  errorComponent: () => (
+    <div className="px-6 pt-40 pb-24 text-center text-navy">
+      Não foi possível carregar os conteúdos agora.
+    </div>
+  ),
+  notFoundComponent: () => (
+    <div className="px-6 pt-40 pb-24 text-center text-navy">Página não encontrada.</div>
+  ),
   component: Conteudo,
 });
 
 function Conteudo() {
+  const recent = Route.useLoaderData();
   const [results, setResults] = useState<Article[] | null>(null);
-  const recent = publishedArticles();
+
+  const search = (q: string) => {
+    const term = q.trim().toLowerCase();
+    if (term.length < 2) return setResults(null);
+    setResults(
+      recent.filter((a) =>
+        [a.titulo, a.subtitulo, a.resumo, a.categoria, editoriaMap[a.editoria].name]
+          .join(" ")
+          .toLowerCase()
+          .includes(term),
+      ),
+    );
+  };
 
   useEffect(() => {
     track("content_hub_view", { source_page: "conteudo" });
@@ -89,7 +106,7 @@ function Conteudo() {
             </p>
             <div className="mt-10">
               <ContentSearch
-                onSearch={(q) => setResults(q.trim().length < 2 ? null : searchArticles(q))}
+                onSearch={search}
               />
             </div>
           </div>
@@ -145,7 +162,7 @@ function Conteudo() {
         <EditoriaBlock
           key={editoria.id}
           editoria={editoria}
-          articles={publishedArticles(editoria.id)}
+          articles={recent.filter((a) => a.editoria === editoria.id)}
           index={i}
           reverse={i % 2 === 1}
         />

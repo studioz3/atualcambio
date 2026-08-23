@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { EditoriaPage } from "@/components/atual/editorial-pages";
+import { getPublishedList } from "@/lib/editorial.functions";
 import { SITE_URL } from "@/content/editorial";
 import { track } from "@/lib/analytics";
 
@@ -36,6 +37,15 @@ export const Route = createFileRoute("/momento-atual/")({
       },
     ],
   }),
+  loader: async () => await getPublishedList({ data: { editoria: "momento-atual" } }),
+  errorComponent: () => (
+    <div className="px-6 pt-40 pb-24 text-center text-navy">
+      Não foi possível carregar os conteúdos agora.
+    </div>
+  ),
+  notFoundComponent: () => (
+    <div className="px-6 pt-40 pb-24 text-center text-navy">Editoria não encontrada.</div>
+  ),
   component: MomentoAtual,
 });
 
@@ -43,5 +53,6 @@ function MomentoAtual() {
   useEffect(() => {
     track("momento_atual_view", { editoria: "momento-atual", source_page: "momento-atual" });
   }, []);
-  return <EditoriaPage id="momento-atual" />;
+  const articles = Route.useLoaderData();
+  return <EditoriaPage id="momento-atual" articles={articles} />;
 }

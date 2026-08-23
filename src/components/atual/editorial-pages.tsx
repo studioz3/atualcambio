@@ -18,16 +18,15 @@ import {
   editoriaMap,
   formatDate,
   getEditoria,
-  publishedArticles,
-  relatedArticles,
 } from "@/content/editorial";
+import { ContentBlockView } from "./content-blocks";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
 /* ================= Página de editoria ================= */
-export function EditoriaPage({ id }: { id: EditoriaId }) {
+export function EditoriaPage({ id, articles }: { id: EditoriaId; articles: Article[] }) {
   const editoria = getEditoria(id);
-  const all = publishedArticles(id);
+  const all = articles;
   const [category, setCategory] = useState("Todos");
 
   const featured = all.find((a) => a.destaque) ?? all[0] ?? null;
@@ -185,9 +184,14 @@ export function EditoriaPage({ id }: { id: EditoriaId }) {
 }
 
 /* ================= Template de artigo ================= */
-export function ArticlePage({ article }: { article: Article }) {
+export function ArticlePage({
+  article,
+  related = [],
+}: {
+  article: Article;
+  related?: Article[];
+}) {
   const editoria = editoriaMap[article.editoria];
-  const related = relatedArticles(article);
 
   const share = async () => {
     track("article_share", {
@@ -261,42 +265,9 @@ export function ArticlePage({ article }: { article: Article }) {
         </figure>
 
         <div className="mx-auto mt-14 max-w-[68ch]">
-          {article.conteudo.map((block, i) => {
-            if (block.type === "subtitulo") {
-              return (
-                <h2 key={i} className="display-h3 mt-12 text-navy first:mt-0">
-                  {block.text}
-                </h2>
-              );
-            }
-            if (block.type === "lista") {
-              return (
-                <ul key={i} className="mt-6 space-y-3">
-                  {block.items.map((item) => (
-                    <li key={item} className="flex gap-3 text-base leading-relaxed text-graphite">
-                      <span className="mt-2.5 size-1.5 shrink-0 rounded-full bg-gold" aria-hidden />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              );
-            }
-            if (block.type === "citacao") {
-              return (
-                <blockquote
-                  key={i}
-                  className="mt-12 border-l-2 border-gold pl-6 text-xl leading-snug font-semibold text-navy"
-                >
-                  {block.text}
-                </blockquote>
-              );
-            }
-            return (
-              <p key={i} className="mt-6 text-base leading-relaxed text-graphite">
-                {block.text}
-              </p>
-            );
-          })}
+          {article.conteudo.map((block, i) => (
+            <ContentBlockView key={i} block={block} />
+          ))}
 
           {article.video_url ? (
             <div className="mt-12 aspect-video w-full overflow-hidden rounded-xl bg-line">

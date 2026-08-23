@@ -1,10 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArticlePage, ArticleNotFound } from "@/components/atual/editorial-pages";
-import { SITE_URL, articleBySlug } from "@/content/editorial";
+import { SITE_URL } from "@/content/editorial";
+import { getPublishedArticle } from "@/lib/editorial.functions";
 
 export const Route = createFileRoute("/momento-atual/$slug")({
-  head: ({ params }) => {
-    const article = articleBySlug("momento-atual", params.slug);
+  loader: async ({ params }) =>
+    await getPublishedArticle({ data: { editoria: "momento-atual", slug: params.slug } }),
+  head: ({ loaderData }) => {
+    const article = loaderData?.article;
     if (!article) {
       return { meta: [{ title: "Conteúdo não encontrado | Momento Atual" }, { name: "robots", content: "noindex" }] };
     }
@@ -39,12 +42,13 @@ export const Route = createFileRoute("/momento-atual/$slug")({
       ],
     };
   },
+  errorComponent: () => <ArticleNotFound id="momento-atual" />,
+  notFoundComponent: () => <ArticleNotFound id="momento-atual" />,
   component: MomentoAtualArtigo,
 });
 
 function MomentoAtualArtigo() {
-  const { slug } = Route.useParams();
-  const article = articleBySlug("momento-atual", slug);
-  if (!article) return <ArticleNotFound id="momento-atual" />;
-  return <ArticlePage article={article} />;
+  const data = Route.useLoaderData();
+  if (!data) return <ArticleNotFound id="momento-atual" />;
+  return <ArticlePage article={data.article} related={data.related} />;
 }

@@ -28,7 +28,8 @@ import { StoreBadges } from "@/components/atual/StoreBadges";
 import { useLead } from "@/components/atual/LeadProvider";
 import { track } from "@/lib/analytics";
 import { brand, pillars, security, links } from "@/content/site";
-import { editorias, publishedArticles } from "@/content/editorial";
+import { editorias } from "@/content/editorial";
+import { getPublishedList } from "@/lib/editorial.functions";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -49,6 +50,15 @@ export const Route = createFileRoute("/")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
+  loader: async () => await getPublishedList({ data: { limit: 12 } }),
+  errorComponent: () => (
+    <div className="px-6 pt-40 pb-24 text-center text-navy">
+      Não foi possível carregar a página agora.
+    </div>
+  ),
+  notFoundComponent: () => (
+    <div className="px-6 pt-40 pb-24 text-center text-navy">Página não encontrada.</div>
+  ),
   component: Home,
 });
 
@@ -106,6 +116,7 @@ const intentCards = [
 
 function Home() {
   const { openLead } = useLead();
+  const destaques = Route.useLoaderData();
 
   return (
     <>
@@ -327,7 +338,7 @@ function Home() {
         </div>
         <div className="mt-14 grid gap-10 md:grid-cols-3">
           {editorias.map((editoria) => {
-            const latest = publishedArticles(editoria.id)[0];
+            const latest = destaques?.find((a) => a.editoria === editoria.id);
             return (
               <Link
                 key={editoria.id}
