@@ -45,6 +45,7 @@ import { Route as MomentoAtualSlugRouteImport } from './routes/momento-atual.$sl
 import { Route as VidaAtualIndexRouteImport } from './routes/vida-atual.index'
 import { Route as VidaAtualSlugRouteImport } from './routes/vida-atual.$slug'
 import { Route as AdminConteudoIndexRouteImport } from './routes/admin.conteudo.index'
+import { Route as AdminConteudoNovoRouteImport } from './routes/admin.conteudo.novo'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -226,6 +227,11 @@ const AdminConteudoIndexRoute = AdminConteudoIndexRouteImport.update({
   path: '/admin/conteudo/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminConteudoNovoRoute = AdminConteudoNovoRouteImport.update({
+  id: '/admin/conteudo/novo',
+  path: '/admin/conteudo/novo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -263,6 +269,7 @@ export interface FileRoutesByFullPath {
   '/cripto-wine/': typeof CriptoWineIndexRoute
   '/momento-atual/': typeof MomentoAtualIndexRoute
   '/vida-atual/': typeof VidaAtualIndexRoute
+  '/admin/conteudo/novo': typeof AdminConteudoNovoRoute
   '/admin/conteudo/': typeof AdminConteudoIndexRoute
 }
 export interface FileRoutesByTo {
@@ -301,6 +308,7 @@ export interface FileRoutesByTo {
   '/cripto-wine': typeof CriptoWineIndexRoute
   '/momento-atual': typeof MomentoAtualIndexRoute
   '/vida-atual': typeof VidaAtualIndexRoute
+  '/admin/conteudo/novo': typeof AdminConteudoNovoRoute
   '/admin/conteudo': typeof AdminConteudoIndexRoute
 }
 export interface FileRoutesById {
@@ -340,6 +348,7 @@ export interface FileRoutesById {
   '/cripto-wine/': typeof CriptoWineIndexRoute
   '/momento-atual/': typeof MomentoAtualIndexRoute
   '/vida-atual/': typeof VidaAtualIndexRoute
+  '/admin/conteudo/novo': typeof AdminConteudoNovoRoute
   '/admin/conteudo/': typeof AdminConteudoIndexRoute
 }
 export interface FileRouteTypes {
@@ -380,6 +389,7 @@ export interface FileRouteTypes {
     | '/cripto-wine/'
     | '/momento-atual/'
     | '/vida-atual/'
+    | '/admin/conteudo/novo'
     | '/admin/conteudo/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -418,6 +428,7 @@ export interface FileRouteTypes {
     | '/cripto-wine'
     | '/momento-atual'
     | '/vida-atual'
+    | '/admin/conteudo/novo'
     | '/admin/conteudo'
   id:
     | '__root__'
@@ -456,6 +467,7 @@ export interface FileRouteTypes {
     | '/cripto-wine/'
     | '/momento-atual/'
     | '/vida-atual/'
+    | '/admin/conteudo/novo'
     | '/admin/conteudo/'
   fileRoutesById: FileRoutesById
 }
@@ -495,6 +507,7 @@ export interface RootRouteChildren {
   CriptoWineIndexRoute: typeof CriptoWineIndexRoute
   MomentoAtualIndexRoute: typeof MomentoAtualIndexRoute
   VidaAtualIndexRoute: typeof VidaAtualIndexRoute
+  AdminConteudoNovoRoute: typeof AdminConteudoNovoRoute
   AdminConteudoIndexRoute: typeof AdminConteudoIndexRoute
 }
 
@@ -752,6 +765,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminConteudoIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/conteudo/novo': {
+      id: '/admin/conteudo/novo'
+      path: '/admin/conteudo/novo'
+      fullPath: '/admin/conteudo/novo'
+      preLoaderRoute: typeof AdminConteudoNovoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -791,6 +811,7 @@ const rootRouteChildren: RootRouteChildren = {
   CriptoWineIndexRoute: CriptoWineIndexRoute,
   MomentoAtualIndexRoute: MomentoAtualIndexRoute,
   VidaAtualIndexRoute: VidaAtualIndexRoute,
+  AdminConteudoNovoRoute: AdminConteudoNovoRoute,
   AdminConteudoIndexRoute: AdminConteudoIndexRoute,
 }
 export const routeTree = rootRouteImport
