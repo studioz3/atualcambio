@@ -7,13 +7,22 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, Users, Mail, LogOut, Globe2, MousePointerClick } from "lucide-react";
+import {
+  LayoutDashboard,
+  Users,
+  Mail,
+  LogOut,
+  Globe2,
+  MousePointerClick,
+  Newspaper,
+} from "lucide-react";
 import { ChangePasswordDialog } from "./ChangePasswordDialog";
 
 const nav = [
   { to: "/admin", label: "Visão geral", icon: LayoutDashboard, exact: true },
   { to: "/admin/trafego", label: "Tráfego", icon: Globe2, exact: false },
   { to: "/admin/comportamento", label: "Comportamento", icon: MousePointerClick, exact: false },
+  { to: "/admin/conteudo", label: "Conteúdo", icon: Newspaper, exact: false },
   { to: "/admin/leads", label: "Leads", icon: Users, exact: false },
   { to: "/admin/newsletter", label: "Newsletter", icon: Mail, exact: false },
 ] as const;

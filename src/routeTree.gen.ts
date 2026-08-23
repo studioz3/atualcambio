@@ -45,6 +45,7 @@ import { Route as MomentoAtualSlugRouteImport } from './routes/momento-atual.$sl
 import { Route as VidaAtualIndexRouteImport } from './routes/vida-atual.index'
 import { Route as VidaAtualSlugRouteImport } from './routes/vida-atual.$slug'
 import { Route as AdminConteudoIndexRouteImport } from './routes/admin.conteudo.index'
+import { Route as AdminConteudoIdRouteImport } from './routes/admin.conteudo.$id'
 import { Route as AdminConteudoNovoRouteImport } from './routes/admin.conteudo.novo'
 
 const IndexRoute = IndexRouteImport.update({
@@ -227,6 +228,11 @@ const AdminConteudoIndexRoute = AdminConteudoIndexRouteImport.update({
   path: '/admin/conteudo/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminConteudoIdRoute = AdminConteudoIdRouteImport.update({
+  id: '/admin/conteudo/$id',
+  path: '/admin/conteudo/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminConteudoNovoRoute = AdminConteudoNovoRouteImport.update({
   id: '/admin/conteudo/novo',
   path: '/admin/conteudo/novo',
@@ -269,6 +275,7 @@ export interface FileRoutesByFullPath {
   '/cripto-wine/': typeof CriptoWineIndexRoute
   '/momento-atual/': typeof MomentoAtualIndexRoute
   '/vida-atual/': typeof VidaAtualIndexRoute
+  '/admin/conteudo/$id': typeof AdminConteudoIdRoute
   '/admin/conteudo/novo': typeof AdminConteudoNovoRoute
   '/admin/conteudo/': typeof AdminConteudoIndexRoute
 }
@@ -308,6 +315,7 @@ export interface FileRoutesByTo {
   '/cripto-wine': typeof CriptoWineIndexRoute
   '/momento-atual': typeof MomentoAtualIndexRoute
   '/vida-atual': typeof VidaAtualIndexRoute
+  '/admin/conteudo/$id': typeof AdminConteudoIdRoute
   '/admin/conteudo/novo': typeof AdminConteudoNovoRoute
   '/admin/conteudo': typeof AdminConteudoIndexRoute
 }
@@ -348,6 +356,7 @@ export interface FileRoutesById {
   '/cripto-wine/': typeof CriptoWineIndexRoute
   '/momento-atual/': typeof MomentoAtualIndexRoute
   '/vida-atual/': typeof VidaAtualIndexRoute
+  '/admin/conteudo/$id': typeof AdminConteudoIdRoute
   '/admin/conteudo/novo': typeof AdminConteudoNovoRoute
   '/admin/conteudo/': typeof AdminConteudoIndexRoute
 }
@@ -389,6 +398,7 @@ export interface FileRouteTypes {
     | '/cripto-wine/'
     | '/momento-atual/'
     | '/vida-atual/'
+    | '/admin/conteudo/$id'
     | '/admin/conteudo/novo'
     | '/admin/conteudo/'
   fileRoutesByTo: FileRoutesByTo
@@ -428,6 +438,7 @@ export interface FileRouteTypes {
     | '/cripto-wine'
     | '/momento-atual'
     | '/vida-atual'
+    | '/admin/conteudo/$id'
     | '/admin/conteudo/novo'
     | '/admin/conteudo'
   id:
@@ -467,6 +478,7 @@ export interface FileRouteTypes {
     | '/cripto-wine/'
     | '/momento-atual/'
     | '/vida-atual/'
+    | '/admin/conteudo/$id'
     | '/admin/conteudo/novo'
     | '/admin/conteudo/'
   fileRoutesById: FileRoutesById
@@ -507,6 +519,7 @@ export interface RootRouteChildren {
   CriptoWineIndexRoute: typeof CriptoWineIndexRoute
   MomentoAtualIndexRoute: typeof MomentoAtualIndexRoute
   VidaAtualIndexRoute: typeof VidaAtualIndexRoute
+  AdminConteudoIdRoute: typeof AdminConteudoIdRoute
   AdminConteudoNovoRoute: typeof AdminConteudoNovoRoute
   AdminConteudoIndexRoute: typeof AdminConteudoIndexRoute
 }
@@ -765,6 +778,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminConteudoIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/conteudo/$id': {
+      id: '/admin/conteudo/$id'
+      path: '/admin/conteudo/$id'
+      fullPath: '/admin/conteudo/$id'
+      preLoaderRoute: typeof AdminConteudoIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/conteudo/novo': {
       id: '/admin/conteudo/novo'
       path: '/admin/conteudo/novo'
@@ -811,6 +831,7 @@ const rootRouteChildren: RootRouteChildren = {
   CriptoWineIndexRoute: CriptoWineIndexRoute,
   MomentoAtualIndexRoute: MomentoAtualIndexRoute,
   VidaAtualIndexRoute: VidaAtualIndexRoute,
+  AdminConteudoIdRoute: AdminConteudoIdRoute,
   AdminConteudoNovoRoute: AdminConteudoNovoRoute,
   AdminConteudoIndexRoute: AdminConteudoIndexRoute,
 }
