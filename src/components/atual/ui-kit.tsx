@@ -93,9 +93,10 @@ export function Hero({
           {navyScrim ? (
             <>
               {/* pretos profundos + área de texto limpa */}
-              <div className="absolute inset-0 bg-gradient-to-r from-black via-black/78 via-42% to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-black via-black/72 via-38% to-transparent" />
               {/* navy como estrutura, não como filtro uniforme */}
-              <div className="absolute inset-0 bg-gradient-to-r from-navy/75 via-navy/22 to-navy/0" />
+              <div className="absolute inset-0 bg-gradient-to-r from-navy/55 via-navy/16 to-navy/0" />
+
               {/* vinheta para profundidade nas bordas */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/35" />
             </>
