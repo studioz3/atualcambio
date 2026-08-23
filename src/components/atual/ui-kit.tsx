@@ -86,8 +86,9 @@ export function Hero({
             height={1080}
             className={cn(
               "ml-auto h-full w-auto max-w-none object-contain object-right",
-              navyScrim &&
-                "origin-right -translate-x-[1.5%] scale-[1.06] contrast-[1.1] saturate-[1.08] brightness-[1.03]",
+              navyScrim && "contrast-[1.1] saturate-[1.08] brightness-[1.03]",
+              navyScrim && zoomImage &&
+                "origin-right -translate-x-[1.5%] scale-[1.06]",
             )}
           />
 
