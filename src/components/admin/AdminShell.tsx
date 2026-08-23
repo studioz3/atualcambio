@@ -85,7 +85,15 @@ function LoginCard({ onDone }: { onDone: () => void }) {
   );
 }
 
-export function AdminShell({ children, title }: { children: ReactNode; title: string }) {
+export function AdminShell({
+  children,
+  title,
+  tone = "light",
+}: {
+  children: ReactNode;
+  title: string;
+  tone?: "light" | "cockpit";
+}) {
   const navigate = useNavigate();
   const [hasSession, setHasSession] = useState<boolean | null>(null);
 
