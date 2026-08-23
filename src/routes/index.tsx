@@ -51,8 +51,14 @@ export const Route = createFileRoute("/")({
     ],
   }),
   loader: async () => await getPublishedList({ data: { limit: 12 } }),
-  errorComponent: () => <Home />,
-  notFoundComponent: () => <Home />,
+  errorComponent: () => (
+    <div className="px-6 pt-40 pb-24 text-center text-navy">
+      Não foi possível carregar a página agora.
+    </div>
+  ),
+  notFoundComponent: () => (
+    <div className="px-6 pt-40 pb-24 text-center text-navy">Página não encontrada.</div>
+  ),
   component: Home,
 });
 
@@ -110,6 +116,7 @@ const intentCards = [
 
 function Home() {
   const { openLead } = useLead();
+  const destaques = Route.useLoaderData();
 
   return (
     <>
