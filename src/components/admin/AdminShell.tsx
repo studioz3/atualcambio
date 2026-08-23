@@ -140,8 +140,13 @@ export function AdminShell({
   }
 
   return (
-    <div className="min-h-screen bg-offwhite lg:flex">
-      <aside className="surface-navy lg:sticky lg:top-0 lg:h-screen lg:w-60 lg:shrink-0">
+    <div
+      className={cn(
+        "min-h-screen lg:flex",
+        tone === "cockpit" ? "bg-navy-deep" : "bg-offwhite",
+      )}
+    >
+      <aside className="bg-navy-deep lg:sticky lg:top-0 lg:h-screen lg:w-60 lg:shrink-0 lg:border-r lg:border-white/10">
         <div className="flex items-center justify-between gap-3 px-5 py-4 lg:block">
           <div>
             <p className="text-[10px] font-semibold tracking-[0.2em] text-gold uppercase">Atual</p>
