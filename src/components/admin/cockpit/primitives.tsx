@@ -16,7 +16,13 @@ export function useReducedMotion() {
 }
 
 /** Contador animado — respeita prefers-reduced-motion. */
-export function CountUp({ value, format }: { value: number; format?: (n: number) => string }) {
+export function CountUp({
+  value,
+  format,
+}: {
+  value: number;
+  format?: ((n: number) => string) | undefined;
+}) {
   const reduced = useReducedMotion();
   const [display, setDisplay] = useState(value);
   const fromRef = useRef(value);
