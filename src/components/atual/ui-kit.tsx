@@ -120,8 +120,8 @@ export function Hero({
           />
           {navyScrim ? (
             <>
-              <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/72 to-black/94" />
-              <div className="absolute inset-0 bg-gradient-to-b from-navy/45 via-navy/18 to-navy/55" />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/88 via-black/60 to-black/92" />
+              <div className="absolute inset-0 bg-gradient-to-b from-navy/38 via-navy/12 to-navy/45" />
             </>
           ) : (
             <div className="absolute inset-0 bg-gradient-to-b from-black/92 via-black/70 to-black/92" />
