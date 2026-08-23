@@ -21,11 +21,21 @@ import {
 } from "@/content/editorial";
 import { ContentBlockView } from "./content-blocks";
 import { SpotifyPlayer } from "./spotify";
+import { PodcastEpisodeList } from "./podcast-episodes";
+import type { PodcastEpisode } from "@/lib/podcast-shared";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
 /* ================= Página de editoria ================= */
-export function EditoriaPage({ id, articles }: { id: EditoriaId; articles: Article[] }) {
+export function EditoriaPage({
+  id,
+  articles,
+  episodes = [],
+}: {
+  id: EditoriaId;
+  articles: Article[];
+  episodes?: PodcastEpisode[];
+}) {
   const editoria = getEditoria(id);
   const all = articles;
   const [category, setCategory] = useState("Todos");
