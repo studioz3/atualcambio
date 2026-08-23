@@ -189,7 +189,14 @@ export function AdminShell({
       </aside>
 
       <main className={cn("min-w-0 flex-1 px-5 py-8 lg:px-10")}>
-        <h1 className="text-2xl font-bold text-navy">{title}</h1>
+        {tone === "cockpit" ? (
+          <p className="text-[10px] font-semibold tracking-[0.24em] text-gold uppercase">
+            Cockpit Atual
+          </p>
+        ) : null}
+        <h1 className={cn("text-2xl font-bold", tone === "cockpit" ? "mt-1 text-white" : "text-navy")}>
+          {title}
+        </h1>
         <div className="mt-6">{children}</div>
       </main>
     </div>
