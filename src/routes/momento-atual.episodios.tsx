@@ -54,8 +54,10 @@ function EpisodesPage() {
           <ArrowLeft className="size-4" aria-hidden />
           Momento Atual
         </Link>
-        <Eyebrow>Podcast</Eyebrow>
-        <h1 className="display-h1 mt-3 text-white">Todos os episódios</h1>
+        <div className="mt-8">
+          <Eyebrow>Podcast</Eyebrow>
+        </div>
+        <h1 className="display-h2 mt-3 text-white">Todos os episódios</h1>
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/70">
           O programa da Atual Câmbio sobre economia, câmbio e mercados. Ouça direto por aqui ou
           acompanhe no Spotify.
