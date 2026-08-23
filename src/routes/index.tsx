@@ -111,6 +111,7 @@ function Home() {
     <>
       <Hero
         scrim="navy"
+        zoomImage
         title={
           <>
             Seu dinheiro,
