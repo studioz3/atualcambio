@@ -14,6 +14,233 @@ export type Database = {
   }
   public: {
     Tables: {
+      editorial_authors: {
+        Row: {
+          ativo: boolean
+          bio: string | null
+          cargo: string | null
+          created_at: string
+          foto_url: string | null
+          id: string
+          links: Json
+          nome: string
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          bio?: string | null
+          cargo?: string | null
+          created_at?: string
+          foto_url?: string | null
+          id?: string
+          links?: Json
+          nome: string
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          bio?: string | null
+          cargo?: string | null
+          created_at?: string
+          foto_url?: string | null
+          id?: string
+          links?: Json
+          nome?: string
+          slug?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      editorial_categories: {
+        Row: {
+          ativo: boolean
+          created_at: string
+          editoria: string
+          id: string
+          nome: string
+          slug: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          created_at?: string
+          editoria: string
+          id?: string
+          nome: string
+          slug: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          created_at?: string
+          editoria?: string
+          id?: string
+          nome?: string
+          slug?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      editorial_content: {
+        Row: {
+          author_id: string | null
+          autor_nome: string | null
+          canonical: string | null
+          categoria: string | null
+          category_id: string | null
+          corpo: Json
+          created_at: string
+          created_by: string | null
+          deleted_at: string | null
+          destaque_editoria: boolean
+          destaque_home: boolean
+          editoria: string
+          hero_alt: string | null
+          hero_image: string | null
+          id: string
+          indexable: boolean
+          meta_description: string | null
+          newsletter_selected: boolean
+          podcast: Json | null
+          published_at: string | null
+          related_cta: string
+          resumo: string | null
+          seo_title: string | null
+          slug: string
+          social_image: string | null
+          status: string
+          subtitulo: string | null
+          tipo: string
+          titulo: string
+          updated_at: string
+          updated_by: string | null
+          video: Json | null
+        }
+        Insert: {
+          author_id?: string | null
+          autor_nome?: string | null
+          canonical?: string | null
+          categoria?: string | null
+          category_id?: string | null
+          corpo?: Json
+          created_at?: string
+          created_by?: string | null
+          deleted_at?: string | null
+          destaque_editoria?: boolean
+          destaque_home?: boolean
+          editoria: string
+          hero_alt?: string | null
+          hero_image?: string | null
+          id?: string
+          indexable?: boolean
+          meta_description?: string | null
+          newsletter_selected?: boolean
+          podcast?: Json | null
+          published_at?: string | null
+          related_cta?: string
+          resumo?: string | null
+          seo_title?: string | null
+          slug: string
+          social_image?: string | null
+          status?: string
+          subtitulo?: string | null
+          tipo?: string
+          titulo: string
+          updated_at?: string
+          updated_by?: string | null
+          video?: Json | null
+        }
+        Update: {
+          author_id?: string | null
+          autor_nome?: string | null
+          canonical?: string | null
+          categoria?: string | null
+          category_id?: string | null
+          corpo?: Json
+          created_at?: string
+          created_by?: string | null
+          deleted_at?: string | null
+          destaque_editoria?: boolean
+          destaque_home?: boolean
+          editoria?: string
+          hero_alt?: string | null
+          hero_image?: string | null
+          id?: string
+          indexable?: boolean
+          meta_description?: string | null
+          newsletter_selected?: boolean
+          podcast?: Json | null
+          published_at?: string | null
+          related_cta?: string
+          resumo?: string | null
+          seo_title?: string | null
+          slug?: string
+          social_image?: string | null
+          status?: string
+          subtitulo?: string | null
+          tipo?: string
+          titulo?: string
+          updated_at?: string
+          updated_by?: string | null
+          video?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "editorial_content_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "editorial_authors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "editorial_content_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "editorial_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      editorial_sources: {
+        Row: {
+          content_id: string
+          created_at: string
+          id: string
+          nome: string
+          sort_order: number
+          url: string | null
+        }
+        Insert: {
+          content_id: string
+          created_at?: string
+          id?: string
+          nome: string
+          sort_order?: number
+          url?: string | null
+        }
+        Update: {
+          content_id?: string
+          created_at?: string
+          id?: string
+          nome?: string
+          sort_order?: number
+          url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "editorial_sources_content_id_fkey"
+            columns: ["content_id"]
+            isOneToOne: false
+            referencedRelation: "editorial_content"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       lead_events: {
         Row: {
           autor: string | null
@@ -267,6 +494,30 @@ export type Database = {
           utm_source?: string | null
           utm_term?: string | null
           vida_atual?: boolean
+        }
+        Relationships: []
+      }
+      redirects: {
+        Row: {
+          created_at: string
+          id: string
+          source_path: string
+          status_code: number
+          target_path: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          source_path: string
+          status_code?: number
+          target_path: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          source_path?: string
+          status_code?: number
+          target_path?: string
         }
         Relationships: []
       }
