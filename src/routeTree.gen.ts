@@ -37,6 +37,7 @@ import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminComportamentoRouteImport } from './routes/admin.comportamento'
 import { Route as AdminLeadsRouteImport } from './routes/admin.leads'
 import { Route as AdminNewsletterRouteImport } from './routes/admin.newsletter'
+import { Route as AdminPodcastRouteImport } from './routes/admin.podcast'
 import { Route as AdminTrafegoRouteImport } from './routes/admin.trafego'
 import { Route as CriptoWineIndexRouteImport } from './routes/cripto-wine.index'
 import { Route as CriptoWineSlugRouteImport } from './routes/cripto-wine.$slug'
@@ -188,6 +189,11 @@ const AdminNewsletterRoute = AdminNewsletterRouteImport.update({
   path: '/admin/newsletter',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminPodcastRoute = AdminPodcastRouteImport.update({
+  id: '/admin/podcast',
+  path: '/admin/podcast',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminTrafegoRoute = AdminTrafegoRouteImport.update({
   id: '/admin/trafego',
   path: '/admin/trafego',
@@ -267,6 +273,7 @@ export interface FileRoutesByFullPath {
   '/admin/comportamento': typeof AdminComportamentoRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/newsletter': typeof AdminNewsletterRoute
+  '/admin/podcast': typeof AdminPodcastRoute
   '/admin/trafego': typeof AdminTrafegoRoute
   '/cripto-wine/$slug': typeof CriptoWineSlugRoute
   '/momento-atual/$slug': typeof MomentoAtualSlugRoute
@@ -307,6 +314,7 @@ export interface FileRoutesByTo {
   '/admin/comportamento': typeof AdminComportamentoRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/newsletter': typeof AdminNewsletterRoute
+  '/admin/podcast': typeof AdminPodcastRoute
   '/admin/trafego': typeof AdminTrafegoRoute
   '/cripto-wine/$slug': typeof CriptoWineSlugRoute
   '/momento-atual/$slug': typeof MomentoAtualSlugRoute
@@ -348,6 +356,7 @@ export interface FileRoutesById {
   '/admin/comportamento': typeof AdminComportamentoRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/newsletter': typeof AdminNewsletterRoute
+  '/admin/podcast': typeof AdminPodcastRoute
   '/admin/trafego': typeof AdminTrafegoRoute
   '/cripto-wine/$slug': typeof CriptoWineSlugRoute
   '/momento-atual/$slug': typeof MomentoAtualSlugRoute
@@ -390,6 +399,7 @@ export interface FileRouteTypes {
     | '/admin/comportamento'
     | '/admin/leads'
     | '/admin/newsletter'
+    | '/admin/podcast'
     | '/admin/trafego'
     | '/cripto-wine/$slug'
     | '/momento-atual/$slug'
@@ -430,6 +440,7 @@ export interface FileRouteTypes {
     | '/admin/comportamento'
     | '/admin/leads'
     | '/admin/newsletter'
+    | '/admin/podcast'
     | '/admin/trafego'
     | '/cripto-wine/$slug'
     | '/momento-atual/$slug'
@@ -470,6 +481,7 @@ export interface FileRouteTypes {
     | '/admin/comportamento'
     | '/admin/leads'
     | '/admin/newsletter'
+    | '/admin/podcast'
     | '/admin/trafego'
     | '/cripto-wine/$slug'
     | '/momento-atual/$slug'
@@ -511,6 +523,7 @@ export interface RootRouteChildren {
   AdminComportamentoRoute: typeof AdminComportamentoRoute
   AdminLeadsRoute: typeof AdminLeadsRoute
   AdminNewsletterRoute: typeof AdminNewsletterRoute
+  AdminPodcastRoute: typeof AdminPodcastRoute
   AdminTrafegoRoute: typeof AdminTrafegoRoute
   CriptoWineSlugRoute: typeof CriptoWineSlugRoute
   MomentoAtualSlugRoute: typeof MomentoAtualSlugRoute
@@ -722,6 +735,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminNewsletterRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/podcast': {
+      id: '/admin/podcast'
+      path: '/admin/podcast'
+      fullPath: '/admin/podcast'
+      preLoaderRoute: typeof AdminPodcastRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/trafego': {
       id: '/admin/trafego'
       path: '/admin/trafego'
@@ -823,6 +843,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminComportamentoRoute: AdminComportamentoRoute,
   AdminLeadsRoute: AdminLeadsRoute,
   AdminNewsletterRoute: AdminNewsletterRoute,
+  AdminPodcastRoute: AdminPodcastRoute,
   AdminTrafegoRoute: AdminTrafegoRoute,
   CriptoWineSlugRoute: CriptoWineSlugRoute,
   MomentoAtualSlugRoute: MomentoAtualSlugRoute,

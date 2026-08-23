@@ -30,6 +30,8 @@ import { track } from "@/lib/analytics";
 import { brand, pillars, security, links } from "@/content/site";
 import { editorias } from "@/content/editorial";
 import { getPublishedList } from "@/lib/editorial.functions";
+import { getPodcastEpisodes } from "@/lib/podcast.functions";
+import { LatestEpisodeStrip } from "@/components/atual/podcast-episodes";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -50,7 +52,13 @@ export const Route = createFileRoute("/")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  loader: async () => await getPublishedList({ data: { limit: 12 } }),
+  loader: async () => {
+    const [destaques, episodes] = await Promise.all([
+      getPublishedList({ data: { limit: 12 } }),
+      getPodcastEpisodes({ data: { editoria: "momento-atual", limit: 1 } }),
+    ]);
+    return { destaques, ultimoEpisodio: episodes[0] ?? null };
+  },
   errorComponent: () => (
     <div className="px-6 pt-40 pb-24 text-center text-navy">
       Não foi possível carregar a página agora.
@@ -116,7 +124,7 @@ const intentCards = [
 
 function Home() {
   const { openLead } = useLead();
-  const destaques = Route.useLoaderData();
+  const { destaques, ultimoEpisodio } = Route.useLoaderData();
 
   return (
     <>
@@ -370,6 +378,16 @@ function Home() {
           })}
         </div>
       </Section>
+
+      {ultimoEpisodio ? (
+        <section className="surface-navy section-y">
+          <div className="mx-auto w-full max-w-[1200px] px-6">
+            <LatestEpisodeStrip episode={ultimoEpisodio} />
+          </div>
+        </section>
+      ) : null}
+
+
 
 
       <FaqSection />

@@ -497,6 +497,48 @@ export type Database = {
         }
         Relationships: []
       }
+      podcast_episodes: {
+        Row: {
+          ativo: boolean
+          created_at: string
+          descricao: string | null
+          duracao_segundos: number | null
+          editoria: string
+          id: string
+          published_at: string
+          sort_order: number
+          spotify_url: string
+          titulo: string
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          created_at?: string
+          descricao?: string | null
+          duracao_segundos?: number | null
+          editoria?: string
+          id?: string
+          published_at?: string
+          sort_order?: number
+          spotify_url: string
+          titulo: string
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          created_at?: string
+          descricao?: string | null
+          duracao_segundos?: number | null
+          editoria?: string
+          id?: string
+          published_at?: string
+          sort_order?: number
+          spotify_url?: string
+          titulo?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       redirects: {
         Row: {
           created_at: string
