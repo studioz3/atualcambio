@@ -5,12 +5,10 @@ import { Container, Section, Eyebrow, SectionHeading, ActionLink, ActionButton }
 import {
   ArticleCard,
   CategoryFilter,
-  ComingSoonCard,
   EditorialHero,
   EditoriaTag,
   FeaturedArticle,
   NewsletterCallout,
-  EditorialSections,
 } from "./editorial-ui";
 import {
   type Article,
@@ -21,7 +19,6 @@ import {
 } from "@/content/editorial";
 import { ContentBlockView } from "./content-blocks";
 import { SpotifyPlayer } from "./spotify";
-import { PodcastEpisodeList } from "./podcast-episodes";
 import type { PodcastEpisode } from "@/lib/podcast-shared";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
@@ -50,7 +47,6 @@ export function EditoriaPage({
   );
 
   const dark = editoria.tone !== "wellness";
-  const sections = editoria.sections ?? [];
 
   return (
     <>
