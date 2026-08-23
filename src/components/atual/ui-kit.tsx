@@ -52,7 +52,8 @@ export function Hero({
   mobileImage,
   imageAlt,
   seals = false,
-  scrim = "ink",
+  scrim = "navy",
+  zoomImage = false,
   children,
 }: {
   eyebrow?: string;
