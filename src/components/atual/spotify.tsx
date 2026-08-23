@@ -19,9 +19,11 @@ export function spotifyEmbedUrl(input: string): string | null {
     // suporta /intl-pt/show/ID e /embed/show/ID
     const kinds = ["show", "episode", "playlist", "album", "track"];
     const idx = parts.findIndex((p) => kinds.includes(p));
-    if (idx === -1 || !parts[idx + 1]) return null;
-    const id = parts[idx + 1].split("?")[0];
-    return `https://open.spotify.com/embed/${parts[idx]}/${id}`;
+    const kind = idx === -1 ? undefined : parts[idx];
+    const rawId = idx === -1 ? undefined : parts[idx + 1];
+    if (!kind || !rawId) return null;
+    const id = rawId.split("?")[0];
+    return `https://open.spotify.com/embed/${kind}/${id}`;
   } catch {
     return null;
   }
