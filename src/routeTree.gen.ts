@@ -43,6 +43,7 @@ import { Route as CriptoWineIndexRouteImport } from './routes/cripto-wine.index'
 import { Route as CriptoWineSlugRouteImport } from './routes/cripto-wine.$slug'
 import { Route as MomentoAtualIndexRouteImport } from './routes/momento-atual.index'
 import { Route as MomentoAtualSlugRouteImport } from './routes/momento-atual.$slug'
+import { Route as MomentoAtualEpisodiosRouteImport } from './routes/momento-atual.episodios'
 import { Route as VidaAtualIndexRouteImport } from './routes/vida-atual.index'
 import { Route as VidaAtualSlugRouteImport } from './routes/vida-atual.$slug'
 import { Route as AdminConteudoIndexRouteImport } from './routes/admin.conteudo.index'
@@ -219,6 +220,11 @@ const MomentoAtualSlugRoute = MomentoAtualSlugRouteImport.update({
   path: '/momento-atual/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MomentoAtualEpisodiosRoute = MomentoAtualEpisodiosRouteImport.update({
+  id: '/momento-atual/episodios',
+  path: '/momento-atual/episodios',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VidaAtualIndexRoute = VidaAtualIndexRouteImport.update({
   id: '/vida-atual/',
   path: '/vida-atual/',
@@ -277,6 +283,7 @@ export interface FileRoutesByFullPath {
   '/admin/trafego': typeof AdminTrafegoRoute
   '/cripto-wine/$slug': typeof CriptoWineSlugRoute
   '/momento-atual/$slug': typeof MomentoAtualSlugRoute
+  '/momento-atual/episodios': typeof MomentoAtualEpisodiosRoute
   '/vida-atual/$slug': typeof VidaAtualSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/cripto-wine/': typeof CriptoWineIndexRoute
@@ -318,6 +325,7 @@ export interface FileRoutesByTo {
   '/admin/trafego': typeof AdminTrafegoRoute
   '/cripto-wine/$slug': typeof CriptoWineSlugRoute
   '/momento-atual/$slug': typeof MomentoAtualSlugRoute
+  '/momento-atual/episodios': typeof MomentoAtualEpisodiosRoute
   '/vida-atual/$slug': typeof VidaAtualSlugRoute
   '/admin': typeof AdminIndexRoute
   '/cripto-wine': typeof CriptoWineIndexRoute
@@ -360,6 +368,7 @@ export interface FileRoutesById {
   '/admin/trafego': typeof AdminTrafegoRoute
   '/cripto-wine/$slug': typeof CriptoWineSlugRoute
   '/momento-atual/$slug': typeof MomentoAtualSlugRoute
+  '/momento-atual/episodios': typeof MomentoAtualEpisodiosRoute
   '/vida-atual/$slug': typeof VidaAtualSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/cripto-wine/': typeof CriptoWineIndexRoute
@@ -403,6 +412,7 @@ export interface FileRouteTypes {
     | '/admin/trafego'
     | '/cripto-wine/$slug'
     | '/momento-atual/$slug'
+    | '/momento-atual/episodios'
     | '/vida-atual/$slug'
     | '/admin/'
     | '/cripto-wine/'
@@ -444,6 +454,7 @@ export interface FileRouteTypes {
     | '/admin/trafego'
     | '/cripto-wine/$slug'
     | '/momento-atual/$slug'
+    | '/momento-atual/episodios'
     | '/vida-atual/$slug'
     | '/admin'
     | '/cripto-wine'
@@ -485,6 +496,7 @@ export interface FileRouteTypes {
     | '/admin/trafego'
     | '/cripto-wine/$slug'
     | '/momento-atual/$slug'
+    | '/momento-atual/episodios'
     | '/vida-atual/$slug'
     | '/admin/'
     | '/cripto-wine/'
@@ -527,6 +539,7 @@ export interface RootRouteChildren {
   AdminTrafegoRoute: typeof AdminTrafegoRoute
   CriptoWineSlugRoute: typeof CriptoWineSlugRoute
   MomentoAtualSlugRoute: typeof MomentoAtualSlugRoute
+  MomentoAtualEpisodiosRoute: typeof MomentoAtualEpisodiosRoute
   VidaAtualSlugRoute: typeof VidaAtualSlugRoute
   AdminIndexRoute: typeof AdminIndexRoute
   CriptoWineIndexRoute: typeof CriptoWineIndexRoute
@@ -777,6 +790,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MomentoAtualSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/momento-atual/episodios': {
+      id: '/momento-atual/episodios'
+      path: '/momento-atual/episodios'
+      fullPath: '/momento-atual/episodios'
+      preLoaderRoute: typeof MomentoAtualEpisodiosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/vida-atual/': {
       id: '/vida-atual/'
       path: '/vida-atual'
@@ -847,6 +867,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminTrafegoRoute: AdminTrafegoRoute,
   CriptoWineSlugRoute: CriptoWineSlugRoute,
   MomentoAtualSlugRoute: MomentoAtualSlugRoute,
+  MomentoAtualEpisodiosRoute: MomentoAtualEpisodiosRoute,
   VidaAtualSlugRoute: VidaAtualSlugRoute,
   AdminIndexRoute: AdminIndexRoute,
   CriptoWineIndexRoute: CriptoWineIndexRoute,
