@@ -97,6 +97,7 @@ const blockTypes: CmsBlock["type"][] = [
   "citacao",
   "destaque",
   "imagem",
+  "spotify",
   "divisor",
 ];
 
@@ -107,6 +108,8 @@ function newBlock(type: CmsBlock["type"]): CmsBlock {
       return { type, items: [""] };
     case "imagem":
       return { type: "imagem", url: "", alt: "" };
+    case "spotify":
+      return { type: "spotify", url: "" };
     case "divisor":
       return { type: "divisor" };
     default:
@@ -481,6 +484,19 @@ export function ContentEditor({ id }: { id?: string }) {
                         placeholder="Legenda (opcional)"
                         value={block.legenda ?? ""}
                         onChange={(e) => setBlock(i, { ...block, legenda: e.target.value })}
+                      />
+                    </div>
+                  ) : block.type === "spotify" ? (
+                    <div className="space-y-3">
+                      <Input
+                        placeholder="Link do Spotify (episódio, programa ou playlist)"
+                        value={block.url}
+                        onChange={(e) => setBlock(i, { ...block, url: e.target.value })}
+                      />
+                      <Input
+                        placeholder="Título do player (opcional)"
+                        value={block.titulo ?? ""}
+                        onChange={(e) => setBlock(i, { ...block, titulo: e.target.value })}
                       />
                     </div>
                   ) : block.type === "divisor" ? (

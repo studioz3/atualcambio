@@ -34,6 +34,7 @@ export type CmsBlock =
   | { type: "destaque"; text: string }
   | { type: "divisor" }
   | { type: "imagem"; url: string; alt: string; legenda?: string }
+  | { type: "spotify"; url: string; titulo?: string }
   // legado (conteúdo migrado)
   | { type: "subtitulo"; text: string };
 
@@ -47,6 +48,7 @@ export const blockLabels: Record<string, string> = {
   destaque: "Destaque textual",
   divisor: "Divisor",
   imagem: "Imagem",
+  spotify: "Player do Spotify",
   subtitulo: "Título (H2)",
 };
 

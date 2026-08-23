@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import type { CmsBlock } from "@/lib/cms-shared";
+import { SpotifyPlayer } from "./spotify";
 
 /**
  * Formatação inline segura: **negrito**, *itálico* e [texto](url).
@@ -87,6 +88,12 @@ export function ContentBlockView({ block }: { block: CmsBlock }) {
       );
     case "divisor":
       return <hr className="mt-12 border-line" />;
+    case "spotify":
+      return (
+        <div className="mt-12">
+          <SpotifyPlayer url={block.url} title={block.titulo ?? "Player do Spotify"} />
+        </div>
+      );
     case "imagem":
       return (
         <figure className="mt-12">
