@@ -21,6 +21,18 @@ export const Route = createFileRoute("/cripto-wine/$slug")({
         { property: "og:type", content: "article" },
         { property: "og:url", content: url },
         { name: "twitter:card", content: "summary_large_image" },
+        ...(article.imagem_social ?? article.imagem_principal
+          ? [
+              {
+                property: "og:image",
+                content: article.imagem_social ?? article.imagem_principal,
+              },
+              {
+                name: "twitter:image",
+                content: article.imagem_social ?? article.imagem_principal,
+              },
+            ]
+          : []),
       ],
       links: [{ rel: "canonical", href: url }],
       scripts: [
