@@ -114,7 +114,7 @@ export function EditoriaPage({ id, articles }: { id: EditoriaId; articles: Artic
           <Container>
             <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
               <div>
-                <Eyebrow tone="light">Podcast</Eyebrow>
+                <Eyebrow>Podcast</Eyebrow>
                 <h2 className="display-h3 mt-4 text-white">{editoria.podcast.titulo}</h2>
                 <p className="mt-4 max-w-md text-base leading-relaxed text-white/75">
                   {editoria.podcast.descricao}
