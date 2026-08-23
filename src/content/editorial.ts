@@ -27,17 +27,15 @@ import vaMovimento from "@/assets/va-movimento.jpg";
 import vaLongevidade from "@/assets/va-longevidade.jpg";
 import vaComportamento from "@/assets/va-comportamento.jpg";
 
+import type { CmsBlock } from "@/lib/cms-shared";
+
 export const SITE_URL = "https://atualcambio.lovable.app";
 
 export type EditoriaId = "momento-atual" | "cripto-wine" | "vida-atual";
 export type ArticleStatus = "rascunho" | "revisao" | "publicado";
 export type EditorialTone = "editorial" | "cultural" | "wellness";
 
-export type ContentBlock =
-  | { type: "paragrafo"; text: string }
-  | { type: "subtitulo"; text: string }
-  | { type: "lista"; items: string[] }
-  | { type: "citacao"; text: string };
+export type ContentBlock = CmsBlock;
 
 export type ArticleCta = {
   title: string;
@@ -325,44 +323,6 @@ export const editoriaMap = Object.fromEntries(editorias.map((e) => [e.id, e])) a
 
 export function getEditoria(id: EditoriaId): Editoria {
   return editoriaMap[id];
-}
-
-export function publishedArticles(editoria?: EditoriaId): Article[] {
-  return articles
-    .filter((a) => a.status === "publicado" && (!editoria || a.editoria === editoria))
-    .sort((a, b) => (a.data < b.data ? 1 : -1));
-}
-
-export function featuredArticle(editoria: EditoriaId): Article | null {
-  const list = publishedArticles(editoria);
-  return list.find((a) => a.destaque) ?? list[0] ?? null;
-}
-
-export function articleBySlug(editoria: EditoriaId, slug: string): Article | null {
-  return (
-    articles.find(
-      (a) => a.editoria === editoria && a.slug === slug && a.status === "publicado",
-    ) ?? null
-  );
-}
-
-export function relatedArticles(article: Article, limit = 3): Article[] {
-  const sameEditoria = publishedArticles(article.editoria).filter((a) => a.id !== article.id);
-  const others = publishedArticles().filter(
-    (a) => a.editoria !== article.editoria && a.id !== article.id,
-  );
-  return [...sameEditoria, ...others].slice(0, limit);
-}
-
-export function searchArticles(query: string): Article[] {
-  const q = query.trim().toLowerCase();
-  if (q.length < 2) return [];
-  return publishedArticles().filter((a) =>
-    [a.titulo, a.subtitulo, a.resumo, a.categoria, editoriaMap[a.editoria].name]
-      .join(" ")
-      .toLowerCase()
-      .includes(q),
-  );
 }
 
 export function formatDate(iso: string): string {
