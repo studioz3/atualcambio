@@ -19,6 +19,7 @@ import {
   formatDate,
   getEditoria,
 } from "@/content/editorial";
+import { ContentBlockView } from "./content-blocks";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
@@ -183,9 +184,14 @@ export function EditoriaPage({ id, articles }: { id: EditoriaId; articles: Artic
 }
 
 /* ================= Template de artigo ================= */
-export function ArticlePage({ article }: { article: Article }) {
+export function ArticlePage({
+  article,
+  related = [],
+}: {
+  article: Article;
+  related?: Article[];
+}) {
   const editoria = editoriaMap[article.editoria];
-  const related = relatedArticles(article);
 
   const share = async () => {
     track("article_share", {
