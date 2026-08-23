@@ -18,16 +18,14 @@ import {
   editoriaMap,
   formatDate,
   getEditoria,
-  publishedArticles,
-  relatedArticles,
 } from "@/content/editorial";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
 /* ================= Página de editoria ================= */
-export function EditoriaPage({ id }: { id: EditoriaId }) {
+export function EditoriaPage({ id, articles }: { id: EditoriaId; articles: Article[] }) {
   const editoria = getEditoria(id);
-  const all = publishedArticles(id);
+  const all = articles;
   const [category, setCategory] = useState("Todos");
 
   const featured = all.find((a) => a.destaque) ?? all[0] ?? null;
