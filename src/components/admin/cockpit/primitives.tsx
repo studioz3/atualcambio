@@ -57,10 +57,10 @@ export function CockpitCard({
   className,
   children,
 }: {
-  title?: ReactNode;
-  subtitle?: ReactNode;
-  action?: ReactNode;
-  className?: string;
+  title?: ReactNode | undefined;
+  subtitle?: ReactNode | undefined;
+  action?: ReactNode | undefined;
+  className?: string | undefined;
   children: ReactNode;
 }) {
   return (
@@ -118,11 +118,11 @@ export function KpiCard({
 }: {
   label: string;
   value: number | null;
-  previous?: number | null;
-  format?: (n: number) => string;
-  hint?: string;
-  loading?: boolean;
-  unavailable?: string;
+  previous?: number | null | undefined;
+  format?: ((n: number) => string) | undefined;
+  hint?: string | undefined;
+  loading?: boolean | undefined;
+  unavailable?: string | undefined;
 }) {
   return (
     <div className="group rounded-2xl border border-white/10 bg-white/[0.035] p-5 transition duration-300 hover:-translate-y-0.5 hover:border-gold/40">
@@ -152,8 +152,8 @@ export function BarList({
   formatValue,
 }: {
   data: { label: string; value: number; hint?: string }[];
-  emptyLabel?: string;
-  formatValue?: (n: number) => string;
+  emptyLabel?: string | undefined;
+  formatValue?: ((n: number) => string) | undefined;
 }) {
   const max = Math.max(1, ...data.map((d) => d.value));
   if (data.length === 0) return <p className="text-sm text-white/45">{emptyLabel}</p>;
@@ -187,9 +187,9 @@ export function EmptyIntegration({
   link,
 }: {
   service: string;
-  reason?: string;
-  steps?: string[];
-  link?: { href: string; label: string } | null;
+  reason?: string | undefined;
+  steps?: string[] | undefined;
+  link?: { href: string; label: string } | null | undefined;
 }) {
   return (
     <div className="rounded-xl border border-dashed border-white/15 bg-white/[0.02] p-6 text-center">
