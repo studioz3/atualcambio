@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { EditoriaPage } from "@/components/atual/editorial-pages";
 import { getPublishedList } from "@/lib/editorial.functions";
+import { getPodcastEpisodes } from "@/lib/podcast.functions";
 import { SITE_URL } from "@/content/editorial";
 import { track } from "@/lib/analytics";
 
@@ -37,7 +38,13 @@ export const Route = createFileRoute("/momento-atual/")({
       },
     ],
   }),
-  loader: async () => await getPublishedList({ data: { editoria: "momento-atual" } }),
+  loader: async () => {
+    const [articles, episodes] = await Promise.all([
+      getPublishedList({ data: { editoria: "momento-atual" } }),
+      getPodcastEpisodes({ data: { editoria: "momento-atual" } }),
+    ]);
+    return { articles, episodes };
+  },
   errorComponent: () => (
     <div className="px-6 pt-40 pb-24 text-center text-navy">
       Não foi possível carregar os conteúdos agora.
@@ -53,6 +60,6 @@ function MomentoAtual() {
   useEffect(() => {
     track("momento_atual_view", { editoria: "momento-atual", source_page: "momento-atual" });
   }, []);
-  const articles = Route.useLoaderData();
-  return <EditoriaPage id="momento-atual" articles={articles} />;
+  const { articles, episodes } = Route.useLoaderData();
+  return <EditoriaPage id="momento-atual" articles={articles} episodes={episodes} />;
 }
