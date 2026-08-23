@@ -5,12 +5,10 @@ import { Container, Section, Eyebrow, SectionHeading, ActionLink, ActionButton }
 import {
   ArticleCard,
   CategoryFilter,
-  ComingSoonCard,
   EditorialHero,
   EditoriaTag,
   FeaturedArticle,
   NewsletterCallout,
-  EditorialSections,
 } from "./editorial-ui";
 import {
   type Article,
@@ -21,7 +19,6 @@ import {
 } from "@/content/editorial";
 import { ContentBlockView } from "./content-blocks";
 import { SpotifyPlayer } from "./spotify";
-import { PodcastEpisodeList } from "./podcast-episodes";
 import type { PodcastEpisode } from "@/lib/podcast-shared";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
@@ -50,7 +47,6 @@ export function EditoriaPage({
   );
 
   const dark = editoria.tone !== "wellness";
-  const sections = editoria.sections ?? [];
 
   return (
     <>
@@ -151,37 +147,16 @@ export function EditoriaPage({
               />
             </div>
             {episodes.length > 0 ? (
-              <div className="mt-14">
-                <Eyebrow>Episódios anteriores</Eyebrow>
-                <PodcastEpisodeList
-                  episodes={episodes}
-                  sourcePage={editoria.id}
-                  className="mt-6"
-                />
+              <div className="mt-12">
+                <ActionLink
+                  to="/momento-atual/episodios"
+                  variant="secondaryDark"
+                  event="podcast_ver_episodios"
+                >
+                  Episódios anteriores
+                </ActionLink>
               </div>
             ) : null}
-          </Container>
-        </section>
-      ) : null}
-
-      {sections.length > 0 ? (
-        <section
-          className={cn(
-            "section-y",
-            editoria.tone === "cultural" ? "surface-ink" : "bg-background",
-          )}
-        >
-          <Container>
-            <SectionHeading
-              eyebrow="A editoria"
-              title={`O que ${editoria.name} cobre`}
-              description="Os territórios da editoria já estão definidos. Enquanto o conteúdo não é publicado, cada frente aparece marcada como “Em breve” — nada aqui é fictício."
-              tone={editoria.tone === "cultural" ? "light-text" : "dark-text"}
-              className="max-w-3xl"
-            />
-            <div className="mt-14">
-              <EditorialSections sections={sections} dark={editoria.tone === "cultural"} />
-            </div>
           </Container>
         </section>
       ) : null}
@@ -209,30 +184,6 @@ export function EditoriaPage({
         </Section>
       ) : null}
 
-      {editoria.upcoming.length > 0 ? (
-        <Section tone={sections.length > 0 ? "offwhite" : "light"}>
-          <SectionHeading
-            eyebrow="Pauta editorial"
-            title={all.length === 0 ? "Próximas pautas" : "Em preparação"}
-            description={
-              all.length === 0
-                ? "Formatos já desenhados para a editoria — sem episódios, convidados ou números inventados."
-                : undefined
-            }
-            className="max-w-2xl"
-          />
-          <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {editoria.upcoming.map((u) => (
-              <ComingSoonCard
-                key={u.title}
-                title={u.title}
-                description={u.description}
-                categoria={u.categoria}
-              />
-            ))}
-          </div>
-        </Section>
-      ) : null}
 
       <NewsletterCallout editoria={editoria} />
     </>

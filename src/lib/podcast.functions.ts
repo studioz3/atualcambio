@@ -83,3 +83,39 @@ export const podcastDelete = createServerFn({ method: "POST" })
     if (error) throw new Error(error.message);
     return { ok: true };
   });
+
+/** Episódios publicados + miniatura (oEmbed do Spotify). */
+export const getPodcastEpisodesWithArt = createServerFn({ method: "GET" })
+  .inputValidator((data: { editoria?: string } | undefined) => ({
+    editoria: typeof data?.editoria === "string" ? data.editoria.slice(0, 40) : "momento-atual",
+  }))
+  .handler(async ({ data }): Promise<(PodcastEpisode & { thumbnail_url: string | null })[]> => {
+    const { publicClient } = await import("@/lib/cms.server");
+    const { data: rows, error } = await publicClient()
+      .from("podcast_episodes")
+      .select(PODCAST_COLUMNS)
+      .eq("editoria", data.editoria)
+      .eq("ativo", true)
+      .order("sort_order", { ascending: false })
+      .order("published_at", { ascending: false })
+      .limit(200);
+    if (error) return [];
+    const episodes = (rows ?? []) as unknown as PodcastEpisode[];
+    return Promise.all(
+      episodes.map(async (ep) => {
+        let thumbnail_url: string | null = null;
+        try {
+          const res = await fetch(
+            `https://open.spotify.com/oembed?url=${encodeURIComponent(ep.spotify_url)}`,
+          );
+          if (res.ok) {
+            const json = (await res.json()) as { thumbnail_url?: string };
+            thumbnail_url = json.thumbnail_url ?? null;
+          }
+        } catch {
+          thumbnail_url = null;
+        }
+        return { ...ep, thumbnail_url };
+      }),
+    );
+  });
