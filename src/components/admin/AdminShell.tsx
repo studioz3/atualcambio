@@ -23,6 +23,7 @@ const nav = [
   { to: "/admin/trafego", label: "Tráfego", icon: Globe2, exact: false },
   { to: "/admin/comportamento", label: "Comportamento", icon: MousePointerClick, exact: false },
   { to: "/admin/conteudo", label: "Conteúdo", icon: Newspaper, exact: false },
+  { to: "/admin/podcast", label: "Podcast", icon: Mic, exact: false },
   { to: "/admin/leads", label: "Leads", icon: Users, exact: false },
   { to: "/admin/newsletter", label: "Newsletter", icon: Mail, exact: false },
 ] as const;
