@@ -110,6 +110,7 @@ function Home() {
   return (
     <>
       <Hero
+        scrim="navy"
         title={
           <>
             Seu dinheiro,
