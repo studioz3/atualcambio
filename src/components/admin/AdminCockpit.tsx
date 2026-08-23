@@ -97,7 +97,7 @@ export function AdminCockpit() {
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <PeriodFilter value={period} onChange={setPeriod} />
+        <PeriodFilter value={period} onChange={setPeriod} tone="cockpit" />
         <div className="flex items-center gap-2 text-xs text-white/45">
           <LiveDot active={ga4Enabled && realtime.data?.configured === true} />
           {ga4Enabled ? "Tempo real ativo" : "Tempo real aguardando GA4"}

@@ -46,7 +46,7 @@ export function AdminTraffic() {
   if (!ga4Enabled) {
     return (
       <div className="space-y-6">
-        <PeriodFilter value={period} onChange={setPeriod} />
+        <PeriodFilter value={period} onChange={setPeriod} tone="cockpit" />
         <CockpitCard title="Tráfego e aquisição">
           <EmptyIntegration
             service="Google Analytics 4"
@@ -71,7 +71,7 @@ export function AdminTraffic() {
 
   return (
     <div className="space-y-6">
-      <PeriodFilter value={period} onChange={setPeriod} />
+      <PeriodFilter value={period} onChange={setPeriod} tone="cockpit" />
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <KpiCard

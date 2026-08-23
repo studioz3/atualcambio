@@ -73,7 +73,7 @@ export function AdminBehavior() {
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <PeriodFilter value={period} onChange={setPeriod} />
+        <PeriodFilter value={period} onChange={setPeriod} tone="cockpit" />
         <div className="flex items-center gap-3 text-[11px] text-white/45">
           {data ? (
             <span>

@@ -22,10 +22,18 @@ export function rangeOf(p: PeriodState) {
 export function PeriodFilter({
   value,
   onChange,
+  tone = "light",
 }: {
   value: PeriodState;
   onChange: (v: PeriodState) => void;
+  tone?: "light" | "cockpit";
 }) {
+  const active =
+    tone === "cockpit" ? "border-gold bg-gold text-gold-foreground" : "border-navy bg-navy text-white";
+  const inactive =
+    tone === "cockpit"
+      ? "border-white/15 bg-white/5 text-white/60 hover:border-gold/40 hover:text-white"
+      : "border-line bg-white text-muted-foreground hover:border-navy/40";
   return (
     <div className="flex flex-wrap items-center gap-2">
       {presets.map((p) => (
@@ -35,9 +43,7 @@ export function PeriodFilter({
           onClick={() => onChange({ ...value, preset: p.id })}
           className={cn(
             "rounded-full border px-3 py-1.5 text-xs font-semibold transition",
-            value.preset === p.id
-              ? "border-navy bg-navy text-white"
-              : "border-line bg-white text-muted-foreground hover:border-navy/40",
+            value.preset === p.id ? active : inactive,
           )}
         >
           {p.label}
@@ -51,7 +57,7 @@ export function PeriodFilter({
             value={value.from}
             onChange={(e) => onChange({ ...value, from: e.target.value })}
           />
-          <span className="text-xs text-muted-foreground">até</span>
+          <span className={cn("text-xs", tone === "cockpit" ? "text-white/50" : "text-muted-foreground")}>até</span>
           <Input
             type="date"
             className="h-8 w-[150px]"
