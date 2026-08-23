@@ -20,6 +20,7 @@ import {
   getEditoria,
 } from "@/content/editorial";
 import { ContentBlockView } from "./content-blocks";
+import { SpotifyPlayer } from "./spotify";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
@@ -106,6 +107,41 @@ export function EditoriaPage({ id, articles }: { id: EditoriaId; articles: Artic
             <FeaturedArticle article={featured} />
           </div>
         </Section>
+      ) : null}
+
+      {editoria.podcast ? (
+        <section className="surface-navy section-y">
+          <Container>
+            <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
+              <div>
+                <Eyebrow>Podcast</Eyebrow>
+                <h2 className="display-h3 mt-4 text-white">{editoria.podcast.titulo}</h2>
+                <p className="mt-4 max-w-md text-base leading-relaxed text-white/75">
+                  {editoria.podcast.descricao}
+                </p>
+                <a
+                  href={editoria.podcast.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() =>
+                    track("podcast_open_spotify", {
+                      editoria: editoria.id,
+                      source_page: editoria.id,
+                    })
+                  }
+                  className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-gold hover:text-white"
+                >
+                  Ouvir no Spotify
+                </a>
+              </div>
+              <SpotifyPlayer
+                url={editoria.podcast.url}
+                title={editoria.podcast.titulo}
+                className="w-full"
+              />
+            </div>
+          </Container>
+        </section>
       ) : null}
 
       {sections.length > 0 ? (

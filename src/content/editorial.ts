@@ -87,6 +87,13 @@ export type Editoria = {
   upcoming: { title: string; description: string; categoria: string }[];
   /** Blocos conceituais da editoria — territórios de cobertura, sem conteúdo publicado. */
   sections?: EditorialSection[];
+  /** Podcast oficial da editoria no Spotify. */
+  podcast?: {
+    titulo: string;
+    descricao: string;
+    /** URL pública do programa ou episódio no Spotify. */
+    url: string;
+  };
 };
 
 /** Território editorial. Enquanto não houver conteúdo real, aparece como "Em breve". */
@@ -123,6 +130,12 @@ export const editorias: Editoria[] = [
       "Geopolítica",
       "Regulação",
     ],
+    podcast: {
+      titulo: "Momento Atual no Spotify",
+      descricao:
+        "O programa da Atual Câmbio sobre economia, câmbio e mercados. Ouça os episódios direto por aqui ou siga no Spotify.",
+      url: "https://open.spotify.com/show/033FdTYkUs8EDeHpF0Tn8d",
+    },
     upcoming: [
       {
         title: "Calendário econômico comentado",
