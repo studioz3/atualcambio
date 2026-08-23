@@ -28,7 +28,8 @@ import { StoreBadges } from "@/components/atual/StoreBadges";
 import { useLead } from "@/components/atual/LeadProvider";
 import { track } from "@/lib/analytics";
 import { brand, pillars, security, links } from "@/content/site";
-import { editorias, publishedArticles } from "@/content/editorial";
+import { editorias } from "@/content/editorial";
+import { getPublishedList } from "@/lib/editorial.functions";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -327,7 +328,7 @@ function Home() {
         </div>
         <div className="mt-14 grid gap-10 md:grid-cols-3">
           {editorias.map((editoria) => {
-            const latest = publishedArticles(editoria.id)[0];
+            const latest = destaques.find((a) => a.editoria === editoria.id);
             return (
               <Link
                 key={editoria.id}
