@@ -34,6 +34,7 @@ import { Route as SolucoesRouteImport } from './routes/solucoes'
 import { Route as StablecoinsRouteImport } from './routes/stablecoins'
 import { Route as TermosRouteImport } from './routes/termos'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminComportamentoRouteImport } from './routes/admin.comportamento'
 import { Route as AdminLeadsRouteImport } from './routes/admin.leads'
 import { Route as AdminNewsletterRouteImport } from './routes/admin.newsletter'
 import { Route as AdminTrafegoRouteImport } from './routes/admin.trafego'
@@ -169,6 +170,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/admin/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminComportamentoRoute = AdminComportamentoRouteImport.update({
+  id: '/admin/comportamento',
+  path: '/admin/comportamento',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminLeadsRoute = AdminLeadsRouteImport.update({
   id: '/admin/leads',
   path: '/admin/leads',
@@ -240,6 +246,7 @@ export interface FileRoutesByFullPath {
   '/solucoes': typeof SolucoesRoute
   '/stablecoins': typeof StablecoinsRoute
   '/termos': typeof TermosRoute
+  '/admin/comportamento': typeof AdminComportamentoRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/newsletter': typeof AdminNewsletterRoute
   '/admin/trafego': typeof AdminTrafegoRoute
@@ -276,6 +283,7 @@ export interface FileRoutesByTo {
   '/solucoes': typeof SolucoesRoute
   '/stablecoins': typeof StablecoinsRoute
   '/termos': typeof TermosRoute
+  '/admin/comportamento': typeof AdminComportamentoRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/newsletter': typeof AdminNewsletterRoute
   '/admin/trafego': typeof AdminTrafegoRoute
@@ -313,6 +321,7 @@ export interface FileRoutesById {
   '/solucoes': typeof SolucoesRoute
   '/stablecoins': typeof StablecoinsRoute
   '/termos': typeof TermosRoute
+  '/admin/comportamento': typeof AdminComportamentoRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/newsletter': typeof AdminNewsletterRoute
   '/admin/trafego': typeof AdminTrafegoRoute
@@ -351,6 +360,7 @@ export interface FileRouteTypes {
     | '/solucoes'
     | '/stablecoins'
     | '/termos'
+    | '/admin/comportamento'
     | '/admin/leads'
     | '/admin/newsletter'
     | '/admin/trafego'
@@ -387,6 +397,7 @@ export interface FileRouteTypes {
     | '/solucoes'
     | '/stablecoins'
     | '/termos'
+    | '/admin/comportamento'
     | '/admin/leads'
     | '/admin/newsletter'
     | '/admin/trafego'
@@ -423,6 +434,7 @@ export interface FileRouteTypes {
     | '/solucoes'
     | '/stablecoins'
     | '/termos'
+    | '/admin/comportamento'
     | '/admin/leads'
     | '/admin/newsletter'
     | '/admin/trafego'
@@ -460,6 +472,7 @@ export interface RootRouteChildren {
   SolucoesRoute: typeof SolucoesRoute
   StablecoinsRoute: typeof StablecoinsRoute
   TermosRoute: typeof TermosRoute
+  AdminComportamentoRoute: typeof AdminComportamentoRoute
   AdminLeadsRoute: typeof AdminLeadsRoute
   AdminNewsletterRoute: typeof AdminNewsletterRoute
   AdminTrafegoRoute: typeof AdminTrafegoRoute
@@ -649,6 +662,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/comportamento': {
+      id: '/admin/comportamento'
+      path: '/admin/comportamento'
+      fullPath: '/admin/comportamento'
+      preLoaderRoute: typeof AdminComportamentoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/leads': {
       id: '/admin/leads'
       path: '/admin/leads'
@@ -740,6 +760,7 @@ const rootRouteChildren: RootRouteChildren = {
   SolucoesRoute: SolucoesRoute,
   StablecoinsRoute: StablecoinsRoute,
   TermosRoute: TermosRoute,
+  AdminComportamentoRoute: AdminComportamentoRoute,
   AdminLeadsRoute: AdminLeadsRoute,
   AdminNewsletterRoute: AdminNewsletterRoute,
   AdminTrafegoRoute: AdminTrafegoRoute,
