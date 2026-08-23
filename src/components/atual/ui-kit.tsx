@@ -52,6 +52,7 @@ export function Hero({
   mobileImage,
   imageAlt,
   seals = false,
+  scrim = "ink",
   children,
 }: {
   eyebrow?: string;
@@ -63,10 +64,17 @@ export function Hero({
   mobileImage?: string;
   imageAlt?: string;
   seals?: boolean;
+  scrim?: "ink" | "navy";
   children?: ReactNode;
 }) {
+  const navyScrim = scrim === "navy";
   return (
-    <section className={cn("hero-shell relative overflow-hidden", image ? "surface-ink" : "surface-navy")}>
+    <section
+      className={cn(
+        "hero-shell relative overflow-hidden",
+        image && !navyScrim ? "surface-ink" : "surface-navy",
+      )}
+    >
       {image ? (
         <div className="absolute inset-0 hidden lg:block">
           <img
@@ -74,11 +82,21 @@ export function Hero({
             alt={imageAlt ?? ""}
             width={1920}
             height={1080}
-            className="ml-auto h-full w-auto max-w-none object-contain object-right"
+            className={cn(
+              "ml-auto h-full w-auto max-w-none object-contain object-right",
+              navyScrim && "opacity-90 mix-blend-luminosity",
+            )}
           />
 
-          {/* scrim neutro para legibilidade */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent" />
+          {/* scrim para legibilidade */}
+          <div
+            className={cn(
+              "absolute inset-0 bg-gradient-to-r",
+              navyScrim
+                ? "from-navy via-navy/70 to-navy/10"
+                : "from-black via-black/60 to-transparent",
+            )}
+          />
         </div>
       ) : null}
 
@@ -89,11 +107,22 @@ export function Hero({
             alt={imageAlt ?? ""}
             width={1080}
             height={1350}
-            className="size-full object-cover object-center"
+            className={cn(
+              "size-full object-cover object-center",
+              navyScrim && "opacity-90 mix-blend-luminosity",
+            )}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/92 via-black/70 to-black/92" />
+          <div
+            className={cn(
+              "absolute inset-0 bg-gradient-to-b",
+              navyScrim
+                ? "from-navy/92 via-navy/72 to-navy/94"
+                : "from-black/92 via-black/70 to-black/92",
+            )}
+          />
         </div>
       ) : null}
+
 
       <div className="hero-container">
         <div className="relative grid gap-12 pt-[130px] pb-16 md:py-28 lg:h-[680px] lg:min-h-[680px] lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:py-24 lg:pt-24">
