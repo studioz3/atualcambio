@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { EditoriaPage } from "@/components/atual/editorial-pages";
+import { getPublishedList } from "@/lib/editorial.functions";
 import { SITE_URL } from "@/content/editorial";
 import { track } from "@/lib/analytics";
 
@@ -36,6 +37,15 @@ export const Route = createFileRoute("/cripto-wine/")({
       },
     ],
   }),
+  loader: async () => await getPublishedList({ data: { editoria: "cripto-wine" } }),
+  errorComponent: () => (
+    <div className="px-6 pt-40 pb-24 text-center text-navy">
+      Não foi possível carregar os conteúdos agora.
+    </div>
+  ),
+  notFoundComponent: () => (
+    <div className="px-6 pt-40 pb-24 text-center text-navy">Editoria não encontrada.</div>
+  ),
   component: CriptoWine,
 });
 
@@ -43,5 +53,6 @@ function CriptoWine() {
   useEffect(() => {
     track("cripto_wine_view", { editoria: "cripto-wine", source_page: "cripto-wine" });
   }, []);
-  return <EditoriaPage id="cripto-wine" />;
+  const articles = Route.useLoaderData();
+  return <EditoriaPage id="cripto-wine" articles={articles} />;
 }
