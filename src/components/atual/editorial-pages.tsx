@@ -150,6 +150,16 @@ export function EditoriaPage({
                 className="w-full"
               />
             </div>
+            {episodes.length > 0 ? (
+              <div className="mt-14">
+                <Eyebrow>Episódios anteriores</Eyebrow>
+                <PodcastEpisodeList
+                  episodes={episodes}
+                  sourcePage={editoria.id}
+                  className="mt-6"
+                />
+              </div>
+            ) : null}
           </Container>
         </section>
       ) : null}
