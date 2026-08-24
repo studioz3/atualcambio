@@ -9,7 +9,8 @@ import {
   MessagesSquare,
   ArrowRight,
 } from "lucide-react";
-import empresasHero from "@/assets/empresas-hero.jpg";
+import empresasHero from "@/assets/empresas-hero-desktop.jpg.asset.json";
+import empresasHeroMobile from "@/assets/empresas-hero-mobile.jpg.asset.json";
 import { Section, SectionHeading, ActionButton, ActionLink } from "@/components/atual/primitives";
 import { Hero, PathCard, ComplianceBlock, CTASection } from "@/components/atual/ui-kit";
 import {
@@ -183,8 +184,9 @@ function Empresas() {
             Conhecer soluções
           </ActionLink>
         }
-        image={empresasHero}
-        imageAlt="Equipe corporativa analisando operações internacionais em uma sala de reunião"
+        image={empresasHero.url}
+        mobileImage={empresasHeroMobile.url}
+        imageAlt="Executivo diante de um mapa-múndi e um porto com navio de contêineres"
       />
 
       <div className="surface-navy">
