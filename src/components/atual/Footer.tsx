@@ -12,6 +12,7 @@ import socialEmail from "@/assets/social-email.png.asset.json";
 import socialInstagram from "@/assets/social-instagram.png.asset.json";
 import socialLinkedin from "@/assets/social-linkedin.png.asset.json";
 import socialFacebook from "@/assets/social-facebook.png.asset.json";
+import socialTiktok from "@/assets/social-tiktok.png.asset.json";
 
 type FooterLink = { label: string; to: string; hash?: string };
 
@@ -81,6 +82,7 @@ const socials = [
   { label: "E-mail", href: "mailto:contato@atualcambio.com.br", icon: socialEmail.url },
   { label: "Instagram", href: "https://www.instagram.com/atualcambio/", icon: socialInstagram.url },
   { label: "LinkedIn", href: "https://www.linkedin.com/company/atualcambio/", icon: socialLinkedin.url },
+  { label: "TikTok", href: "https://www.tiktok.com/@atual.cambio", icon: socialTiktok.url },
   {
     label: "Facebook",
     href: "https://www.facebook.com/profile.php?id=61573205567154",
