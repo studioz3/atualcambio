@@ -65,6 +65,23 @@ const columns: { title: string; items: FooterLink[] }[] = [
 
 const appLinks = [{ label: "Acessar conta", href: links.account, event: "login_click" }];
 
+const socials = [
+  {
+    label: "WhatsApp",
+    href: "https://api.whatsapp.com/send/?phone=%2B551235002009&text&type=phone_number&app_absent=0",
+    icon: socialWhatsapp.url,
+  },
+  { label: "YouTube", href: "https://www.youtube.com/@Atual.C%C3%A2mbio", icon: socialYoutube.url },
+  { label: "E-mail", href: "mailto:contato@atualcambio.com.br", icon: socialEmail.url },
+  { label: "Instagram", href: "https://www.instagram.com/atualcambio/", icon: socialInstagram.url },
+  { label: "LinkedIn", href: "https://www.linkedin.com/company/atualcambio/", icon: socialLinkedin.url },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/profile.php?id=61573205567154",
+    icon: socialFacebook.url,
+  },
+];
+
 
 export function Footer() {
   return (
