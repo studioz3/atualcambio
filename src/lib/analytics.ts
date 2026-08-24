@@ -137,6 +137,7 @@ declare global {
   interface Window {
     dataLayer?: unknown[];
     gtag?: (...args: unknown[]) => void;
+    clarity?: ((...args: unknown[]) => void) & { q?: unknown[] };
   }
 }
 
@@ -151,6 +152,22 @@ function ensureGtag() {
 }
 
 let ga4Ready = false;
+let clarityReady = false;
+
+/** Microsoft Clarity — carregado uma única vez, apenas com consentimento de analytics. */
+function startClarity(projectId: string) {
+  if (typeof window === "undefined" || clarityReady) return;
+  if (document.getElementById("clarity-script") || window.clarity) {
+    clarityReady = true;
+    return;
+  }
+  const stub = ((...args: unknown[]) => {
+    (stub.q = stub.q ?? []).push(args);
+  }) as NonNullable<Window["clarity"]>;
+  window.clarity = window.clarity ?? stub;
+  injectScript("clarity-script", `https://www.clarity.ms/tag/${projectId}`);
+  clarityReady = true;
+}
 
 export function track(event: AnalyticsEvent | string, params: Params = {}) {
   if (typeof window === "undefined") return;
@@ -184,9 +201,16 @@ function injectScript(id: string, src: string) {
   document.head.appendChild(script);
 }
 
+/** A área administrativa não é rastreada. */
+function isAdminPath() {
+  if (typeof window === "undefined") return false;
+  const path = window.location.pathname;
+  return path === "/admin" || path.startsWith("/admin/");
+}
+
 /** Ativa os provedores conforme consentimento. Sem ID configurado, nada acontece. */
 export function applyAnalyticsConsent(consent: CookieConsent | null) {
-  if (typeof window === "undefined" || !consent) return;
+  if (typeof window === "undefined" || !consent || isAdminPath()) return;
 
   if (consent.analytics) {
     ensureGtag();
@@ -210,7 +234,7 @@ export function applyAnalyticsConsent(consent: CookieConsent | null) {
       ga4Ready = true;
     }
     if (analyticsConfig.clarityId) {
-      injectScript("clarity-script", `https://www.clarity.ms/tag/${analyticsConfig.clarityId}`);
+      startClarity(analyticsConfig.clarityId);
     }
   }
 
