@@ -6,6 +6,12 @@ import { Logo } from "./Logo";
 import { links } from "@/content/site";
 import { openCookiePreferences } from "@/lib/cookie-consent";
 import { track } from "@/lib/analytics";
+import socialWhatsapp from "@/assets/social-whatsapp.png.asset.json";
+import socialYoutube from "@/assets/social-youtube.png.asset.json";
+import socialEmail from "@/assets/social-email.png.asset.json";
+import socialInstagram from "@/assets/social-instagram.png.asset.json";
+import socialLinkedin from "@/assets/social-linkedin.png.asset.json";
+import socialFacebook from "@/assets/social-facebook.png.asset.json";
 
 type FooterLink = { label: string; to: string; hash?: string };
 
@@ -64,6 +70,23 @@ const columns: { title: string; items: FooterLink[] }[] = [
 ];
 
 const appLinks = [{ label: "Acessar conta", href: links.account, event: "login_click" }];
+
+const socials = [
+  {
+    label: "WhatsApp",
+    href: "https://api.whatsapp.com/send/?phone=%2B551235002009&text&type=phone_number&app_absent=0",
+    icon: socialWhatsapp.url,
+  },
+  { label: "YouTube", href: "https://www.youtube.com/@Atual.C%C3%A2mbio", icon: socialYoutube.url },
+  { label: "E-mail", href: "mailto:contato@atualcambio.com.br", icon: socialEmail.url },
+  { label: "Instagram", href: "https://www.instagram.com/atualcambio/", icon: socialInstagram.url },
+  { label: "LinkedIn", href: "https://www.linkedin.com/company/atualcambio/", icon: socialLinkedin.url },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/profile.php?id=61573205567154",
+    icon: socialFacebook.url,
+  },
+];
 
 
 export function Footer() {
@@ -161,10 +184,30 @@ export function Footer() {
           </div>
         </div>
 
+        {/* Canais de contato */}
+        <div className="relative flex flex-wrap justify-center gap-4 border-t border-white/10 py-8">
+          {socials.map((item) => (
+            <a
+              key={item.label}
+              href={item.href}
+              target={item.href.startsWith("mailto:") ? undefined : "_blank"}
+              rel="noopener noreferrer"
+              aria-label={item.label}
+              onClick={() => track("social_click", { canal: item.label, origem: "footer" })}
+              className="transition-opacity hover:opacity-80"
+            >
+              <img src={item.icon} alt={item.label} loading="lazy" className="h-10 w-10 shrink-0 object-contain" />
+            </a>
+          ))}
+        </div>
+
         {/* Base legal */}
         <div className="relative border-t border-white/10 py-8">
           <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-xs text-white/45">
-            <span>© {new Date().getFullYear()} Atual Câmbio. Todos os direitos reservados.</span>
+            <span>
+              Copyright 2026 <strong className="font-semibold text-white/70">Atual Câmbio Serviços Financeiros Ltda.</strong>{" "}
+              Todos os direitos reservados.
+            </span>
             <Link to="/privacidade" className="transition-colors hover:text-white">
               Privacidade
             </Link>
