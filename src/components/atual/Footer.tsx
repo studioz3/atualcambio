@@ -157,7 +157,15 @@ export function Footer() {
           <div>
             <p className="eyebrow text-gold">Atendimento e Ouvidoria</p>
             <ul className="mt-5 space-y-2 text-sm text-white/70">
-              <li>Ouvidoria: 0800 770-5422</li>
+              <li>
+                Ouvidoria:{" "}
+                <a
+                  href="tel:08007705422"
+                  className="font-semibold text-white transition-colors hover:text-gold"
+                >
+                  0800 770-5422
+                </a>
+              </li>
               <li>Segunda a sexta, das 9h às 18h</li>
               <li>
                 <a
