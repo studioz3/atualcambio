@@ -9,7 +9,8 @@ import {
   MessagesSquare,
   ArrowRight,
 } from "lucide-react";
-import empresasHero from "@/assets/empresas-hero.jpg";
+import empresasHero from "@/assets/empresas-hero-desktop.jpg.asset.json";
+import empresasHeroMobile from "@/assets/empresas-hero-mobile.jpg.asset.json";
 import { Section, SectionHeading, ActionButton, ActionLink } from "@/components/atual/primitives";
 import { Hero, PathCard, ComplianceBlock, CTASection } from "@/components/atual/ui-kit";
 import {
