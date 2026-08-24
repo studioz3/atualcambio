@@ -1,6 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
+import { X } from "lucide-react";
+import { Sheet, SheetContent, SheetTitle, SheetDescription } from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
+
+/** Símbolo oficial da marca. */
+const BRAND_SYMBOL = "/brand/simbolo.png";
 import { ActionButton } from "./primitives";
 import { TextField, SelectField } from "./fields";
 import { submitLead, type LeadInput } from "@/lib/leads.functions";
