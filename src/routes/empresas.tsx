@@ -183,8 +183,9 @@ function Empresas() {
             Conhecer soluções
           </ActionLink>
         }
-        image={empresasHero}
-        imageAlt="Equipe corporativa analisando operações internacionais em uma sala de reunião"
+        image={empresasHero.url}
+        mobileImage={empresasHeroMobile.url}
+        imageAlt="Executivo diante de um mapa-múndi e um porto com navio de contêineres"
       />
 
       <div className="surface-navy">
