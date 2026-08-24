@@ -56,16 +56,7 @@ export function EditorialHero({
         <img src={image} alt={imageAlt} width={1600} height={1000} className={imgClass} />
       )}
 
-      <div
-        className={cn(
-          "absolute inset-0",
-          tone === "cultural"
-            ? "bg-gradient-to-r from-black/90 via-black/55 to-transparent"
-            : tone === "wellness"
-              ? "bg-gradient-to-r from-black/80 via-black/40 to-transparent"
-              : "bg-gradient-to-r from-black/90 via-black/55 to-transparent",
-        )}
-      />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/25 to-transparent" />
       <Container>
         <div className="relative max-w-2xl pt-[140px] pb-20 md:pt-[190px] md:pb-28">
           <p className="font-display text-xs font-bold tracking-[0.14em] text-gold uppercase sm:text-sm">
