@@ -101,7 +101,13 @@ export function AdminCockpit() {
         <div className="flex items-center gap-2 text-xs text-white/45">
           <LiveDot active={ga4Enabled && realtime.data?.configured === true} />
           {ga4Enabled ? "Tempo real ativo" : "Tempo real aguardando GA4"}
+          {realtime.dataUpdatedAt ? (
+            <span className="text-[11px] text-white/35">
+              · sinc. {new Date(realtime.dataUpdatedAt).toLocaleTimeString("pt-BR")}
+            </span>
+          ) : null}
         </div>
+
       </div>
 
       {/* Faixa tempo real */}
