@@ -213,8 +213,10 @@ function ContaAtual() {
             Já tenho conta
           </ActionLink>
         }
-        image={heroApp.url}
-        imageAlt="Smartphone exibindo a tela de saldo da Conta Atual"
+        image={heroDesktop.url}
+        mobileImage={heroMobile.url}
+        rawImage
+        imageAlt="Smartphones exibindo o aplicativo da Conta Atual"
       />
 
       <TrustPillars items={pillars} />
