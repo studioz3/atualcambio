@@ -81,6 +81,7 @@ export type Editoria = {
   shortDescription: string;
   tone: EditorialTone;
   image: string;
+  mobileImage?: string;
   imageAlt: string;
   categories: string[];
   /** Pautas em preparação — exibidas como "Em breve", nunca como publicadas. */
