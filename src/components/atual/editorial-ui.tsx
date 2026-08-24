@@ -27,7 +27,7 @@ export function EditorialHero({
   title: string;
   subtitle: string;
   image: string;
-  mobileImage?: string;
+  mobileImage?: string | undefined;
   imageAlt: string;
   tone?: EditorialTone;
 }) {
