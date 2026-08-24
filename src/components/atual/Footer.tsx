@@ -6,6 +6,12 @@ import { Logo } from "./Logo";
 import { links } from "@/content/site";
 import { openCookiePreferences } from "@/lib/cookie-consent";
 import { track } from "@/lib/analytics";
+import socialWhatsapp from "@/assets/social-whatsapp.png.asset.json";
+import socialYoutube from "@/assets/social-youtube.png.asset.json";
+import socialEmail from "@/assets/social-email.png.asset.json";
+import socialInstagram from "@/assets/social-instagram.png.asset.json";
+import socialLinkedin from "@/assets/social-linkedin.png.asset.json";
+import socialFacebook from "@/assets/social-facebook.png.asset.json";
 
 type FooterLink = { label: string; to: string; hash?: string };
 
