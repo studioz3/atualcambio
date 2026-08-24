@@ -54,6 +54,7 @@ export function Hero({
   seals = false,
   scrim = "navy",
   zoomImage = false,
+  rawImage = false,
   children,
 }: {
   eyebrow?: string;
@@ -67,9 +68,12 @@ export function Hero({
   seals?: boolean;
   scrim?: "ink" | "navy";
   zoomImage?: boolean;
+  /** Exibe a arte sem tratamento de cor (sem "lente") nem zoom. */
+  rawImage?: boolean;
   children?: ReactNode;
 }) {
   const navyScrim = scrim === "navy";
+
   return (
     <section
       className={cn(
@@ -85,15 +89,17 @@ export function Hero({
             width={1920}
             height={1080}
             className={cn(
-              "ml-auto h-full w-auto max-w-none object-contain object-right",
-              navyScrim && "contrast-[1.1] saturate-[1.08] brightness-[1.03]",
-              navyScrim && zoomImage &&
+              rawImage
+                ? "size-full object-cover object-center"
+                : "ml-auto h-full w-auto max-w-none object-contain object-right",
+              !rawImage && navyScrim && "contrast-[1.1] saturate-[1.08] brightness-[1.03]",
+              !rawImage && navyScrim && zoomImage &&
                 "origin-right -translate-x-[1.5%] scale-[1.06]",
             )}
           />
 
           {/* scrim para legibilidade */}
-          {navyScrim ? (
+          {rawImage ? null : navyScrim ? (
             <>
               {/* pretos profundos + área de texto limpa */}
               <div className="absolute inset-0 bg-gradient-to-r from-black via-black/72 via-38% to-transparent" />
@@ -118,10 +124,10 @@ export function Hero({
             height={1350}
             className={cn(
               "size-full object-cover object-center",
-              navyScrim && "contrast-[1.1] saturate-[1.06]",
+              !rawImage && navyScrim && "contrast-[1.1] saturate-[1.06]",
             )}
           />
-          {navyScrim ? (
+          {rawImage ? null : navyScrim ? (
             <>
               <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/76 to-black/92" />
               <div className="absolute inset-0 bg-gradient-to-b from-navy/38 via-navy/12 to-navy/45" />
@@ -131,6 +137,7 @@ export function Hero({
           )}
         </div>
       ) : null}
+
 
 
 
