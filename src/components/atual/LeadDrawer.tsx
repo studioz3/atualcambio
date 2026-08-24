@@ -102,24 +102,48 @@ export function LeadDrawer({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="right" className="w-full overflow-y-auto border-line bg-white sm:max-w-[480px]">
-        <SheetHeader className="px-6 pt-6">
-          <SheetTitle className="font-display text-2xl leading-tight text-navy">
-            {intent.formTitle}
-          </SheetTitle>
-          <SheetDescription className="text-muted-foreground">
-            {context ?? "Conte o essencial. Pedimos só o necessário agora."}
-          </SheetDescription>
-        </SheetHeader>
+      <SheetContent
+        side="right"
+        className="flex h-full w-full flex-col gap-0 overflow-hidden border-0 bg-white p-0 sm:max-w-[500px] [&>button]:hidden"
+      >
+        <header className="relative isolate overflow-hidden bg-navy px-6 pt-6 pb-7 sm:px-8">
+          <img
+            src={BRAND_SYMBOL}
+            alt=""
+            aria-hidden
+            className="pointer-events-none absolute -right-8 -bottom-10 -z-10 h-44 w-auto object-contain opacity-[0.07]"
+          />
+          <button
+            type="button"
+            onClick={() => onOpenChange(false)}
+            aria-label="Fechar"
+            className="absolute top-5 right-4 grid size-11 place-items-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
+          >
+            <X className="size-5" aria-hidden />
+          </button>
+          <div className="flex flex-col items-center text-center">
+            <img src={BRAND_SYMBOL} alt="Atual Câmbio" className="h-10 w-auto shrink-0 object-contain" />
+            <SheetTitle className="font-display mt-4 text-xl leading-[1.15] font-bold tracking-[-0.01em] text-balance text-white sm:text-[1.375rem]">
+              {intent.formTitle}
+            </SheetTitle>
+            <SheetDescription className="mt-3 max-w-[38ch] text-sm leading-relaxed text-pretty text-white/70">
+              {context ?? "Conte o essencial. Pedimos só o necessário agora."}
+            </SheetDescription>
+          </div>
+        </header>
 
-        <form onSubmit={onSubmit} className="flex flex-col gap-5 px-6 pt-2 pb-8" noValidate>
+        <form
+          onSubmit={onSubmit}
+          className="flex flex-1 flex-col gap-6 overflow-y-auto px-6 pt-7 pb-8 sm:px-8"
+          noValidate
+        >
           <div>
             <label className="mb-2 block text-sm font-medium text-graphite" htmlFor="intent">
               O que você precisa fazer
             </label>
             <select
               id="intent"
-              className="min-h-13 w-full rounded-sm border border-line bg-white px-4 text-base text-graphite outline-none focus:border-navy"
+              className="h-13 w-full rounded-[10px] border border-line bg-white px-4 text-base text-graphite outline-none transition-colors focus-visible:border-navy focus-visible:ring-2 focus-visible:ring-navy/20"
               value={selected}
               onChange={(event) => {
                 const value = event.target.value as LeadIntentId;
@@ -138,22 +162,34 @@ export function LeadDrawer({
           </div>
 
           {showProfile ? (
-            <div role="group" aria-label="Perfil" className="grid grid-cols-2 gap-1 rounded-sm bg-offwhite p-1">
-              {(["pf", "pj"] as const).map((value) => (
-                <button
-                  key={value}
-                  type="button"
-                  aria-pressed={profile === value}
-                  onClick={() => setProfile(value)}
-                  className={`min-h-11 rounded-sm text-sm font-medium transition-colors ${
-                    profile === value ? "bg-navy text-white" : "text-muted-foreground hover:text-navy"
-                  }`}
-                >
-                  {value === "pf" ? "Pessoa" : "Empresa"}
-                </button>
-              ))}
-            </div>
+            <fieldset>
+              <legend className="sr-only">Perfil</legend>
+              <div className="grid grid-cols-2 gap-3">
+                {(
+                  [
+                    { value: "pf", label: "Pessoa Física" },
+                    { value: "pj", label: "Pessoa Jurídica" },
+                  ] as const
+                ).map((option) => (
+                  <button
+                    key={option.value}
+                    type="button"
+                    aria-pressed={profile === option.value}
+                    onClick={() => setProfile(option.value)}
+                    className={cn(
+                      "min-h-[48px] rounded-[10px] border px-4 py-3 text-center transition-colors focus-visible:ring-2 focus-visible:ring-navy/30 focus-visible:outline-none",
+                      profile === option.value
+                        ? "border-navy bg-navy text-white"
+                        : "border-line bg-offwhite text-navy hover:border-navy/40",
+                    )}
+                  >
+                    <span className="block text-sm font-semibold">{option.label}</span>
+                  </button>
+                ))}
+              </div>
+            </fieldset>
           ) : null}
+
 
           <TextField label="Nome" name="nome" error={errors['nome']} autoComplete="name" maxLength={120} />
           <TextField
