@@ -133,7 +133,7 @@ export function Hero({
             )}
           />
           {rawImage ? null : softScrim ? (
-            <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/45 via-55% to-black/70" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/20 via-60% to-black/40" />
           ) : navyScrim ? (
             <>
               <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/76 to-black/92" />
