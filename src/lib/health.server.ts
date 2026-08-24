@@ -10,6 +10,9 @@ import { healthSources, sourceLabel } from "./health-shared";
 /** Não repetir alerta da mesma fonte antes disso, se ela seguir falhando. */
 const ALERT_REPEAT_MS = 1000 * 60 * 60;
 
+/** Intervalo mínimo entre sondas reais do Clarity (cota diária baixa na API). */
+const CLARITY_PROBE_MS = 1000 * 60 * 60 * 3;
+
 type ProbeResult = {
   ok: boolean;
   status: number | null;
