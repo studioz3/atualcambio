@@ -8,18 +8,24 @@ import {
 } from "@/lib/cms-shared";
 import type { Article, EditoriaId } from "@/content/editorial";
 
-const editoriaIds = ["momento-atual", "cripto-wine", "vida-atual"] as const;
-
+/** Editoria é um slug dinâmico (tabela `editorials`). */
 function isEditoria(value: unknown): value is EditoriaId {
-  return typeof value === "string" && (editoriaIds as readonly string[]).includes(value);
+  return typeof value === "string" && /^[a-z0-9-]{2,60}$/.test(value);
 }
 
-/** Lista de conteúdos publicados (cards). */
+/**
+ * Lista de conteúdos publicados (cards).
+ * Por padrão traz apenas artigos — podcasts têm superfície própria no site.
+ * Use `formato: "todos"` para trazer todos os formatos.
+ */
 export const getPublishedList = createServerFn({ method: "GET" })
-  .inputValidator((data: { editoria?: EditoriaId; limit?: number } | undefined) => ({
-    editoria: isEditoria(data?.editoria) ? data.editoria : undefined,
-    limit: typeof data?.limit === "number" ? Math.min(Math.max(data.limit, 1), 60) : 60,
-  }))
+  .inputValidator(
+    (data: { editoria?: EditoriaId; limit?: number; formato?: string } | undefined) => ({
+      editoria: isEditoria(data?.editoria) ? data.editoria : undefined,
+      limit: typeof data?.limit === "number" ? Math.min(Math.max(data.limit, 1), 60) : 60,
+      formato: typeof data?.formato === "string" ? data.formato : "artigo",
+    }),
+  )
   .handler(async ({ data }): Promise<Article[]> => {
     const { publicClient } = await import("@/lib/cms.server");
     let query = publicClient()
@@ -30,6 +36,7 @@ export const getPublishedList = createServerFn({ method: "GET" })
       .order("published_at", { ascending: false })
       .limit(data.limit);
     if (data.editoria) query = query.eq("editoria", data.editoria);
+    if (data.formato !== "todos") query = query.eq("tipo", data.formato);
     const { data: rows, error } = await query;
     if (error) return [];
     return ((rows ?? []) as unknown as CmsListItem[]).map(listItemToCard);

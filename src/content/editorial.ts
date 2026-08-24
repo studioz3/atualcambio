@@ -32,8 +32,9 @@ import type { CmsBlock } from "@/lib/cms-shared";
 
 export const SITE_URL = "https://atualcambio.lovable.app";
 
-export type EditoriaId = "momento-atual" | "cripto-wine" | "vida-atual";
-export type ArticleStatus = "rascunho" | "revisao" | "publicado";
+/** Slug da editoria — dinâmico: novas editorias são criadas no painel. */
+export type EditoriaId = string;
+export type ArticleStatus = "rascunho" | "revisao" | "agendado" | "publicado";
 export type EditorialTone = "editorial" | "cultural" | "wellness";
 
 export type ContentBlock = CmsBlock;
@@ -74,7 +75,7 @@ export type Article = {
 export type Editoria = {
   id: EditoriaId;
   name: string;
-  path: "/momento-atual" | "/cripto-wine" | "/vida-atual";
+  path: string;
   eyebrow: string;
   headline: string;
   subheadline: string;
@@ -329,16 +330,43 @@ export const editorias: Editoria[] = [
   },
 ];
 
-export const editoriaMap = Object.fromEntries(editorias.map((e) => [e.id, e])) as Record<
-  EditoriaId,
-  Editoria
->;
-
+export const editoriaMap: Record<string, Editoria> = Object.fromEntries(
+  editorias.map((e) => [e.id, e]),
+);
 
 /* ---------------- Helpers ---------------- */
 
+function titleFromSlug(slug: string): string {
+  return slug
+    .split("-")
+    .filter(Boolean)
+    .map((p) => p.charAt(0).toUpperCase() + p.slice(1))
+    .join(" ");
+}
+
+/**
+ * Editoria pelo slug. Editorias criadas no painel (que não têm arte fixa em
+ * código) recebem um perfil genérico — nada aqui é hardcoded como enum.
+ */
 export function getEditoria(id: EditoriaId): Editoria {
-  return editoriaMap[id];
+  const found = editoriaMap[id];
+  if (found) return found;
+  const name = titleFromSlug(id);
+  return {
+    id,
+    name,
+    path: `/${id}`,
+    eyebrow: name,
+    headline: name,
+    subheadline: "",
+    promise: "",
+    shortDescription: "",
+    tone: "editorial",
+    image: "",
+    imageAlt: name,
+    categories: [],
+    upcoming: [],
+  };
 }
 
 export function formatDate(iso: string): string {
@@ -350,5 +378,5 @@ export function formatDate(iso: string): string {
 }
 
 export function articleUrl(article: Article): string {
-  return `${editoriaMap[article.editoria].path}/${article.slug}`;
+  return `/${article.editoria}/${article.slug}`;
 }

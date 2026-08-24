@@ -9,11 +9,11 @@ import {
   EditoriaTag,
   FeaturedArticle,
   NewsletterCallout,
+  editoriaRoute,
 } from "./editorial-ui";
 import {
   type Article,
   type EditoriaId,
-  editoriaMap,
   formatDate,
   getEditoria,
 } from "@/content/editorial";
@@ -152,7 +152,7 @@ export function ArticlePage({
   article: Article;
   related?: Article[];
 }) {
-  const editoria = editoriaMap[article.editoria];
+  const editoria = getEditoria(article.editoria);
 
   const share = async () => {
     track("article_share", {
@@ -183,7 +183,7 @@ export function ArticlePage({
               Conteúdo
             </Link>{" "}
             /{" "}
-            <Link to={editoria.path} className="hover:text-gold">
+            <Link to={editoriaRoute(editoria.path)} className="hover:text-gold">
               {editoria.name}
             </Link>{" "}
             / <span className="text-white/85">{article.categoria}</span>
@@ -297,7 +297,7 @@ export function ArticlePage({
 
           <div className="mt-12">
             <Link
-              to={editoria.path}
+              to={editoriaRoute(editoria.path)}
               className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-navy hover:text-gold-soft"
             >
               <ArrowLeft className="size-4" aria-hidden /> Voltar para {editoria.name}
@@ -334,7 +334,7 @@ export function ArticleNotFound({ id }: { id: EditoriaId }) {
           Este endereço não corresponde a um conteúdo publicado nesta editoria.
         </p>
         <div className="mt-9 flex flex-wrap gap-3">
-          <ActionLink to={editoria.path}>Ver {editoria.name}</ActionLink>
+          <ActionLink to={editoriaRoute(editoria.path)}>Ver {editoria.name}</ActionLink>
           <ActionLink to="/conteudo" variant="secondary">
             Ir para Conteúdo
           </ActionLink>

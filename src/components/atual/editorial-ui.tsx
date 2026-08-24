@@ -9,9 +9,19 @@ import {
   type Editoria,
   type EditorialTone,
   type EditorialSection,
-  editoriaMap,
+  getEditoria,
   formatDate,
 } from "@/content/editorial";
+
+
+/**
+ * Rotas de editoria são dinâmicas (novas editorias vêm do banco). Os helpers
+ * abaixo mantêm a navegação SPA sem exigir um union fixo de caminhos.
+ */
+type SlugRoute = "/momento-atual/$slug";
+type EditoriaRoute = "/momento-atual";
+export const slugRoute = (path: string) => `${path}/$slug` as SlugRoute;
+export const editoriaRoute = (path: string) => path as EditoriaRoute;
 
 /* ---------- Hero editorial reutilizável ---------- */
 export function EditorialHero({
@@ -72,7 +82,7 @@ export function EditorialHero({
 
 /* ---------- Selo de editoria ---------- */
 export function EditoriaTag({ id, className }: { id: Article["editoria"]; className?: string }) {
-  const editoria = editoriaMap[id];
+  const editoria = getEditoria(id);
   return (
     <span
       className={cn(
@@ -95,11 +105,11 @@ export function ArticleCard({
   showEditoria?: boolean;
   sourcePage?: string;
 }) {
-  const editoria = editoriaMap[article.editoria];
+  const editoria = getEditoria(article.editoria);
   return (
     <article className="group flex flex-col">
       <Link
-        to={`${editoria.path}/$slug`}
+        to={slugRoute(editoria.path)}
         params={{ slug: article.slug }}
         onClick={() =>
           track("article_view", {
@@ -127,7 +137,7 @@ export function ArticleCard({
         </div>
         <h3 className="display-h4 mt-3 text-navy">
           <Link
-            to={`${editoria.path}/$slug`}
+            to={slugRoute(editoria.path)}
             params={{ slug: article.slug }}
             className="hover:text-gold-soft"
           >
@@ -137,7 +147,7 @@ export function ArticleCard({
         <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{article.resumo}</p>
         <div className="mt-5 flex items-center gap-4">
           <Link
-            to={`${editoria.path}/$slug`}
+            to={slugRoute(editoria.path)}
             params={{ slug: article.slug }}
             className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-navy hover:text-gold-soft"
           >
@@ -152,11 +162,11 @@ export function ArticleCard({
 
 /* ---------- Matéria principal ---------- */
 export function FeaturedArticle({ article }: { article: Article }) {
-  const editoria = editoriaMap[article.editoria];
+  const editoria = getEditoria(article.editoria);
   return (
     <article className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
       <Link
-        to={`${editoria.path}/$slug`}
+        to={slugRoute(editoria.path)}
         params={{ slug: article.slug }}
         className="group block overflow-hidden rounded-xl bg-line"
       >
@@ -175,7 +185,7 @@ export function FeaturedArticle({ article }: { article: Article }) {
         </div>
         <h2 className="display-h2 mt-4 text-navy">
           <Link
-            to={`${editoria.path}/$slug`}
+            to={slugRoute(editoria.path)}
             params={{ slug: article.slug }}
             className="hover:text-gold-soft"
           >
@@ -188,7 +198,7 @@ export function FeaturedArticle({ article }: { article: Article }) {
         </p>
         <div className="mt-7">
           <ActionLink
-            to={`${editoria.path}/${article.slug}`}
+            to={editoriaRoute(`${editoria.path}/${article.slug}`)}
             variant="secondary"
             event="article_view"
           >
@@ -384,7 +394,7 @@ export function EditoriaBlock({
                   ? articles.slice(0, 3).map((a) => (
                       <Link
                         key={a.id}
-                        to={`${editoria.path}/$slug`}
+                        to={slugRoute(editoria.path)}
                         params={{ slug: a.slug }}
                         onClick={() =>
                           track("article_view", {
@@ -424,7 +434,7 @@ export function EditoriaBlock({
 
             <div className="mt-10">
               <ActionLink
-                to={editoria.path}
+                to={editoriaRoute(editoria.path)}
                 variant={light ? "secondary" : "secondaryDark"}
                 event="editorial_selected"
                 onClick={() =>

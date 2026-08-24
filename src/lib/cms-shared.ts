@@ -7,20 +7,43 @@ import type { Article, ArticleCta, EditoriaId } from "@/content/editorial";
 
 export const CMS_BUCKET = "editorial";
 
-export type CmsStatus = "rascunho" | "revisao" | "publicado";
-export type CmsTipo = "artigo" | "podcast" | "video";
+export type CmsStatus = "rascunho" | "revisao" | "agendado" | "publicado";
+/** Formato do conteúdo (antigo "tipo"). */
+export type CmsFormato = "artigo" | "podcast" | "video";
+export type CmsTipo = CmsFormato;
 
 export const cmsStatuses: { value: CmsStatus; label: string }[] = [
   { value: "rascunho", label: "Rascunho" },
   { value: "revisao", label: "Revisão" },
+  { value: "agendado", label: "Agendado" },
   { value: "publicado", label: "Publicado" },
 ];
 
-export const cmsTipos: { value: CmsTipo; label: string }[] = [
+/** Formatos disponíveis no CMS. */
+export const cmsFormatos: { value: CmsFormato; label: string }[] = [
   { value: "artigo", label: "Artigo" },
   { value: "podcast", label: "Podcast" },
   { value: "video", label: "Vídeo" },
 ];
+
+export const cmsTipos = cmsFormatos;
+
+export function formatoLabel(value: string): string {
+  return cmsFormatos.find((f) => f.value === value)?.label ?? value;
+}
+
+/** Distribuição — onde o conteúdo aparece (derivada das flags atuais). */
+export function distribuicaoLabels(row: {
+  status: string;
+  destaque_home: boolean;
+  newsletter_selected?: boolean;
+}): string[] {
+  const out: string[] = [];
+  if (row.status === "publicado") out.push("Site");
+  if (row.destaque_home) out.push("Home");
+  if (row.newsletter_selected) out.push("Newsletter");
+  return out;
+}
 
 /* ---------------- Blocos do editor visual ---------------- */
 
@@ -141,6 +164,7 @@ export function slugify(value: string): string {
 export type CmsRow = {
   id: string;
   editoria: EditoriaId;
+  editorial_id?: string | null;
   tipo: CmsTipo;
   titulo: string;
   subtitulo: string | null;

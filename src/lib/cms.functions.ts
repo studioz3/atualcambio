@@ -3,8 +3,9 @@ import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { CMS_LIST_COLUMNS, slugify, type CmsListItem, type CmsRow } from "@/lib/cms-shared";
 
-const editoriaSchema = z.enum(["momento-atual", "cripto-wine", "vida-atual"]);
-const statusSchema = z.enum(["rascunho", "revisao", "publicado"]);
+/** Editoria é um slug dinâmico validado contra a tabela `editorials`. */
+const editoriaSchema = z.string().min(2).max(60);
+const statusSchema = z.enum(["rascunho", "revisao", "agendado", "publicado"]);
 const tipoSchema = z.enum(["artigo", "podcast", "video"]);
 
 const blockSchema = z.record(z.string(), z.unknown());
@@ -94,11 +95,18 @@ export const cmsSave = createServerFn({ method: "POST" })
   .inputValidator((data: CmsContentInput) => contentSchema.parse(data))
   .handler(async ({ data, context }): Promise<{ id: string; slug: string }> => {
     const slug = slugify(data.slug || data.titulo);
+    const { data: editorialRow } = await context.supabase
+      .from("editorials")
+      .select("id")
+      .eq("slug", data.editoria)
+      .maybeSingle();
+    if (!editorialRow) throw new Error("Editoria inválida.");
     const publishedAt =
       data.status === "publicado" ? (data.published_at ?? new Date().toISOString()) : (data.published_at ?? null);
 
     const payload = {
       editoria: data.editoria,
+      editorial_id: (editorialRow as { id: string }).id,
       tipo: data.tipo,
       titulo: data.titulo,
       subtitulo: data.subtitulo ?? null,
