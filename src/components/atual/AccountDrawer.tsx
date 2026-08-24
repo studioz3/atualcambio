@@ -125,7 +125,7 @@ export function AccountDrawer({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="right"
-        className="flex h-full w-full flex-col gap-0 overflow-hidden border-line bg-white p-0 sm:max-w-[500px] [&>button]:hidden"
+        className="flex h-full w-full flex-col gap-0 overflow-hidden border-0 bg-white p-0 sm:max-w-[500px] [&>button]:hidden"
       >
         {/* Header institucional */}
         <header className="relative isolate overflow-hidden bg-navy px-6 pt-6 pb-7 sm:px-8">
