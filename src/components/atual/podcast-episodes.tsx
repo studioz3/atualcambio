@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Play } from "lucide-react";
+import { ArrowRight, Play } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { SpotifyPlayer } from "./spotify";
 import { formatDuration, formatEpisodeDate, type PodcastEpisode } from "@/lib/podcast-shared";
 import { track } from "@/lib/analytics";
