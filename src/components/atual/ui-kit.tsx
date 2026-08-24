@@ -81,6 +81,7 @@ export function Hero({
     <section
       className={cn(
         "hero-shell relative overflow-hidden",
+        rawImage && "hero-shell-raw",
         image && !navyScrim ? "surface-ink" : "surface-navy",
       )}
     >
@@ -93,7 +94,7 @@ export function Hero({
             height={1080}
             className={cn(
               rawImage
-                ? "size-full object-contain object-right"
+                ? "size-full object-cover object-right"
                 : "ml-auto h-full w-auto max-w-none object-contain object-right",
               !rawImage && navyScrim && "contrast-[1.1] saturate-[1.08] brightness-[1.03]",
               !rawImage && navyScrim && zoomImage &&
