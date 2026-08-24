@@ -14,8 +14,8 @@ import {
   Lock,
 } from "lucide-react";
 
-import heroDesktop from "@/assets/conta-hero-desktop-v2.jpg.asset.json";
-import heroMobile from "@/assets/conta-hero-mobile-v2.jpg.asset.json";
+import heroDesktop from "@/assets/conta-hero-desktop-v3.jpg.asset.json";
+import heroMobile from "@/assets/conta-hero-mobile-v3.jpg.asset.json";
 /** Telas reais do app — trocar o import (ou o asset) atualiza a prova de produto. */
 import appInicio from "@/assets/app-inicio.jpg.asset.json";
 import appRemessa from "@/assets/app-remessa.jpg.asset.json";
