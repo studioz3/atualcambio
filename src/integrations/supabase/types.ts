@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      analytics_health_checks: {
+        Row: {
+          alerted: boolean
+          checked_at: string
+          duration_ms: number
+          error: string | null
+          id: string
+          ok: boolean
+          source: string
+          status_code: number | null
+        }
+        Insert: {
+          alerted?: boolean
+          checked_at?: string
+          duration_ms?: number
+          error?: string | null
+          id?: string
+          ok: boolean
+          source: string
+          status_code?: number | null
+        }
+        Update: {
+          alerted?: boolean
+          checked_at?: string
+          duration_ms?: number
+          error?: string | null
+          id?: string
+          ok?: boolean
+          source?: string
+          status_code?: number | null
+        }
+        Relationships: []
+      }
       editorial_authors: {
         Row: {
           ativo: boolean
