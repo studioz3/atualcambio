@@ -13,7 +13,7 @@ import {
   CheckCircle2,
   Lock,
 } from "lucide-react";
-import heroApp from "@/assets/app-mao-2.png.asset.json";
+
 import heroDesktop from "@/assets/conta-hero-desktop.jpg.asset.json";
 import heroMobile from "@/assets/conta-hero-mobile.jpg.asset.json";
 /** Telas reais do app — trocar o import (ou o asset) atualiza a prova de produto. */
