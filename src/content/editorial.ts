@@ -120,8 +120,9 @@ export const editorias: Editoria[] = [
     promise: "Entender o que está acontecendo e por que isso importa.",
     shortDescription: "Economia, política, mercados e mundo.",
     tone: "editorial",
-    image: edtMomento,
-    imageAlt: "Profissional lendo um jornal econômico diante do skyline de um centro financeiro",
+    image: edtMomento.url,
+    mobileImage: edtMomentoMobile.url,
+    imageAlt: "Notas de cem dólares em close, com tratamento azul-noite",
     categories: [
       "Economia",
       "Câmbio",
