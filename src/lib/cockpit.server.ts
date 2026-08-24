@@ -135,6 +135,84 @@ async function ga4Run(path: string, body: unknown) {
   };
 }
 
+/**
+ * Sondas de saúde — retornam status HTTP e latência sem expor credenciais.
+ */
+export async function ga4Probe(
+  kind: "data" | "realtime",
+): Promise<{ ok: boolean; status: number | null; durationMs: number; error: string | null }> {
+  const started = Date.now();
+  const cfg = ga4Config();
+  if (!cfg) {
+    return { ok: false, status: null, durationMs: 0, error: "Google Analytics não configurado." };
+  }
+  try {
+    const token = await ga4AccessToken(cfg.clientEmail, cfg.privateKey);
+    const path = kind === "realtime" ? "runRealtimeReport" : "runReport";
+    const body =
+      kind === "realtime"
+        ? { metrics: [{ name: "activeUsers" }] }
+        : {
+            dateRanges: [{ startDate: "yesterday", endDate: "today" }],
+            metrics: [{ name: "sessions" }],
+          };
+    const res = await fetch(
+      `https://analyticsdata.googleapis.com/v1beta/properties/${cfg.propertyId}:${path}`,
+      {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      },
+    );
+    const durationMs = Date.now() - started;
+    if (!res.ok) {
+      const text = (await res.text()).slice(0, 300);
+      return { ok: false, status: res.status, durationMs, error: text };
+    }
+    await res.json();
+    return { ok: true, status: res.status, durationMs, error: null };
+  } catch (error) {
+    return {
+      ok: false,
+      status: null,
+      durationMs: Date.now() - started,
+      error: (error as Error).message.slice(0, 300),
+    };
+  }
+}
+
+export async function clarityProbe(): Promise<{
+  ok: boolean;
+  status: number | null;
+  durationMs: number;
+  error: string | null;
+}> {
+  const started = Date.now();
+  const token = process.env["CLARITY_API_TOKEN"];
+  if (!token) {
+    return { ok: false, status: null, durationMs: 0, error: "Clarity não configurado." };
+  }
+  try {
+    const url = new URL("https://www.clarity.ms/export-data/api/v1/project-live-insights");
+    url.searchParams.set("numOfDays", "1");
+    const res = await fetch(url.toString(), { headers: { Authorization: `Bearer ${token}` } });
+    const durationMs = Date.now() - started;
+    if (!res.ok) {
+      const text = (await res.text()).slice(0, 300);
+      return { ok: false, status: res.status, durationMs, error: text };
+    }
+    await res.json();
+    return { ok: true, status: res.status, durationMs, error: null };
+  } catch (error) {
+    return {
+      ok: false,
+      status: null,
+      durationMs: Date.now() - started,
+      error: (error as Error).message.slice(0, 300),
+    };
+  }
+}
+
 const num = (v?: string) => {
   const n = Number(v ?? 0);
   return Number.isFinite(n) ? n : 0;
