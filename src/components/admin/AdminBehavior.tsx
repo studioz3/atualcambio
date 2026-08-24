@@ -182,7 +182,7 @@ export function AdminBehavior() {
             </CockpitCard>
           </div>
 
-          <div className="grid gap-4 lg:grid-cols-[1.4fr_1fr]">
+          <div className="grid gap-4 lg:grid-cols-3">
             <CockpitCard title="Páginas por sessões" subtitle="Amostra do Clarity (últimos 3 dias)">
               <BarList
                 data={(data?.pages ?? []).slice(0, 10).map((p) => ({
@@ -197,6 +197,33 @@ export function AdminBehavior() {
                 }))}
               />
             </CockpitCard>
+            <CockpitCard title="Dispositivos" subtitle="Sessões registradas pelo Clarity">
+              <BarList
+                data={(data?.devices ?? []).map((d) => ({ label: d.label, value: d.sessions }))}
+                emptyLabel="Sem amostra de dispositivos no período."
+              />
+            </CockpitCard>
+            <CockpitCard title="Origens" subtitle="Referrers das sessões">
+              <BarList
+                data={(data?.sources ?? []).map((s) => ({ label: s.label, value: s.sessions }))}
+                emptyLabel="Sem referrers registrados no período."
+              />
+            </CockpitCard>
+          </div>
+
+          <div className="grid gap-4 lg:grid-cols-[1.4fr_1fr]">
+            <CockpitCard title="Resumo do período" subtitle="Agregado do projeto no Clarity">
+              <BarList
+                data={[
+                  { label: "Sessões", value: page.sessions },
+                  { label: "Quick backs", value: page.quickBacks },
+                  { label: "Dead clicks", value: page.deadClicks },
+                  { label: "Rage clicks", value: page.rageClicks },
+                  { label: "Erros de script", value: page.scriptErrors },
+                ]}
+              />
+            </CockpitCard>
+
             <CockpitCard title="Insights de UX" subtitle="Somente com base nos dados conectados">
               {insights.length === 0 ? (
                 <p className="text-sm text-white/45">Nenhum sinal fora dos limiares definidos.</p>

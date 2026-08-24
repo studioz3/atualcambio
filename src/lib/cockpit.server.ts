@@ -31,17 +31,23 @@ export async function assertStaff(context: StaffCtx) {
  * ------------------------------------------------------------------ */
 
 function ga4Config() {
-  const propertyId = process.env["GA4_PROPERTY_ID"];
-  const credentials = process.env["GA4_SERVICE_ACCOUNT_JSON"];
+  const propertyId = (process.env["GA4_PROPERTY_ID"] ?? "").replace(/^properties\//, "").trim();
+  const credentials =
+    process.env["GA4_SERVICE_ACCOUNT_KEY"] ?? process.env["GA4_SERVICE_ACCOUNT_JSON"];
   if (!propertyId || !credentials) return null;
   try {
     const parsed = JSON.parse(credentials) as { client_email?: string; private_key?: string };
     if (!parsed.client_email || !parsed.private_key) return null;
-    return { propertyId, clientEmail: parsed.client_email, privateKey: parsed.private_key };
+    return {
+      propertyId,
+      clientEmail: parsed.client_email,
+      privateKey: parsed.private_key.replace(/\\n/g, "\n"),
+    };
   } catch {
     return null;
   }
 }
+
 
 export function ga4Configured() {
   return ga4Config() !== null;
@@ -310,16 +316,39 @@ function emptyPageMetrics(path: string): ClarityPageMetrics {
 
 type ClarityRaw = { metricName: string; information: Record<string, string>[] }[];
 
-function parseClarity(raw: ClarityRaw): Omit<ClarityOverview, "updatedAt" | "stale" | "projectUrl"> {
+/** Converte URL absoluta do Clarity em caminho do site. */
+function clarityPath(raw: string) {
+  if (!raw) return "/";
+  try {
+    const u = new URL(raw);
+    return u.pathname.replace(/\/+$/, "") || "/";
+  } catch {
+    const p = raw.split("?")[0] ?? raw;
+    return p.replace(/\/+$/, "") || "/";
+  }
+}
+
+const frictionField = {
+  RageClickCount: "rageClicks",
+  DeadClickCount: "deadClicks",
+  ExcessiveScroll: "excessiveScroll",
+  QuickbackClick: "quickBacks",
+  ScriptErrorCount: "scriptErrors",
+  ErrorClickCount: "errorClicks",
+} as const;
+
+function parseClarity(
+  base: ClarityRaw,
+  byUrl: ClarityRaw,
+): Omit<ClarityOverview, "updatedAt" | "stale" | "projectUrl"> {
   const totals = emptyPageMetrics("todas");
   const pageMap = new Map<string, ClarityPageMetrics>();
   const devices: { label: string; sessions: number }[] = [];
   const sources: { label: string; sessions: number }[] = [];
 
   const pageOf = (path: string) => {
-    const key = path || "/";
-    if (!pageMap.has(key)) pageMap.set(key, emptyPageMetrics(key));
-    return pageMap.get(key)!;
+    if (!pageMap.has(path)) pageMap.set(path, emptyPageMetrics(path));
+    return pageMap.get(path)!;
   };
 
   const numeric = (v?: string) => {
@@ -327,87 +356,92 @@ function parseClarity(raw: ClarityRaw): Omit<ClarityOverview, "updatedAt" | "sta
     return Number.isFinite(n) ? n : 0;
   };
 
-  for (const metric of raw ?? []) {
-    const rows = metric.information ?? [];
-    for (const row of rows) {
-      const url = row["Url"] ?? row["url"] ?? row["URL"] ?? "";
-      const sessions = numeric(row["sessionsCount"] ?? row["sessionsWithMetricPercentage"]);
+  // --- Agregado do projeto (sem dimensão) ---
+  for (const metric of base ?? []) {
+    for (const row of metric.information ?? []) {
       switch (metric.metricName) {
-        case "Traffic": {
+        case "Traffic":
           totals.sessions += numeric(row["totalSessionCount"] ?? row["sessionsCount"]);
           break;
+        case "ScrollDepth":
+          totals.averageScrollDepth = numeric(row["averageScrollDepth"]) / 100;
+          break;
+        case "EngagementTime": {
+          const active = numeric(row["activeTime"]);
+          totals.averageEngagementSeconds = active;
+          break;
         }
+        case "Device":
+          devices.push({ label: row["name"] ?? "—", sessions: numeric(row["sessionsCount"]) });
+          break;
+        case "ReferrerUrl":
+          sources.push({
+            label: row["name"] ? clarityHost(row["name"]) : "direto",
+            sessions: numeric(row["sessionsCount"]),
+          });
+          break;
         case "PopularPages": {
-          const p = pageOf(url);
+          const p = pageOf(clarityPath(row["url"] ?? row["Url"] ?? ""));
           p.sessions += numeric(row["visitsCount"] ?? row["sessionsCount"]);
           break;
         }
-        case "Browser":
-        case "Device":
-        case "OS": {
-          if (metric.metricName === "Device") {
-            devices.push({
-              label: row["Device"] ?? row["deviceType"] ?? "—",
-              sessions: numeric(row["sessionsCount"] ?? row["visitsCount"]),
-            });
-          }
+        default: {
+          const field = frictionField[metric.metricName as keyof typeof frictionField];
+          if (field) totals[field] += numeric(row["subTotal"]);
           break;
         }
-        case "ReferrerUrl":
-        case "Source": {
-          sources.push({
-            label: row["Source"] ?? row["ReferrerUrl"] ?? "—",
-            sessions: numeric(row["sessionsCount"] ?? row["visitsCount"]),
-          });
-          break;
-        }
-        case "ScrollDepth": {
-          const value = numeric(row["averageScrollDepth"]) / 100;
-          if (url) pageOf(url).averageScrollDepth = value;
-          else totals.averageScrollDepth = value;
-          break;
-        }
-        case "EngagementTime": {
-          const value = numeric(row["activeTime"] ?? row["totalTime"]);
-          if (url) pageOf(url).averageEngagementSeconds = value;
-          else totals.averageEngagementSeconds = value;
-          break;
-        }
-        case "RageClickCount":
-        case "DeadClickCount":
-        case "ExcessiveScroll":
-        case "QuickbackClick":
-        case "ScriptErrorCount":
-        case "ErrorClickCount": {
-          const field =
-            metric.metricName === "RageClickCount"
-              ? "rageClicks"
-              : metric.metricName === "DeadClickCount"
-                ? "deadClicks"
-                : metric.metricName === "ExcessiveScroll"
-                  ? "excessiveScroll"
-                  : metric.metricName === "QuickbackClick"
-                    ? "quickBacks"
-                    : metric.metricName === "ScriptErrorCount"
-                      ? "scriptErrors"
-                      : "errorClicks";
-          const value = sessions || numeric(row["subTotal"]);
-          totals[field] += value;
-          if (url) pageOf(url)[field] += value;
-          break;
-        }
-        default:
-          break;
       }
     }
   }
 
+  // --- Quebra por URL ---
+  for (const metric of byUrl ?? []) {
+    for (const row of metric.information ?? []) {
+      const url = row["URL"] ?? row["Url"] ?? row["url"] ?? "";
+      if (!url) continue;
+      const p = pageOf(clarityPath(url));
+      switch (metric.metricName) {
+        case "Traffic":
+          if (p.sessions === 0) p.sessions = numeric(row["totalSessionCount"]);
+          break;
+        case "ScrollDepth":
+          p.averageScrollDepth = numeric(row["averageScrollDepth"]) / 100;
+          break;
+        case "EngagementTime":
+          p.averageEngagementSeconds = numeric(row["activeTime"]);
+          break;
+        default: {
+          const field = frictionField[metric.metricName as keyof typeof frictionField];
+          if (field) p[field] += numeric(row["subTotal"]);
+          break;
+        }
+      }
+    }
+  }
+
+  const merge = (list: { label: string; sessions: number }[]) => {
+    const map = new Map<string, number>();
+    for (const item of list) map.set(item.label, (map.get(item.label) ?? 0) + item.sessions);
+    return [...map.entries()]
+      .map(([label, sessions]) => ({ label, sessions }))
+      .sort((a, b) => b.sessions - a.sessions);
+  };
+
   return {
     totals,
     pages: [...pageMap.values()].sort((a, b) => b.sessions - a.sessions),
-    devices,
-    sources,
+    devices: merge(devices),
+    sources: merge(sources),
   };
+
+}
+
+function clarityHost(value: string) {
+  try {
+    return new URL(value).hostname.replace(/^www\./, "");
+  } catch {
+    return value;
+  }
 }
 
 export async function fetchClarity(input: { days: number; force: boolean }): Promise<ClarityOverview> {
@@ -424,12 +458,19 @@ export async function fetchClarity(input: { days: number; force: boolean }): Pro
   clarityLastCall = now;
   try {
     const days = Math.min(3, Math.max(1, input.days));
-    const url = new URL("https://www.clarity.ms/export-data/api/v1/project-live-insights");
-    url.searchParams.set("numOfDays", String(days));
-    const res = await fetch(url.toString(), { headers: { Authorization: `Bearer ${token}` } });
-    if (!res.ok) throw new Error(`Clarity respondeu ${res.status}: ${await res.text()}`);
-    const raw = (await res.json()) as ClarityRaw;
-    const parsed = parseClarity(raw);
+    const call = async (dimension?: string) => {
+      const url = new URL("https://www.clarity.ms/export-data/api/v1/project-live-insights");
+      url.searchParams.set("numOfDays", String(days));
+      if (dimension) url.searchParams.set("dimension1", dimension);
+      const res = await fetch(url.toString(), { headers: { Authorization: `Bearer ${token}` } });
+      if (!res.ok) throw new Error(`Clarity respondeu ${res.status}`);
+      return (await res.json()) as ClarityRaw;
+    };
+
+    const base = await call();
+    const byUrl = await call("URL").catch(() => [] as ClarityRaw);
+
+    const parsed = parseClarity(base, byUrl);
     const data: ClarityOverview = {
       ...parsed,
       updatedAt: new Date().toISOString(),
@@ -443,3 +484,4 @@ export async function fetchClarity(input: { days: number; force: boolean }): Pro
     throw err;
   }
 }
+
