@@ -19,6 +19,7 @@ export function EditorialHero({
   title,
   subtitle,
   image,
+  mobileImage,
   imageAlt,
   tone = "editorial",
 }: {
@@ -26,21 +27,38 @@ export function EditorialHero({
   title: string;
   subtitle: string;
   image: string;
+  mobileImage?: string | undefined;
   imageAlt: string;
   tone?: EditorialTone;
 }) {
+  const imgClass = cn(
+    "absolute inset-0 size-full object-cover",
+    tone === "wellness" ? "opacity-70" : "opacity-55",
+  );
   return (
     <section className="relative overflow-hidden bg-black">
-      <img
-        src={image}
-        alt={imageAlt}
-        width={1600}
-        height={1000}
-        className={cn(
-          "absolute inset-0 size-full object-cover",
-          tone === "wellness" ? "opacity-70" : "opacity-55",
-        )}
-      />
+      {mobileImage ? (
+        <>
+          <img
+            src={mobileImage}
+            alt={imageAlt}
+            width={1080}
+            height={1350}
+            className={cn(imgClass, "md:hidden")}
+          />
+          <img
+            src={image}
+            alt=""
+            aria-hidden="true"
+            width={1600}
+            height={1000}
+            className={cn(imgClass, "hidden md:block")}
+          />
+        </>
+      ) : (
+        <img src={image} alt={imageAlt} width={1600} height={1000} className={imgClass} />
+      )}
+
       <div
         className={cn(
           "absolute inset-0",

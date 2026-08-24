@@ -11,7 +11,8 @@
  * "Em breve" — nunca artigos, episódios ou convidados fictícios.
  */
 
-import edtMomento from "@/assets/edt-momento-atual.jpg";
+import edtMomento from "@/assets/momento-atual-hero.jpg.asset.json";
+import edtMomentoMobile from "@/assets/momento-atual-hero-mobile.jpg.asset.json";
 import edtCriptoWine from "@/assets/edt-cripto-wine.jpg";
 import edtVidaAtual from "@/assets/edt-vida-atual.jpg";
 import editorial1 from "@/assets/editorial-1.jpg";
@@ -81,6 +82,7 @@ export type Editoria = {
   shortDescription: string;
   tone: EditorialTone;
   image: string;
+  mobileImage?: string;
   imageAlt: string;
   categories: string[];
   /** Pautas em preparação — exibidas como "Em breve", nunca como publicadas. */
@@ -119,8 +121,9 @@ export const editorias: Editoria[] = [
     promise: "Entender o que está acontecendo e por que isso importa.",
     shortDescription: "Economia, política, mercados e mundo.",
     tone: "editorial",
-    image: edtMomento,
-    imageAlt: "Profissional lendo um jornal econômico diante do skyline de um centro financeiro",
+    image: edtMomento.url,
+    mobileImage: edtMomentoMobile.url,
+    imageAlt: "Notas de cem dólares em close, com tratamento azul-noite",
     categories: [
       "Economia",
       "Câmbio",

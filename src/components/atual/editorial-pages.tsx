@@ -54,6 +54,7 @@ export function EditoriaPage({
         title={editoria.headline}
         subtitle={editoria.subheadline}
         image={editoria.image}
+        mobileImage={editoria.mobileImage}
         imageAlt={editoria.imageAlt}
         tone={editoria.tone}
       />
