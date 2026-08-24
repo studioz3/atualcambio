@@ -155,7 +155,8 @@ function Turismo() {
             Falar com especialista
           </ActionLink>
         }
-        image={turismoHero}
+        image={turismoHeroDesktop.url}
+        mobileImage={turismoHeroMobile.url}
         imageAlt="Viajante observando a cidade pela janela ao entardecer"
       />
 
