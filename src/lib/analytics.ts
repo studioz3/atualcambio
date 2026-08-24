@@ -152,6 +152,22 @@ function ensureGtag() {
 }
 
 let ga4Ready = false;
+let clarityReady = false;
+
+/** Microsoft Clarity — carregado uma única vez, apenas com consentimento de analytics. */
+function startClarity(projectId: string) {
+  if (typeof window === "undefined" || clarityReady) return;
+  if (document.getElementById("clarity-script") || window.clarity) {
+    clarityReady = true;
+    return;
+  }
+  const stub = ((...args: unknown[]) => {
+    (stub.q = stub.q ?? []).push(args);
+  }) as NonNullable<Window["clarity"]>;
+  window.clarity = window.clarity ?? stub;
+  injectScript("clarity-script", `https://www.clarity.ms/tag/${projectId}`);
+  clarityReady = true;
+}
 
 export function track(event: AnalyticsEvent | string, params: Params = {}) {
   if (typeof window === "undefined") return;
