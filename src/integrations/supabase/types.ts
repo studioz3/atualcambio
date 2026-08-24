@@ -100,6 +100,7 @@ export type Database = {
           destaque_editoria: boolean
           destaque_home: boolean
           editoria: string
+          editorial_id: string | null
           hero_alt: string | null
           hero_image: string | null
           id: string
@@ -134,6 +135,7 @@ export type Database = {
           destaque_editoria?: boolean
           destaque_home?: boolean
           editoria: string
+          editorial_id?: string | null
           hero_alt?: string | null
           hero_image?: string | null
           id?: string
@@ -168,6 +170,7 @@ export type Database = {
           destaque_editoria?: boolean
           destaque_home?: boolean
           editoria?: string
+          editorial_id?: string | null
           hero_alt?: string | null
           hero_image?: string | null
           id?: string
@@ -202,6 +205,13 @@ export type Database = {
             columns: ["category_id"]
             isOneToOne: false
             referencedRelation: "editorial_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "editorial_content_editorial_id_fkey"
+            columns: ["editorial_id"]
+            isOneToOne: false
+            referencedRelation: "editorials"
             referencedColumns: ["id"]
           },
         ]
@@ -240,6 +250,51 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      editorials: {
+        Row: {
+          created_at: string
+          description: string | null
+          display_order: number
+          id: string
+          image: string | null
+          meta_description: string | null
+          meta_title: string | null
+          name: string
+          slug: string
+          status: string
+          updated_at: string
+          visible_on_site: boolean
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          id?: string
+          image?: string | null
+          meta_description?: string | null
+          meta_title?: string | null
+          name: string
+          slug: string
+          status?: string
+          updated_at?: string
+          visible_on_site?: boolean
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          id?: string
+          image?: string | null
+          meta_description?: string | null
+          meta_title?: string | null
+          name?: string
+          slug?: string
+          status?: string
+          updated_at?: string
+          visible_on_site?: boolean
+        }
+        Relationships: []
       }
       lead_events: {
         Row: {

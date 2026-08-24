@@ -28,13 +28,14 @@ import {
   type CmsStatus,
   type CmsTipo,
 } from "@/lib/cms-shared";
-import { editorias, type EditoriaId } from "@/content/editorial";
+import { editorialsList } from "@/lib/editorials.functions";
+import { EditorialDialog } from "@/components/admin/EditorialDialog";
 import { ContentBlockView } from "@/components/atual/content-blocks";
 import { ArrowDown, ArrowUp, Plus, Trash2, Upload } from "lucide-react";
 
 type Form = {
   id: string | null;
-  editoria: EditoriaId;
+  editoria: string;
   tipo: CmsTipo;
   titulo: string;
   subtitulo: string;
@@ -56,6 +57,7 @@ type Form = {
   canonical: string;
   indexable: boolean;
   audio_url: string;
+  audio_duracao: string;
   video_url: string;
   fontes: { nome: string; url: string }[];
 };
@@ -84,6 +86,7 @@ const empty: Form = {
   canonical: "",
   indexable: true,
   audio_url: "",
+  audio_duracao: "",
   video_url: "",
   fontes: [],
 };
@@ -215,10 +218,18 @@ export function ContentEditor({ id }: { id?: string }) {
       canonical: r.canonical ?? "",
       indexable: r.indexable,
       audio_url: r.podcast?.audio_url ?? "",
+      audio_duracao: r.podcast?.duracao ?? "",
       video_url: r.video?.url ?? "",
       fontes: data.fontes.map((f) => ({ nome: f.nome, url: f.url ?? "" })),
     });
   }, [existing.data]);
+
+  const [novaEditoria, setNovaEditoria] = useState(false);
+  const editoriasQuery = useQuery({ queryKey: ["editorials"], queryFn: () => editorialsList() });
+  const editoriasAtivas = useMemo(
+    () => (editoriasQuery.data ?? []).filter((e) => e.status === "ativa" || e.slug === form.editoria),
+    [editoriasQuery.data, form.editoria],
+  );
 
   const set = <K extends keyof Form>(key: K, value: Form[K]) =>
     setForm((f) => ({ ...f, [key]: value }));
@@ -249,6 +260,12 @@ export function ContentEditor({ id }: { id?: string }) {
         if (!form.resumo.trim()) throw new Error("Resumo é obrigatório para publicar.");
         if (!form.hero_image.trim()) throw new Error("Imagem principal é obrigatória para publicar.");
         if (!form.hero_alt.trim()) throw new Error("Texto alternativo da imagem é obrigatório.");
+        if (form.tipo === "podcast" && !form.audio_url.trim()) {
+          throw new Error("Informe o link do episódio (Spotify) para publicar.");
+        }
+        if (form.tipo === "video" && !form.video_url.trim()) {
+          throw new Error("Informe a URL do vídeo para publicar.");
+        }
       }
       return cmsSave({
         data: {
@@ -274,7 +291,14 @@ export function ContentEditor({ id }: { id?: string }) {
           meta_description: form.meta_description || null,
           canonical: form.canonical || null,
           indexable: form.indexable,
-          podcast: form.audio_url ? { audio_url: form.audio_url } : null,
+          podcast:
+            form.tipo === "podcast" && form.audio_url
+              ? {
+                  audio_url: form.audio_url,
+                  ...(form.audio_duracao ? { duracao: form.audio_duracao } : {}),
+                  plataforma: "spotify",
+                }
+              : null,
           video: form.video_url ? { url: form.video_url } : null,
           fontes: form.fontes.filter((f) => f.nome.trim()).map((f) => ({ nome: f.nome, url: f.url || null })),
         },
@@ -327,18 +351,27 @@ export function ContentEditor({ id }: { id?: string }) {
               />
             </div>
             <div>
-              <Label className="text-navy">Editoria</Label>
-              <Select value={form.editoria} onValueChange={(v) => set("editoria", v as EditoriaId)}>
-                <SelectTrigger><SelectValue /></SelectTrigger>
+              <div className="flex items-center justify-between">
+                <Label className="text-navy">Editoria</Label>
+                <button
+                  type="button"
+                  className="text-xs font-semibold text-gold hover:underline"
+                  onClick={() => setNovaEditoria(true)}
+                >
+                  + Nova editoria
+                </button>
+              </div>
+              <Select value={form.editoria} onValueChange={(v) => set("editoria", v)}>
+                <SelectTrigger><SelectValue placeholder="Selecione" /></SelectTrigger>
                 <SelectContent>
-                  {editorias.map((e) => (
-                    <SelectItem key={e.id} value={e.id}>{e.name}</SelectItem>
+                  {editoriasAtivas.map((e) => (
+                    <SelectItem key={e.id} value={e.slug}>{e.name}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
             <div>
-              <Label className="text-navy">Tipo</Label>
+              <Label className="text-navy">Formato</Label>
               <Select value={form.tipo} onValueChange={(v) => set("tipo", v as CmsTipo)}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>
@@ -545,10 +578,23 @@ export function ContentEditor({ id }: { id?: string }) {
               </div>
             ) : null}
             {form.tipo === "podcast" ? (
-              <div className="md:col-span-2">
-                <Label className="text-navy">URL do áudio</Label>
-                <Input value={form.audio_url} onChange={(e) => set("audio_url", e.target.value)} />
-              </div>
+              <>
+                <div>
+                  <Label className="text-navy">Link do episódio (Spotify)</Label>
+                  <Input
+                    placeholder="https://open.spotify.com/episode/…"
+                    value={form.audio_url}
+                    onChange={(e) => set("audio_url", e.target.value)}
+                  />
+                </div>
+                <div>
+                  <Label className="text-navy">Duração (ex.: 34min)</Label>
+                  <Input
+                    value={form.audio_duracao}
+                    onChange={(e) => set("audio_duracao", e.target.value)}
+                  />
+                </div>
+              </>
             ) : null}
           </div>
 
@@ -657,6 +703,12 @@ export function ContentEditor({ id }: { id?: string }) {
           </div>
         </TabsContent>
       </Tabs>
+      <EditorialDialog
+        open={novaEditoria}
+        onOpenChange={setNovaEditoria}
+        compact
+        onSaved={(res) => set("editoria", res.slug)}
+      />
     </div>
   );
 }

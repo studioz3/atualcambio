@@ -9,7 +9,7 @@ import {
   NewsletterCallout,
 } from "@/components/atual/editorial-ui";
 import { SpecialistCta } from "@/components/atual/blocks";
-import { SITE_URL, editorias, editoriaMap, type Article } from "@/content/editorial";
+import { SITE_URL, editorias, getEditoria, type Article } from "@/content/editorial";
 import { getPublishedList } from "@/lib/editorial.functions";
 import { track } from "@/lib/analytics";
 
@@ -71,7 +71,7 @@ function Conteudo() {
     if (term.length < 2) return setResults(null);
     setResults(
       recent.filter((a) =>
-        [a.titulo, a.subtitulo, a.resumo, a.categoria, editoriaMap[a.editoria].name]
+        [a.titulo, a.subtitulo, a.resumo, a.categoria, getEditoria(a.editoria).name]
           .join(" ")
           .toLowerCase()
           .includes(term),

@@ -1,106 +1,85 @@
 import { createServerFn } from "@tanstack/react-start";
-import { z } from "zod";
-import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
-import { PODCAST_COLUMNS, type PodcastEpisode } from "@/lib/podcast-shared";
+import type { PodcastEpisode } from "@/lib/podcast-shared";
 
-const episodeSchema = z.object({
-  id: z.string().uuid().nullable().optional(),
-  editoria: z.string().max(40).default("momento-atual"),
-  titulo: z.string().min(2).max(200),
-  descricao: z.string().max(1200).nullable().optional(),
-  spotify_url: z.string().min(8).max(600),
-  duracao_segundos: z.number().int().min(0).max(360000).nullable().optional(),
-  published_at: z.string().min(4),
-  ativo: z.boolean().default(true),
-  sort_order: z.number().int().min(0).max(9999).default(0),
-});
+/**
+ * Podcast é um FORMATO de conteúdo: os episódios vivem na biblioteca
+ * `editorial_content` (tipo = "podcast"). A tabela antiga `podcast_episodes`
+ * permanece no banco apenas como histórico da migração.
+ */
 
-export type PodcastEpisodeInput = z.input<typeof episodeSchema>;
+type ContentRow = {
+  id: string;
+  editoria: string;
+  titulo: string;
+  resumo: string | null;
+  published_at: string | null;
+  created_at: string;
+  status: string;
+  podcast: { spotify_url?: string; duracao_segundos?: number | null } | null;
+  corpo: unknown;
+};
+
+const CONTENT_PODCAST_COLUMNS =
+  "id, editoria, titulo, resumo, published_at, created_at, status, podcast, corpo";
+
+function spotifyFrom(row: ContentRow): string | null {
+  const direct = row.podcast?.spotify_url;
+  if (direct) return direct;
+  const blocks = Array.isArray(row.corpo) ? (row.corpo as { type?: string; url?: string }[]) : [];
+  return blocks.find((b) => b?.type === "spotify" && b.url)?.url ?? null;
+}
+
+function toEpisode(row: ContentRow): PodcastEpisode | null {
+  const url = spotifyFrom(row);
+  if (!url) return null;
+  return {
+    id: row.id,
+    editoria: row.editoria,
+    titulo: row.titulo,
+    descricao: row.resumo,
+    spotify_url: url,
+    duracao_segundos: row.podcast?.duracao_segundos ?? null,
+    published_at: row.published_at ?? row.created_at,
+    ativo: row.status === "publicado",
+    sort_order: 0,
+  };
+}
+
+async function fetchEpisodes(editoria: string | undefined, limit: number): Promise<PodcastEpisode[]> {
+  const { publicClient } = await import("@/lib/cms.server");
+  let query = publicClient()
+    .from("editorial_content")
+    .select(CONTENT_PODCAST_COLUMNS)
+    .eq("tipo", "podcast")
+    .eq("status", "publicado")
+    .is("deleted_at", null)
+    .order("published_at", { ascending: false })
+    .limit(limit);
+  if (editoria) query = query.eq("editoria", editoria);
+  const { data, error } = await query;
+  if (error) return [];
+  return ((data ?? []) as unknown as ContentRow[])
+    .map(toEpisode)
+    .filter((e): e is PodcastEpisode => e !== null);
+}
 
 /** Episódios publicados (público). */
 export const getPodcastEpisodes = createServerFn({ method: "GET" })
   .inputValidator((data: { editoria?: string; limit?: number } | undefined) => ({
-    editoria: typeof data?.editoria === "string" ? data.editoria.slice(0, 40) : "momento-atual",
+    editoria: typeof data?.editoria === "string" ? data.editoria.slice(0, 60) : undefined,
     limit: typeof data?.limit === "number" ? Math.min(Math.max(data.limit, 1), 60) : 30,
   }))
-  .handler(async ({ data }): Promise<PodcastEpisode[]> => {
-    const { publicClient } = await import("@/lib/cms.server");
-    const { data: rows, error } = await publicClient()
-      .from("podcast_episodes")
-      .select(PODCAST_COLUMNS)
-      .eq("editoria", data.editoria)
-      .eq("ativo", true)
-      .order("sort_order", { ascending: false })
-      .order("published_at", { ascending: false })
-      .limit(data.limit);
-    if (error) return [];
-    return (rows ?? []) as unknown as PodcastEpisode[];
-  });
-
-/** Lista para o painel — inclui inativos. */
-export const podcastList = createServerFn({ method: "GET" })
-  .middleware([requireSupabaseAuth])
-  .handler(async ({ context }): Promise<PodcastEpisode[]> => {
-    const { data, error } = await context.supabase
-      .from("podcast_episodes")
-      .select(PODCAST_COLUMNS)
-      .order("published_at", { ascending: false });
-    if (error) throw new Error(error.message);
-    return (data ?? []) as unknown as PodcastEpisode[];
-  });
-
-/** Cria ou atualiza um episódio. */
-export const podcastSave = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
-  .inputValidator((data: PodcastEpisodeInput) => episodeSchema.parse(data))
-  .handler(async ({ data, context }): Promise<{ id: string }> => {
-    const { id, ...values } = data;
-    const payload = {
-      ...values,
-      descricao: values.descricao ?? null,
-      duracao_segundos: values.duracao_segundos ?? null,
-    };
-    if (id) {
-      const { error } = await context.supabase.from("podcast_episodes").update(payload).eq("id", id);
-      if (error) throw new Error(error.message);
-      return { id };
-    }
-    const { data: row, error } = await context.supabase
-      .from("podcast_episodes")
-      .insert(payload)
-      .select("id")
-      .single();
-    if (error) throw new Error(error.message);
-    return { id: (row as { id: string }).id };
-  });
-
-/** Remove um episódio. */
-export const podcastDelete = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
-  .inputValidator((data: { id: string }) => z.object({ id: z.string().uuid() }).parse(data))
-  .handler(async ({ data, context }): Promise<{ ok: true }> => {
-    const { error } = await context.supabase.from("podcast_episodes").delete().eq("id", data.id);
-    if (error) throw new Error(error.message);
-    return { ok: true };
-  });
+  .handler(async ({ data }): Promise<PodcastEpisode[]> =>
+    fetchEpisodes(data.editoria, data.limit),
+  );
 
 /** Episódios publicados + miniatura (oEmbed do Spotify). */
 export const getPodcastEpisodesWithArt = createServerFn({ method: "GET" })
   .inputValidator((data: { editoria?: string } | undefined) => ({
-    editoria: typeof data?.editoria === "string" ? data.editoria.slice(0, 40) : "momento-atual",
+    editoria: typeof data?.editoria === "string" ? data.editoria.slice(0, 60) : undefined,
   }))
   .handler(async ({ data }): Promise<(PodcastEpisode & { thumbnail_url: string | null })[]> => {
-    const { publicClient } = await import("@/lib/cms.server");
-    const { data: rows, error } = await publicClient()
-      .from("podcast_episodes")
-      .select(PODCAST_COLUMNS)
-      .eq("editoria", data.editoria)
-      .eq("ativo", true)
-      .order("sort_order", { ascending: false })
-      .order("published_at", { ascending: false })
-      .limit(200);
-    if (error) return [];
-    const episodes = (rows ?? []) as unknown as PodcastEpisode[];
+    const episodes = await fetchEpisodes(data.editoria, 60);
     return Promise.all(
       episodes.map(async (ep) => {
         let thumbnail_url: string | null = null;

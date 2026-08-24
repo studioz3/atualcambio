@@ -5,6 +5,14 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   Select,
   SelectContent,
@@ -14,27 +22,34 @@ import {
 } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { cmsArchive, cmsDuplicate, cmsList, cmsSetStatus } from "@/lib/cms.functions";
-import { cmsStatuses, cmsTipos } from "@/lib/cms-shared";
-import { editorias, formatDate } from "@/content/editorial";
-import { Copy, ExternalLink, Archive, Pencil, Plus } from "lucide-react";
+import { cmsStatuses, cmsFormatos, formatoLabel } from "@/lib/cms-shared";
+import { editorialsList } from "@/lib/editorials.functions";
+import { formatDate } from "@/content/editorial";
+import { ExternalLink, MoreHorizontal, Pencil, Plus, Tags } from "lucide-react";
 
 const TODOS = "todos";
 
 export function AdminContent() {
   const qc = useQueryClient();
+  const [formatoTab, setFormatoTab] = useState(TODOS);
   const [editoria, setEditoria] = useState(TODOS);
   const [status, setStatus] = useState(TODOS);
-  const [tipo, setTipo] = useState(TODOS);
+  const [formato, setFormato] = useState(TODOS);
   const [q, setQ] = useState("");
 
+  const editoriasQuery = useQuery({ queryKey: ["editorials"], queryFn: () => editorialsList() });
+  const editorias = editoriasQuery.data ?? [];
+
+  const formatoAtivo = formatoTab !== TODOS ? formatoTab : formato !== TODOS ? formato : null;
+
   const list = useQuery({
-    queryKey: ["cms-list", editoria, status, tipo, q],
+    queryKey: ["cms-list", editoria, status, formatoAtivo, q],
     queryFn: () =>
       cmsList({
         data: {
           ...(editoria !== TODOS ? { editoria } : {}),
           ...(status !== TODOS ? { status } : {}),
-          ...(tipo !== TODOS ? { tipo } : {}),
+          ...(formatoAtivo ? { tipo: formatoAtivo } : {}),
           ...(q.trim().length > 1 ? { q: q.trim() } : {}),
         },
       }),
@@ -70,28 +85,62 @@ export function AdminContent() {
     onError: () => toast.error("Não foi possível arquivar."),
   });
 
+  const editoriaNome = (slug: string) =>
+    editorias.find((e) => e.slug === slug)?.name ?? slug;
+
   const rows = list.data ?? [];
 
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center gap-3">
+        <Tabs value={formatoTab} onValueChange={setFormatoTab}>
+          <TabsList>
+            <TabsTrigger value={TODOS}>Todos</TabsTrigger>
+            <TabsTrigger value="artigo">Artigos</TabsTrigger>
+            <TabsTrigger value="podcast">Podcasts</TabsTrigger>
+          </TabsList>
+        </Tabs>
+        <div className="ml-auto flex flex-wrap gap-2">
+          <Button asChild variant="secondary">
+            <Link to="/admin/editorias">
+              <Tags className="size-4" aria-hidden /> Gerenciar editorias
+            </Link>
+          </Button>
+          <Button asChild>
+            <Link to="/admin/conteudo/novo">
+              <Plus className="size-4" aria-hidden /> Novo conteúdo
+            </Link>
+          </Button>
+        </div>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-3">
         <Input
           placeholder="Buscar por título"
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          className="w-56"
+          className="w-full sm:w-56"
         />
         <Select value={editoria} onValueChange={setEditoria}>
-          <SelectTrigger className="w-44"><SelectValue placeholder="Editoria" /></SelectTrigger>
+          <SelectTrigger className="w-full sm:w-48"><SelectValue placeholder="Editoria" /></SelectTrigger>
           <SelectContent>
             <SelectItem value={TODOS}>Todas as editorias</SelectItem>
             {editorias.map((e) => (
-              <SelectItem key={e.id} value={e.id}>{e.name}</SelectItem>
+              <SelectItem key={e.id} value={e.slug}>{e.name}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <Select value={formato} onValueChange={setFormato} disabled={formatoTab !== TODOS}>
+          <SelectTrigger className="w-full sm:w-40"><SelectValue placeholder="Formato" /></SelectTrigger>
+          <SelectContent>
+            <SelectItem value={TODOS}>Todos os formatos</SelectItem>
+            {cmsFormatos.map((f) => (
+              <SelectItem key={f.value} value={f.value}>{f.label}</SelectItem>
             ))}
           </SelectContent>
         </Select>
         <Select value={status} onValueChange={setStatus}>
-          <SelectTrigger className="w-40"><SelectValue placeholder="Status" /></SelectTrigger>
+          <SelectTrigger className="w-full sm:w-40"><SelectValue placeholder="Status" /></SelectTrigger>
           <SelectContent>
             <SelectItem value={TODOS}>Todos os status</SelectItem>
             {cmsStatuses.map((s) => (
@@ -99,29 +148,15 @@ export function AdminContent() {
             ))}
           </SelectContent>
         </Select>
-        <Select value={tipo} onValueChange={setTipo}>
-          <SelectTrigger className="w-36"><SelectValue placeholder="Tipo" /></SelectTrigger>
-          <SelectContent>
-            <SelectItem value={TODOS}>Todos os tipos</SelectItem>
-            {cmsTipos.map((t) => (
-              <SelectItem key={t.value} value={t.value}>{t.label}</SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        <Button asChild className="ml-auto">
-          <Link to="/admin/conteudo/novo">
-            <Plus className="size-4" aria-hidden /> Novo conteúdo
-          </Link>
-        </Button>
       </div>
 
-      <div className="rounded-xl border border-line bg-white">
+      <div className="overflow-x-auto rounded-xl border border-line bg-white">
         <Table>
           <TableHeader>
             <TableRow>
               <TableHead>Título</TableHead>
               <TableHead>Editoria</TableHead>
-              <TableHead>Tipo</TableHead>
+              <TableHead>Formato</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Publicação</TableHead>
               <TableHead className="text-right">Ações</TableHead>
@@ -149,8 +184,8 @@ export function AdminContent() {
                       /{row.editoria}/{row.slug}
                     </p>
                   </TableCell>
-                  <TableCell className="text-sm">{row.editoria}</TableCell>
-                  <TableCell className="text-sm capitalize">{row.tipo}</TableCell>
+                  <TableCell className="text-sm">{editoriaNome(row.editoria)}</TableCell>
+                  <TableCell className="text-sm">{formatoLabel(row.tipo)}</TableCell>
                   <TableCell>
                     <Badge variant={row.status === "publicado" ? "default" : "secondary"}>
                       {cmsStatuses.find((s) => s.value === row.status)?.label ?? row.status}
@@ -168,28 +203,8 @@ export function AdminContent() {
                         <Pencil className="size-4" aria-hidden />
                       </Link>
                     </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      title="Duplicar"
-                      onClick={() => duplicar.mutate(row.id)}
-                    >
-                      <Copy className="size-4" aria-hidden />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() =>
-                        publicar.mutate({
-                          id: row.id,
-                          status: row.status === "publicado" ? "rascunho" : "publicado",
-                        })
-                      }
-                    >
-                      {row.status === "publicado" ? "Despublicar" : "Publicar"}
-                    </Button>
                     {row.status === "publicado" ? (
-                      <Button asChild variant="ghost" size="sm" title="Ver no site">
+                      <Button asChild variant="ghost" size="sm" title="Abrir no site">
                         <a
                           href={`/${row.editoria}/${row.slug}`}
                           target="_blank"
@@ -199,14 +214,37 @@ export function AdminContent() {
                         </a>
                       </Button>
                     ) : null}
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      title="Arquivar"
-                      onClick={() => arquivar.mutate(row.id)}
-                    >
-                      <Archive className="size-4" aria-hidden />
-                    </Button>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="sm" title="Mais ações">
+                          <MoreHorizontal className="size-4" aria-hidden />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem onClick={() => duplicar.mutate(row.id)}>
+                          Duplicar
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={() =>
+                            publicar.mutate({
+                              id: row.id,
+                              status: row.status === "publicado" ? "rascunho" : "publicado",
+                            })
+                          }
+                        >
+                          {row.status === "publicado" ? "Despublicar" : "Publicar"}
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                          className="text-destructive"
+                          onClick={() => {
+                            if (confirm(`Arquivar "${row.titulo}"?`)) arquivar.mutate(row.id);
+                          }}
+                        >
+                          Arquivar
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </TableCell>
                 </TableRow>
               ))
