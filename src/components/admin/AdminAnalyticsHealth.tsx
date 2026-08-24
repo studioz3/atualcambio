@@ -34,18 +34,29 @@ function StatusPill({ ok }: { ok: boolean | null }) {
 }
 
 function Sparkbar({ status }: { status: HealthSourceStatus }) {
-  if (status.history.length === 0) return null;
   const max = Math.max(...status.history.map((h) => h.durationMs), 1);
   return (
-    <div className="mt-4 flex h-12 items-end gap-1">
-      {status.history.map((h, i) => (
-        <div
-          key={`${h.checkedAt}-${i}`}
-          title={`${when(h.checkedAt)} · ${h.statusCode ?? "sem resposta"} · ${formatMs(h.durationMs)}`}
-          className={cn("flex-1 rounded-sm", h.ok ? "bg-gold/70" : "bg-destructive")}
-          style={{ height: `${Math.max(8, (h.durationMs / max) * 100)}%` }}
-        />
-      ))}
+    <div className="mt-4">
+      <p className="mb-2 text-[11px] font-semibold tracking-wide text-muted-foreground uppercase">
+        Tempo de resposta por checagem (24h)
+      </p>
+      {status.history.length === 0 ? (
+        <p className="text-xs text-muted-foreground">Ainda sem histórico neste período.</p>
+      ) : (
+        <div className="flex h-12 items-end gap-1">
+          {status.history.map((h, i) => (
+            <div
+              key={`${h.checkedAt}-${i}`}
+              title={`${when(h.checkedAt)} · ${h.statusCode ?? "sem resposta"} · ${formatMs(h.durationMs)}`}
+              className={cn("min-w-1 flex-1 rounded-sm", h.ok ? "bg-gold/70" : "bg-destructive")}
+              style={{ height: `${Math.max(10, (h.durationMs / max) * 100)}%` }}
+            />
+          ))}
+        </div>
+      )}
+      <p className="mt-2 text-[11px] text-muted-foreground">
+        Cada barra é uma checagem; altura = latência. Vermelho indica resposta fora do 200.
+      </p>
     </div>
   );
 }
