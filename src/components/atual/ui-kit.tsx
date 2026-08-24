@@ -142,7 +142,7 @@ export function Hero({
 
 
       <div className="hero-container">
-        <div className="relative grid flex-1 content-start gap-12 pt-[84px] pb-16 md:py-28 lg:h-full lg:min-h-[680px] lg:grid-cols-[1.05fr_0.95fr] lg:content-center lg:items-center lg:py-24 lg:pt-24">
+        <div className="relative grid flex-1 content-start gap-8 pt-[60px] pb-16 md:gap-12 md:py-28 lg:h-full lg:min-h-[680px] lg:grid-cols-[1.05fr_0.95fr] lg:content-center lg:items-center lg:py-24 lg:pt-24">
 
           <div className="w-full max-w-none lg:max-w-2xl">
             {eyebrow ? (
@@ -150,8 +150,9 @@ export function Hero({
                 {eyebrow}
               </p>
             ) : null}
-            <h1 className="hero-title mt-6 text-white lg:whitespace-nowrap">{title}</h1>
-            <p className="hero-copy mt-7 text-white/85 md:mt-8">{description}</p>
+            <h1 className="hero-title mt-2 text-white md:mt-6 lg:whitespace-nowrap">{title}</h1>
+            <p className="hero-copy mt-5 text-white/85 md:mt-8">{description}</p>
+
             {primary || secondary ? (
               <div className="hero-actions mt-9 md:mt-12">
                 {primary}
