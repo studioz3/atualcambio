@@ -90,15 +90,25 @@ export function LatestEpisodeStrip({ episode }: { episode: PodcastEpisode | null
           <time dateTime={episode.published_at}>{formatEpisodeDate(episode.published_at)}</time>
           {duration ? <> · {duration}</> : null}
         </p>
-        <a
-          href={episode.spotify_url}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => track("podcast_open_spotify", { episodio: episode.titulo, source_page: "home" })}
-          className="mt-6 inline-flex min-h-11 items-center text-sm font-semibold text-gold hover:text-white"
-        >
-          Ouvir no Spotify
-        </a>
+        <div className="mt-6 flex flex-wrap items-center gap-6">
+          <a
+            href={episode.spotify_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => track("podcast_open_spotify", { episodio: episode.titulo, source_page: "home" })}
+            className="inline-flex min-h-11 items-center text-sm font-semibold text-gold hover:text-white"
+          >
+            Ouvir no Spotify
+          </a>
+          <Link
+            to="/momento-atual/episodios"
+            onClick={() => track("podcast_ver_episodios", { source_page: "home" })}
+            className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-white/80 hover:text-gold"
+          >
+            Episódios anteriores
+            <ArrowRight className="size-4" aria-hidden />
+          </Link>
+        </div>
       </div>
       <SpotifyPlayer url={episode.spotify_url} title={episode.titulo} compact className="w-full" />
     </div>
