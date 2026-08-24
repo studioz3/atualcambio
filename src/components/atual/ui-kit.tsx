@@ -150,8 +150,9 @@ export function Hero({
                 {eyebrow}
               </p>
             ) : null}
-            <h1 className="hero-title mt-6 text-white lg:whitespace-nowrap">{title}</h1>
-            <p className="hero-copy mt-7 text-white/85 md:mt-8">{description}</p>
+            <h1 className="hero-title mt-2 text-white md:mt-6 lg:whitespace-nowrap">{title}</h1>
+            <p className="hero-copy mt-5 text-white/85 md:mt-8">{description}</p>
+
             {primary || secondary ? (
               <div className="hero-actions mt-9 md:mt-12">
                 {primary}
