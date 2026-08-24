@@ -172,7 +172,7 @@ function Conteudo() {
         <Section tone="light">
           <SectionHeading
             eyebrow="Publicados"
-            title="Mais recentes"
+            title="Fique por dentro"
             description="Conteúdos publicados nas editorias da Atual."
           />
           <div className="mt-14 grid gap-10 md:grid-cols-2 lg:grid-cols-3">

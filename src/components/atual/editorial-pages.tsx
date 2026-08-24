@@ -21,7 +21,7 @@ import { ContentBlockView } from "./content-blocks";
 import { SpotifyPlayer } from "./spotify";
 import type { PodcastEpisode } from "@/lib/podcast-shared";
 import { track } from "@/lib/analytics";
-import { cn } from "@/lib/utils";
+
 
 /* ================= Página de editoria ================= */
 export function EditoriaPage({
@@ -46,7 +46,6 @@ export function EditoriaPage({
     [all, featured, category],
   );
 
-  const dark = editoria.tone !== "wellness";
 
   return (
     <>
@@ -59,52 +58,6 @@ export function EditoriaPage({
         tone={editoria.tone}
       />
 
-      {/* Faixa de promessa + territórios */}
-      <section
-        className={cn(
-          "border-b py-10 md:py-14",
-          editoria.tone === "editorial"
-            ? "surface-navy border-white/10"
-            : editoria.tone === "cultural"
-              ? "surface-ink border-white/10"
-              : "surface-offwhite border-line",
-        )}
-      >
-        <Container>
-          <nav
-            aria-label="Trilha"
-            className={cn("text-xs", dark ? "text-white/55" : "text-muted-foreground")}
-          >
-            <Link to="/conteudo" className="hover:text-gold">
-              Conteúdo
-            </Link>{" "}
-            / <span className={dark ? "text-white/85" : "text-navy"}>{editoria.name}</span>
-          </nav>
-          <div className="mt-7 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-            <p
-              className={cn(
-                "display-h3 max-w-3xl",
-                dark ? "text-white" : "text-navy",
-              )}
-            >
-              {editoria.promise}
-            </p>
-            <ul className="flex flex-wrap gap-2">
-              {editoria.categories.map((cat) => (
-                <li
-                  key={cat}
-                  className={cn(
-                    "rounded-full border px-3 py-1 text-xs",
-                    dark ? "border-white/20 text-white/70" : "border-line text-muted-foreground",
-                  )}
-                >
-                  {cat}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </Container>
-      </section>
 
       {featured ? (
         <Section tone="light">
@@ -164,7 +117,7 @@ export function EditoriaPage({
       {all.length > 1 ? (
         <Section tone="light">
           <div className="flex flex-wrap items-end justify-between gap-6">
-            <SectionHeading eyebrow="Publicados" title="Mais recentes" className="max-w-xl" />
+            <SectionHeading eyebrow="Publicados" title="Fique por dentro" className="max-w-xl" />
             <CategoryFilter
               categories={[...new Set(all.map((a) => a.categoria))]}
               active={category}
