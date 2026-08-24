@@ -15,6 +15,7 @@ import {
   Globe2,
   MousePointerClick,
   Newspaper,
+  Activity,
 } from "lucide-react";
 import { ChangePasswordDialog } from "./ChangePasswordDialog";
 
