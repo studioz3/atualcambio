@@ -49,6 +49,7 @@ import { Route as VidaAtualSlugRouteImport } from './routes/vida-atual.$slug'
 import { Route as AdminConteudoIndexRouteImport } from './routes/admin.conteudo.index'
 import { Route as AdminConteudoIdRouteImport } from './routes/admin.conteudo.$id'
 import { Route as AdminConteudoNovoRouteImport } from './routes/admin.conteudo.novo'
+import { Route as ApiPublicAnalyticsHealthRouteImport } from './routes/api/public/analytics-health'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -250,6 +251,12 @@ const AdminConteudoNovoRoute = AdminConteudoNovoRouteImport.update({
   path: '/admin/conteudo/novo',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicAnalyticsHealthRoute =
+  ApiPublicAnalyticsHealthRouteImport.update({
+    id: '/api/public/analytics-health',
+    path: '/api/public/analytics-health',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -291,6 +298,7 @@ export interface FileRoutesByFullPath {
   '/vida-atual/': typeof VidaAtualIndexRoute
   '/admin/conteudo/$id': typeof AdminConteudoIdRoute
   '/admin/conteudo/novo': typeof AdminConteudoNovoRoute
+  '/api/public/analytics-health': typeof ApiPublicAnalyticsHealthRoute
   '/admin/conteudo/': typeof AdminConteudoIndexRoute
 }
 export interface FileRoutesByTo {
@@ -333,6 +341,7 @@ export interface FileRoutesByTo {
   '/vida-atual': typeof VidaAtualIndexRoute
   '/admin/conteudo/$id': typeof AdminConteudoIdRoute
   '/admin/conteudo/novo': typeof AdminConteudoNovoRoute
+  '/api/public/analytics-health': typeof ApiPublicAnalyticsHealthRoute
   '/admin/conteudo': typeof AdminConteudoIndexRoute
 }
 export interface FileRoutesById {
@@ -376,6 +385,7 @@ export interface FileRoutesById {
   '/vida-atual/': typeof VidaAtualIndexRoute
   '/admin/conteudo/$id': typeof AdminConteudoIdRoute
   '/admin/conteudo/novo': typeof AdminConteudoNovoRoute
+  '/api/public/analytics-health': typeof ApiPublicAnalyticsHealthRoute
   '/admin/conteudo/': typeof AdminConteudoIndexRoute
 }
 export interface FileRouteTypes {
@@ -420,6 +430,7 @@ export interface FileRouteTypes {
     | '/vida-atual/'
     | '/admin/conteudo/$id'
     | '/admin/conteudo/novo'
+    | '/api/public/analytics-health'
     | '/admin/conteudo/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -462,6 +473,7 @@ export interface FileRouteTypes {
     | '/vida-atual'
     | '/admin/conteudo/$id'
     | '/admin/conteudo/novo'
+    | '/api/public/analytics-health'
     | '/admin/conteudo'
   id:
     | '__root__'
@@ -504,6 +516,7 @@ export interface FileRouteTypes {
     | '/vida-atual/'
     | '/admin/conteudo/$id'
     | '/admin/conteudo/novo'
+    | '/api/public/analytics-health'
     | '/admin/conteudo/'
   fileRoutesById: FileRoutesById
 }
@@ -547,6 +560,7 @@ export interface RootRouteChildren {
   VidaAtualIndexRoute: typeof VidaAtualIndexRoute
   AdminConteudoIdRoute: typeof AdminConteudoIdRoute
   AdminConteudoNovoRoute: typeof AdminConteudoNovoRoute
+  ApiPublicAnalyticsHealthRoute: typeof ApiPublicAnalyticsHealthRoute
   AdminConteudoIndexRoute: typeof AdminConteudoIndexRoute
 }
 
@@ -832,6 +846,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminConteudoNovoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/analytics-health': {
+      id: '/api/public/analytics-health'
+      path: '/api/public/analytics-health'
+      fullPath: '/api/public/analytics-health'
+      preLoaderRoute: typeof ApiPublicAnalyticsHealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -875,6 +896,7 @@ const rootRouteChildren: RootRouteChildren = {
   VidaAtualIndexRoute: VidaAtualIndexRoute,
   AdminConteudoIdRoute: AdminConteudoIdRoute,
   AdminConteudoNovoRoute: AdminConteudoNovoRoute,
+  ApiPublicAnalyticsHealthRoute: ApiPublicAnalyticsHealthRoute,
   AdminConteudoIndexRoute: AdminConteudoIndexRoute,
 }
 export const routeTree = rootRouteImport
