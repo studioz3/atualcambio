@@ -55,6 +55,7 @@ export function Hero({
   scrim = "navy",
   zoomImage = false,
   rawImage = false,
+  softScrim = false,
   children,
 }: {
   eyebrow?: string;
