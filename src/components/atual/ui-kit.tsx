@@ -81,6 +81,7 @@ export function Hero({
     <section
       className={cn(
         "hero-shell relative overflow-hidden",
+        rawImage && "hero-shell-raw",
         image && !navyScrim ? "surface-ink" : "surface-navy",
       )}
     >
