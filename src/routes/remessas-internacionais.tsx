@@ -201,6 +201,7 @@ function Remessas() {
         }
         image={heroApp.url}
         mobileImage={heroAppMobile.url}
+        softScrim
 
         imageAlt="Smartphone exibindo a Conta Atual com uma remessa internacional"
       />

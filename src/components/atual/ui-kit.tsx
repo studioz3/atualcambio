@@ -55,6 +55,7 @@ export function Hero({
   scrim = "navy",
   zoomImage = false,
   rawImage = false,
+  softScrim = false,
   children,
 }: {
   eyebrow?: string;
@@ -70,6 +71,8 @@ export function Hero({
   zoomImage?: boolean;
   /** Exibe a arte sem tratamento de cor (sem "lente") nem zoom. */
   rawImage?: boolean;
+  /** Scrim mais leve, para artes que já têm área escura para o texto. */
+  softScrim?: boolean;
   children?: ReactNode;
 }) {
   const navyScrim = scrim === "navy";
@@ -99,7 +102,9 @@ export function Hero({
           />
 
           {/* scrim para legibilidade */}
-          {rawImage ? null : navyScrim ? (
+          {rawImage ? null : softScrim ? (
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/35 via-45% to-transparent" />
+          ) : navyScrim ? (
             <>
               {/* pretos profundos + área de texto limpa */}
               <div className="absolute inset-0 bg-gradient-to-r from-black via-black/72 via-38% to-transparent" />
@@ -127,7 +132,9 @@ export function Hero({
               !rawImage && navyScrim && "contrast-[1.1] saturate-[1.06]",
             )}
           />
-          {rawImage ? null : navyScrim ? (
+          {rawImage ? null : softScrim ? (
+            <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/20 via-60% to-black/40" />
+          ) : navyScrim ? (
             <>
               <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/76 to-black/92" />
               <div className="absolute inset-0 bg-gradient-to-b from-navy/38 via-navy/12 to-navy/45" />
