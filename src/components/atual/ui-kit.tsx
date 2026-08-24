@@ -102,7 +102,9 @@ export function Hero({
           />
 
           {/* scrim para legibilidade */}
-          {rawImage ? null : navyScrim ? (
+          {rawImage ? null : softScrim ? (
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/35 via-45% to-transparent" />
+          ) : navyScrim ? (
             <>
               {/* pretos profundos + área de texto limpa */}
               <div className="absolute inset-0 bg-gradient-to-r from-black via-black/72 via-38% to-transparent" />
