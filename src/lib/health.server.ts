@@ -10,6 +10,9 @@ import { healthSources, sourceLabel } from "./health-shared";
 /** Não repetir alerta da mesma fonte antes disso, se ela seguir falhando. */
 const ALERT_REPEAT_MS = 1000 * 60 * 60;
 
+/** Intervalo mínimo entre sondas reais do Clarity (cota diária baixa na API). */
+const CLARITY_PROBE_MS = 1000 * 60 * 60 * 3;
+
 type ProbeResult = {
   ok: boolean;
   status: number | null;
@@ -106,10 +109,47 @@ async function notify(failures: { source: HealthSourceId; result: ProbeResult }[
 export async function runHealthChecks() {
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
+  // Estado anterior por fonte, para evitar alerta repetido e poupar a cota do Clarity.
+  const { data: previous } = await supabaseAdmin
+    .from("analytics_health_checks")
+    .select("source, ok, status_code, duration_ms, error, alerted, checked_at")
+    .order("checked_at", { ascending: false })
+    .limit(80);
+
+  const previousRows = (previous ?? []) as {
+    source: string;
+    ok: boolean;
+    status_code: number | null;
+    duration_ms: number;
+    error: string | null;
+    alerted: boolean;
+    checked_at: string;
+  }[];
+
+  // A Data Export API do Clarity tem cota diária baixa: só sondamos a cada 3h.
+  const lastClarityOk = previousRows.find((r) => r.source === "clarity" && r.ok);
+  const clarityFresh =
+    lastClarityOk && Date.now() - new Date(lastClarityOk.checked_at).getTime() < CLARITY_PROBE_MS;
+
   const [ga4, ga4Realtime, clarity] = await Promise.all([
     ga4Probe("data"),
     ga4Probe("realtime"),
-    clarityProbe(),
+    clarityFresh
+      ? Promise.resolve<ProbeResult>({
+          ok: true,
+          status: lastClarityOk!.status_code ?? 200,
+          durationMs: lastClarityOk!.duration_ms,
+          error: null,
+        })
+      : clarityProbe().then((r) =>
+          r.status === 429
+            ? {
+                ...r,
+                error:
+                  "Cota diária da API do Clarity atingida — a coleta no site segue normal; os dados voltam a atualizar no próximo ciclo.",
+              }
+            : r,
+        ),
   ]);
   const results: { source: HealthSourceId; result: ProbeResult }[] = [
     { source: "ga4", result: ga4 },
@@ -117,25 +157,16 @@ export async function runHealthChecks() {
     { source: "clarity", result: clarity },
   ];
 
-  // Estado anterior por fonte, para evitar alerta repetido a cada checagem.
-  const { data: previous } = await supabaseAdmin
-    .from("analytics_health_checks")
-    .select("source, ok, alerted, checked_at")
-    .order("checked_at", { ascending: false })
-    .limit(60);
-
-  const lastBySource = new Map<string, { ok: boolean; alerted: boolean; checked_at: string }>();
-  for (const row of (previous ?? []) as { source: string; ok: boolean; alerted: boolean; checked_at: string }[]) {
-    if (!lastBySource.has(row.source)) lastBySource.set(row.source, row);
-  }
   const lastAlertBySource = new Map<string, string>();
-  for (const row of (previous ?? []) as { source: string; alerted: boolean; checked_at: string }[]) {
+  for (const row of previousRows) {
     if (row.alerted && !lastAlertBySource.has(row.source)) lastAlertBySource.set(row.source, row.checked_at);
   }
 
   const now = Date.now();
   const toAlert = results.filter(({ source, result }) => {
     if (result.ok) return false;
+    // 429 = cota diária da API, não indisponibilidade: não dispara alerta.
+    if (result.status === 429) return false;
     const lastAlert = lastAlertBySource.get(source);
     if (!lastAlert) return true;
     return now - new Date(lastAlert).getTime() > ALERT_REPEAT_MS;
