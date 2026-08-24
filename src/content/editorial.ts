@@ -11,7 +11,8 @@
  * "Em breve" — nunca artigos, episódios ou convidados fictícios.
  */
 
-import edtMomento from "@/assets/edt-momento-atual.jpg";
+import edtMomento from "@/assets/momento-atual-hero.jpg.asset.json";
+import edtMomentoMobile from "@/assets/momento-atual-hero-mobile.jpg.asset.json";
 import edtCriptoWine from "@/assets/edt-cripto-wine.jpg";
 import edtVidaAtual from "@/assets/edt-vida-atual.jpg";
 import editorial1 from "@/assets/editorial-1.jpg";
