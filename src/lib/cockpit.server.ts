@@ -31,17 +31,23 @@ export async function assertStaff(context: StaffCtx) {
  * ------------------------------------------------------------------ */
 
 function ga4Config() {
-  const propertyId = process.env["GA4_PROPERTY_ID"];
-  const credentials = process.env["GA4_SERVICE_ACCOUNT_JSON"];
+  const propertyId = (process.env["GA4_PROPERTY_ID"] ?? "").replace(/^properties\//, "").trim();
+  const credentials =
+    process.env["GA4_SERVICE_ACCOUNT_KEY"] ?? process.env["GA4_SERVICE_ACCOUNT_JSON"];
   if (!propertyId || !credentials) return null;
   try {
     const parsed = JSON.parse(credentials) as { client_email?: string; private_key?: string };
     if (!parsed.client_email || !parsed.private_key) return null;
-    return { propertyId, clientEmail: parsed.client_email, privateKey: parsed.private_key };
+    return {
+      propertyId,
+      clientEmail: parsed.client_email,
+      privateKey: parsed.private_key.replace(/\\n/g, "\n"),
+    };
   } catch {
     return null;
   }
 }
+
 
 export function ga4Configured() {
   return ga4Config() !== null;
