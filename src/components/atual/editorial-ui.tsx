@@ -63,10 +63,10 @@ export function EditorialHero({
         className={cn(
           "absolute inset-0",
           tone === "cultural"
-            ? "bg-gradient-to-r from-black via-black/75 to-black/20"
+            ? "bg-gradient-to-r from-black/90 via-black/55 to-transparent"
             : tone === "wellness"
-              ? "bg-gradient-to-r from-black/90 via-black/60 to-black/10"
-              : "bg-gradient-to-r from-black via-black/80 to-black/25",
+              ? "bg-gradient-to-r from-black/80 via-black/40 to-transparent"
+              : "bg-gradient-to-r from-black/90 via-black/55 to-transparent",
         )}
       />
       <Container>
