@@ -132,7 +132,9 @@ export function Hero({
               !rawImage && navyScrim && "contrast-[1.1] saturate-[1.06]",
             )}
           />
-          {rawImage ? null : navyScrim ? (
+          {rawImage ? null : softScrim ? (
+            <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/45 via-55% to-black/70" />
+          ) : navyScrim ? (
             <>
               <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/76 to-black/92" />
               <div className="absolute inset-0 bg-gradient-to-b from-navy/38 via-navy/12 to-navy/45" />
