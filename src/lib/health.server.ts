@@ -157,18 +157,16 @@ export async function runHealthChecks() {
     { source: "clarity", result: clarity },
   ];
 
-  const lastBySource = new Map<string, { ok: boolean; alerted: boolean; checked_at: string }>();
-  for (const row of (previous ?? []) as { source: string; ok: boolean; alerted: boolean; checked_at: string }[]) {
-    if (!lastBySource.has(row.source)) lastBySource.set(row.source, row);
-  }
   const lastAlertBySource = new Map<string, string>();
-  for (const row of (previous ?? []) as { source: string; alerted: boolean; checked_at: string }[]) {
+  for (const row of previousRows) {
     if (row.alerted && !lastAlertBySource.has(row.source)) lastAlertBySource.set(row.source, row.checked_at);
   }
 
   const now = Date.now();
   const toAlert = results.filter(({ source, result }) => {
     if (result.ok) return false;
+    // 429 = cota diária da API, não indisponibilidade: não dispara alerta.
+    if (result.status === 429) return false;
     const lastAlert = lastAlertBySource.get(source);
     if (!lastAlert) return true;
     return now - new Date(lastAlert).getTime() > ALERT_REPEAT_MS;
