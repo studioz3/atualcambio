@@ -201,9 +201,16 @@ function injectScript(id: string, src: string) {
   document.head.appendChild(script);
 }
 
+/** A área administrativa não é rastreada. */
+function isAdminPath() {
+  if (typeof window === "undefined") return false;
+  const path = window.location.pathname;
+  return path === "/admin" || path.startsWith("/admin/");
+}
+
 /** Ativa os provedores conforme consentimento. Sem ID configurado, nada acontece. */
 export function applyAnalyticsConsent(consent: CookieConsent | null) {
-  if (typeof window === "undefined" || !consent) return;
+  if (typeof window === "undefined" || !consent || isAdminPath()) return;
 
   if (consent.analytics) {
     ensureGtag();
@@ -227,9 +234,10 @@ export function applyAnalyticsConsent(consent: CookieConsent | null) {
       ga4Ready = true;
     }
     if (analyticsConfig.clarityId) {
-      injectScript("clarity-script", `https://www.clarity.ms/tag/${analyticsConfig.clarityId}`);
+      startClarity(analyticsConfig.clarityId);
     }
   }
+}
 
   if (consent.marketing && analyticsConfig.metaPixelId) {
     injectScript("meta-pixel-script", "https://connect.facebook.net/en_US/fbevents.js");
