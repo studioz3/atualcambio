@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, ShieldCheck, FileCheck2, Headset, Eye } from "lucide-react";
-import turismoHero from "@/assets/turismo-hero.jpg";
+import turismoHeroDesktop from "@/assets/turismo-hero-desktop.jpg.asset.json";
+import turismoHeroMobile from "@/assets/turismo-hero-mobile.jpg.asset.json";
 import { Section, SectionHeading, ActionButton, ActionLink } from "@/components/atual/primitives";
 import { Hero } from "@/components/atual/ui-kit";
 import { TourismLeadForm } from "@/components/atual/TourismLeadForm";
