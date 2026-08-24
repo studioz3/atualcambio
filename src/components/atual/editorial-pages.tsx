@@ -46,7 +46,6 @@ export function EditoriaPage({
     [all, featured, category],
   );
 
-  const dark = editoria.tone !== "wellness";
 
   return (
     <>
@@ -118,7 +117,7 @@ export function EditoriaPage({
       {all.length > 1 ? (
         <Section tone="light">
           <div className="flex flex-wrap items-end justify-between gap-6">
-            <SectionHeading eyebrow="Publicados" title="Mais recentes" className="max-w-xl" />
+            <SectionHeading eyebrow="Publicados" title="Fique por dentro" className="max-w-xl" />
             <CategoryFilter
               categories={[...new Set(all.map((a) => a.categoria))]}
               active={category}
