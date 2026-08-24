@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import heroAsset from "@/assets/hero-banner-3.png.asset.json";
-import heroMobile from "@/assets/hero-mobile.jpg.asset.json";
+import heroAsset from "@/assets/home-hero-desktop.jpg.asset.json";
+import heroMobile from "@/assets/home-hero-mobile.jpg.asset.json";
 import appMao from "@/assets/app-mao-2.png.asset.json";
 
 import especialistaImg from "@/assets/card-especialista.jpg";
@@ -130,7 +130,7 @@ function Home() {
     <>
       <Hero
         scrim="navy"
-        zoomImage
+        rawImage
         title={
           <>
             Seu dinheiro,
