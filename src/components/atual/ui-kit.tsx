@@ -142,7 +142,7 @@ export function Hero({
 
 
       <div className="hero-container">
-        <div className="relative grid flex-1 content-start gap-12 pt-[84px] pb-16 md:py-28 lg:h-full lg:min-h-[680px] lg:grid-cols-[1.05fr_0.95fr] lg:content-center lg:items-center lg:py-24 lg:pt-24">
+        <div className="relative grid flex-1 content-start gap-8 pt-[60px] pb-16 md:gap-12 md:py-28 lg:h-full lg:min-h-[680px] lg:grid-cols-[1.05fr_0.95fr] lg:content-center lg:items-center lg:py-24 lg:pt-24">
 
           <div className="w-full max-w-none lg:max-w-2xl">
             {eyebrow ? (
