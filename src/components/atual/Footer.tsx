@@ -184,10 +184,30 @@ export function Footer() {
           </div>
         </div>
 
+        {/* Canais de contato */}
+        <div className="relative flex flex-wrap justify-center gap-4 border-t border-white/10 py-8">
+          {socials.map((item) => (
+            <a
+              key={item.label}
+              href={item.href}
+              target={item.href.startsWith("mailto:") ? undefined : "_blank"}
+              rel="noopener noreferrer"
+              aria-label={item.label}
+              onClick={() => track("social_click", { canal: item.label, origem: "footer" })}
+              className="transition-opacity hover:opacity-80"
+            >
+              <img src={item.icon} alt={item.label} loading="lazy" className="h-10 w-10 shrink-0 object-contain" />
+            </a>
+          ))}
+        </div>
+
         {/* Base legal */}
         <div className="relative border-t border-white/10 py-8">
           <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-xs text-white/45">
-            <span>© {new Date().getFullYear()} Atual Câmbio. Todos os direitos reservados.</span>
+            <span>
+              Copyright 2026 <strong className="font-semibold text-white/70">Atual Câmbio Serviços Financeiros Ltda.</strong>{" "}
+              Todos os direitos reservados.
+            </span>
             <Link to="/privacidade" className="transition-colors hover:text-white">
               Privacidade
             </Link>
