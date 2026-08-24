@@ -125,6 +125,17 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const isAdmin = pathname === "/admin" || pathname.startsWith("/admin/");
+  const firstView = useRef(true);
+
+  useEffect(() => {
+    // O primeiro page_view é enviado pelo config do gtag; aqui cobrimos a navegação SPA.
+    if (firstView.current) {
+      firstView.current = false;
+      return;
+    }
+    trackPageView(pathname);
+  }, [pathname]);
+
 
   if (isAdmin) {
     return (
