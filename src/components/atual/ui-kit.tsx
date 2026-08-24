@@ -71,6 +71,8 @@ export function Hero({
   zoomImage?: boolean;
   /** Exibe a arte sem tratamento de cor (sem "lente") nem zoom. */
   rawImage?: boolean;
+  /** Scrim mais leve, para artes que já têm área escura para o texto. */
+  softScrim?: boolean;
   children?: ReactNode;
 }) {
   const navyScrim = scrim === "navy";
