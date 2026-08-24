@@ -419,12 +419,21 @@ function parseClarity(
     }
   }
 
+  const merge = (list: { label: string; sessions: number }[]) => {
+    const map = new Map<string, number>();
+    for (const item of list) map.set(item.label, (map.get(item.label) ?? 0) + item.sessions);
+    return [...map.entries()]
+      .map(([label, sessions]) => ({ label, sessions }))
+      .sort((a, b) => b.sessions - a.sessions);
+  };
+
   return {
     totals,
     pages: [...pageMap.values()].sort((a, b) => b.sessions - a.sessions),
-    devices: devices.sort((a, b) => b.sessions - a.sessions),
-    sources: sources.sort((a, b) => b.sessions - a.sessions),
+    devices: merge(devices),
+    sources: merge(sources),
   };
+
 }
 
 function clarityHost(value: string) {
