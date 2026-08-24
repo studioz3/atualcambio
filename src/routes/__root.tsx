@@ -8,7 +8,9 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
+import { trackPageView } from "@/lib/analytics";
+
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -125,6 +127,17 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const isAdmin = pathname === "/admin" || pathname.startsWith("/admin/");
+  const firstView = useRef(true);
+
+  useEffect(() => {
+    // O primeiro page_view é enviado pelo config do gtag; aqui cobrimos a navegação SPA.
+    if (firstView.current) {
+      firstView.current = false;
+      return;
+    }
+    trackPageView(pathname);
+  }, [pathname]);
+
 
   if (isAdmin) {
     return (

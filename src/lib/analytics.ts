@@ -136,8 +136,21 @@ export const analyticsConfig = {
 declare global {
   interface Window {
     dataLayer?: unknown[];
+    gtag?: (...args: unknown[]) => void;
   }
 }
+
+function ensureGtag() {
+  if (typeof window === "undefined") return;
+  window.dataLayer = window.dataLayer ?? [];
+  if (!window.gtag) {
+    window.gtag = (...args: unknown[]) => {
+      window.dataLayer!.push(args);
+    };
+  }
+}
+
+let ga4Ready = false;
 
 export function track(event: AnalyticsEvent | string, params: Params = {}) {
   if (typeof window === "undefined") return;
@@ -145,6 +158,21 @@ export function track(event: AnalyticsEvent | string, params: Params = {}) {
   if (!consent?.analytics) return;
   window.dataLayer = window.dataLayer ?? [];
   window.dataLayer.push({ event, ...params });
+  if (ga4Ready && window.gtag) {
+    window.gtag("event", event, params);
+  }
+}
+
+/** Envia um page_view no GA4 (necessário em navegação SPA). */
+export function trackPageView(path: string, title?: string) {
+  if (typeof window === "undefined") return;
+  const consent = readConsent();
+  if (!consent?.analytics || !ga4Ready || !window.gtag) return;
+  window.gtag("event", "page_view", {
+    page_path: path,
+    page_location: window.location.href,
+    page_title: title ?? document.title,
+  });
 }
 
 function injectScript(id: string, src: string) {
@@ -161,20 +189,25 @@ export function applyAnalyticsConsent(consent: CookieConsent | null) {
   if (typeof window === "undefined" || !consent) return;
 
   if (consent.analytics) {
-    window.dataLayer = window.dataLayer ?? [];
+    ensureGtag();
     if (analyticsConfig.gtmId) {
-      window.dataLayer.push({ "gtm.start": Date.now(), event: "gtm.js" });
+      window.dataLayer!.push({ "gtm.start": Date.now(), event: "gtm.js" });
       injectScript(
         "gtm-script",
         `https://www.googletagmanager.com/gtm.js?id=${analyticsConfig.gtmId}`,
       );
     }
-    if (analyticsConfig.ga4Id && !analyticsConfig.gtmId) {
+    if (analyticsConfig.ga4Id && !ga4Ready) {
       injectScript(
         "ga4-script",
         `https://www.googletagmanager.com/gtag/js?id=${analyticsConfig.ga4Id}`,
       );
-      window.dataLayer.push({ event: "gtag_config", send_to: analyticsConfig.ga4Id });
+      window.gtag!("js", new Date());
+      window.gtag!("config", analyticsConfig.ga4Id, {
+        send_page_view: true,
+        page_path: window.location.pathname,
+      });
+      ga4Ready = true;
     }
     if (analyticsConfig.clarityId) {
       injectScript("clarity-script", `https://www.clarity.ms/tag/${analyticsConfig.clarityId}`);
@@ -185,3 +218,4 @@ export function applyAnalyticsConsent(consent: CookieConsent | null) {
     injectScript("meta-pixel-script", "https://connect.facebook.net/en_US/fbevents.js");
   }
 }
+
