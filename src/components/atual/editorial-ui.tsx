@@ -33,7 +33,7 @@ export function EditorialHero({
 }) {
   const imgClass = cn(
     "absolute inset-0 size-full object-cover",
-    tone === "wellness" ? "opacity-70" : "opacity-55",
+    tone === "wellness" ? "opacity-95" : "opacity-90",
   );
   return (
     <section className="relative overflow-hidden bg-black">
