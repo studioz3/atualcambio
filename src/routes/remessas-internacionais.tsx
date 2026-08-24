@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import heroApp from "@/assets/remessas-hero-desktop.jpg.asset.json";
-import heroAppMobile from "@/assets/remessas-hero-mobile.jpg.asset.json";
+import heroApp from "@/assets/remessas-hero-v2.jpg.asset.json";
 import appRemessa from "@/assets/app-remessa.jpg.asset.json";
 import appExtrato from "@/assets/app-extrato.jpg.asset.json";
 import remEstudos from "@/assets/rem-estudos.jpg";
@@ -200,7 +199,8 @@ function Remessas() {
           </ActionButton>
         }
         image={heroApp.url}
-        mobileImage={heroAppMobile.url}
+        mobileImage={heroApp.url}
+
         imageAlt="Smartphone exibindo a Conta Atual com uma remessa internacional"
       />
 
