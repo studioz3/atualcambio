@@ -42,7 +42,7 @@ function Sparkbar({ status }: { status: HealthSourceStatus }) {
         <div
           key={`${h.checkedAt}-${i}`}
           title={`${when(h.checkedAt)} · ${h.statusCode ?? "sem resposta"} · ${formatMs(h.durationMs)}`}
-          className={cn("flex-1 rounded-sm", h.ok ? "bg-navy/60" : "bg-destructive")}
+          className={cn("flex-1 rounded-sm", h.ok ? "bg-gold/70" : "bg-destructive")}
           style={{ height: `${Math.max(8, (h.durationMs / max) * 100)}%` }}
         />
       ))}
@@ -90,29 +90,29 @@ export function AdminAnalyticsHealth() {
             <CockpitCard key={s.id} title={s.label} subtitle={s.hint}>
               <div className="flex items-center justify-between">
                 <StatusPill ok={last ? last.ok : null} />
-                <span className="text-sm font-semibold text-navy">
+                <span className="text-sm font-semibold text-foreground">
                   {last?.statusCode ?? "—"}
                 </span>
               </div>
               <dl className="mt-4 space-y-2 text-sm">
                 <div className="flex justify-between gap-3">
                   <dt className="text-muted-foreground">Última sincronização</dt>
-                  <dd className="font-medium text-navy">{when(last?.checkedAt)}</dd>
+                  <dd className="font-medium text-foreground">{when(last?.checkedAt)}</dd>
                 </div>
                 <div className="flex justify-between gap-3">
                   <dt className="text-muted-foreground">Tempo de resposta</dt>
-                  <dd className="font-medium text-navy">{formatMs(last?.durationMs ?? null)}</dd>
+                  <dd className="font-medium text-foreground">{formatMs(last?.durationMs ?? null)}</dd>
                 </div>
                 <div className="flex justify-between gap-3">
                   <dt className="text-muted-foreground">Média 24h</dt>
-                  <dd className="font-medium text-navy">{formatMs(status?.avgDurationMs ?? null)}</dd>
+                  <dd className="font-medium text-foreground">{formatMs(status?.avgDurationMs ?? null)}</dd>
                 </div>
                 <div className="flex justify-between gap-3">
                   <dt className="text-muted-foreground">Erros em 24h</dt>
                   <dd
                     className={cn(
                       "font-semibold",
-                      (status?.errors24h ?? 0) > 0 ? "text-destructive" : "text-navy",
+                      (status?.errors24h ?? 0) > 0 ? "text-destructive" : "text-foreground",
                     )}
                   >
                     {status?.errors24h ?? 0} de {status?.checks24h ?? 0}
