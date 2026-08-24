@@ -237,7 +237,6 @@ export function applyAnalyticsConsent(consent: CookieConsent | null) {
       startClarity(analyticsConfig.clarityId);
     }
   }
-}
 
   if (consent.marketing && analyticsConfig.metaPixelId) {
     injectScript("meta-pixel-script", "https://connect.facebook.net/en_US/fbevents.js");
