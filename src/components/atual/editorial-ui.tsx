@@ -31,10 +31,7 @@ export function EditorialHero({
   imageAlt: string;
   tone?: EditorialTone;
 }) {
-  const imgClass = cn(
-    "absolute inset-0 size-full object-cover",
-    tone === "wellness" ? "opacity-95" : "opacity-90",
-  );
+  const imgClass = "absolute inset-0 size-full object-cover";
   return (
     <section className="relative overflow-hidden bg-black">
       {mobileImage ? (
