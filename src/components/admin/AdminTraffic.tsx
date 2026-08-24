@@ -71,7 +71,15 @@ export function AdminTraffic() {
 
   return (
     <div className="space-y-6">
-      <PeriodFilter value={period} onChange={setPeriod} tone="cockpit" />
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <PeriodFilter value={period} onChange={setPeriod} tone="cockpit" />
+        {ga4.dataUpdatedAt ? (
+          <span className="text-[11px] text-white/45">
+            GA4 sincronizado em {new Date(ga4.dataUpdatedAt).toLocaleString("pt-BR")}
+          </span>
+        ) : null}
+      </div>
+
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <KpiCard
