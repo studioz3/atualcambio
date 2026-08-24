@@ -46,6 +46,7 @@ import { Route as MomentoAtualSlugRouteImport } from './routes/momento-atual.$sl
 import { Route as MomentoAtualEpisodiosRouteImport } from './routes/momento-atual.episodios'
 import { Route as VidaAtualIndexRouteImport } from './routes/vida-atual.index'
 import { Route as VidaAtualSlugRouteImport } from './routes/vida-atual.$slug'
+import { Route as AdminAnalyticsHealthRouteImport } from './routes/admin.analytics.health'
 import { Route as AdminConteudoIndexRouteImport } from './routes/admin.conteudo.index'
 import { Route as AdminConteudoIdRouteImport } from './routes/admin.conteudo.$id'
 import { Route as AdminConteudoNovoRouteImport } from './routes/admin.conteudo.novo'
@@ -236,6 +237,11 @@ const VidaAtualSlugRoute = VidaAtualSlugRouteImport.update({
   path: '/vida-atual/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminAnalyticsHealthRoute = AdminAnalyticsHealthRouteImport.update({
+  id: '/admin/analytics/health',
+  path: '/admin/analytics/health',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminConteudoIndexRoute = AdminConteudoIndexRouteImport.update({
   id: '/admin/conteudo/',
   path: '/admin/conteudo/',
@@ -296,6 +302,7 @@ export interface FileRoutesByFullPath {
   '/cripto-wine/': typeof CriptoWineIndexRoute
   '/momento-atual/': typeof MomentoAtualIndexRoute
   '/vida-atual/': typeof VidaAtualIndexRoute
+  '/admin/analytics/health': typeof AdminAnalyticsHealthRoute
   '/admin/conteudo/$id': typeof AdminConteudoIdRoute
   '/admin/conteudo/novo': typeof AdminConteudoNovoRoute
   '/api/public/analytics-health': typeof ApiPublicAnalyticsHealthRoute
@@ -339,6 +346,7 @@ export interface FileRoutesByTo {
   '/cripto-wine': typeof CriptoWineIndexRoute
   '/momento-atual': typeof MomentoAtualIndexRoute
   '/vida-atual': typeof VidaAtualIndexRoute
+  '/admin/analytics/health': typeof AdminAnalyticsHealthRoute
   '/admin/conteudo/$id': typeof AdminConteudoIdRoute
   '/admin/conteudo/novo': typeof AdminConteudoNovoRoute
   '/api/public/analytics-health': typeof ApiPublicAnalyticsHealthRoute
@@ -383,6 +391,7 @@ export interface FileRoutesById {
   '/cripto-wine/': typeof CriptoWineIndexRoute
   '/momento-atual/': typeof MomentoAtualIndexRoute
   '/vida-atual/': typeof VidaAtualIndexRoute
+  '/admin/analytics/health': typeof AdminAnalyticsHealthRoute
   '/admin/conteudo/$id': typeof AdminConteudoIdRoute
   '/admin/conteudo/novo': typeof AdminConteudoNovoRoute
   '/api/public/analytics-health': typeof ApiPublicAnalyticsHealthRoute
@@ -428,6 +437,7 @@ export interface FileRouteTypes {
     | '/cripto-wine/'
     | '/momento-atual/'
     | '/vida-atual/'
+    | '/admin/analytics/health'
     | '/admin/conteudo/$id'
     | '/admin/conteudo/novo'
     | '/api/public/analytics-health'
@@ -471,6 +481,7 @@ export interface FileRouteTypes {
     | '/cripto-wine'
     | '/momento-atual'
     | '/vida-atual'
+    | '/admin/analytics/health'
     | '/admin/conteudo/$id'
     | '/admin/conteudo/novo'
     | '/api/public/analytics-health'
@@ -514,6 +525,7 @@ export interface FileRouteTypes {
     | '/cripto-wine/'
     | '/momento-atual/'
     | '/vida-atual/'
+    | '/admin/analytics/health'
     | '/admin/conteudo/$id'
     | '/admin/conteudo/novo'
     | '/api/public/analytics-health'
@@ -558,6 +570,7 @@ export interface RootRouteChildren {
   CriptoWineIndexRoute: typeof CriptoWineIndexRoute
   MomentoAtualIndexRoute: typeof MomentoAtualIndexRoute
   VidaAtualIndexRoute: typeof VidaAtualIndexRoute
+  AdminAnalyticsHealthRoute: typeof AdminAnalyticsHealthRoute
   AdminConteudoIdRoute: typeof AdminConteudoIdRoute
   AdminConteudoNovoRoute: typeof AdminConteudoNovoRoute
   ApiPublicAnalyticsHealthRoute: typeof ApiPublicAnalyticsHealthRoute
@@ -825,6 +838,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VidaAtualSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/analytics/health': {
+      id: '/admin/analytics/health'
+      path: '/admin/analytics/health'
+      fullPath: '/admin/analytics/health'
+      preLoaderRoute: typeof AdminAnalyticsHealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/conteudo/': {
       id: '/admin/conteudo/'
       path: '/admin/conteudo'
@@ -894,6 +914,7 @@ const rootRouteChildren: RootRouteChildren = {
   CriptoWineIndexRoute: CriptoWineIndexRoute,
   MomentoAtualIndexRoute: MomentoAtualIndexRoute,
   VidaAtualIndexRoute: VidaAtualIndexRoute,
+  AdminAnalyticsHealthRoute: AdminAnalyticsHealthRoute,
   AdminConteudoIdRoute: AdminConteudoIdRoute,
   AdminConteudoNovoRoute: AdminConteudoNovoRoute,
   ApiPublicAnalyticsHealthRoute: ApiPublicAnalyticsHealthRoute,
