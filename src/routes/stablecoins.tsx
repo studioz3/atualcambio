@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Info, ArrowRight, ShieldCheck, FileCheck2, Headset, Eye } from "lucide-react";
-import heroApp from "@/assets/app-mao-2.png.asset.json";
+import heroDesktop from "@/assets/stablecoins-hero-desktop.jpg.asset.json";
+import heroMobile from "@/assets/stablecoins-hero-mobile.jpg.asset.json";
 /**
  * Telas reais do app — basta trocar o import (ou o asset) para atualizar a prova de produto.
  */
@@ -196,8 +197,9 @@ function Stablecoins() {
             Falar com especialista
           </ActionButton>
         }
-        image={heroApp.url}
-        imageAlt="Smartphone exibindo a Conta Atual, com operações de USDT e USDC"
+        image={heroDesktop.url}
+        mobileImage={heroMobile.url}
+        imageAlt="Moeda dourada de USDT sobre fundo azul escuro"
       />
 
       <TrustPillars items={pillars} />
