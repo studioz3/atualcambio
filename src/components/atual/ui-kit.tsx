@@ -54,6 +54,7 @@ export function Hero({
   seals = false,
   scrim = "navy",
   zoomImage = false,
+  rawImage = false,
   children,
 }: {
   eyebrow?: string;
@@ -67,9 +68,12 @@ export function Hero({
   seals?: boolean;
   scrim?: "ink" | "navy";
   zoomImage?: boolean;
+  /** Exibe a arte sem tratamento de cor (sem "lente") nem zoom. */
+  rawImage?: boolean;
   children?: ReactNode;
 }) {
   const navyScrim = scrim === "navy";
+
   return (
     <section
       className={cn(
