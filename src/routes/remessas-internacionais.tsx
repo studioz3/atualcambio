@@ -200,7 +200,8 @@ function Remessas() {
           </ActionButton>
         }
         image={heroApp.url}
-        mobileImage={heroAppMobile.url}
+        mobileImage={heroApp.url}
+
         imageAlt="Smartphone exibindo a Conta Atual com uma remessa internacional"
       />
 
