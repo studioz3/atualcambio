@@ -79,13 +79,32 @@ export const getPublishedArticle = createServerFn({ method: "GET" })
         .limit(12),
     ]);
 
+    let authorSlug: string | null = null;
+    const authorId = (row as CmsRow).author_id;
+    if (authorId) {
+      const { data: author } = await sb
+        .from("editorial_authors")
+        .select("slug")
+        .eq("id", authorId)
+        .eq("ativo", true)
+        .maybeSingle();
+      authorSlug = (author as { slug: string } | null)?.slug ?? null;
+    }
+
     const cards = ((rest ?? []) as unknown as CmsListItem[]).map(listItemToCard);
     const related = [
       ...cards.filter((a) => a.editoria === data.editoria),
       ...cards.filter((a) => a.editoria !== data.editoria),
     ].slice(0, 3);
 
-    return { article: toArticle(row as CmsRow, (sources ?? []) as { nome: string; url: string | null }[]), related };
+    return {
+      article: toArticle(
+        row as CmsRow,
+        (sources ?? []) as { nome: string; url: string | null }[],
+        authorSlug,
+      ),
+      related,
+    };
   });
 
 /** Redirecionamento configurado no CMS para um caminho antigo. */
