@@ -31,7 +31,6 @@ const staticEntries: SitemapEntry[] = [
   { path: "/cripto-wine", changefreq: "weekly", priority: "0.6" },
   { path: "/vida-atual", changefreq: "weekly", priority: "0.6" },
   { path: "/newsletter", changefreq: "yearly", priority: "0.4" },
-  { path: "/autores/redacao-atual", changefreq: "monthly", priority: "0.4" },
   { path: "/termos", changefreq: "yearly", priority: "0.3" },
   { path: "/privacidade", changefreq: "yearly", priority: "0.3" },
   { path: "/cookies", changefreq: "yearly", priority: "0.3" },
@@ -74,6 +73,16 @@ export const Route = createFileRoute("/sitemap.xml")({
               changefreq: "monthly",
               priority: "0.7",
             });
+          }
+          // Perfis de autor ativos (E-E-A-T).
+          const { data: authors } = await publicClient()
+            .from("editorial_authors")
+            .select("slug")
+            .eq("ativo", true)
+            .limit(200);
+          for (const author of (authors ?? []) as { slug: string }[]) {
+            if (!author.slug) continue;
+            entries.push({ path: `/autores/${author.slug}`, changefreq: "monthly", priority: "0.4" });
           }
         } catch {
           // Sem conteúdo dinâmico disponível, o sitemap estático ainda é servido.
