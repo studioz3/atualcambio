@@ -89,6 +89,7 @@ export function Header() {
           </div>
 
           <div className="flex items-center gap-2 md:gap-3">
+            <LanguageSwitcher />
             <ActionLink
               href={links.account}
               variant="textLight"
