@@ -39,7 +39,8 @@ export function articleHead(input: {
     author: {
       "@type": "Person",
       name: article.autor,
-      url: absoluteUrl(`/autores/${authorSlug(article.autor)}`),
+      // Só publicamos a URL do perfil quando o autor existe de fato no CMS.
+      ...(article.autor_slug ? { url: absoluteUrl(`/autores/${article.autor_slug}`) } : {}),
     },
     publisher: { "@id": ORG_ID },
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
