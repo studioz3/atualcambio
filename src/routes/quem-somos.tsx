@@ -27,6 +27,7 @@ import { Hero, AccreditationSeals } from "@/components/atual/ui-kit";
 import { useLead } from "@/components/atual/LeadProvider";
 import { track } from "@/lib/analytics";
 import { links } from "@/content/site";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/quem-somos")({
   head: () =>
