@@ -238,8 +238,11 @@ export function Footer() {
         <div className="relative border-t border-white/10 py-8">
           <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-xs text-white/45">
             <span>
-              Copyright 2026 <strong className="font-semibold text-white/70">Atual Câmbio Serviços Financeiros Ltda.</strong>{" "}
-              Todos os direitos reservados.
+              Copyright 2026{" "}
+              <strong className="font-semibold text-white/70">
+                {LEGAL_NAME ?? "Atual Câmbio"}
+              </strong>
+              {CNPJ ? ` — CNPJ ${CNPJ}` : ""}. Todos os direitos reservados.
             </span>
             <Link to="/privacidade" className="transition-colors hover:text-white">
               Privacidade
