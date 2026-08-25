@@ -651,6 +651,30 @@ export type Database = {
         }
         Relationships: []
       }
+      translation_cache: {
+        Row: {
+          created_at: string
+          hash: string
+          lang: string
+          source: string
+          target: string
+        }
+        Insert: {
+          created_at?: string
+          hash: string
+          lang: string
+          source: string
+          target: string
+        }
+        Update: {
+          created_at?: string
+          hash?: string
+          lang?: string
+          source?: string
+          target?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
