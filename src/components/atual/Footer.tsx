@@ -190,6 +190,28 @@ export function Footer() {
               Atual Câmbio — instituição autorizada a operar no mercado de câmbio brasileiro,
               sujeita à regulação e supervisão do Banco Central do Brasil, e associada à ABRACAM.
             </p>
+            <address className="mt-6 max-w-xl text-sm leading-relaxed text-white/70 not-italic">
+              <Link
+                to={UNIT.path}
+                className="font-semibold text-white/85 transition-colors hover:text-gold"
+              >
+                {UNIT.name}
+              </Link>
+              <br />
+              {UNIT.streetAddress}
+              <br />
+              {UNIT.neighborhood} — {UNIT.city}/{UNIT.region} — CEP {UNIT.postalCode}
+              <br />
+              <a
+                href={`tel:${UNIT.phoneE164}`}
+                className="transition-colors hover:text-gold"
+                onClick={() => track("phone_click", { origem: "footer" })}
+              >
+                {UNIT.phone}
+              </a>
+              <br />
+              <span className="text-white/55">{UNIT.hours}</span>
+            </address>
             <AccreditationSeals size="sm" className="mt-7" />
           </div>
         </div>
