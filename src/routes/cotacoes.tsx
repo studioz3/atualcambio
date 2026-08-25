@@ -1,6 +1,9 @@
 import { useEffect } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowUpRight, Info } from "lucide-react";
+import { pageHead, faqSchema } from "@/lib/seo";
+import { getPtaxCotacoes, type PtaxCotacao } from "@/lib/ptax.functions";
+import { getPublishedList } from "@/lib/editorial.functions";
 import heroCotacoes from "@/assets/hero-cotacoes.jpg";
 import {
   Section,
@@ -20,27 +23,37 @@ import {
 } from "@/components/ui/accordion";
 import { getQuoteResult, quoteAssets, type QuoteAsset } from "@/lib/quotes";
 import { track } from "@/lib/analytics";
-import { links, editorial } from "@/content/site";
+import { links } from "@/content/site";
 
 export const Route = createFileRoute("/cotacoes")({
   head: () => ({
-    meta: [
-      { title: "Cotação de Câmbio, Dólar, Euro, USDT e USDC | Atual Câmbio" },
-      {
-        name: "description",
-        content:
-          "Consulte informações sobre moedas e stablecoins e encontre o melhor caminho para realizar sua operação com a Atual Câmbio.",
-      },
-      { property: "og:title", content: "Cotação de Câmbio, Dólar, Euro, USDT e USDC | Atual Câmbio" },
-      {
-        property: "og:description",
-        content:
-          "Acompanhe moedas e stablecoins e escolha o melhor caminho para a sua operação pela Conta Atual ou com um especialista.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
+    ...pageHead({
+      path: "/cotacoes",
+      title: "Cotação de Câmbio, Dólar, Euro, USDT e USDC | Atual Câmbio",
+      description:
+        "Consulte informações sobre moedas e stablecoins e encontre o melhor caminho para realizar sua operação com a Atual Câmbio.",
+      jsonLd: [
+        {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "Cotações PTAX — Banco Central",
+          itemListElement: ["USD", "EUR", "GBP"].map((moeda, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            name: `Cotação PTAX ${moeda}`,
+          })),
+        },
+        faqSchema(faq),
+      ],
+    }),
   }),
+  loader: async () => {
+    const [ptax, artigos] = await Promise.all([
+      getPtaxCotacoes(),
+      getPublishedList({ data: { editoria: "momento-atual", limit: 3 } }),
+    ]);
+    return { ptax, artigos };
+  },
   component: Cotacoes,
 });
 
@@ -81,6 +94,7 @@ const faq = [
 
 function Cotacoes() {
   const { openLead } = useLead();
+  const { ptax, artigos } = Route.useLoaderData();
 
   useEffect(() => {
     track("quotes_page_view", { pagina: "/cotacoes" });
@@ -173,6 +187,47 @@ function Cotacoes() {
             ))}
           </div>
         </div>
+      </Section>
+
+      <Section tone="light" id="ptax">
+        <SectionHeading
+          eyebrow="Banco Central"
+          title="Cotação PTAX de referência."
+          description="A PTAX é a cotação média oficial divulgada pelo Banco Central ao final do dia. Ela é uma referência de mercado — a cotação aplicável à sua operação é sempre a apresentada no momento do fechamento."
+        />
+        {ptax.length > 0 ? (
+          <div className="mt-10 grid gap-6 sm:grid-cols-3">
+            {ptax.map((item: PtaxCotacao) => (
+              <div key={item.moeda} className="rounded-lg border border-line bg-white p-6">
+                <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                  {item.moeda}
+                </p>
+                <div className="mt-4 flex items-baseline gap-2">
+                  <span className="display-h4 text-navy">
+                    R$ {item.venda.toFixed(4)}
+                  </span>
+                  <span className="text-xs text-muted-foreground">venda</span>
+                </div>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Compra: R$ {item.compra.toFixed(4)}
+                </p>
+                <p className="mt-4 text-xs text-muted-foreground">
+                  Boletim PTAX de {new Date(item.dataHoraCotacao).toLocaleString("pt-BR")}
+                </p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="mt-10 rounded-md border border-line bg-white p-6 text-sm text-muted-foreground">
+            Não foi possível carregar a cotação PTAX agora. Tente novamente em instantes.
+          </p>
+        )}
+        <p className="mt-6 inline-flex items-start gap-3 rounded-md border border-line bg-offwhite p-5 text-sm leading-relaxed text-muted-foreground">
+          <Info className="mt-0.5 size-4 shrink-0 text-gold" aria-hidden />
+          A PTAX é uma cotação indicativa do Banco Central do Brasil, calculada com base nas operações
+          do dia. A cotação aplicável à sua operação é a apresentada no momento do fechamento, pela
+          Conta Atual ou com um especialista.
+        </p>
       </Section>
 
       <Section tone="offwhite" id="entenda">
@@ -329,23 +384,28 @@ function Cotacoes() {
             Ver Momento Atual <ArrowUpRight className="size-4 text-gold" aria-hidden />
           </Link>
         </div>
-        <div className="mt-12 grid gap-10 md:grid-cols-3">
-          {editorial.slice(0, 3).map((item) => (
-            <article key={item.title}>
-              <Eyebrow>{item.category}</Eyebrow>
-              <h3 className="display-h4 mt-3 text-navy">{item.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.excerpt}</p>
-              <Link
-                to="/conteudo"
-                data-event="quote_article_click"
-                onClick={() => track("quote_article_click", { titulo: item.title })}
-                className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-navy hover:text-gold-soft"
-              >
-                Ler <ArrowUpRight className="size-4 text-gold" aria-hidden />
-              </Link>
-            </article>
-          ))}
-        </div>
+        {artigos.length > 0 ? (
+          <div className="mt-12 grid gap-10 md:grid-cols-3">
+            {artigos.map((item) => (
+              <article key={item.id}>
+                <Eyebrow>{item.categoria}</Eyebrow>
+                <h3 className="display-h4 mt-3 text-navy">{item.titulo}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.resumo}</p>
+                <Link
+                  to="/momento-atual/$slug"
+                  params={{ slug: item.slug }}
+                  data-event="quote_article_click"
+                  onClick={() => track("quote_article_click", { titulo: item.titulo })}
+                  className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-navy hover:text-gold-soft"
+                >
+                  Ler <ArrowUpRight className="size-4 text-gold" aria-hidden />
+                </Link>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <p className="mt-12 text-sm text-muted-foreground">Novos conteúdos em breve.</p>
+        )}
       </Section>
 
       <Section tone="offwhite" id="faq">

@@ -30,7 +30,7 @@ import vaComportamento from "@/assets/va-comportamento.jpg";
 
 import type { CmsBlock } from "@/lib/cms-shared";
 
-export const SITE_URL = "https://atualcambio.lovable.app";
+export { SITE_URL } from "@/config/site";
 
 /** Slug da editoria — dinâmico: novas editorias são criadas no painel. */
 export type EditoriaId = string;

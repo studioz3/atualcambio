@@ -24,26 +24,26 @@ import {
 import { track } from "@/lib/analytics";
 import { links } from "@/content/site";
 import { cn } from "@/lib/utils";
+import { pageHead, faqSchema, serviceSchema } from "@/lib/seo";
+
+const PAGE_DESCRIPTION =
+  "Compre e venda USDT e USDC pela Conta Atual, em uma plataforma digital com suporte especializado quando você precisar.";
 
 export const Route = createFileRoute("/stablecoins")({
-  head: () => ({
-    meta: [
-      { title: "USDT e USDC pela Atual | Atual Câmbio" },
-      {
-        name: "description",
-        content:
-          "Compre e venda USDT e USDC pela Conta Atual, em uma plataforma digital com suporte especializado quando você precisar.",
-      },
-      { property: "og:title", content: "USDT e USDC pela Atual" },
-      {
-        property: "og:description",
-        content:
-          "Operações com stablecoins pela Conta Atual: plataforma digital, processos conduzidos pela Atual e especialistas para orientar.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: () =>
+    pageHead({
+      path: "/stablecoins",
+      title: "USDT e USDC pela Atual | Atual Câmbio",
+      description: PAGE_DESCRIPTION,
+      jsonLd: [
+        serviceSchema({
+          name: "USDT e USDC",
+          serviceType: "Compra e venda de stablecoins",
+          description: PAGE_DESCRIPTION,
+        }),
+        faqSchema(faq),
+      ],
+    }),
   component: Stablecoins,
 });
 
@@ -181,7 +181,7 @@ function Stablecoins() {
             pela Atual.
           </>
         }
-        description="Compre e venda stablecoins pela Conta Atual, em uma plataforma digital com suporte especializado quando você precisar."
+        description="Uma stablecoin é um ativo digital desenhado para acompanhar o valor de uma moeda de referência, como o dólar americano. Pela Conta Atual, você compra e vende USDT e USDC em uma plataforma digital, com suporte especializado quando precisar de orientação."
         primary={
           <ActionLink
             size="lg"

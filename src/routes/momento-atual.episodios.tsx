@@ -1,33 +1,21 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { pageHead } from "@/lib/seo";
+import { absoluteUrl } from "@/config/site";
 import { ArrowLeft, Play } from "lucide-react";
 import { Container, Eyebrow } from "@/components/atual/primitives";
 import { SpotifyPlayer } from "@/components/atual/spotify";
 import { getPodcastEpisodesWithArt } from "@/lib/podcast.functions";
 import { formatDuration, formatEpisodeDate } from "@/lib/podcast-shared";
-import { SITE_URL } from "@/content/editorial";
 import { track } from "@/lib/analytics";
 
 export const Route = createFileRoute("/momento-atual/episodios")({
-  head: () => ({
-    meta: [
-      { title: "Episódios do Momento Atual | Podcast da Atual Câmbio" },
-      {
-        name: "description",
-        content:
-          "Todos os episódios do podcast Momento Atual: economia, câmbio e mercados comentados semana a semana pela Atual Câmbio.",
-      },
-      { property: "og:title", content: "Episódios do Momento Atual | Podcast da Atual Câmbio" },
-      {
-        property: "og:description",
-        content: "Todos os episódios do podcast Momento Atual, semana a semana.",
-      },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: `${SITE_URL}/momento-atual/episodios` },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-    links: [{ rel: "canonical", href: `${SITE_URL}/momento-atual/episodios` }],
-  }),
+  head: () =>
+    pageHead({
+      path: "/momento-atual/episodios",
+      title: "Episódios do Momento Atual | Podcast da Atual Câmbio",
+      description: "Todos os episódios do podcast Momento Atual: economia, câmbio e mercados comentados semana a semana pela Atual Câmbio.",
+    }),
   loader: async () => await getPodcastEpisodesWithArt({ data: { editoria: "momento-atual" } }),
   errorComponent: () => (
     <div className="px-6 pt-40 pb-24 text-center text-navy">

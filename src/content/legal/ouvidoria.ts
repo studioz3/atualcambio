@@ -54,7 +54,7 @@ export const blocks: LegalBlock[] = [
           "Telefone (0800): 0800 770-5422 — ligação gratuita de telefones fixos e celulares.",
           "Horário de funcionamento: de segunda a sexta-feira, das 9h às 18h, exceto feriados nacionais.",
           "E-mail: ouvidoria@atualcambio.com.br",
-          "Atendimento presencial: Ag. Iguatemi Sorocaba — Av. Prof. Izoraida Marques Peres, 256, Campolim, CEP 18048-110, Shopping Iguatemi, Sorocaba-SP."
+          "Atendimento presencial: Atual Câmbio — Av. Cassiano Ricardo, 601, Sala 25, Edifício The One, Jardim Aquarius, CEP 12246-870, São José dos Campos-SP."
         ]
       },
       {

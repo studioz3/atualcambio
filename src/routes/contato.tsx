@@ -24,25 +24,18 @@ import { AccreditationSeals } from "@/components/atual/ui-kit";
 import { StoreBadges } from "@/components/atual/StoreBadges";
 import { track } from "@/lib/analytics";
 import { links, contact } from "@/content/site";
+import { pageHead, faqSchema } from "@/lib/seo";
+import { UNIT } from "@/config/site";
 
 export const Route = createFileRoute("/contato")({
-  head: () => ({
-    meta: [
-      { title: "Contato | Atual Câmbio" },
-      {
-        name: "description",
-        content:
-          "Encontre os canais oficiais de atendimento, contato, Ouvidoria e suporte da Atual Câmbio.",
-      },
-      { property: "og:title", content: "Contato | Atual Câmbio" },
-      {
-        property: "og:description",
-        content: "Canais oficiais de atendimento, Ouvidoria e Canal de Denúncias da Atual Câmbio.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: () =>
+    pageHead({
+      path: "/contato",
+      title: "Contato | Atual Câmbio",
+      description:
+        "Encontre os canais oficiais de atendimento, contato, Ouvidoria e suporte da Atual Câmbio, além do endereço da nossa agência em São José dos Campos.",
+      jsonLd: [faqSchema(faq)],
+    }),
   component: ContatoPage,
 });
 
@@ -209,7 +202,7 @@ function ContatoPage() {
 
             <li className="flex gap-4">
               <MapPin className="mt-1 size-5 shrink-0 text-gold" aria-hidden />
-              <div>
+              <div className="w-full">
                 <p className="display-h4 text-navy">Endereço</p>
                 <p className="mt-1 text-base text-muted-foreground">{contact.address.label}</p>
                 {contact.address.lines.map((line) => (
@@ -237,6 +230,21 @@ function ContatoPage() {
                     <Copy className="size-4" aria-hidden />
                     {copied ? "Endereço copiado" : "Copiar endereço"}
                   </button>
+                  <Link
+                    to="/unidades/sao-jose-dos-campos"
+                    className="inline-flex min-h-11 items-center gap-2 rounded-sm border border-navy/25 px-4 text-sm font-semibold text-navy hover:bg-navy/5"
+                  >
+                    Página da agência <ArrowUpRight className="size-4" aria-hidden />
+                  </Link>
+                </div>
+                <div className="mt-6 overflow-hidden rounded-sm border border-line">
+                  <iframe
+                    src={UNIT.mapEmbedUrl}
+                    title={`Mapa da agência ${UNIT.name}`}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="h-64 w-full border-0"
+                  />
                 </div>
               </div>
             </li>

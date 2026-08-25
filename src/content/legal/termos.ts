@@ -166,27 +166,23 @@ export const blocks: LegalBlock[] = [
       },
       {
         "type": "p",
-        "text": "# Ag. Iguatemi Sorocaba"
+        "text": "# Atual Câmbio — São José dos Campos"
       },
       {
         "type": "p",
-        "text": "Av. Prof. Izoraida Marques Peres, 256"
+        "text": "Av. Cassiano Ricardo, 601 — Sala 25 — Edifício The One"
       },
       {
         "type": "p",
-        "text": "Campolim CEP 18048-110"
+        "text": "Jardim Aquarius — CEP 12246-870"
       },
       {
         "type": "p",
-        "text": "Shopping Iguatemi"
+        "text": "São José dos Campos-SP"
       },
       {
         "type": "p",
-        "text": "Sorocaba-SP"
-      },
-      {
-        "type": "p",
-        "text": "Tel.:"
+        "text": "Tel.: (12) 3500-2009"
       },
       {
         "type": "p",

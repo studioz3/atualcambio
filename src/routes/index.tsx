@@ -27,7 +27,8 @@ import { StoreBadges } from "@/components/atual/StoreBadges";
 
 import { useLead } from "@/components/atual/LeadProvider";
 import { track } from "@/lib/analytics";
-import { brand, pillars, security, links } from "@/content/site";
+import { brand, pillars, security, links, faq } from "@/content/site";
+import { pageHead, websiteSchema, faqSchema } from "@/lib/seo";
 import { editorias } from "@/content/editorial";
 import { getPublishedList } from "@/lib/editorial.functions";
 import { getPodcastEpisodes } from "@/lib/podcast.functions";
@@ -35,22 +36,13 @@ import { LatestEpisodeStrip } from "@/components/atual/podcast-episodes";
 
 export const Route = createFileRoute("/")({
   head: () => ({
-    meta: [
-      { title: "Atual Câmbio | Seu dinheiro, sem fronteiras" },
-      {
-        name: "description",
-        content:
-          "Câmbio, remessas internacionais e stablecoins em uma plataforma digital, com atendimento especializado quando você precisar.",
-      },
-      { property: "og:title", content: "Atual Câmbio | Seu dinheiro, sem fronteiras" },
-      {
-        property: "og:description",
-        content:
-          "Câmbio, remessas e stablecoins em uma plataforma digital, com especialista quando você precisar.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
+    ...pageHead({
+      path: "/",
+      title: "Atual Câmbio | Câmbio, Remessas Internacionais e Stablecoins",
+      description:
+        "Câmbio, remessas internacionais e stablecoins em uma plataforma digital, com atendimento especializado quando você precisar.",
+      jsonLd: [websiteSchema, faqSchema(faq)],
+    }),
   }),
   loader: async () => {
     const [destaques, episodes] = await Promise.all([
@@ -138,7 +130,16 @@ function Home() {
             sem fronteiras.
           </>
         }
-        description="Câmbio, remessas e stablecoins em uma plataforma digital, com atendimento especializado quando você precisar."
+        description={
+          <>
+            Câmbio, remessas e stablecoins em uma plataforma digital, com atendimento
+            especializado quando você precisar.
+            <span className="mt-3 block text-sm text-white/70">
+              Câmbio turismo, remessas internacionais, comércio exterior e USDT/USDC — tudo em
+              um só lugar.
+            </span>
+          </>
+        }
         primary={
           <ActionButton
             size="lg"

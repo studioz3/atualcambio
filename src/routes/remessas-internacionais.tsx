@@ -26,26 +26,27 @@ import { remittanceCurrencies, remittancePurposes } from "@/lib/exchange-options
 import { valueRanges } from "@/lib/lead-intents";
 import { track } from "@/lib/analytics";
 import { links } from "@/content/site";
+import { pageHead, faqSchema, serviceSchema, howToSchema } from "@/lib/seo";
+
+const PAGE_DESCRIPTION =
+  "Envie recursos para o exterior, acompanhe sua operação pela Conta Atual e conte com atendimento especializado quando precisar.";
 
 export const Route = createFileRoute("/remessas-internacionais")({
-  head: () => ({
-    meta: [
-      { title: "Remessas Internacionais | Atual Câmbio" },
-      {
-        name: "description",
-        content:
-          "Envie recursos para o exterior, acompanhe sua operação pela Conta Atual e conte com atendimento especializado quando precisar.",
-      },
-      { property: "og:title", content: "Remessas Internacionais | Atual Câmbio" },
-      {
-        property: "og:description",
-        content:
-          "Simule sua remessa, consulte cotação e custos antes da confirmação e acompanhe pela Conta Atual.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: () =>
+    pageHead({
+      path: "/remessas-internacionais",
+      title: "Remessas Internacionais | Atual Câmbio",
+      description: PAGE_DESCRIPTION,
+      jsonLd: [
+        serviceSchema({
+          name: "Remessas Internacionais",
+          serviceType: "Remessa internacional de recursos",
+          description: PAGE_DESCRIPTION,
+        }),
+        howToSchema({ name: "Como funciona uma remessa pela Atual", steps }),
+        faqSchema(faq),
+      ],
+    }),
   component: Remessas,
 });
 
@@ -174,7 +175,7 @@ function Remessas() {
       <Hero
         eyebrow="REMESSAS INTERNACIONAIS"
         title={<>Envie recursos para o exterior com mais clareza.</>}
-        description="Simule sua remessa, consulte cotação e custos antes da confirmação e acompanhe sua operação pela Conta Atual."
+        description="Uma remessa internacional é a transferência de recursos do Brasil para o exterior, conduzida por uma instituição autorizada a operar no mercado de câmbio brasileiro. Simule sua remessa, consulte cotação e custos antes da confirmação e acompanhe sua operação pela Conta Atual."
         primary={
           <ActionButton
             size="lg"

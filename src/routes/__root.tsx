@@ -10,6 +10,7 @@ import {
 } from "@tanstack/react-router";
 import { useEffect, useRef, type ReactNode } from "react";
 import { trackPageView } from "@/lib/analytics";
+import { orgSchema, robotsContent } from "@/lib/seo";
 
 
 import appCss from "../styles.css?url";
@@ -87,10 +88,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content:
           "Plataforma digital quando você quer autonomia. Especialista quando você precisa de orientação. Remessas, USDT/USDC e câmbio turismo.",
       },
+      { name: "robots", content: robotsContent() },
       { name: "author", content: "Atual Câmbio" },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Atual Câmbio" },
+      { property: "og:locale", content: "pt_BR" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "theme-color", content: "#01183A" },
+    ],
+    scripts: [
+      { type: "application/ld+json", children: JSON.stringify(orgSchema) },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

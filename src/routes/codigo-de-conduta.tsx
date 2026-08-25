@@ -1,25 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { pageHead } from "@/lib/seo";
 import { LegalPage } from "@/components/atual/LegalPage";
 import { blocks, intro } from "@/content/legal/codigo-de-conduta";
 
 export const Route = createFileRoute("/codigo-de-conduta")({
-  head: () => ({
-    meta: [
-      { title: "Código de Conduta | Atual Câmbio" },
-      {
-        name: "description",
-        content:
-          "Princípios, ética, compliance, confidencialidade e postura institucional que orientam o relacionamento da Atual Câmbio com clientes e parceiros.",
-      },
-      { property: "og:title", content: "Código de Conduta | Atual Câmbio" },
-      {
-        property: "og:description",
-        content: "Transparência, integridade, segurança e responsabilidade no relacionamento com clientes e parceiros.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: () =>
+    pageHead({
+      path: "/codigo-de-conduta",
+      title: "Código de Conduta | Atual Câmbio",
+      description: "Princípios, ética, compliance, confidencialidade e postura institucional que orientam o relacionamento da Atual Câmbio com clientes e parceiros.",
+    }),
   component: CodigoDeCondutaPage,
 });
 

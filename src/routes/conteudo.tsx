@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
+import { pageHead } from "@/lib/seo";
+import { absoluteUrl } from "@/config/site";
 import edtHub from "@/assets/edt-hub.jpg";
 import { Container, Section, SectionHeading } from "@/components/atual/primitives";
 import {
@@ -9,47 +11,30 @@ import {
   NewsletterCallout,
 } from "@/components/atual/editorial-ui";
 import { SpecialistCta } from "@/components/atual/blocks";
-import { SITE_URL, editorias, getEditoria, type Article } from "@/content/editorial";
+import { editorias, getEditoria, type Article } from "@/content/editorial";
 import { getPublishedList } from "@/lib/editorial.functions";
 import { track } from "@/lib/analytics";
 
 export const Route = createFileRoute("/conteudo")({
-  head: () => ({
-    meta: [
-      { title: "Conteúdo para quem é Atual | Atual Câmbio" },
-      {
-        name: "description",
-        content:
-          "Economia, cultura, tecnologia e bem-estar em três editorias: Momento Atual, Cripto Wine e Vida Atual.",
-      },
-      { property: "og:title", content: "Conteúdo para quem é Atual | Atual Câmbio" },
-      {
-        property: "og:description",
-        content:
-          "Economia, cultura, tecnologia e bem-estar para quem quer entender o mundo por diferentes perspectivas.",
-      },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: `${SITE_URL}/conteudo` },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-    links: [{ rel: "canonical", href: `${SITE_URL}/conteudo` }],
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
+  head: () =>
+    pageHead({
+      path: "/conteudo",
+      title: "Conteúdo para quem é Atual | Atual Câmbio",
+      description: "Economia, cultura, tecnologia e bem-estar em três editorias: Momento Atual, Cripto Wine e Vida Atual.",
+      jsonLd: [
+        {
           "@context": "https://schema.org",
           "@type": "CollectionPage",
           name: "Conteúdo Atual",
-          url: `${SITE_URL}/conteudo`,
+          url: absoluteUrl("/conteudo"),
           hasPart: editorias.map((e) => ({
             "@type": "CreativeWorkSeries",
             name: e.name,
-            url: `${SITE_URL}${e.path}`,
+            url: absoluteUrl(e.path),
           })),
-        }),
-      },
-    ],
-  }),
+        },
+      ],
+    }),
   loader: async () => await getPublishedList({ data: {} }),
   errorComponent: () => (
     <div className="px-6 pt-40 pb-24 text-center text-navy">

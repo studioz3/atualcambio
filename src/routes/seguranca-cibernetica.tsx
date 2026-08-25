@@ -1,28 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { pageHead } from "@/lib/seo";
 import { LegalPage } from "@/components/atual/LegalPage";
 import { blocks, intro } from "@/content/legal/seguranca-cibernetica";
 
 export const Route = createFileRoute("/seguranca-cibernetica")({
-  head: () => ({
-    meta: [
-      { title: "Política de Segurança Cibernética e da Informação | Atual Câmbio" },
-      {
-        name: "description",
-        content:
-          "Diretrizes da Atual Câmbio para segurança da informação e segurança cibernética: princípios, atribuições, regras de uso de tecnologia, acessos e exceções.",
-      },
-      {
-        property: "og:title",
-        content: "Política de Segurança Cibernética e da Informação | Atual Câmbio",
-      },
-      {
-        property: "og:description",
-        content: "Princípios e controles que protegem informações, sistemas e operações da Atual Câmbio.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: () =>
+    pageHead({
+      path: "/seguranca-cibernetica",
+      title: "Política de Segurança Cibernética e da Informação | Atual Câmbio",
+      description: "Diretrizes da Atual Câmbio para segurança da informação e segurança cibernética: princípios, atribuições, regras de uso de tecnologia, acessos e exceções.",
+    }),
   component: SegurancaCiberneticaPage,
 });
 

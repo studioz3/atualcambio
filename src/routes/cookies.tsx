@@ -1,26 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { pageHead } from "@/lib/seo";
 import { LegalPage } from "@/components/atual/LegalPage";
 import { blocks, intro } from "@/content/legal/cookies";
 import { openCookiePreferences } from "@/lib/cookie-consent";
 
 export const Route = createFileRoute("/cookies")({
-  head: () => ({
-    meta: [
-      { title: "Política de Cookies | Atual Câmbio" },
-      {
-        name: "description",
-        content:
-          "Como a Atual Câmbio usa cookies e tecnologias semelhantes, quais categorias existem e como gerenciar suas preferências conforme a LGPD.",
-      },
-      { property: "og:title", content: "Política de Cookies | Atual Câmbio" },
-      {
-        property: "og:description",
-        content: "Categorias de cookies, base legal e como revisar suas preferências a qualquer momento.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: () =>
+    pageHead({
+      path: "/cookies",
+      title: "Política de Cookies | Atual Câmbio",
+      description: "Como a Atual Câmbio usa cookies e tecnologias semelhantes, quais categorias existem e como gerenciar suas preferências conforme a LGPD.",
+    }),
   component: CookiesPage,
 });
 

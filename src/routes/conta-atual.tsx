@@ -34,26 +34,26 @@ import {
 } from "@/components/ui/accordion";
 import { track } from "@/lib/analytics";
 import { links } from "@/content/site";
+import { pageHead, faqSchema, serviceSchema } from "@/lib/seo";
+
+const PAGE_DESCRIPTION =
+  "Abra sua Conta Atual pelo aplicativo: saldo em reais, remessas internacionais, USDT e USDC, extrato e acompanhamento das suas operações.";
 
 export const Route = createFileRoute("/conta-atual")({
-  head: () => ({
-    meta: [
-      { title: "Conta Atual: o app da Atual Câmbio | Atual Câmbio" },
-      {
-        name: "description",
-        content:
-          "Abra sua Conta Atual pelo aplicativo: saldo em reais, remessas internacionais, USDT e USDC, extrato e acompanhamento das suas operações.",
-      },
-      { property: "og:title", content: "Sua Conta Atual, onde você estiver" },
-      {
-        property: "og:description",
-        content:
-          "Acesse as soluções digitais da Atual, acompanhe suas operações e movimente recursos pelo aplicativo.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: () =>
+    pageHead({
+      path: "/conta-atual",
+      title: "Conta Atual: o app da Atual Câmbio | Atual Câmbio",
+      description: PAGE_DESCRIPTION,
+      jsonLd: [
+        serviceSchema({
+          name: "Conta Atual",
+          serviceType: "Plataforma digital de câmbio e pagamentos internacionais",
+          description: PAGE_DESCRIPTION,
+        }),
+        faqSchema(faq),
+      ],
+    }),
   component: ContaAtual,
 });
 

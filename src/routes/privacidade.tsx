@@ -1,25 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { pageHead } from "@/lib/seo";
 import { LegalPage } from "@/components/atual/LegalPage";
 import { blocks, intro } from "@/content/legal/privacidade";
 
 export const Route = createFileRoute("/privacidade")({
-  head: () => ({
-    meta: [
-      { title: "Política de Privacidade | Atual Câmbio" },
-      {
-        name: "description",
-        content:
-          "Como a Atual Câmbio coleta, utiliza, compartilha e protege dados pessoais, e como o titular exerce seus direitos previstos na LGPD.",
-      },
-      { property: "og:title", content: "Política de Privacidade | Atual Câmbio" },
-      {
-        property: "og:description",
-        content: "Tratamento de dados pessoais com transparência, segurança e conformidade com a LGPD.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: () =>
+    pageHead({
+      path: "/privacidade",
+      title: "Política de Privacidade | Atual Câmbio",
+      description: "Como a Atual Câmbio coleta, utiliza, compartilha e protege dados pessoais, e como o titular exerce seus direitos previstos na LGPD.",
+    }),
   component: PrivacidadePage,
 });
 

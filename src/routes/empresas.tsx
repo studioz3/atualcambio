@@ -26,26 +26,26 @@ import {
 } from "@/components/ui/accordion";
 import { track } from "@/lib/analytics";
 import { security, links } from "@/content/site";
+import { pageHead, faqSchema, serviceSchema } from "@/lib/seo";
+
+const PAGE_DESCRIPTION =
+  "Importação, exportação, pagamentos e recebimentos internacionais com tecnologia para agilizar e especialistas para orientar a sua operação.";
 
 export const Route = createFileRoute("/empresas")({
-  head: () => ({
-    meta: [
-      { title: "Câmbio para empresas | Atual Câmbio" },
-      {
-        name: "description",
-        content:
-          "Importação, exportação, pagamentos e recebimentos internacionais com tecnologia para agilizar e especialistas para orientar a sua operação.",
-      },
-      { property: "og:title", content: "Sua empresa no mercado global | Atual Câmbio" },
-      {
-        property: "og:description",
-        content:
-          "Câmbio e operações internacionais para empresas, com atendimento consultivo e instituição autorizada pelo Banco Central.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: () =>
+    pageHead({
+      path: "/empresas",
+      title: "Câmbio para empresas | Atual Câmbio",
+      description: PAGE_DESCRIPTION,
+      jsonLd: [
+        serviceSchema({
+          name: "Câmbio para empresas",
+          serviceType: "Operações de câmbio para comércio exterior",
+          description: PAGE_DESCRIPTION,
+        }),
+        faqSchema(faq),
+      ],
+    }),
   component: Empresas,
 });
 

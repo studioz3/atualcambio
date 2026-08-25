@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
+import { pageHead } from "@/lib/seo";
 import especialistas from "@/assets/especialistas.jpg";
 import { Section, Container, Eyebrow } from "@/components/atual/primitives";
 import { SpecialistWizard } from "@/components/atual/SpecialistWizard";
@@ -26,24 +27,12 @@ export const Route = createFileRoute("/fale-com-especialista")({
     ...(pick(search['operacao']) ? { operacao: pick(search['operacao'])! } : {}),
     ...(pick(search['moeda']) ? { moeda: pick(search['moeda'])! } : {}),
   }),
-  head: () => ({
-    meta: [
-      { title: "Fale com um Especialista | Atual Câmbio" },
-      {
-        name: "description",
-        content:
-          "Conte o que precisa resolver e fale com um especialista da Atual sobre câmbio, remessas, empresas, USDT, USDC e Conta Atual.",
-      },
-      { property: "og:title", content: "Fale com um Especialista | Atual Câmbio" },
-      {
-        property: "og:description",
-        content:
-          "Atendimento consultivo da Atual Câmbio para remessas, empresas, stablecoins, turismo e Conta Atual.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: () =>
+    pageHead({
+      path: "/fale-com-especialista",
+      title: "Fale com um Especialista | Atual Câmbio",
+      description: "Conte o que precisa resolver e fale com um especialista da Atual sobre câmbio, remessas, empresas, USDT, USDC e Conta Atual.",
+    }),
   component: SpecialistPage,
 });
 
