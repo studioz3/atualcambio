@@ -201,6 +201,15 @@ export function ArticlePage({
               <span>{article.autor}</span>
               <span aria-hidden>·</span>
               <time dateTime={article.data}>{formatDate(article.data)}</time>
+              {article.updated_at && article.updated_at.slice(0, 10) !== article.data.slice(0, 10) ? (
+                <>
+                  <span aria-hidden>·</span>
+                  <span>
+                    Atualizado em{" "}
+                    <time dateTime={article.updated_at}>{formatDate(article.updated_at)}</time>
+                  </span>
+                </>
+              ) : null}
               <button
                 type="button"
                 onClick={share}
