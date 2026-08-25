@@ -36,8 +36,10 @@ export const WEBSITE_ID = `${SITE_URL}/#website`;
  * "Atual Corretora de Câmbio Ltda", "Atual Sociedade Corretora de Câmbio Ltda").
  * Use UMA só aqui — este valor alimenta rodapé, schema e páginas legais.
  */
-export const LEGAL_NAME = "{RAZAO_SOCIAL_OFICIAL}"; // TODO preencher
-export const CNPJ = "{CNPJ}"; // TODO preencher (ex.: 44.323.831/0001-70)
+/** TODO [COMPLIANCE]: preencher com a razão social oficial. Enquanto null, não é publicado. */
+export const LEGAL_NAME: string | null = null;
+/** TODO [COMPLIANCE]: preencher o CNPJ oficial. Enquanto null, não é publicado. */
+export const CNPJ: string | null = null;
 
 /** Agência física única da Atual. */
 export const UNIT = {
@@ -58,8 +60,9 @@ export const UNIT = {
   mapEmbedUrl:
     "https://www.google.com/maps?q=Av.+Cassiano+Ricardo,+601,+Jardim+Aquarius,+S%C3%A3o+Jos%C3%A9+dos+Campos+SP&output=embed",
   // TODO [PREENCHER]: coordenadas reais da agência.
-  latitude: "{LAT}",
-  longitude: "{LNG}",
+  // TODO [PREENCHER]: coordenadas reais da agência (null = não publicadas).
+  latitude: null as string | null,
+  longitude: null as string | null,
 } as const;
 
 export const SOCIAL_PROFILES = [
@@ -94,8 +97,8 @@ export const organizationSchema = {
   "@type": "FinancialService",
   "@id": ORG_ID,
   name: "Atual Câmbio",
-  legalName: LEGAL_NAME,
-  taxID: CNPJ,
+  ...(LEGAL_NAME ? { legalName: LEGAL_NAME } : {}),
+  ...(CNPJ ? { taxID: CNPJ } : {}),
   url: SITE_URL,
   logo: absoluteUrl("/brand/simbolo.png"),
   image: OG_IMAGE,
