@@ -4,6 +4,7 @@ import { Container } from "./primitives";
 import { AccreditationSeals } from "./ui-kit";
 import { Logo } from "./Logo";
 import { links } from "@/content/site";
+import { CNPJ, LEGAL_NAME, UNIT } from "@/config/site";
 import { openCookiePreferences } from "@/lib/cookie-consent";
 import { track } from "@/lib/analytics";
 import socialWhatsapp from "@/assets/social-whatsapp.png.asset.json";
