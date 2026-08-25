@@ -58,6 +58,7 @@ export type Article = {
   imagem_alt: string;
   conteudo: ContentBlock[];
   autor: string;
+  autor_slug: string | null;
   data: string; // ISO
   fonte: { label: string; url?: string }[];
   video_url: string | null;

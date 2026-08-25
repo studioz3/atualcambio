@@ -222,7 +222,11 @@ export type CmsListItem = Pick<
 >;
 
 /** Converte uma linha do banco no formato consumido pelos templates públicos. */
-export function toArticle(row: CmsRow, sources: CmsSource[] = []): Article {
+export function toArticle(
+  row: CmsRow,
+  sources: CmsSource[] = [],
+  authorSlug: string | null = null,
+): Article {
   const video = row.video ?? {};
   const podcast = row.podcast ?? {};
   return {
@@ -237,6 +241,7 @@ export function toArticle(row: CmsRow, sources: CmsSource[] = []): Article {
     imagem_alt: row.hero_alt ?? row.titulo,
     conteudo: normalizeBlocks(row.corpo) as Article["conteudo"],
     autor: row.autor_nome ?? "Redação Atual",
+    autor_slug: authorSlug,
     data: row.published_at ?? row.created_at,
     fonte: sources.map((s) => ({ label: s.nome, ...(s.url ? { url: s.url } : {}) })),
     video_url: video.url ?? null,
