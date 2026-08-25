@@ -20,6 +20,7 @@ import { Footer } from "@/components/atual/Footer";
 import { LeadProvider } from "@/components/atual/LeadProvider";
 import { Toaster } from "@/components/ui/sonner";
 import { CookieBanner } from "@/components/atual/CookieBanner";
+import { TranslateProvider } from "@/components/atual/TranslateProvider";
 
 function NotFoundComponent() {
   return (
@@ -157,16 +158,18 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <LeadProvider>
-        <Header />
-        <main className="pt-16 md:pt-20">
-          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-          <Outlet />
-        </main>
-        <Footer />
-        <CookieBanner />
-        <Toaster position="top-center" />
-      </LeadProvider>
+      <TranslateProvider>
+        <LeadProvider>
+          <Header />
+          <main className="pt-16 md:pt-20">
+            {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+            <Outlet />
+          </main>
+          <Footer />
+          <CookieBanner />
+          <Toaster position="top-center" />
+        </LeadProvider>
+      </TranslateProvider>
     </QueryClientProvider>
   );
 }

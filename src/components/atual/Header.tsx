@@ -6,6 +6,7 @@ import { Logo } from "./Logo";
 import { nav, links } from "@/content/site";
 import { cn } from "@/lib/utils";
 import { useLead } from "./LeadProvider";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
