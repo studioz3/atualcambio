@@ -203,7 +203,7 @@ export function FeaturedArticle({ article }: { article: Article }) {
             variant="secondary"
             event="article_view"
           >
-            Ler matéria
+            Ler matéria<span className="sr-only">: {article.titulo}</span>
           </ActionLink>
         </div>
       </div>
