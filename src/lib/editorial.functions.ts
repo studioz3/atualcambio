@@ -79,13 +79,32 @@ export const getPublishedArticle = createServerFn({ method: "GET" })
         .limit(12),
     ]);
 
+    let authorSlug: string | null = null;
+    const authorId = (row as CmsRow).author_id;
+    if (authorId) {
+      const { data: author } = await sb
+        .from("editorial_authors")
+        .select("slug")
+        .eq("id", authorId)
+        .eq("ativo", true)
+        .maybeSingle();
+      authorSlug = (author as { slug: string } | null)?.slug ?? null;
+    }
+
     const cards = ((rest ?? []) as unknown as CmsListItem[]).map(listItemToCard);
     const related = [
       ...cards.filter((a) => a.editoria === data.editoria),
       ...cards.filter((a) => a.editoria !== data.editoria),
     ].slice(0, 3);
 
-    return { article: toArticle(row as CmsRow, (sources ?? []) as { nome: string; url: string | null }[]), related };
+    return {
+      article: toArticle(
+        row as CmsRow,
+        (sources ?? []) as { nome: string; url: string | null }[],
+        authorSlug,
+      ),
+      related,
+    };
   });
 
 /** Redirecionamento configurado no CMS para um caminho antigo. */
@@ -101,3 +120,57 @@ export const getRedirect = createServerFn({ method: "GET" })
     if (!row) return null;
     return { target: (row as { target_path: string }).target_path, status: (row as { status_code: number }).status_code };
   });
+
+/** Perfil público de autor + conteúdos assinados (E-E-A-T). */
+export const getAuthorProfile = createServerFn({ method: "GET" })
+  .inputValidator((data: { slug: string }) => ({
+    slug: String(data?.slug ?? "").slice(0, 120),
+  }))
+  .handler(
+    async ({
+      data,
+    }): Promise<{
+      author: {
+        nome: string;
+        slug: string;
+        cargo: string | null;
+        bio: string | null;
+        foto_url: string | null;
+        links: { label?: string; url: string }[];
+      };
+      articles: Article[];
+    } | null> => {
+      const { publicClient } = await import("@/lib/cms.server");
+      const sb = publicClient();
+      const { data: row } = await sb
+        .from("editorial_authors")
+        .select("id, nome, slug, cargo, bio, foto_url, links")
+        .eq("slug", data.slug)
+        .eq("ativo", true)
+        .maybeSingle();
+      if (!row) return null;
+      const author = row as {
+        id: string;
+        nome: string;
+        slug: string;
+        cargo: string | null;
+        bio: string | null;
+        foto_url: string | null;
+        links: { label?: string; url: string }[] | null;
+      };
+
+      const { data: rows } = await sb
+        .from("editorial_content")
+        .select(CMS_LIST_COLUMNS)
+        .eq("status", "publicado")
+        .is("deleted_at", null)
+        .eq("author_id", author.id)
+        .order("published_at", { ascending: false })
+        .limit(30);
+
+      return {
+        author: { ...author, links: author.links ?? [] },
+        articles: ((rows ?? []) as unknown as CmsListItem[]).map(listItemToCard),
+      };
+    },
+  );

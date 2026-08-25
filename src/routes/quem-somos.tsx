@@ -27,27 +27,15 @@ import { Hero, AccreditationSeals } from "@/components/atual/ui-kit";
 import { useLead } from "@/components/atual/LeadProvider";
 import { track } from "@/lib/analytics";
 import { links } from "@/content/site";
+import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/quem-somos")({
-  head: () => ({
-    meta: [
-      { title: "Quem Somos | Atual Câmbio" },
-      {
-        name: "description",
-        content:
-          "Conheça a Atual Câmbio, sua atuação, tecnologia, atendimento consultivo e compromisso com segurança em operações nacionais e internacionais.",
-      },
-      { property: "og:title", content: "Quem Somos | Atual Câmbio" },
-      {
-        property: "og:description",
-        content:
-          "Tecnologia para simplificar e especialistas para orientar: conheça a atuação, os valores e a estrutura da Atual Câmbio.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-    links: [{ rel: "canonical", href: "https://atualcambio.lovable.app/quem-somos" }],
-  }),
+  head: () =>
+    pageHead({
+      path: "/quem-somos",
+      title: "Quem Somos | Atual Câmbio",
+      description: "Conheça a Atual Câmbio, sua atuação, tecnologia, atendimento consultivo e compromisso com segurança em operações nacionais e internacionais.",
+    }),
   component: QuemSomosPage,
 });
 

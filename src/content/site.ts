@@ -1,3 +1,5 @@
+import { UNIT } from "@/config/site";
+
 /**
  * Conteúdo do site — separado dos componentes.
  * Nada aqui deve conter cotação, prazo ou dado institucional inventado.
@@ -33,19 +35,17 @@ export const links = {
  */
 export const contact = {
   email: "contato@atualcambio.com.br",
-  phone: null as string | null,
+  phone: UNIT.phone as string | null,
   whatsapp: null as string | null,
   hours: "Segunda a sexta, das 9h às 18h, exceto feriados nacionais.",
   address: {
-    label: "Ag. Iguatemi Sorocaba",
+    label: UNIT.name,
     lines: [
-      "Av. Prof. Izoraida Marques Peres, 256 — Campolim",
-      "Shopping Iguatemi — Sorocaba/SP — CEP 18048-110",
+      UNIT.streetAddress,
+      `${UNIT.neighborhood}, ${UNIT.city}/${UNIT.region} — CEP ${UNIT.postalCode}`,
     ],
-    full:
-      "Av. Prof. Izoraida Marques Peres, 256 — Campolim, Shopping Iguatemi, Sorocaba/SP, CEP 18048-110",
-    mapUrl:
-      "https://www.google.com/maps/search/?api=1&query=Av.+Prof.+Izoraida+Marques+Peres,+256,+Campolim,+Sorocaba+SP",
+    full: `${UNIT.streetAddress}, ${UNIT.neighborhood}, ${UNIT.city}/${UNIT.region}, CEP ${UNIT.postalCode}`,
+    mapUrl: UNIT.mapUrl,
   },
   ouvidoria: {
     phone: "0800 770-5422",

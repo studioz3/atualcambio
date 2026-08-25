@@ -15,26 +15,27 @@ import {
 import { tourismCurrencies, tourismOperations, type TourismOperation } from "@/lib/exchange-options";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
+import { pageHead, faqSchema, serviceSchema, howToSchema } from "@/lib/seo";
+
+const PAGE_DESCRIPTION =
+  "Solicite cotação para compra ou venda de moeda estrangeira e organize seu câmbio para viagens com a Atual Câmbio.";
 
 export const Route = createFileRoute("/cambio-turismo")({
-  head: () => ({
-    meta: [
-      { title: "Câmbio Turismo | Comprar e Vender Moeda | Atual Câmbio" },
-      {
-        name: "description",
-        content:
-          "Solicite cotação para compra ou venda de moeda estrangeira e organize seu câmbio para viagens com a Atual Câmbio.",
-      },
-      { property: "og:title", content: "Câmbio Turismo | Atual Câmbio" },
-      {
-        property: "og:description",
-        content:
-          "Compre ou venda moeda estrangeira com atendimento da Atual para organizar seu câmbio antes da viagem.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: () =>
+    pageHead({
+      path: "/cambio-turismo",
+      title: "Câmbio Turismo | Comprar e Vender Moeda | Atual Câmbio",
+      description: PAGE_DESCRIPTION,
+      jsonLd: [
+        serviceSchema({
+          name: "Câmbio Turismo",
+          serviceType: "Compra e venda de moeda estrangeira para viagem",
+          description: PAGE_DESCRIPTION,
+        }),
+        howToSchema({ name: "Como funciona o câmbio turismo na Atual", steps }),
+        faqSchema(faq),
+      ],
+    }),
   component: Turismo,
 });
 
@@ -138,7 +139,7 @@ function Turismo() {
       <Hero
         eyebrow="CÂMBIO TURISMO"
         title={<>Sua viagem começa antes do embarque.</>}
-        description="Compre ou venda moeda estrangeira com atendimento da Atual para organizar seu câmbio antes da viagem."
+        description="Câmbio turismo é a compra ou venda de moeda estrangeira em espécie destinada a viagens internacionais, realizada por instituição autorizada a operar no mercado de câmbio. Informe a operação e a moeda desejada e receba as condições aplicáveis antes de confirmar."
         primary={
           <ActionButton size="lg" event="tourism_quote_start" onClick={goToForm}>
             Pedir cotação

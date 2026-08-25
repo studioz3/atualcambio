@@ -28,8 +28,10 @@ import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as QuemSomosRouteImport } from './routes/quem-somos'
 import { Route as RemessasInternacionaisRouteImport } from './routes/remessas-internacionais'
 import { Route as ResponsabilidadeSocialRouteImport } from './routes/responsabilidade-social'
+import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SegurancaRouteImport } from './routes/seguranca'
 import { Route as SegurancaCiberneticaRouteImport } from './routes/seguranca-cibernetica'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SolucoesRouteImport } from './routes/solucoes'
 import { Route as StablecoinsRouteImport } from './routes/stablecoins'
 import { Route as TermosRouteImport } from './routes/termos'
@@ -39,11 +41,13 @@ import { Route as AdminEditoriasRouteImport } from './routes/admin.editorias'
 import { Route as AdminLeadsRouteImport } from './routes/admin.leads'
 import { Route as AdminNewsletterRouteImport } from './routes/admin.newsletter'
 import { Route as AdminTrafegoRouteImport } from './routes/admin.trafego'
+import { Route as AutoresSlugRouteImport } from './routes/autores.$slug'
 import { Route as CriptoWineIndexRouteImport } from './routes/cripto-wine.index'
 import { Route as CriptoWineSlugRouteImport } from './routes/cripto-wine.$slug'
 import { Route as MomentoAtualIndexRouteImport } from './routes/momento-atual.index'
 import { Route as MomentoAtualSlugRouteImport } from './routes/momento-atual.$slug'
 import { Route as MomentoAtualEpisodiosRouteImport } from './routes/momento-atual.episodios'
+import { Route as UnidadesSaoJoseDosCamposRouteImport } from './routes/unidades.sao-jose-dos-campos'
 import { Route as VidaAtualIndexRouteImport } from './routes/vida-atual.index'
 import { Route as VidaAtualSlugRouteImport } from './routes/vida-atual.$slug'
 import { Route as AdminAnalyticsHealthRouteImport } from './routes/admin.analytics.health'
@@ -147,6 +151,11 @@ const ResponsabilidadeSocialRoute = ResponsabilidadeSocialRouteImport.update({
   path: '/responsabilidade-social',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
+  id: '/robots.txt',
+  path: '/robots.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SegurancaRoute = SegurancaRouteImport.update({
   id: '/seguranca',
   path: '/seguranca',
@@ -155,6 +164,11 @@ const SegurancaRoute = SegurancaRouteImport.update({
 const SegurancaCiberneticaRoute = SegurancaCiberneticaRouteImport.update({
   id: '/seguranca-cibernetica',
   path: '/seguranca-cibernetica',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SolucoesRoute = SolucoesRouteImport.update({
@@ -202,6 +216,11 @@ const AdminTrafegoRoute = AdminTrafegoRouteImport.update({
   path: '/admin/trafego',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AutoresSlugRoute = AutoresSlugRouteImport.update({
+  id: '/autores/$slug',
+  path: '/autores/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CriptoWineIndexRoute = CriptoWineIndexRouteImport.update({
   id: '/cripto-wine/',
   path: '/cripto-wine/',
@@ -227,6 +246,12 @@ const MomentoAtualEpisodiosRoute = MomentoAtualEpisodiosRouteImport.update({
   path: '/momento-atual/episodios',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UnidadesSaoJoseDosCamposRoute =
+  UnidadesSaoJoseDosCamposRouteImport.update({
+    id: '/unidades/sao-jose-dos-campos',
+    path: '/unidades/sao-jose-dos-campos',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const VidaAtualIndexRoute = VidaAtualIndexRouteImport.update({
   id: '/vida-atual/',
   path: '/vida-atual/',
@@ -284,8 +309,10 @@ export interface FileRoutesByFullPath {
   '/quem-somos': typeof QuemSomosRoute
   '/remessas-internacionais': typeof RemessasInternacionaisRoute
   '/responsabilidade-social': typeof ResponsabilidadeSocialRoute
+  '/robots.txt': typeof RobotsDottxtRoute
   '/seguranca': typeof SegurancaRoute
   '/seguranca-cibernetica': typeof SegurancaCiberneticaRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/solucoes': typeof SolucoesRoute
   '/stablecoins': typeof StablecoinsRoute
   '/termos': typeof TermosRoute
@@ -294,9 +321,11 @@ export interface FileRoutesByFullPath {
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/newsletter': typeof AdminNewsletterRoute
   '/admin/trafego': typeof AdminTrafegoRoute
+  '/autores/$slug': typeof AutoresSlugRoute
   '/cripto-wine/$slug': typeof CriptoWineSlugRoute
   '/momento-atual/$slug': typeof MomentoAtualSlugRoute
   '/momento-atual/episodios': typeof MomentoAtualEpisodiosRoute
+  '/unidades/sao-jose-dos-campos': typeof UnidadesSaoJoseDosCamposRoute
   '/vida-atual/$slug': typeof VidaAtualSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/cripto-wine/': typeof CriptoWineIndexRoute
@@ -328,8 +357,10 @@ export interface FileRoutesByTo {
   '/quem-somos': typeof QuemSomosRoute
   '/remessas-internacionais': typeof RemessasInternacionaisRoute
   '/responsabilidade-social': typeof ResponsabilidadeSocialRoute
+  '/robots.txt': typeof RobotsDottxtRoute
   '/seguranca': typeof SegurancaRoute
   '/seguranca-cibernetica': typeof SegurancaCiberneticaRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/solucoes': typeof SolucoesRoute
   '/stablecoins': typeof StablecoinsRoute
   '/termos': typeof TermosRoute
@@ -338,9 +369,11 @@ export interface FileRoutesByTo {
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/newsletter': typeof AdminNewsletterRoute
   '/admin/trafego': typeof AdminTrafegoRoute
+  '/autores/$slug': typeof AutoresSlugRoute
   '/cripto-wine/$slug': typeof CriptoWineSlugRoute
   '/momento-atual/$slug': typeof MomentoAtualSlugRoute
   '/momento-atual/episodios': typeof MomentoAtualEpisodiosRoute
+  '/unidades/sao-jose-dos-campos': typeof UnidadesSaoJoseDosCamposRoute
   '/vida-atual/$slug': typeof VidaAtualSlugRoute
   '/admin': typeof AdminIndexRoute
   '/cripto-wine': typeof CriptoWineIndexRoute
@@ -373,8 +406,10 @@ export interface FileRoutesById {
   '/quem-somos': typeof QuemSomosRoute
   '/remessas-internacionais': typeof RemessasInternacionaisRoute
   '/responsabilidade-social': typeof ResponsabilidadeSocialRoute
+  '/robots.txt': typeof RobotsDottxtRoute
   '/seguranca': typeof SegurancaRoute
   '/seguranca-cibernetica': typeof SegurancaCiberneticaRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/solucoes': typeof SolucoesRoute
   '/stablecoins': typeof StablecoinsRoute
   '/termos': typeof TermosRoute
@@ -383,9 +418,11 @@ export interface FileRoutesById {
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/newsletter': typeof AdminNewsletterRoute
   '/admin/trafego': typeof AdminTrafegoRoute
+  '/autores/$slug': typeof AutoresSlugRoute
   '/cripto-wine/$slug': typeof CriptoWineSlugRoute
   '/momento-atual/$slug': typeof MomentoAtualSlugRoute
   '/momento-atual/episodios': typeof MomentoAtualEpisodiosRoute
+  '/unidades/sao-jose-dos-campos': typeof UnidadesSaoJoseDosCamposRoute
   '/vida-atual/$slug': typeof VidaAtualSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/cripto-wine/': typeof CriptoWineIndexRoute
@@ -419,8 +456,10 @@ export interface FileRouteTypes {
     | '/quem-somos'
     | '/remessas-internacionais'
     | '/responsabilidade-social'
+    | '/robots.txt'
     | '/seguranca'
     | '/seguranca-cibernetica'
+    | '/sitemap.xml'
     | '/solucoes'
     | '/stablecoins'
     | '/termos'
@@ -429,9 +468,11 @@ export interface FileRouteTypes {
     | '/admin/leads'
     | '/admin/newsletter'
     | '/admin/trafego'
+    | '/autores/$slug'
     | '/cripto-wine/$slug'
     | '/momento-atual/$slug'
     | '/momento-atual/episodios'
+    | '/unidades/sao-jose-dos-campos'
     | '/vida-atual/$slug'
     | '/admin/'
     | '/cripto-wine/'
@@ -463,8 +504,10 @@ export interface FileRouteTypes {
     | '/quem-somos'
     | '/remessas-internacionais'
     | '/responsabilidade-social'
+    | '/robots.txt'
     | '/seguranca'
     | '/seguranca-cibernetica'
+    | '/sitemap.xml'
     | '/solucoes'
     | '/stablecoins'
     | '/termos'
@@ -473,9 +516,11 @@ export interface FileRouteTypes {
     | '/admin/leads'
     | '/admin/newsletter'
     | '/admin/trafego'
+    | '/autores/$slug'
     | '/cripto-wine/$slug'
     | '/momento-atual/$slug'
     | '/momento-atual/episodios'
+    | '/unidades/sao-jose-dos-campos'
     | '/vida-atual/$slug'
     | '/admin'
     | '/cripto-wine'
@@ -507,8 +552,10 @@ export interface FileRouteTypes {
     | '/quem-somos'
     | '/remessas-internacionais'
     | '/responsabilidade-social'
+    | '/robots.txt'
     | '/seguranca'
     | '/seguranca-cibernetica'
+    | '/sitemap.xml'
     | '/solucoes'
     | '/stablecoins'
     | '/termos'
@@ -517,9 +564,11 @@ export interface FileRouteTypes {
     | '/admin/leads'
     | '/admin/newsletter'
     | '/admin/trafego'
+    | '/autores/$slug'
     | '/cripto-wine/$slug'
     | '/momento-atual/$slug'
     | '/momento-atual/episodios'
+    | '/unidades/sao-jose-dos-campos'
     | '/vida-atual/$slug'
     | '/admin/'
     | '/cripto-wine/'
@@ -552,8 +601,10 @@ export interface RootRouteChildren {
   QuemSomosRoute: typeof QuemSomosRoute
   RemessasInternacionaisRoute: typeof RemessasInternacionaisRoute
   ResponsabilidadeSocialRoute: typeof ResponsabilidadeSocialRoute
+  RobotsDottxtRoute: typeof RobotsDottxtRoute
   SegurancaRoute: typeof SegurancaRoute
   SegurancaCiberneticaRoute: typeof SegurancaCiberneticaRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SolucoesRoute: typeof SolucoesRoute
   StablecoinsRoute: typeof StablecoinsRoute
   TermosRoute: typeof TermosRoute
@@ -562,9 +613,11 @@ export interface RootRouteChildren {
   AdminLeadsRoute: typeof AdminLeadsRoute
   AdminNewsletterRoute: typeof AdminNewsletterRoute
   AdminTrafegoRoute: typeof AdminTrafegoRoute
+  AutoresSlugRoute: typeof AutoresSlugRoute
   CriptoWineSlugRoute: typeof CriptoWineSlugRoute
   MomentoAtualSlugRoute: typeof MomentoAtualSlugRoute
   MomentoAtualEpisodiosRoute: typeof MomentoAtualEpisodiosRoute
+  UnidadesSaoJoseDosCamposRoute: typeof UnidadesSaoJoseDosCamposRoute
   VidaAtualSlugRoute: typeof VidaAtualSlugRoute
   AdminIndexRoute: typeof AdminIndexRoute
   CriptoWineIndexRoute: typeof CriptoWineIndexRoute
@@ -712,6 +765,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResponsabilidadeSocialRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/robots.txt': {
+      id: '/robots.txt'
+      path: '/robots.txt'
+      fullPath: '/robots.txt'
+      preLoaderRoute: typeof RobotsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/seguranca': {
       id: '/seguranca'
       path: '/seguranca'
@@ -724,6 +784,13 @@ declare module '@tanstack/react-router' {
       path: '/seguranca-cibernetica'
       fullPath: '/seguranca-cibernetica'
       preLoaderRoute: typeof SegurancaCiberneticaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/solucoes': {
@@ -789,6 +856,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminTrafegoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/autores/$slug': {
+      id: '/autores/$slug'
+      path: '/autores/$slug'
+      fullPath: '/autores/$slug'
+      preLoaderRoute: typeof AutoresSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/cripto-wine/': {
       id: '/cripto-wine/'
       path: '/cripto-wine'
@@ -822,6 +896,13 @@ declare module '@tanstack/react-router' {
       path: '/momento-atual/episodios'
       fullPath: '/momento-atual/episodios'
       preLoaderRoute: typeof MomentoAtualEpisodiosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/unidades/sao-jose-dos-campos': {
+      id: '/unidades/sao-jose-dos-campos'
+      path: '/unidades/sao-jose-dos-campos'
+      fullPath: '/unidades/sao-jose-dos-campos'
+      preLoaderRoute: typeof UnidadesSaoJoseDosCamposRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/vida-atual/': {
@@ -896,8 +977,10 @@ const rootRouteChildren: RootRouteChildren = {
   QuemSomosRoute: QuemSomosRoute,
   RemessasInternacionaisRoute: RemessasInternacionaisRoute,
   ResponsabilidadeSocialRoute: ResponsabilidadeSocialRoute,
+  RobotsDottxtRoute: RobotsDottxtRoute,
   SegurancaRoute: SegurancaRoute,
   SegurancaCiberneticaRoute: SegurancaCiberneticaRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   SolucoesRoute: SolucoesRoute,
   StablecoinsRoute: StablecoinsRoute,
   TermosRoute: TermosRoute,
@@ -906,9 +989,11 @@ const rootRouteChildren: RootRouteChildren = {
   AdminLeadsRoute: AdminLeadsRoute,
   AdminNewsletterRoute: AdminNewsletterRoute,
   AdminTrafegoRoute: AdminTrafegoRoute,
+  AutoresSlugRoute: AutoresSlugRoute,
   CriptoWineSlugRoute: CriptoWineSlugRoute,
   MomentoAtualSlugRoute: MomentoAtualSlugRoute,
   MomentoAtualEpisodiosRoute: MomentoAtualEpisodiosRoute,
+  UnidadesSaoJoseDosCamposRoute: UnidadesSaoJoseDosCamposRoute,
   VidaAtualSlugRoute: VidaAtualSlugRoute,
   AdminIndexRoute: AdminIndexRoute,
   CriptoWineIndexRoute: CriptoWineIndexRoute,

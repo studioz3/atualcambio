@@ -1,42 +1,27 @@
 import { useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
+import { pageHead } from "@/lib/seo";
+import { absoluteUrl } from "@/config/site";
 import { EditoriaPage } from "@/components/atual/editorial-pages";
 import { getPublishedList } from "@/lib/editorial.functions";
-import { SITE_URL } from "@/content/editorial";
 import { track } from "@/lib/analytics";
 
 export const Route = createFileRoute("/vida-atual/")({
-  head: () => ({
-    meta: [
-      { title: "Vida Atual | Wellness, comportamento e qualidade de vida" },
-      {
-        name: "description",
-        content:
-          "Ideias, tendências e informação para viver melhor. Curadoria editorial da Atual Câmbio sobre wellness, comportamento e longevidade.",
-      },
-      {
-        property: "og:title",
-        content: "Vida Atual | Wellness, comportamento e qualidade de vida",
-      },
-      { property: "og:description", content: "Ideias, tendências e informação para viver melhor." },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: `${SITE_URL}/vida-atual` },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-    links: [{ rel: "canonical", href: `${SITE_URL}/vida-atual` }],
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
+  head: () =>
+    pageHead({
+      path: "/vida-atual",
+      title: "Vida Atual | Wellness, comportamento e qualidade de vida",
+      description: "Ideias, tendências e informação para viver melhor. Curadoria editorial da Atual Câmbio sobre wellness, comportamento e longevidade.",
+      jsonLd: [
+        {
           "@context": "https://schema.org",
           "@type": "CollectionPage",
           name: "Vida Atual",
           description: "Wellness, comportamento e qualidade de vida.",
-          url: `${SITE_URL}/vida-atual`,
-        }),
-      },
-    ],
-  }),
+          url: absoluteUrl("/vida-atual"),
+        },
+      ],
+    }),
   loader: async () => await getPublishedList({ data: { editoria: "vida-atual" } }),
   errorComponent: () => (
     <div className="px-6 pt-40 pb-24 text-center text-navy">

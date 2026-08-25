@@ -40,26 +40,17 @@ import {
 } from "@/components/ui/accordion";
 import { track } from "@/lib/analytics";
 import { links } from "@/content/site";
+import { pageHead } from "@/lib/seo";
+import { UNIT } from "@/config/site";
 
 export const Route = createFileRoute("/seguranca")({
-  head: () => ({
-    meta: [
-      { title: "Segurança, Compliance e Regulação | Atual Câmbio" },
-      {
-        name: "description",
-        content:
-          "Conheça os processos de segurança, compliance, proteção de dados e regulação que fazem parte das operações da Atual Câmbio.",
-      },
-      { property: "og:title", content: "Segurança, Compliance e Regulação | Atual Câmbio" },
-      {
-        property: "og:description",
-        content:
-          "Regulação, compliance, segurança digital e atendimento responsável em cada etapa da relação com a Atual Câmbio.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: () =>
+    pageHead({
+      path: "/seguranca",
+      title: "Segurança, Compliance e Regulação | Atual Câmbio",
+      description:
+        "Conheça os processos de segurança, compliance, proteção de dados e regulação que fazem parte das operações da Atual Câmbio, com agência única em São José dos Campos e operações digitais para todo o Brasil.",
+    }),
   component: SegurancaPage,
 });
 
@@ -556,8 +547,8 @@ function SegurancaPage() {
               <li className="flex gap-3">
                 <MapPin className="mt-0.5 size-4 shrink-0 text-gold" aria-hidden />
                 <span>
-                  Ag. Iguatemi Sorocaba — Av. Prof. Izoraida Marques Peres, 256, Campolim, CEP
-                  18048-110, Shopping Iguatemi, Sorocaba-SP.
+                  {UNIT.name} — {UNIT.streetAddress}, {UNIT.neighborhood}, CEP {UNIT.postalCode},{" "}
+                  {UNIT.city}-{UNIT.region}.
                 </span>
               </li>
             </ul>

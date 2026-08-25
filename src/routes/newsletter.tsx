@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
+import { pageHead } from "@/lib/seo";
 import { CheckCircle2 } from "lucide-react";
 import { Container, Section, Eyebrow, ActionButton, ActionLink } from "@/components/atual/primitives";
 import { SITE_URL, editorias, type EditoriaId } from "@/content/editorial";
@@ -7,25 +8,12 @@ import { subscribeNewsletter } from "@/lib/newsletter.functions";
 import { track } from "@/lib/analytics";
 
 export const Route = createFileRoute("/newsletter")({
-  head: () => ({
-    meta: [
-      { title: "Newsletter da Atual | Escolha o que quer acompanhar" },
-      {
-        name: "description",
-        content:
-          "Receba Momento Atual, Cripto Wine e Vida Atual de acordo com os temas que fazem sentido para você.",
-      },
-      { property: "og:title", content: "Newsletter da Atual | Escolha o que quer acompanhar" },
-      {
-        property: "og:description",
-        content: "Preferências editoriais: economia, vinho e tecnologia, wellness.",
-      },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: `${SITE_URL}/newsletter` },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-    links: [{ rel: "canonical", href: `${SITE_URL}/newsletter` }],
-  }),
+  head: () =>
+    pageHead({
+      path: "/newsletter",
+      title: "Newsletter da Atual | Escolha o que quer acompanhar",
+      description: "Receba Momento Atual, Cripto Wine e Vida Atual de acordo com os temas que fazem sentido para você.",
+    }),
   component: Newsletter,
 });
 

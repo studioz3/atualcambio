@@ -198,9 +198,29 @@ export function ArticlePage({
             <h1 className="display-h2 mt-6 text-white">{article.titulo}</h1>
             <p className="body-lg mt-6 text-white/80">{article.subtitulo}</p>
             <div className="mt-8 flex flex-wrap items-center gap-5 text-sm text-white/60">
-              <span>{article.autor}</span>
+              {article.autor_slug ? (
+                <Link
+                  to="/autores/$slug"
+                  params={{ slug: article.autor_slug }}
+                  rel="author"
+                  className="transition-colors hover:text-gold"
+                >
+                  {article.autor}
+                </Link>
+              ) : (
+                <span>{article.autor}</span>
+              )}
               <span aria-hidden>·</span>
               <time dateTime={article.data}>{formatDate(article.data)}</time>
+              {article.updated_at && article.updated_at.slice(0, 10) !== article.data.slice(0, 10) ? (
+                <>
+                  <span aria-hidden>·</span>
+                  <span>
+                    Atualizado em{" "}
+                    <time dateTime={article.updated_at}>{formatDate(article.updated_at)}</time>
+                  </span>
+                </>
+              ) : null}
               <button
                 type="button"
                 onClick={share}

@@ -10,7 +10,8 @@ import {
 } from "@/components/atual/primitives";
 import { SpecialistCta, FaqSection } from "@/components/atual/blocks";
 import { useLead } from "@/components/atual/LeadProvider";
-import { solutions, brand } from "@/content/site";
+import { solutions, brand, faq } from "@/content/site";
+import { pageHead, faqSchema } from "@/lib/seo";
 
 /** Cada solução tem uma página dedicada. */
 const solutionRoutes: Record<string, string> = {
@@ -21,21 +22,14 @@ const solutionRoutes: Record<string, string> = {
 };
 
 export const Route = createFileRoute("/solucoes")({
-  head: () => ({
-    meta: [
-      { title: "Soluções | Atual Câmbio" },
-      {
-        name: "description",
-        content:
-          "Remessas internacionais, USDT e USDC, câmbio turismo e Conta Atual: soluções de câmbio com atendimento consultivo.",
-      },
-      { property: "og:title", content: "Soluções de câmbio | Atual Câmbio" },
-      {
-        property: "og:description",
-        content: "Remessas, stablecoins, câmbio turismo e a plataforma digital da Atual.",
-      },
-    ],
-  }),
+  head: () =>
+    pageHead({
+      path: "/solucoes",
+      title: "Soluções | Atual Câmbio",
+      description:
+        "Remessas internacionais, USDT e USDC, câmbio turismo e Conta Atual: soluções de câmbio com atendimento consultivo.",
+      jsonLd: [faqSchema(faq)],
+    }),
   component: Solucoes,
 });
 

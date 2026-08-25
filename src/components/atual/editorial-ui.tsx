@@ -151,7 +151,8 @@ export function ArticleCard({
             params={{ slug: article.slug }}
             className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-navy hover:text-gold-soft"
           >
-            Ler <ArrowUpRight className="size-4 text-gold" aria-hidden />
+            Ler<span className="sr-only">: {article.titulo}</span>{" "}
+            <ArrowUpRight className="size-4 text-gold" aria-hidden />
           </Link>
           <span className="text-xs text-muted-foreground">{formatDate(article.data)}</span>
         </div>
@@ -202,7 +203,7 @@ export function FeaturedArticle({ article }: { article: Article }) {
             variant="secondary"
             event="article_view"
           >
-            Ler matéria
+            Ler matéria<span className="sr-only">: {article.titulo}</span>
           </ActionLink>
         </div>
       </div>

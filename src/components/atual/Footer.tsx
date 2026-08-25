@@ -4,6 +4,7 @@ import { Container } from "./primitives";
 import { AccreditationSeals } from "./ui-kit";
 import { Logo } from "./Logo";
 import { links } from "@/content/site";
+import { CNPJ, LEGAL_NAME, UNIT } from "@/config/site";
 import { openCookiePreferences } from "@/lib/cookie-consent";
 import { track } from "@/lib/analytics";
 import socialWhatsapp from "@/assets/social-whatsapp.png.asset.json";
@@ -190,6 +191,28 @@ export function Footer() {
               Atual Câmbio — instituição autorizada a operar no mercado de câmbio brasileiro,
               sujeita à regulação e supervisão do Banco Central do Brasil, e associada à ABRACAM.
             </p>
+            <address className="mt-6 max-w-xl text-sm leading-relaxed text-white/70 not-italic">
+              <Link
+                to={UNIT.path}
+                className="font-semibold text-white/85 transition-colors hover:text-gold"
+              >
+                {UNIT.name}
+              </Link>
+              <br />
+              {UNIT.streetAddress}
+              <br />
+              {UNIT.neighborhood} — {UNIT.city}/{UNIT.region} — CEP {UNIT.postalCode}
+              <br />
+              <a
+                href={`tel:${UNIT.phoneE164}`}
+                className="transition-colors hover:text-gold"
+                onClick={() => track("phone_click", { origem: "footer" })}
+              >
+                {UNIT.phone}
+              </a>
+              <br />
+              <span className="text-white/55">{UNIT.hours}</span>
+            </address>
             <AccreditationSeals size="sm" className="mt-7" />
           </div>
         </div>
@@ -215,8 +238,11 @@ export function Footer() {
         <div className="relative border-t border-white/10 py-8">
           <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-xs text-white/45">
             <span>
-              Copyright 2026 <strong className="font-semibold text-white/70">Atual Câmbio Serviços Financeiros Ltda.</strong>{" "}
-              Todos os direitos reservados.
+              Copyright 2026{" "}
+              <strong className="font-semibold text-white/70">
+                {LEGAL_NAME ?? "Atual Câmbio"}
+              </strong>
+              {CNPJ ? ` — CNPJ ${CNPJ}` : ""}. Todos os direitos reservados.
             </span>
             <Link to="/privacidade" className="transition-colors hover:text-white">
               Privacidade
