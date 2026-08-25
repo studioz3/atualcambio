@@ -41,12 +41,16 @@ const localBusiness = {
   address: postalAddressSchema,
   openingHoursSpecification: openingHoursSchema,
   url: `${SITE_URL}${UNIT.path}`,
-  // TODO [PREENCHER]: coordenadas reais (latitude/longitude) da agência antes de publicar geo.
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: UNIT.latitude,
-    longitude: UNIT.longitude,
-  },
+  // TODO [PREENCHER]: coordenadas reais da agência — enquanto null, geo não é publicado.
+  ...(UNIT.latitude && UNIT.longitude
+    ? {
+        geo: {
+          "@type": "GeoCoordinates",
+          latitude: UNIT.latitude,
+          longitude: UNIT.longitude,
+        },
+      }
+    : {}),
 };
 
 export const Route = createFileRoute("/unidades/sao-jose-dos-campos")({
