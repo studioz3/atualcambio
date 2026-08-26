@@ -202,7 +202,7 @@ function Cotacoes() {
               <QuoteCard
                 key={asset.code}
                 asset={asset}
-                result={getQuoteResult(asset.code)}
+                result={moedaResult(asset)}
                 onSelect={() => selectAsset(asset)}
               />
             ))}
