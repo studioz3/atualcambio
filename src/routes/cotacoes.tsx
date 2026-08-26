@@ -48,11 +48,12 @@ export const Route = createFileRoute("/cotacoes")({
     }),
   }),
   loader: async () => {
-    const [ptax, artigos] = await Promise.all([
+    const [ptax, artigos, onz] = await Promise.all([
       getPtaxCotacoes(),
       getPublishedList({ data: { editoria: "momento-atual", limit: 3 } }),
+      getOnzQuotes(),
     ]);
-    return { ptax, artigos };
+    return { ptax, artigos, onz };
   },
   component: Cotacoes,
 });
