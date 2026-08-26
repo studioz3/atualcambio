@@ -24,6 +24,7 @@ import {
 import { FaqSection } from "@/components/atual/blocks";
 import { QuoteBoard } from "@/components/atual/QuoteBoard";
 import { CurrencyConverter } from "@/components/atual/CurrencyConverter";
+import { FloatingConverter } from "@/components/atual/FloatingConverter";
 import { StoreBadges } from "@/components/atual/StoreBadges";
 
 import { useLead } from "@/components/atual/LeadProvider";
@@ -414,6 +415,8 @@ function Home() {
         onPrimary={() => openLead({ context: "Começar uma operação" })}
         secondaryHref={links.account}
       />
+
+      <FloatingConverter />
     </>
   );
 }
