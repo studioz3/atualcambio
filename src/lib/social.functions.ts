@@ -29,10 +29,16 @@ export const saveSocialAccount = createServerFn({ method: "POST" })
   .handler(async ({ context, data }) => {
     const { assertStaff } = await import("./cockpit.server");
     await assertStaff(context as any);
-    const { error } = await (context as any).supabase
-      .from("social_accounts")
-      .update({ handle: data.handle, profile_url: data.profileUrl })
-      .eq("platform", data.platform);
+    // Pode não existir linha ainda (plataforma nunca conectada): upsert por platform.
+    const { error } = await (context as any).supabase.from("social_accounts").upsert(
+      {
+        platform: data.platform,
+        external_id: `manual:${data.platform}`,
+        handle: data.handle,
+        profile_url: data.profileUrl,
+      },
+      { onConflict: "platform" },
+    );
     if (error) throw new Error(error.message);
     return { ok: true };
   });

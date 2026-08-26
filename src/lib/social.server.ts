@@ -629,10 +629,20 @@ export async function importSpotifyRows(
     imported_by: ctx.userId,
   });
 
-  await ctx.supabase
-    .from("social_accounts")
-    .update({ status: imported > 0 ? "conectado" : "nao_conectado", last_sync_at: new Date().toISOString() })
-    .eq("platform", "spotify");
+  // A linha de social_accounts só existe quando houve conexão/importação real.
+  if (imported > 0) {
+    await ctx.supabase.from("social_accounts").upsert(
+      {
+        platform: "spotify",
+        external_id: "csv:spotify",
+        display_name: "Spotify",
+        status: "conectado",
+        last_sync_at: new Date().toISOString(),
+        last_error: null,
+      },
+      { onConflict: "platform" },
+    );
+  }
 
   return { imported, skipped };
 }
