@@ -22,7 +22,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { getQuoteResult, quoteAssets, type QuoteAsset } from "@/lib/quotes";
+import { formatQuoteValue, quoteAssets, type QuoteAsset } from "@/lib/quotes";
 import { track } from "@/lib/analytics";
 import { links } from "@/content/site";
 
@@ -98,6 +98,23 @@ function Cotacoes() {
   const { openLead } = useLead();
   const { ptax, artigos, onz } = Route.useLoaderData();
 
+  function moedaResult(asset: QuoteAsset) {
+    const item = ptax.find((p: PtaxCotacao) => p.moeda === asset.code);
+    if (!item) return { status: "unavailable" as const };
+    return {
+      status: "success" as const,
+      data: {
+        code: asset.code,
+        name: asset.name,
+        bid: item.compra,
+        ask: item.venda,
+        timestamp: item.dataHoraCotacao.replace(" ", "T"),
+        referenceCurrency: "BRL",
+        source: "PTAX",
+      },
+    };
+  }
+
   function stablecoinResult(asset: QuoteAsset) {
     if (onz.error) return { status: "error" as const };
     const cotacao = onz.quotes.find((item) => item.asset === asset.code);
@@ -115,6 +132,7 @@ function Cotacoes() {
       },
     };
   }
+
 
   useEffect(() => {
     track("quotes_page_view", { pagina: "/cotacoes" });
@@ -184,7 +202,7 @@ function Cotacoes() {
               <QuoteCard
                 key={asset.code}
                 asset={asset}
-                result={getQuoteResult(asset.code)}
+                result={moedaResult(asset)}
                 onSelect={() => selectAsset(asset)}
               />
             ))}
@@ -332,6 +350,14 @@ function Cotacoes() {
                 <div key={asset.code} className="rounded-lg border border-white/12 bg-white/5 p-6">
                   <p className="display-h4 text-white">{asset.code}</p>
                   <p className="mt-2 text-sm text-white/70">{asset.name}</p>
+                  {(() => {
+                    const cotacao = onz.quotes.find((item) => item.asset === asset.code);
+                    return cotacao ? (
+                      <p className="mt-4 text-lg font-semibold text-gold">
+                        {formatQuoteValue(cotacao.priceBrl, onz.base)}
+                      </p>
+                    ) : null;
+                  })()}
                 </div>
               ))}
             </div>
