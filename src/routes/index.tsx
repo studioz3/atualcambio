@@ -164,8 +164,14 @@ function Home() {
         image={heroAsset.url}
         mobileImage={heroMobile.url}
         imageAlt="Atendimento internacional da Atual Câmbio com globo conectado ao fundo"
+      >
+        <div className="flex w-full justify-center lg:justify-end">
+          <HeroSimulator
+            onConvert={() => openLead({ intent: "turismo", context: "Simulador de câmbio (hero)" })}
+          />
+        </div>
+      </Hero>
 
-      />
 
       <TrustPillars items={pillars} />
 
