@@ -60,3 +60,68 @@ export const getPtaxCotacoes = createServerFn({ method: "GET" }).handler(
     return resultados.filter((item): item is PtaxCotacao => item !== null);
   },
 );
+
+export type PtaxMoeda = { simbolo: string; nome: string };
+
+export type PtaxConversao = {
+  simbolo: string;
+  compra: number;
+  venda: number;
+  dataHoraCotacao: string;
+};
+
+/** Lista de moedas com boletim PTAX no Banco Central. */
+export const getPtaxMoedas = createServerFn({ method: "GET" }).handler(
+  async (): Promise<PtaxMoeda[]> => {
+    try {
+      const res = await fetch(
+        "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/Moedas?$format=json",
+        { signal: AbortSignal.timeout(8000) },
+      );
+      if (!res.ok) return [];
+      const json = (await res.json()) as {
+        value?: { simbolo: string; nomeFormatado: string }[];
+      };
+      return (json.value ?? []).map((m) => ({ simbolo: m.simbolo, nome: m.nomeFormatado }));
+    } catch {
+      return [];
+    }
+  },
+);
+
+/** Boletim de fechamento PTAX de uma moeda específica. */
+export const getPtaxMoeda = createServerFn({ method: "GET" })
+  .inputValidator((data: { simbolo: string }) => ({
+    simbolo: String(data.simbolo).toUpperCase().slice(0, 3),
+  }))
+  .handler(async ({ data }): Promise<PtaxConversao | null> => {
+    const end = new Date();
+    const start = new Date();
+    start.setDate(start.getDate() - 10);
+    const fmt = (d: Date) =>
+      `${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}-${d.getFullYear()}`;
+
+    const url =
+      `https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoMoedaPeriodoFechamento(` +
+      `codigoMoeda=@codigoMoeda,dataInicialCotacao=@dataInicialCotacao,dataFinalCotacao=@dataFinalCotacao)` +
+      `?@codigoMoeda='${data.simbolo}'&@dataInicialCotacao='${fmt(start)}'&@dataFinalCotacao='${fmt(end)}'` +
+      `&$top=1&$orderby=dataHoraCotacao desc&$format=json`;
+
+    try {
+      const res = await fetch(url, { signal: AbortSignal.timeout(8000) });
+      if (!res.ok) return null;
+      const json = (await res.json()) as {
+        value?: { cotacaoCompra: number; cotacaoVenda: number; dataHoraCotacao: string }[];
+      };
+      const item = json.value?.[0];
+      if (!item) return null;
+      return {
+        simbolo: data.simbolo,
+        compra: item.cotacaoCompra,
+        venda: item.cotacaoVenda,
+        dataHoraCotacao: item.dataHoraCotacao,
+      };
+    } catch {
+      return null;
+    }
+  });
