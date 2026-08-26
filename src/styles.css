@@ -263,9 +263,9 @@
 /* arte exibida por inteiro: a seção assume exatamente a proporção da arte */
 @utility hero-shell-art {
   @media (min-width: 1024px) {
-    min-height: 0;
     height: auto;
-    aspect-ratio: 1920 / 871;
+    aspect-ratio: auto;
+    min-height: calc(100vw * 871 / 1920);
   }
 }
 
