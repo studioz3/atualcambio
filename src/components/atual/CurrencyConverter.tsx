@@ -207,6 +207,32 @@ export function CurrencyConverter({ className }: { className?: string }) {
             </dl>
           </>
         )}
+        <div className="mt-6 grid gap-3 sm:grid-cols-2">
+          <ActionButton
+            event="converter_lead_start"
+            onClick={() => {
+              track("converter_lead_start", { moeda: currency, direcao: direction });
+              openLead({
+                context: `Calculadora de câmbio — ${formatMoney(parseAmount(amount), fromCurrency)} → ${toCurrency}`,
+              });
+            }}
+          >
+            Receber a cotação da minha operação
+          </ActionButton>
+          <ActionButton
+            variant="secondary"
+            event="converter_alert_start"
+            onClick={() => {
+              track("converter_alert_start", { moeda: currency });
+              openLead({
+                context: `Acompanhar a taxa de câmbio — ${currency}/BRL`,
+              });
+            }}
+          >
+            Acompanhar a taxa de câmbio
+          </ActionButton>
+        </div>
+
         <p className="mt-4 text-xs text-muted-foreground">
           Valores meramente informativos, baseados no boletim de fechamento PTAX do Banco Central
           do Brasil. Não representam a cotação final da sua operação, que considera finalidade,
