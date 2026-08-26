@@ -23,6 +23,7 @@ import {
 } from "@/components/atual/ui-kit";
 import { FaqSection } from "@/components/atual/blocks";
 import { QuoteBoard } from "@/components/atual/QuoteBoard";
+import { CurrencyConverter } from "@/components/atual/CurrencyConverter";
 import { StoreBadges } from "@/components/atual/StoreBadges";
 
 import { useLead } from "@/components/atual/LeadProvider";
