@@ -415,6 +415,8 @@ function Home() {
         onPrimary={() => openLead({ context: "Começar uma operação" })}
         secondaryHref={links.account}
       />
+
+      <FloatingConverter />
     </>
   );
 }
