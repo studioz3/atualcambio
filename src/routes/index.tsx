@@ -25,7 +25,7 @@ import { FaqSection } from "@/components/atual/blocks";
 import { QuoteBoard } from "@/components/atual/QuoteBoard";
 import { CurrencyConverter } from "@/components/atual/CurrencyConverter";
 import { StoreBadges } from "@/components/atual/StoreBadges";
-import { HeroSimulator } from "@/components/atual/HeroSimulator";
+import { FloatingSimulator } from "@/components/atual/FloatingSimulator";
 
 import { useLead } from "@/components/atual/LeadProvider";
 import { track } from "@/lib/analytics";
@@ -165,12 +165,11 @@ function Home() {
         mobileImage={heroMobile.url}
         imageAlt="Atendimento internacional da Atual Câmbio com globo conectado ao fundo"
       >
-        <div className="flex w-full justify-center lg:justify-end">
-          <HeroSimulator
-            onConvert={() => openLead({ intent: "turismo", context: "Simulador de câmbio (hero)" })}
-          />
-        </div>
       </Hero>
+
+      <FloatingSimulator
+        onConvert={() => openLead({ intent: "turismo", context: "Simulador de câmbio (flutuante)" })}
+      />
 
 
       <TrustPillars items={pillars} />
