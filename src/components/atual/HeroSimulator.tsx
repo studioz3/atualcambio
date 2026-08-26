@@ -19,8 +19,8 @@ export function HeroSimulator({
   className,
   onConvert,
 }: {
-  className?: string;
-  onConvert?: () => void;
+  className?: string | undefined;
+  onConvert?: (() => void) | undefined;
 }) {
   const [currency, setCurrency] = useState("USD");
   const [amount, setAmount] = useState("2000");
