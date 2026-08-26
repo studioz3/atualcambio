@@ -5,6 +5,7 @@ import { getPtaxMoedas, getPtaxMoeda } from "@/lib/ptax.functions";
 import { getOnzQuotes } from "@/lib/onz-quotes.functions";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
+import { useLead } from "@/components/atual/LeadProvider";
 
 const fallbackMoedas = [
   { simbolo: "USD", nome: "Dólar dos Estados Unidos" },
@@ -28,6 +29,7 @@ export function HeroSimulator({
   className?: string | undefined;
   onConvert?: (() => void) | undefined;
 }) {
+  const { openLead } = useLead();
   const [currency, setCurrency] = useState("USD");
   const [amount, setAmount] = useState("2000");
 
