@@ -25,9 +25,13 @@ export type QuoteData = {
   code: string;
   name: string;
   /** Preço de compra (a instituição compra do cliente) */
-  bid: number;
+  bid?: number;
   /** Preço de venda (a instituição vende ao cliente) */
-  ask: number;
+  ask?: number;
+  /** Preço único de referência, quando a fonte não separa compra/venda */
+  price?: number;
+  /** Rede/blockchain da cotação, quando aplicável */
+  network?: string;
   /** Momento da apuração da cotação (ISO 8601) */
   timestamp: string;
   /** Validade da cotação, quando houver (ISO 8601) */
