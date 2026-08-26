@@ -746,43 +746,70 @@ export type Database = {
       }
       social_accounts: {
         Row: {
+          access_token: string | null
+          account_name: string | null
           created_at: string
+          data_access_expires_at: string | null
           display_name: string | null
-          external_id: string | null
+          external_id: string
           handle: string | null
           id: string
           last_error: string | null
+          last_error_at: string | null
           last_sync_at: string | null
           platform: string
+          profile_picture_url: string | null
           profile_url: string | null
+          refresh_token: string | null
+          scopes: string[] | null
           status: string
+          token_expires_at: string | null
           updated_at: string
+          username: string | null
         }
         Insert: {
+          access_token?: string | null
+          account_name?: string | null
           created_at?: string
+          data_access_expires_at?: string | null
           display_name?: string | null
-          external_id?: string | null
+          external_id: string
           handle?: string | null
           id?: string
           last_error?: string | null
+          last_error_at?: string | null
           last_sync_at?: string | null
           platform: string
+          profile_picture_url?: string | null
           profile_url?: string | null
+          refresh_token?: string | null
+          scopes?: string[] | null
           status?: string
+          token_expires_at?: string | null
           updated_at?: string
+          username?: string | null
         }
         Update: {
+          access_token?: string | null
+          account_name?: string | null
           created_at?: string
+          data_access_expires_at?: string | null
           display_name?: string | null
-          external_id?: string | null
+          external_id?: string
           handle?: string | null
           id?: string
           last_error?: string | null
+          last_error_at?: string | null
           last_sync_at?: string | null
           platform?: string
+          profile_picture_url?: string | null
           profile_url?: string | null
+          refresh_token?: string | null
+          scopes?: string[] | null
           status?: string
+          token_expires_at?: string | null
           updated_at?: string
+          username?: string | null
         }
         Relationships: []
       }
@@ -822,6 +849,42 @@ export type Database = {
           platform?: string
           rows_imported?: number
           rows_skipped?: number
+        }
+        Relationships: []
+      }
+      social_metrics_daily: {
+        Row: {
+          content_type: string | null
+          created_at: string
+          date: string
+          editorial_line: string | null
+          id: string
+          metric: string
+          platform: string
+          source: string
+          value: number
+        }
+        Insert: {
+          content_type?: string | null
+          created_at?: string
+          date: string
+          editorial_line?: string | null
+          id?: string
+          metric: string
+          platform: string
+          source?: string
+          value: number
+        }
+        Update: {
+          content_type?: string | null
+          created_at?: string
+          date?: string
+          editorial_line?: string | null
+          id?: string
+          metric?: string
+          platform?: string
+          source?: string
+          value?: number
         }
         Relationships: []
       }
@@ -937,16 +1000,33 @@ export type Database = {
       }
       social_posts: {
         Row: {
+          avg_watch_time: number | null
           campaign: string | null
+          caption: string | null
+          clicks: number | null
           cms_content_id: string | null
-          content_type: string
+          comments: number | null
+          content_id: string
+          content_type: string | null
           created_at: string
           editorial_line: string
+          engagements: number | null
           external_id: string | null
           id: string
+          last_synced_at: string | null
+          likes: number | null
+          media_product_type: string | null
+          media_type: string | null
+          metrics_available: boolean
+          metrics_unavailable_reason: string | null
           origin: string
+          permalink: string | null
           platform: string
-          published_at: string
+          published_at: string | null
+          reach: number | null
+          saves: number | null
+          shares: number | null
+          skip_rate: number | null
           thumbnail_url: string | null
           title: string | null
           updated_at: string
@@ -955,18 +1035,36 @@ export type Database = {
           utm_content: string | null
           utm_medium: string | null
           utm_source: string | null
+          views: number | null
         }
         Insert: {
+          avg_watch_time?: number | null
           campaign?: string | null
+          caption?: string | null
+          clicks?: number | null
           cms_content_id?: string | null
-          content_type?: string
+          comments?: number | null
+          content_id: string
+          content_type?: string | null
           created_at?: string
           editorial_line?: string
+          engagements?: number | null
           external_id?: string | null
           id?: string
+          last_synced_at?: string | null
+          likes?: number | null
+          media_product_type?: string | null
+          media_type?: string | null
+          metrics_available?: boolean
+          metrics_unavailable_reason?: string | null
           origin?: string
+          permalink?: string | null
           platform: string
-          published_at?: string
+          published_at?: string | null
+          reach?: number | null
+          saves?: number | null
+          shares?: number | null
+          skip_rate?: number | null
           thumbnail_url?: string | null
           title?: string | null
           updated_at?: string
@@ -975,18 +1073,36 @@ export type Database = {
           utm_content?: string | null
           utm_medium?: string | null
           utm_source?: string | null
+          views?: number | null
         }
         Update: {
+          avg_watch_time?: number | null
           campaign?: string | null
+          caption?: string | null
+          clicks?: number | null
           cms_content_id?: string | null
-          content_type?: string
+          comments?: number | null
+          content_id?: string
+          content_type?: string | null
           created_at?: string
           editorial_line?: string
+          engagements?: number | null
           external_id?: string | null
           id?: string
+          last_synced_at?: string | null
+          likes?: number | null
+          media_product_type?: string | null
+          media_type?: string | null
+          metrics_available?: boolean
+          metrics_unavailable_reason?: string | null
           origin?: string
+          permalink?: string | null
           platform?: string
-          published_at?: string
+          published_at?: string | null
+          reach?: number | null
+          saves?: number | null
+          shares?: number | null
+          skip_rate?: number | null
           thumbnail_url?: string | null
           title?: string | null
           updated_at?: string
@@ -995,6 +1111,7 @@ export type Database = {
           utm_content?: string | null
           utm_medium?: string | null
           utm_source?: string | null
+          views?: number | null
         }
         Relationships: [
           {
@@ -1005,6 +1122,39 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      social_sync_runs: {
+        Row: {
+          error_message: string | null
+          finished_at: string | null
+          id: string
+          items_synced: number
+          platform: string
+          rate_limit_pct: number | null
+          started_at: string
+          status: string | null
+        }
+        Insert: {
+          error_message?: string | null
+          finished_at?: string | null
+          id?: string
+          items_synced?: number
+          platform: string
+          rate_limit_pct?: number | null
+          started_at?: string
+          status?: string | null
+        }
+        Update: {
+          error_message?: string | null
+          finished_at?: string | null
+          id?: string
+          items_synced?: number
+          platform?: string
+          rate_limit_pct?: number | null
+          started_at?: string
+          status?: string | null
+        }
+        Relationships: []
       }
       translation_cache: {
         Row: {
