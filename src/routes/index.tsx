@@ -319,6 +319,19 @@ function Home() {
         </div>
       </Section>
 
+      {/* Calculadora de câmbio (PTAX — Banco Central) */}
+      <Section tone="offwhite" id="calculadora-de-cambio">
+        <SectionHeading
+          eyebrow="Calculadora"
+          title="Converta moedas com a taxa do Banco Central"
+          description="Informe o valor, escolha a moeda e simule também o efeito de uma taxa adicional. Referência: boletim de fechamento PTAX."
+          className="max-w-2xl"
+        />
+        <div className="mt-12">
+          <CurrencyConverter />
+        </div>
+      </Section>
+
       <ComplianceBlock items={security} />
 
       <SpecialistBlock
