@@ -10,7 +10,7 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "14.15"
+    PostgrestVersion: "14.17"
   }
   public: {
     Tables: {
@@ -650,6 +650,268 @@ export type Database = {
           target_path?: string
         }
         Relationships: []
+      }
+      social_accounts: {
+        Row: {
+          created_at: string
+          display_name: string | null
+          external_id: string | null
+          handle: string | null
+          id: string
+          last_error: string | null
+          last_sync_at: string | null
+          platform: string
+          profile_url: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          display_name?: string | null
+          external_id?: string | null
+          handle?: string | null
+          id?: string
+          last_error?: string | null
+          last_sync_at?: string | null
+          platform: string
+          profile_url?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          display_name?: string | null
+          external_id?: string | null
+          handle?: string | null
+          id?: string
+          last_error?: string | null
+          last_sync_at?: string | null
+          platform?: string
+          profile_url?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      social_imports: {
+        Row: {
+          created_at: string
+          file_name: string | null
+          id: string
+          imported_by: string | null
+          kind: string
+          period_from: string | null
+          period_to: string | null
+          platform: string
+          rows_imported: number
+          rows_skipped: number
+        }
+        Insert: {
+          created_at?: string
+          file_name?: string | null
+          id?: string
+          imported_by?: string | null
+          kind?: string
+          period_from?: string | null
+          period_to?: string | null
+          platform: string
+          rows_imported?: number
+          rows_skipped?: number
+        }
+        Update: {
+          created_at?: string
+          file_name?: string | null
+          id?: string
+          imported_by?: string | null
+          kind?: string
+          period_from?: string | null
+          period_to?: string | null
+          platform?: string
+          rows_imported?: number
+          rows_skipped?: number
+        }
+        Relationships: []
+      }
+      social_platform_daily: {
+        Row: {
+          clicks: number | null
+          created_at: string
+          engagements: number | null
+          followers: number | null
+          followers_gained: number | null
+          followers_lost: number | null
+          id: string
+          impressions: number | null
+          metric_date: string
+          platform: string
+          reach: number | null
+          views: number | null
+        }
+        Insert: {
+          clicks?: number | null
+          created_at?: string
+          engagements?: number | null
+          followers?: number | null
+          followers_gained?: number | null
+          followers_lost?: number | null
+          id?: string
+          impressions?: number | null
+          metric_date: string
+          platform: string
+          reach?: number | null
+          views?: number | null
+        }
+        Update: {
+          clicks?: number | null
+          created_at?: string
+          engagements?: number | null
+          followers?: number | null
+          followers_gained?: number | null
+          followers_lost?: number | null
+          id?: string
+          impressions?: number | null
+          metric_date?: string
+          platform?: string
+          reach?: number | null
+          views?: number | null
+        }
+        Relationships: []
+      }
+      social_post_metrics: {
+        Row: {
+          avg_view_seconds: number | null
+          clicks: number | null
+          created_at: string
+          engagements: number | null
+          id: string
+          impressions: number | null
+          listeners: number | null
+          metric_date: string
+          plays: number | null
+          post_id: string
+          reach: number | null
+          retention_rate: number | null
+          saves: number | null
+          shares: number | null
+          views: number | null
+          watch_time_seconds: number | null
+        }
+        Insert: {
+          avg_view_seconds?: number | null
+          clicks?: number | null
+          created_at?: string
+          engagements?: number | null
+          id?: string
+          impressions?: number | null
+          listeners?: number | null
+          metric_date: string
+          plays?: number | null
+          post_id: string
+          reach?: number | null
+          retention_rate?: number | null
+          saves?: number | null
+          shares?: number | null
+          views?: number | null
+          watch_time_seconds?: number | null
+        }
+        Update: {
+          avg_view_seconds?: number | null
+          clicks?: number | null
+          created_at?: string
+          engagements?: number | null
+          id?: string
+          impressions?: number | null
+          listeners?: number | null
+          metric_date?: string
+          plays?: number | null
+          post_id?: string
+          reach?: number | null
+          retention_rate?: number | null
+          saves?: number | null
+          shares?: number | null
+          views?: number | null
+          watch_time_seconds?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "social_post_metrics_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "social_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      social_posts: {
+        Row: {
+          campaign: string | null
+          cms_content_id: string | null
+          content_type: string
+          created_at: string
+          editorial_line: string
+          external_id: string | null
+          id: string
+          origin: string
+          platform: string
+          published_at: string
+          thumbnail_url: string | null
+          title: string | null
+          updated_at: string
+          url: string | null
+          utm_campaign: string | null
+          utm_content: string | null
+          utm_medium: string | null
+          utm_source: string | null
+        }
+        Insert: {
+          campaign?: string | null
+          cms_content_id?: string | null
+          content_type?: string
+          created_at?: string
+          editorial_line?: string
+          external_id?: string | null
+          id?: string
+          origin?: string
+          platform: string
+          published_at?: string
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string
+          url?: string | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Update: {
+          campaign?: string | null
+          cms_content_id?: string | null
+          content_type?: string
+          created_at?: string
+          editorial_line?: string
+          external_id?: string | null
+          id?: string
+          origin?: string
+          platform?: string
+          published_at?: string
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string
+          url?: string | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "social_posts_cms_content_id_fkey"
+            columns: ["cms_content_id"]
+            isOneToOne: false
+            referencedRelation: "editorial_content"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       translation_cache: {
         Row: {
