@@ -5,6 +5,7 @@ import { getPtaxMoedas, getPtaxMoeda } from "@/lib/ptax.functions";
 import { getOnzQuotes } from "@/lib/onz-quotes.functions";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
+import { useLead } from "@/components/atual/LeadProvider";
 
 const fallbackMoedas = [
   { simbolo: "USD", nome: "Dólar dos Estados Unidos" },
@@ -28,6 +29,7 @@ export function HeroSimulator({
   className?: string | undefined;
   onConvert?: (() => void) | undefined;
 }) {
+  const { openLead } = useLead();
   const [currency, setCurrency] = useState("USD");
   const [amount, setAmount] = useState("2000");
 
@@ -166,16 +168,32 @@ export function HeroSimulator({
           </span>
         </div>
 
-        <button
-          type="button"
-          onClick={() => {
-            track("currency_converter_open", { origem: "hero", moeda: currency });
-            onConvert?.();
-          }}
-          className="mt-2 min-h-13 w-full rounded-full bg-gold px-6 text-base font-semibold text-gold-foreground transition-colors hover:bg-gold-soft"
-        >
-          Converter
-        </button>
+        <div className="mt-2 space-y-3">
+          <button
+            type="button"
+            onClick={() => {
+              track("open_account_click", { origem: "simulador", moeda: currency });
+              openLead({ intent: "conta", context: `Envie dinheiro — ${amount} ${currency}` });
+              onConvert?.();
+            }}
+            className="min-h-13 w-full rounded-full bg-gold px-6 text-base font-semibold text-gold-foreground transition-colors hover:bg-gold-soft"
+          >
+            Envie dinheiro
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              track("rate_alert_start", { origem: "simulador", moeda: currency });
+              openLead({
+                context: `Acompanhar a taxa de câmbio — ${currency}`,
+              });
+            }}
+            className="min-h-13 w-full rounded-full border border-navy px-6 text-base font-semibold text-navy transition-colors hover:bg-offwhite"
+          >
+            Acompanhe a taxa de câmbio
+          </button>
+        </div>
+
 
         <p className="text-center text-[11px] leading-relaxed text-muted-foreground">
           {isStable
