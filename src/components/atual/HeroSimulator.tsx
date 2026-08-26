@@ -6,6 +6,7 @@ import { getOnzQuotes } from "@/lib/onz-quotes.functions";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import { useLead } from "@/components/atual/LeadProvider";
+import { RateAlertDialog } from "@/components/atual/RateAlertDialog";
 
 const fallbackMoedas = [
   { simbolo: "USD", nome: "Dólar dos Estados Unidos" },
