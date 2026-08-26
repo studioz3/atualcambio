@@ -117,11 +117,22 @@ export function HeroSimulator({
             }}
             className={fieldClass}
           >
-            {moedas.map((moeda) => (
-              <option key={moeda.simbolo} value={moeda.simbolo}>
-                {moeda.nome} ({moeda.simbolo})
-              </option>
-            ))}
+            {stableOptions.length > 0 ? (
+              <optgroup label="Stablecoins">
+                {stableOptions.map((moeda) => (
+                  <option key={moeda.simbolo} value={moeda.simbolo}>
+                    {moeda.nome} ({moeda.simbolo})
+                  </option>
+                ))}
+              </optgroup>
+            ) : null}
+            <optgroup label="Moedas">
+              {moedas.map((moeda) => (
+                <option key={moeda.simbolo} value={moeda.simbolo}>
+                  {moeda.nome} ({moeda.simbolo})
+                </option>
+              ))}
+            </optgroup>
           </select>
         </div>
 
@@ -139,10 +150,13 @@ export function HeroSimulator({
         </div>
 
         <div>
-          <p className="mb-2 text-sm text-graphite">Câmbio de referência (PTAX):</p>
+          <p className="mb-2 text-sm text-graphite">
+            {isStable ? "Preço de referência (ONZ):" : "Câmbio de referência (PTAX):"}
+          </p>
           <div className="flex min-h-12 items-center rounded-md bg-offwhite px-4 text-base text-graphite">
-            {rate ? nf(4).format(rate) : cotacaoQuery.isPending ? "Consultando…" : "Indisponível"}
+            {rate ? nf(4).format(rate) : loadingRate ? "Consultando…" : "Indisponível"}
           </div>
+
         </div>
 
         <div className="flex items-baseline justify-between gap-4 pt-1">
