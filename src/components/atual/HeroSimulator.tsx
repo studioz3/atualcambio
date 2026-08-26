@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import { getPtaxMoedas, getPtaxMoeda } from "@/lib/ptax.functions";
+import { getOnzQuotes } from "@/lib/onz-quotes.functions";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
@@ -10,6 +11,11 @@ const fallbackMoedas = [
   { simbolo: "EUR", nome: "Euro" },
   { simbolo: "GBP", nome: "Libra Esterlina" },
 ];
+
+const stableNames: Record<string, string> = {
+  USDT: "Tether",
+  USDC: "USD Coin",
+};
 
 const nf = (digits: number) =>
   new Intl.NumberFormat("pt-BR", { minimumFractionDigits: digits, maximumFractionDigits: digits });
@@ -25,6 +31,8 @@ export function HeroSimulator({
   const [currency, setCurrency] = useState("USD");
   const [amount, setAmount] = useState("2000");
 
+  const isStable = currency === "USDT" || currency === "USDC";
+
   const moedasQuery = useQuery({
     queryKey: ["ptax-moedas"],
     queryFn: () => getPtaxMoedas(),
@@ -35,16 +43,45 @@ export function HeroSimulator({
     queryKey: ["ptax-moeda", currency],
     queryFn: () => getPtaxMoeda({ data: { simbolo: currency } }),
     staleTime: 1000 * 60 * 30,
+    enabled: !isStable,
   });
 
+  const onzQuery = useQuery({
+    queryKey: ["onz-quotes"],
+    queryFn: () => getOnzQuotes(),
+    staleTime: 1000 * 60 * 2,
+  });
+
+  const stableOptions = useMemo(() => {
+    const assets = new Set(
+      (onzQuery.data?.quotes ?? [])
+        .map((q) => q.asset)
+        .filter((asset) => asset === "USDT" || asset === "USDC"),
+    );
+    return [...assets].map((asset) => ({
+      simbolo: asset,
+      nome: stableNames[asset] ?? asset,
+    }));
+  }, [onzQuery.data]);
+
   const moedas = moedasQuery.data?.length ? moedasQuery.data : fallbackMoedas;
-  const rate = cotacaoQuery.data?.venda ?? null;
+
+  const stableRate = useMemo(() => {
+    if (!isStable) return null;
+    const match = (onzQuery.data?.quotes ?? []).filter((q) => q.asset === currency);
+    if (match.length === 0) return null;
+    return Math.min(...match.map((q) => q.priceBrl));
+  }, [currency, isStable, onzQuery.data]);
+
+  const rate = isStable ? stableRate : (cotacaoQuery.data?.venda ?? null);
+  const loadingRate = isStable ? onzQuery.isPending : cotacaoQuery.isPending;
 
   const total = useMemo(() => {
     const qty = Number(amount.replace(/\./g, "").replace(",", ".").replace(/[^\d.]/g, ""));
     if (!rate || !Number.isFinite(qty)) return null;
     return qty * rate;
   }, [amount, rate]);
+
 
   const fieldClass =
     "min-h-12 w-full rounded-md border border-line bg-white px-4 text-base text-graphite outline-none transition-colors focus:border-navy";
