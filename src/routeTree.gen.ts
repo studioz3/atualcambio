@@ -56,8 +56,11 @@ import { Route as AdminConteudoIndexRouteImport } from './routes/admin.conteudo.
 import { Route as AdminConteudoIdRouteImport } from './routes/admin.conteudo.$id'
 import { Route as AdminConteudoNovoRouteImport } from './routes/admin.conteudo.novo'
 import { Route as AdminSocialIndexRouteImport } from './routes/admin.social.index'
+import { Route as ApiAdminSocialSyncRouteImport } from './routes/api/admin/social-sync'
+import { Route as ApiCronSocialSyncRouteImport } from './routes/api/cron/social-sync'
 import { Route as ApiPublicAnalyticsHealthRouteImport } from './routes/api/public/analytics-health'
 import { Route as AdminSocialSpotifyImportarRouteImport } from './routes/admin.social.spotify.importar'
+import { Route as ApiAdminSocialTestPlatformRouteImport } from './routes/api/admin/social-test.$platform'
 import { Route as ApiPublicSocialOauthPlatformRouteImport } from './routes/api/public/social-oauth.$platform'
 
 const IndexRoute = IndexRouteImport.update({
@@ -296,6 +299,16 @@ const AdminSocialIndexRoute = AdminSocialIndexRouteImport.update({
   path: '/admin/social/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAdminSocialSyncRoute = ApiAdminSocialSyncRouteImport.update({
+  id: '/api/admin/social-sync',
+  path: '/api/admin/social-sync',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiCronSocialSyncRoute = ApiCronSocialSyncRouteImport.update({
+  id: '/api/cron/social-sync',
+  path: '/api/cron/social-sync',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicAnalyticsHealthRoute =
   ApiPublicAnalyticsHealthRouteImport.update({
     id: '/api/public/analytics-health',
@@ -306,6 +319,12 @@ const AdminSocialSpotifyImportarRoute =
   AdminSocialSpotifyImportarRouteImport.update({
     id: '/admin/social/spotify/importar',
     path: '/admin/social/spotify/importar',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiAdminSocialTestPlatformRoute =
+  ApiAdminSocialTestPlatformRouteImport.update({
+    id: '/api/admin/social-test/$platform',
+    path: '/api/admin/social-test/$platform',
     getParentRoute: () => rootRouteImport,
   } as any)
 const ApiPublicSocialOauthPlatformRoute =
@@ -361,10 +380,13 @@ export interface FileRoutesByFullPath {
   '/admin/analytics/health': typeof AdminAnalyticsHealthRoute
   '/admin/conteudo/$id': typeof AdminConteudoIdRoute
   '/admin/conteudo/novo': typeof AdminConteudoNovoRoute
+  '/api/admin/social-sync': typeof ApiAdminSocialSyncRoute
+  '/api/cron/social-sync': typeof ApiCronSocialSyncRoute
   '/api/public/analytics-health': typeof ApiPublicAnalyticsHealthRoute
   '/admin/conteudo/': typeof AdminConteudoIndexRoute
   '/admin/social/': typeof AdminSocialIndexRoute
   '/admin/social/spotify/importar': typeof AdminSocialSpotifyImportarRoute
+  '/api/admin/social-test/$platform': typeof ApiAdminSocialTestPlatformRoute
   '/api/public/social-oauth/$platform': typeof ApiPublicSocialOauthPlatformRoute
 }
 export interface FileRoutesByTo {
@@ -413,10 +435,13 @@ export interface FileRoutesByTo {
   '/admin/analytics/health': typeof AdminAnalyticsHealthRoute
   '/admin/conteudo/$id': typeof AdminConteudoIdRoute
   '/admin/conteudo/novo': typeof AdminConteudoNovoRoute
+  '/api/admin/social-sync': typeof ApiAdminSocialSyncRoute
+  '/api/cron/social-sync': typeof ApiCronSocialSyncRoute
   '/api/public/analytics-health': typeof ApiPublicAnalyticsHealthRoute
   '/admin/conteudo': typeof AdminConteudoIndexRoute
   '/admin/social': typeof AdminSocialIndexRoute
   '/admin/social/spotify/importar': typeof AdminSocialSpotifyImportarRoute
+  '/api/admin/social-test/$platform': typeof ApiAdminSocialTestPlatformRoute
   '/api/public/social-oauth/$platform': typeof ApiPublicSocialOauthPlatformRoute
 }
 export interface FileRoutesById {
@@ -466,10 +491,13 @@ export interface FileRoutesById {
   '/admin/analytics/health': typeof AdminAnalyticsHealthRoute
   '/admin/conteudo/$id': typeof AdminConteudoIdRoute
   '/admin/conteudo/novo': typeof AdminConteudoNovoRoute
+  '/api/admin/social-sync': typeof ApiAdminSocialSyncRoute
+  '/api/cron/social-sync': typeof ApiCronSocialSyncRoute
   '/api/public/analytics-health': typeof ApiPublicAnalyticsHealthRoute
   '/admin/conteudo/': typeof AdminConteudoIndexRoute
   '/admin/social/': typeof AdminSocialIndexRoute
   '/admin/social/spotify/importar': typeof AdminSocialSpotifyImportarRoute
+  '/api/admin/social-test/$platform': typeof ApiAdminSocialTestPlatformRoute
   '/api/public/social-oauth/$platform': typeof ApiPublicSocialOauthPlatformRoute
 }
 export interface FileRouteTypes {
@@ -520,10 +548,13 @@ export interface FileRouteTypes {
     | '/admin/analytics/health'
     | '/admin/conteudo/$id'
     | '/admin/conteudo/novo'
+    | '/api/admin/social-sync'
+    | '/api/cron/social-sync'
     | '/api/public/analytics-health'
     | '/admin/conteudo/'
     | '/admin/social/'
     | '/admin/social/spotify/importar'
+    | '/api/admin/social-test/$platform'
     | '/api/public/social-oauth/$platform'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -572,10 +603,13 @@ export interface FileRouteTypes {
     | '/admin/analytics/health'
     | '/admin/conteudo/$id'
     | '/admin/conteudo/novo'
+    | '/api/admin/social-sync'
+    | '/api/cron/social-sync'
     | '/api/public/analytics-health'
     | '/admin/conteudo'
     | '/admin/social'
     | '/admin/social/spotify/importar'
+    | '/api/admin/social-test/$platform'
     | '/api/public/social-oauth/$platform'
   id:
     | '__root__'
@@ -624,10 +658,13 @@ export interface FileRouteTypes {
     | '/admin/analytics/health'
     | '/admin/conteudo/$id'
     | '/admin/conteudo/novo'
+    | '/api/admin/social-sync'
+    | '/api/cron/social-sync'
     | '/api/public/analytics-health'
     | '/admin/conteudo/'
     | '/admin/social/'
     | '/admin/social/spotify/importar'
+    | '/api/admin/social-test/$platform'
     | '/api/public/social-oauth/$platform'
   fileRoutesById: FileRoutesById
 }
@@ -677,10 +714,13 @@ export interface RootRouteChildren {
   AdminAnalyticsHealthRoute: typeof AdminAnalyticsHealthRoute
   AdminConteudoIdRoute: typeof AdminConteudoIdRoute
   AdminConteudoNovoRoute: typeof AdminConteudoNovoRoute
+  ApiAdminSocialSyncRoute: typeof ApiAdminSocialSyncRoute
+  ApiCronSocialSyncRoute: typeof ApiCronSocialSyncRoute
   ApiPublicAnalyticsHealthRoute: typeof ApiPublicAnalyticsHealthRoute
   AdminConteudoIndexRoute: typeof AdminConteudoIndexRoute
   AdminSocialIndexRoute: typeof AdminSocialIndexRoute
   AdminSocialSpotifyImportarRoute: typeof AdminSocialSpotifyImportarRoute
+  ApiAdminSocialTestPlatformRoute: typeof ApiAdminSocialTestPlatformRoute
   ApiPublicSocialOauthPlatformRoute: typeof ApiPublicSocialOauthPlatformRoute
 }
 
@@ -1015,6 +1055,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminSocialIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/admin/social-sync': {
+      id: '/api/admin/social-sync'
+      path: '/api/admin/social-sync'
+      fullPath: '/api/admin/social-sync'
+      preLoaderRoute: typeof ApiAdminSocialSyncRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/cron/social-sync': {
+      id: '/api/cron/social-sync'
+      path: '/api/cron/social-sync'
+      fullPath: '/api/cron/social-sync'
+      preLoaderRoute: typeof ApiCronSocialSyncRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/analytics-health': {
       id: '/api/public/analytics-health'
       path: '/api/public/analytics-health'
@@ -1027,6 +1081,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/social/spotify/importar'
       fullPath: '/admin/social/spotify/importar'
       preLoaderRoute: typeof AdminSocialSpotifyImportarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/social-test/$platform': {
+      id: '/api/admin/social-test/$platform'
+      path: '/api/admin/social-test/$platform'
+      fullPath: '/api/admin/social-test/$platform'
+      preLoaderRoute: typeof ApiAdminSocialTestPlatformRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/social-oauth/$platform': {
@@ -1085,10 +1146,13 @@ const rootRouteChildren: RootRouteChildren = {
   AdminAnalyticsHealthRoute: AdminAnalyticsHealthRoute,
   AdminConteudoIdRoute: AdminConteudoIdRoute,
   AdminConteudoNovoRoute: AdminConteudoNovoRoute,
+  ApiAdminSocialSyncRoute: ApiAdminSocialSyncRoute,
+  ApiCronSocialSyncRoute: ApiCronSocialSyncRoute,
   ApiPublicAnalyticsHealthRoute: ApiPublicAnalyticsHealthRoute,
   AdminConteudoIndexRoute: AdminConteudoIndexRoute,
   AdminSocialIndexRoute: AdminSocialIndexRoute,
   AdminSocialSpotifyImportarRoute: AdminSocialSpotifyImportarRoute,
+  ApiAdminSocialTestPlatformRoute: ApiAdminSocialTestPlatformRoute,
   ApiPublicSocialOauthPlatformRoute: ApiPublicSocialOauthPlatformRoute,
 }
 export const routeTree = rootRouteImport

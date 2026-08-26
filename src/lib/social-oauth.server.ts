@@ -114,8 +114,6 @@ export async function runSocialSync(platforms?: string[]) {
   const results: { platform: string; ok: boolean; message: string }[] = [];
 
   for (const platform of targets) {
-    const state = crypto.randomUUID(); // não usado; mantém tipos coesos
-    void state;
     const configured = Boolean(authorizeUrl(platform, "probe"));
     const message = configured
       ? "Credenciais presentes. Aguardando token de acesso da plataforma."
