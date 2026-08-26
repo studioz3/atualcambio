@@ -89,7 +89,7 @@ export function Hero({
       )}
     >
       {image ? (
-        <div className="absolute inset-0 hidden lg:block">
+        <div className="absolute inset-y-0 left-1/2 hidden w-full max-w-[1920px] -translate-x-1/2 lg:block">
           <img
             src={image}
             alt={imageAlt ?? ""}
