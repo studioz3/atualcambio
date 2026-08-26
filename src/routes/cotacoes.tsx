@@ -3,6 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowUpRight, Info } from "lucide-react";
 import { pageHead, faqSchema } from "@/lib/seo";
 import { getPtaxCotacoes, type PtaxCotacao } from "@/lib/ptax.functions";
+import { getOnzQuotes } from "@/lib/onz-quotes.functions";
 import { getPublishedList } from "@/lib/editorial.functions";
 import heroCotacoes from "@/assets/hero-cotacoes.jpg";
 import {
@@ -48,11 +49,12 @@ export const Route = createFileRoute("/cotacoes")({
     }),
   }),
   loader: async () => {
-    const [ptax, artigos] = await Promise.all([
+    const [ptax, artigos, onz] = await Promise.all([
       getPtaxCotacoes(),
       getPublishedList({ data: { editoria: "momento-atual", limit: 3 } }),
+      getOnzQuotes(),
     ]);
-    return { ptax, artigos };
+    return { ptax, artigos, onz };
   },
   component: Cotacoes,
 });
@@ -94,7 +96,25 @@ const faq = [
 
 function Cotacoes() {
   const { openLead } = useLead();
-  const { ptax, artigos } = Route.useLoaderData();
+  const { ptax, artigos, onz } = Route.useLoaderData();
+
+  function stablecoinResult(asset: QuoteAsset) {
+    if (onz.error) return { status: "error" as const };
+    const cotacao = onz.quotes.find((item) => item.asset === asset.code);
+    if (!cotacao || !onz.asOf) return { status: "unavailable" as const };
+    return {
+      status: onz.stale ? ("stale" as const) : ("success" as const),
+      data: {
+        code: asset.code,
+        name: asset.name,
+        price: cotacao.priceBrl,
+        network: cotacao.network,
+        timestamp: onz.asOf,
+        referenceCurrency: onz.base,
+        source: "ONZ",
+      },
+    };
+  }
 
   useEffect(() => {
     track("quotes_page_view", { pagina: "/cotacoes" });
@@ -181,7 +201,7 @@ function Cotacoes() {
               <QuoteCard
                 key={asset.code}
                 asset={asset}
-                result={getQuoteResult(asset.code)}
+                result={stablecoinResult(asset)}
                 onSelect={() => selectAsset(asset)}
               />
             ))}
