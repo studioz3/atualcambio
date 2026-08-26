@@ -58,6 +58,7 @@ import { Route as AdminConteudoNovoRouteImport } from './routes/admin.conteudo.n
 import { Route as AdminSocialIndexRouteImport } from './routes/admin.social.index'
 import { Route as ApiPublicAnalyticsHealthRouteImport } from './routes/api/public/analytics-health'
 import { Route as AdminSocialSpotifyImportarRouteImport } from './routes/admin.social.spotify.importar'
+import { Route as ApiPublicSocialOauthPlatformRouteImport } from './routes/api/public/social-oauth.$platform'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -307,6 +308,12 @@ const AdminSocialSpotifyImportarRoute =
     path: '/admin/social/spotify/importar',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicSocialOauthPlatformRoute =
+  ApiPublicSocialOauthPlatformRouteImport.update({
+    id: '/api/public/social-oauth/$platform',
+    path: '/api/public/social-oauth/$platform',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -358,6 +365,7 @@ export interface FileRoutesByFullPath {
   '/admin/conteudo/': typeof AdminConteudoIndexRoute
   '/admin/social/': typeof AdminSocialIndexRoute
   '/admin/social/spotify/importar': typeof AdminSocialSpotifyImportarRoute
+  '/api/public/social-oauth/$platform': typeof ApiPublicSocialOauthPlatformRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -409,6 +417,7 @@ export interface FileRoutesByTo {
   '/admin/conteudo': typeof AdminConteudoIndexRoute
   '/admin/social': typeof AdminSocialIndexRoute
   '/admin/social/spotify/importar': typeof AdminSocialSpotifyImportarRoute
+  '/api/public/social-oauth/$platform': typeof ApiPublicSocialOauthPlatformRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -461,6 +470,7 @@ export interface FileRoutesById {
   '/admin/conteudo/': typeof AdminConteudoIndexRoute
   '/admin/social/': typeof AdminSocialIndexRoute
   '/admin/social/spotify/importar': typeof AdminSocialSpotifyImportarRoute
+  '/api/public/social-oauth/$platform': typeof ApiPublicSocialOauthPlatformRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -514,6 +524,7 @@ export interface FileRouteTypes {
     | '/admin/conteudo/'
     | '/admin/social/'
     | '/admin/social/spotify/importar'
+    | '/api/public/social-oauth/$platform'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -565,6 +576,7 @@ export interface FileRouteTypes {
     | '/admin/conteudo'
     | '/admin/social'
     | '/admin/social/spotify/importar'
+    | '/api/public/social-oauth/$platform'
   id:
     | '__root__'
     | '/'
@@ -616,6 +628,7 @@ export interface FileRouteTypes {
     | '/admin/conteudo/'
     | '/admin/social/'
     | '/admin/social/spotify/importar'
+    | '/api/public/social-oauth/$platform'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -668,6 +681,7 @@ export interface RootRouteChildren {
   AdminConteudoIndexRoute: typeof AdminConteudoIndexRoute
   AdminSocialIndexRoute: typeof AdminSocialIndexRoute
   AdminSocialSpotifyImportarRoute: typeof AdminSocialSpotifyImportarRoute
+  ApiPublicSocialOauthPlatformRoute: typeof ApiPublicSocialOauthPlatformRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1015,6 +1029,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminSocialSpotifyImportarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/social-oauth/$platform': {
+      id: '/api/public/social-oauth/$platform'
+      path: '/api/public/social-oauth/$platform'
+      fullPath: '/api/public/social-oauth/$platform'
+      preLoaderRoute: typeof ApiPublicSocialOauthPlatformRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -1068,6 +1089,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminConteudoIndexRoute: AdminConteudoIndexRoute,
   AdminSocialIndexRoute: AdminSocialIndexRoute,
   AdminSocialSpotifyImportarRoute: AdminSocialSpotifyImportarRoute,
+  ApiPublicSocialOauthPlatformRoute: ApiPublicSocialOauthPlatformRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
