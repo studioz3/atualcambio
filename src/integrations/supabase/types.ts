@@ -627,6 +627,66 @@ export type Database = {
         }
         Relationships: []
       }
+      rate_alerts: {
+        Row: {
+          alerta_valor: boolean
+          ativo: boolean
+          atualizacoes_diarias: boolean
+          base: string
+          created_at: string
+          email: string
+          id: string
+          moeda: string
+          nome: string | null
+          source_url: string | null
+          taxa_alvo: number | null
+          taxa_referencia: number | null
+          utm_campaign: string | null
+          utm_content: string | null
+          utm_medium: string | null
+          utm_source: string | null
+          utm_term: string | null
+        }
+        Insert: {
+          alerta_valor?: boolean
+          ativo?: boolean
+          atualizacoes_diarias?: boolean
+          base?: string
+          created_at?: string
+          email: string
+          id?: string
+          moeda: string
+          nome?: string | null
+          source_url?: string | null
+          taxa_alvo?: number | null
+          taxa_referencia?: number | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
+        }
+        Update: {
+          alerta_valor?: boolean
+          ativo?: boolean
+          atualizacoes_diarias?: boolean
+          base?: string
+          created_at?: string
+          email?: string
+          id?: string
+          moeda?: string
+          nome?: string | null
+          source_url?: string | null
+          taxa_alvo?: number | null
+          taxa_referencia?: number | null
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
+        }
+        Relationships: []
+      }
       redirects: {
         Row: {
           created_at: string

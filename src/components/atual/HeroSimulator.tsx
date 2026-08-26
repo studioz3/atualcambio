@@ -6,6 +6,7 @@ import { getOnzQuotes } from "@/lib/onz-quotes.functions";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import { useLead } from "@/components/atual/LeadProvider";
+import { RateAlertDialog } from "@/components/atual/RateAlertDialog";
 
 const fallbackMoedas = [
   { simbolo: "USD", nome: "Dólar dos Estados Unidos" },
@@ -32,6 +33,7 @@ export function HeroSimulator({
   const { openLead } = useLead();
   const [currency, setCurrency] = useState("USD");
   const [amount, setAmount] = useState("2000");
+  const [alertOpen, setAlertOpen] = useState(false);
 
   const isStable = currency === "USDT" || currency === "USDC";
 
@@ -184,9 +186,7 @@ export function HeroSimulator({
             type="button"
             onClick={() => {
               track("rate_alert_start", { origem: "simulador", moeda: currency });
-              openLead({
-                context: `Acompanhar a taxa de câmbio — ${currency}`,
-              });
+              setAlertOpen(true);
             }}
             className="min-h-13 w-full rounded-full border border-navy px-6 text-base font-semibold text-navy transition-colors hover:bg-offwhite"
           >
@@ -202,6 +202,8 @@ export function HeroSimulator({
         </p>
 
       </div>
+
+      <RateAlertDialog open={alertOpen} onOpenChange={setAlertOpen} initialCurrency={currency} />
     </div>
   );
 }
