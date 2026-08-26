@@ -5,7 +5,7 @@ import { track } from "@/lib/analytics";
 
 /** Bloco flutuante com a calculadora de câmbio (PTAX). */
 export function FloatingConverter() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -42,6 +42,7 @@ export function FloatingConverter() {
           </div>
         ) : null}
 
+        {open ? null : (
         <button
           type="button"
           aria-expanded={open}
@@ -55,8 +56,9 @@ export function FloatingConverter() {
           className="flex min-h-13 items-center gap-3 rounded-full bg-gold px-5 py-3 text-sm font-semibold text-gold-foreground shadow-xl transition-transform hover:scale-[1.03]"
         >
           <Calculator className="size-4" aria-hidden />
-          {open ? "Fechar calculadora" : "Calculadora de câmbio"}
+          Calculadora de câmbio
         </button>
+        )}
       </div>
     </div>
   );
