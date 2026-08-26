@@ -16,18 +16,23 @@ import {
   MousePointerClick,
   Newspaper,
   Activity,
+  Share2,
+  PlugZap,
 } from "lucide-react";
 import { ChangePasswordDialog } from "./ChangePasswordDialog";
 
 const nav = [
   { to: "/admin", label: "Visão geral", icon: LayoutDashboard, exact: true },
   { to: "/admin/trafego", label: "Tráfego", icon: Globe2, exact: false },
+  { to: "/admin/social", label: "Redes sociais", icon: Share2, exact: false },
   { to: "/admin/comportamento", label: "Comportamento", icon: MousePointerClick, exact: false },
-  { to: "/admin/analytics/health", label: "Saúde", icon: Activity, exact: false },
   { to: "/admin/conteudo", label: "Conteúdo", icon: Newspaper, exact: false },
   { to: "/admin/leads", label: "Leads", icon: Users, exact: false },
   { to: "/admin/newsletter", label: "Newsletter", icon: Mail, exact: false },
+  { to: "/admin/integracoes", label: "Integrações", icon: PlugZap, exact: false },
+  { to: "/admin/analytics/health", label: "Saúde", icon: Activity, exact: false },
 ] as const;
+
 
 function LoginCard({ onDone }: { onDone: () => void }) {
   const [email, setEmail] = useState("");

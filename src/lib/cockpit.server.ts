@@ -242,7 +242,7 @@ async function ga4Totals(from: string, to: string): Promise<Ga4Totals> {
   };
 }
 
-async function ga4Dimension(from: string, to: string, dimension: string, limit = 12): Promise<Ga4Dim[]> {
+export async function ga4Dimension(from: string, to: string, dimension: string, limit = 12): Promise<Ga4Dim[]> {
   const res = await ga4Run("runReport", {
     dateRanges: [{ startDate: from, endDate: to }],
     dimensions: [{ name: dimension }],
