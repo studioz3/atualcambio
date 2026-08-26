@@ -54,6 +54,7 @@ import { Route as AdminAnalyticsHealthRouteImport } from './routes/admin.analyti
 import { Route as AdminConteudoIndexRouteImport } from './routes/admin.conteudo.index'
 import { Route as AdminConteudoIdRouteImport } from './routes/admin.conteudo.$id'
 import { Route as AdminConteudoNovoRouteImport } from './routes/admin.conteudo.novo'
+import { Route as AdminSocialIndexRouteImport } from './routes/admin.social.index'
 import { Route as ApiPublicAnalyticsHealthRouteImport } from './routes/api/public/analytics-health'
 
 const IndexRoute = IndexRouteImport.update({
@@ -282,6 +283,11 @@ const AdminConteudoNovoRoute = AdminConteudoNovoRouteImport.update({
   path: '/admin/conteudo/novo',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminSocialIndexRoute = AdminSocialIndexRouteImport.update({
+  id: '/admin/social/',
+  path: '/admin/social/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicAnalyticsHealthRoute =
   ApiPublicAnalyticsHealthRouteImport.update({
     id: '/api/public/analytics-health',
@@ -336,6 +342,7 @@ export interface FileRoutesByFullPath {
   '/admin/conteudo/novo': typeof AdminConteudoNovoRoute
   '/api/public/analytics-health': typeof ApiPublicAnalyticsHealthRoute
   '/admin/conteudo/': typeof AdminConteudoIndexRoute
+  '/admin/social/': typeof AdminSocialIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -384,6 +391,7 @@ export interface FileRoutesByTo {
   '/admin/conteudo/novo': typeof AdminConteudoNovoRoute
   '/api/public/analytics-health': typeof ApiPublicAnalyticsHealthRoute
   '/admin/conteudo': typeof AdminConteudoIndexRoute
+  '/admin/social': typeof AdminSocialIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -433,6 +441,7 @@ export interface FileRoutesById {
   '/admin/conteudo/novo': typeof AdminConteudoNovoRoute
   '/api/public/analytics-health': typeof ApiPublicAnalyticsHealthRoute
   '/admin/conteudo/': typeof AdminConteudoIndexRoute
+  '/admin/social/': typeof AdminSocialIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -483,6 +492,7 @@ export interface FileRouteTypes {
     | '/admin/conteudo/novo'
     | '/api/public/analytics-health'
     | '/admin/conteudo/'
+    | '/admin/social/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -531,6 +541,7 @@ export interface FileRouteTypes {
     | '/admin/conteudo/novo'
     | '/api/public/analytics-health'
     | '/admin/conteudo'
+    | '/admin/social'
   id:
     | '__root__'
     | '/'
@@ -579,6 +590,7 @@ export interface FileRouteTypes {
     | '/admin/conteudo/novo'
     | '/api/public/analytics-health'
     | '/admin/conteudo/'
+    | '/admin/social/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -628,6 +640,7 @@ export interface RootRouteChildren {
   AdminConteudoNovoRoute: typeof AdminConteudoNovoRoute
   ApiPublicAnalyticsHealthRoute: typeof ApiPublicAnalyticsHealthRoute
   AdminConteudoIndexRoute: typeof AdminConteudoIndexRoute
+  AdminSocialIndexRoute: typeof AdminSocialIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -947,6 +960,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminConteudoNovoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/social/': {
+      id: '/admin/social/'
+      path: '/admin/social'
+      fullPath: '/admin/social/'
+      preLoaderRoute: typeof AdminSocialIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/analytics-health': {
       id: '/api/public/analytics-health'
       path: '/api/public/analytics-health'
@@ -1004,6 +1024,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminConteudoNovoRoute: AdminConteudoNovoRoute,
   ApiPublicAnalyticsHealthRoute: ApiPublicAnalyticsHealthRoute,
   AdminConteudoIndexRoute: AdminConteudoIndexRoute,
+  AdminSocialIndexRoute: AdminSocialIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
