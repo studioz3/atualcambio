@@ -423,7 +423,7 @@ function Home() {
         secondaryHref={links.account}
       />
 
-      <FloatingConverter />
+      <FloatingConverter defaultOpen={false} />
     </>
   );
 }
