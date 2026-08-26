@@ -91,7 +91,7 @@ export function SocialCockpit() {
       row[p.platform] = ((row[p.platform] as number) ?? 0) + (value ?? 0);
       byDate.set(p.date, row);
     }
-    return [...byDate.values()].sort((a, b) => String(a.date).localeCompare(String(b.date)));
+    return [...byDate.values()].sort((a, b) => String(a["date"]).localeCompare(String(b["date"])));
   }, [data, metric]);
 
   const activePlatforms = data?.byPlatform.map((p) => p.platform) ?? [];
