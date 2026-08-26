@@ -46,20 +46,31 @@ export function QuoteCard({
 
         {hasData ? (
           <>
-            <dl className="grid grid-cols-2 gap-4">
-              <div>
-                <dt className="text-xs text-muted-foreground">Compra</dt>
+            {typeof data.bid === "number" && typeof data.ask === "number" ? (
+              <dl className="grid grid-cols-2 gap-4">
+                <div>
+                  <dt className="text-xs text-muted-foreground">Compra</dt>
+                  <dd className="mt-1 text-lg font-semibold text-navy">
+                    {formatQuoteValue(data.bid, data.referenceCurrency)}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-xs text-muted-foreground">Venda</dt>
+                  <dd className="mt-1 text-lg font-semibold text-navy">
+                    {formatQuoteValue(data.ask, data.referenceCurrency)}
+                  </dd>
+                </div>
+              </dl>
+            ) : typeof data.price === "number" ? (
+              <dl>
+                <dt className="text-xs text-muted-foreground">
+                  Referência{data.network ? ` · rede ${data.network}` : ""}
+                </dt>
                 <dd className="mt-1 text-lg font-semibold text-navy">
-                  {formatQuoteValue(data.bid, data.referenceCurrency)}
+                  {formatQuoteValue(data.price, data.referenceCurrency)}
                 </dd>
-              </div>
-              <div>
-                <dt className="text-xs text-muted-foreground">Venda</dt>
-                <dd className="mt-1 text-lg font-semibold text-navy">
-                  {formatQuoteValue(data.ask, data.referenceCurrency)}
-                </dd>
-              </div>
-            </dl>
+              </dl>
+            ) : null}
             <p
               className={cn(
                 "mt-5 inline-flex items-center gap-2 text-xs",
