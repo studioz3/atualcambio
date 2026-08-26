@@ -3,6 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowUpRight, Info } from "lucide-react";
 import { pageHead, faqSchema } from "@/lib/seo";
 import { getPtaxCotacoes, type PtaxCotacao } from "@/lib/ptax.functions";
+import { getOnzQuotes } from "@/lib/onz-quotes.functions";
 import { getPublishedList } from "@/lib/editorial.functions";
 import heroCotacoes from "@/assets/hero-cotacoes.jpg";
 import {
