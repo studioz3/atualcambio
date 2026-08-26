@@ -26,6 +26,7 @@ import { QuoteBoard } from "@/components/atual/QuoteBoard";
 import { CurrencyConverter } from "@/components/atual/CurrencyConverter";
 import { FloatingConverter } from "@/components/atual/FloatingConverter";
 import { StoreBadges } from "@/components/atual/StoreBadges";
+import { HeroSimulator } from "@/components/atual/HeroSimulator";
 
 import { useLead } from "@/components/atual/LeadProvider";
 import { track } from "@/lib/analytics";
