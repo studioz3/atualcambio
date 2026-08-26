@@ -98,6 +98,23 @@ function Cotacoes() {
   const { openLead } = useLead();
   const { ptax, artigos, onz } = Route.useLoaderData();
 
+  function moedaResult(asset: QuoteAsset) {
+    const item = ptax.find((p: PtaxCotacao) => p.moeda === asset.code);
+    if (!item) return { status: "unavailable" as const };
+    return {
+      status: "success" as const,
+      data: {
+        code: asset.code,
+        name: asset.name,
+        bid: item.compra,
+        ask: item.venda,
+        timestamp: item.dataHoraCotacao.replace(" ", "T"),
+        referenceCurrency: "BRL",
+        source: "PTAX",
+      },
+    };
+  }
+
   function stablecoinResult(asset: QuoteAsset) {
     if (onz.error) return { status: "error" as const };
     const cotacao = onz.quotes.find((item) => item.asset === asset.code);
@@ -115,6 +132,7 @@ function Cotacoes() {
       },
     };
   }
+
 
   useEffect(() => {
     track("quotes_page_view", { pagina: "/cotacoes" });
