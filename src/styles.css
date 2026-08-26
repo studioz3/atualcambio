@@ -242,13 +242,6 @@
 }
 
 /* ---------- Regras reutilizáveis de Hero/Banner ---------- */
-@utility hero-shell-raw {
-  /* artes full-bleed: acompanha a proporção original, sem faixas nem zoom */
-  @media (min-width: 1024px) {
-    min-height: clamp(560px, calc(100vw * 871 / 1920), 1120px);
-  }
-}
-
 @utility hero-shell {
   min-height: 100svh;
   height: auto;
@@ -257,6 +250,13 @@
   flex-direction: column;
   @media (min-width: 1024px) {
     min-height: clamp(680px, 100svh, 920px);
+  }
+}
+
+@utility hero-shell-raw {
+  /* artes full-bleed: acompanha a proporção original, sem faixas nem zoom */
+  @media (min-width: 1024px) {
+    min-height: clamp(560px, calc(100vw * 871 / 1920), 1120px);
   }
 }
 
