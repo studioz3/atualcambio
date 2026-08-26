@@ -5,7 +5,7 @@ import { track } from "@/lib/analytics";
 
 /** Bloco flutuante com a calculadora de câmbio (PTAX). */
 export function FloatingConverter() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
