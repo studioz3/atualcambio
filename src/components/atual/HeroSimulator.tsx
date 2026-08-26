@@ -155,7 +155,7 @@ export function HeroSimulator({
 
         <div>
           <p className="mb-2 text-sm text-graphite">
-            {isStable ? "Preço de referência (ONZ):" : "Câmbio de referência (PTAX):"}
+            {isStable ? "Preço de referência:" : "Câmbio de referência (PTAX):"}
           </p>
           <div className="flex min-h-12 items-center rounded-md bg-offwhite px-4 text-base text-graphite">
             {rate ? nf(4).format(rate) : loadingRate ? "Consultando…" : "Indisponível"}
@@ -197,7 +197,7 @@ export function HeroSimulator({
 
         <p className="text-center text-[11px] leading-relaxed text-muted-foreground">
           {isStable
-            ? "Preço de referência de stablecoins fornecido pela ONZ. Valores informativos."
+            ? "Preço de referência de stablecoins. Valores informativos."
             : "Valores informativos com base no boletim de fechamento PTAX do Banco Central."}
         </p>
 

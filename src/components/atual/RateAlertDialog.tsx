@@ -198,7 +198,7 @@ export function RateAlertDialog({
               </p>
               <p className="mt-1 text-xs text-graphite">
                 {isStable
-                  ? "Preço de referência de stablecoins (ONZ)."
+                  ? "Preço de referência de stablecoins."
                   : "Boletim de fechamento PTAX do Banco Central."}
               </p>
             </div>
