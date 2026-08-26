@@ -55,6 +55,7 @@ export function Hero({
   scrim = "navy",
   zoomImage = false,
   rawImage = false,
+  imageFit = "cover",
   softScrim = false,
   children,
 }: {
@@ -71,6 +72,8 @@ export function Hero({
   zoomImage?: boolean;
   /** Exibe a arte sem tratamento de cor (sem "lente") nem zoom. */
   rawImage?: boolean;
+  /** Preserva a composição inteira quando a arte já foi diagramada para o Hero. */
+  imageFit?: "cover" | "contain";
   /** Scrim mais leve, para artes que já têm área escura para o texto. */
   softScrim?: boolean;
   children?: ReactNode;
@@ -93,7 +96,8 @@ export function Hero({
             width={1920}
             height={1080}
             className={cn(
-              "size-full object-cover object-right",
+              "size-full object-right",
+              imageFit === "contain" ? "object-contain" : "object-cover",
               !rawImage && navyScrim && "contrast-[1.1] saturate-[1.08] brightness-[1.03]",
               !rawImage && navyScrim && zoomImage &&
                 "origin-right scale-[1.03]",
