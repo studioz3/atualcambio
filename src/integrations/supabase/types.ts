@@ -585,6 +585,39 @@ export type Database = {
         }
         Relationships: []
       }
+      oauth_states: {
+        Row: {
+          consumed_at: string | null
+          created_at: string
+          created_by: string | null
+          expires_at: string
+          id: string
+          platform: string
+          redirect_to: string | null
+          state: string
+        }
+        Insert: {
+          consumed_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          expires_at?: string
+          id?: string
+          platform: string
+          redirect_to?: string | null
+          state: string
+        }
+        Update: {
+          consumed_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          expires_at?: string
+          id?: string
+          platform?: string
+          redirect_to?: string | null
+          state?: string
+        }
+        Relationships: []
+      }
       podcast_episodes: {
         Row: {
           ativo: boolean
