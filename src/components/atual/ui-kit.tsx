@@ -84,8 +84,7 @@ export function Hero({
     <section
       className={cn(
         "hero-shell relative overflow-hidden",
-        image && "hero-shell-raw",
-        image && imageFit === "contain" && "hero-shell-art",
+        image && (imageFit === "contain" ? "hero-shell-art" : "hero-shell-raw"),
         image && !navyScrim ? "surface-ink" : "surface-navy",
       )}
     >
@@ -168,7 +167,7 @@ export function Hero({
                 {eyebrow}
               </p>
             ) : null}
-            <h1 className="hero-title mt-2 text-white md:mt-6 lg:whitespace-nowrap">{title}</h1>
+            <h1 className="hero-title mt-2 text-white md:mt-6 xl:whitespace-nowrap">{title}</h1>
             <p className="hero-copy mt-5 text-white/85 md:mt-8">{description}</p>
 
             {primary || secondary ? (
