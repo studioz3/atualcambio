@@ -85,6 +85,7 @@ export function Hero({
       className={cn(
         "hero-shell relative overflow-hidden",
         image && "hero-shell-raw",
+        image && imageFit === "contain" && "hero-shell-art",
         image && !navyScrim ? "surface-ink" : "surface-navy",
       )}
     >
