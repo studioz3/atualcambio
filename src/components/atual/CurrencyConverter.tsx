@@ -4,6 +4,8 @@ import { ArrowLeftRight } from "lucide-react";
 import { getPtaxMoedas, getPtaxMoeda } from "@/lib/ptax.functions";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
+import { useLead } from "@/components/atual/LeadProvider";
+import { ActionButton } from "@/components/atual/primitives";
 
 const fallbackMoedas = [
   { simbolo: "USD", nome: "Dólar dos Estados Unidos" },
