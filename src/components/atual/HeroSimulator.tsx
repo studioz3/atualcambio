@@ -178,8 +178,11 @@ export function HeroSimulator({
         </button>
 
         <p className="text-center text-[11px] leading-relaxed text-muted-foreground">
-          Valores informativos com base no boletim de fechamento PTAX do Banco Central.
+          {isStable
+            ? "Preço de referência de stablecoins fornecido pela ONZ. Valores informativos."
+            : "Valores informativos com base no boletim de fechamento PTAX do Banco Central."}
         </p>
+
       </div>
     </div>
   );
