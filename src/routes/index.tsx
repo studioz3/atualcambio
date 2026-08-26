@@ -123,6 +123,7 @@ function Home() {
       <Hero
         scrim="navy"
         rawImage
+        imageFit="contain"
         title={
           <>
             Seu dinheiro,
