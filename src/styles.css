@@ -245,7 +245,7 @@
 @utility hero-shell-raw {
   /* artes full-bleed: acompanha a proporção original, sem faixas nem zoom */
   @media (min-width: 1024px) {
-    min-height: clamp(560px, calc(100vw * 871 / 1920), 860px);
+    min-height: clamp(560px, calc(100vw * 871 / 1920), 1120px);
   }
 }
 
