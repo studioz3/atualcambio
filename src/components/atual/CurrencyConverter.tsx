@@ -54,6 +54,7 @@ export function CurrencyConverter({ className }: { className?: string }) {
     "brl-to-foreign",
   );
   const [fee, setFee] = useState("0");
+  const { openLead } = useLead();
 
   const moedasQuery = useQuery({
     queryKey: ["ptax-moedas"],
