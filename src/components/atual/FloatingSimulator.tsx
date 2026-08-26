@@ -40,7 +40,7 @@ export function FloatingSimulator({
   }
 
   return (
-    <div className="fixed bottom-5 right-5 z-50 w-[min(92vw,380px)]">
+    <div className="fixed bottom-5 right-5 z-50 w-[min(92vw,380px)] lg:bottom-auto lg:right-10 lg:top-1/2 lg:-translate-y-1/2">
       <div className="relative max-h-[85svh] overflow-y-auto rounded-2xl shadow-2xl">
         <button
           type="button"
