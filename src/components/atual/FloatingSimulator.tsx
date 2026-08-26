@@ -40,8 +40,8 @@ export function FloatingSimulator({
   }
 
   return (
-    <div className="fixed bottom-5 right-5 z-50 w-[min(92vw,380px)] lg:bottom-auto lg:right-10 lg:top-1/2 lg:-translate-y-1/2">
-      <div className="relative max-h-[85svh] overflow-y-auto rounded-2xl shadow-2xl">
+    <div className="pointer-events-none fixed inset-x-0 bottom-5 z-50 mx-auto w-full max-w-[1280px] px-5 md:px-8 lg:top-1/2 lg:bottom-auto lg:-translate-y-1/2 lg:px-12">
+      <div className="pointer-events-auto relative ml-auto max-h-[85svh] w-[min(100%,380px)] overflow-y-auto rounded-2xl shadow-2xl">
         <button
           type="button"
           onClick={() => setOpen(false)}
