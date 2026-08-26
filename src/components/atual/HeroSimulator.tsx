@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useQuery as _unused } from "@tanstack/react-query";
+
 import { getPtaxMoedas, getPtaxMoeda } from "@/lib/ptax.functions";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
