@@ -15,6 +15,17 @@ export const socialPlatforms = [
 export type PlatformId = (typeof socialPlatforms)[number]["id"];
 export const platformIds = socialPlatforms.map((p) => p.id) as PlatformId[];
 
+/**
+ * Origem do registro em social_posts.
+ * A coluna tem default 'manual'; TODO post vindo de API precisa gravar POST_ORIGIN.api
+ * explicitamente, senão o painel não distingue importado de cadastrado à mão.
+ */
+export const POST_ORIGIN = {
+  manual: "manual",
+  api: "api",
+  csvSpotify: "csv_spotify",
+} as const;
+
 export function platformLabel(id: string) {
   return socialPlatforms.find((p) => p.id === id)?.label ?? id;
 }
