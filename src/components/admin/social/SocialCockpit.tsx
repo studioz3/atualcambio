@@ -429,25 +429,49 @@ export function SocialCockpit() {
                   </thead>
                   <tbody className="divide-y divide-white/5">
                     {rankedPosts.map((p) => (
-                      <tr key={p.id} className="text-white/80">
-                        <td className="max-w-[280px] truncate py-2.5">
-                          {p.url ? (
-                            <a href={p.url} target="_blank" rel="noreferrer" className="hover:text-gold">
-                              {p.title ?? p.url}
-                            </a>
-                          ) : (
-                            (p.title ?? "—")
-                          )}
+                      <tr key={p.id} className="align-top text-white/80">
+                        <td className="max-w-[280px] py-2.5">
+                          <div className="flex items-start gap-2">
+                            {p.thumbnailUrl ? (
+                              <img
+                                src={p.thumbnailUrl}
+                                alt=""
+                                loading="lazy"
+                                className="size-9 shrink-0 rounded-md object-cover"
+                              />
+                            ) : null}
+                            <div className="min-w-0">
+                              {p.url ? (
+                                <a href={p.url} target="_blank" rel="noreferrer" className="block truncate hover:text-gold">
+                                  {p.title ?? p.caption ?? p.url}
+                                </a>
+                              ) : (
+                                <span className="block truncate">{p.title ?? p.caption ?? "—"}</span>
+                              )}
+                              {p.caption && p.caption !== p.title ? (
+                                <span className="block truncate text-[11px] text-white/35">{p.caption}</span>
+                              ) : null}
+                            </div>
+                          </div>
                         </td>
                         <td>{platformLabel(p.platform)}</td>
                         <td>{editorialLabel(p.editorialLine)}</td>
                         <td>{contentTypeLabel(p.contentType)}</td>
                         <td>{formatDateTime(p.publishedAt)}</td>
-                        <td><Cell value={p.metrics.reach} /></td>
-                        <td><Cell value={p.metrics.engagements} /></td>
-                        <td className="font-semibold text-white">{p.leads}</td>
+                        {p.metricsAvailable === false ? (
+                          <td colSpan={3} className="text-[11px] text-amber-300/80">
+                            {p.metricsUnavailableReason ?? "Métricas não disponíveis para esta publicação."}
+                          </td>
+                        ) : (
+                          <>
+                            <td><Cell value={p.metrics.reach} /></td>
+                            <td><Cell value={p.metrics.engagements} /></td>
+                            <td className="font-semibold text-white">{p.leads}</td>
+                          </>
+                        )}
                       </tr>
                     ))}
+
                   </tbody>
                 </table>
               </div>
