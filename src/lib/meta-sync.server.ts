@@ -339,21 +339,23 @@ async function fetchInsightsBatch(
 
 async function syncInstagramPosts(client: GraphClient, igId: string, notes: string[]) {
   const db = await admin();
-  const { data: lastRow } = await db
+  const { data: storedRows } = await db
     .from("social_posts")
-    .select("published_at")
+    .select("content_id, metrics_available")
     .eq("platform", "instagram")
     .eq("origin", POST_ORIGIN.api)
-    .order("published_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
-  // Cursores expiram: o incremental usa o timestamp do último post processado.
-  const sinceIso: string | null = lastRow?.published_at ?? null;
+    .limit(1000);
+  // Cursores expiram: guardamos quais mídias já têm métrica boa para não repetir insight.
+  const settled = new Set(
+    (storedRows ?? []).filter((r: any) => r.metrics_available).map((r: any) => String(r.content_id)),
+  );
 
-  const media = await listInstagramMedia(client, igId, sinceIso);
+  // Paginação completa: percorremos todas as páginas de /media (teto de 500).
+  const media = await listInstagramMedia(client, igId);
   if (media.length === 0) return 0;
 
   const groups = new Map<string, IgMedia[]>();
+  const recentCutoff = new Date(Date.now() - 7 * 86_400_000).toISOString();
   for (const item of media) {
     const type = String(item.media_product_type ?? "FEED");
     if (type === "STORY") {
@@ -361,6 +363,9 @@ async function syncInstagramPosts(client: GraphClient, igId: string, notes: stri
       continue;
     }
     if (type === "AD") continue;
+    // Insight só para mídia nova, sem métrica ainda, ou publicada nos últimos 7 dias.
+    const fresh = String(item.timestamp ?? "") >= recentCutoff;
+    if (settled.has(String(item.id)) && !fresh) continue;
     const list = groups.get(type) ?? [];
     list.push(item);
     groups.set(type, list);
@@ -383,6 +388,7 @@ async function syncInstagramPosts(client: GraphClient, igId: string, notes: stri
       Object.assign(insights, result.byId);
     }
   }
+
 
   const nowIso = new Date().toISOString();
   const rows = media
