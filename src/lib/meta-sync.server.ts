@@ -261,24 +261,32 @@ async function backfillInstagramReach(client: GraphClient, igId: string, days: n
 
 const POST_FIELDS =
   "id,caption,media_type,media_product_type,permalink,thumbnail_url,timestamp,like_count,comments_count,saved_count,shares_count";
+
+/** Remove bytes nulos e surrogates órfãos (emoji cortado) que quebram o JSON do PostgREST. */
+function safeText(value: string | null): string | null {
+  if (value == null) return null;
+  const cleaned = value
+    .replace(/[\uD800-\uDBFF](?![\uDC00-\uDFFF])/g, "")
+    .replace(/(^|[^\uD800-\uDBFF])[\uDC00-\uDFFF]/g, "$1")
+    .replace(/\u0000/g, "");
+  return cleaned;
+}
 // view_count não é acessível fora da Business Discovery API: views vêm de /insights.
 
 type IgMedia = any;
 
-async function listInstagramMedia(client: GraphClient, igId: string, sinceIso: string | null) {
+async function listInstagramMedia(client: GraphClient, igId: string) {
   const items: IgMedia[] = [];
   let page = await client.get(`${igId}/media`, { fields: POST_FIELDS, limit: 100 });
   for (;;) {
-    for (const item of page?.data ?? []) {
-      if (sinceIso && item.timestamp && item.timestamp <= sinceIso) return items;
-      items.push(item);
-    }
+    for (const item of page?.data ?? []) items.push(item);
     const next = page?.paging?.next;
     // Só paramos quando paging.next some — nunca por "vieram menos que o limit".
     if (!next || items.length >= 500) return items;
     page = await client.getUrl(next);
   }
 }
+
 
 function insightMetricsFor(productType: string): string[] | null {
   switch (productType) {
@@ -341,21 +349,23 @@ async function fetchInsightsBatch(
 
 async function syncInstagramPosts(client: GraphClient, igId: string, notes: string[]) {
   const db = await admin();
-  const { data: lastRow } = await db
+  const { data: storedRows } = await db
     .from("social_posts")
-    .select("published_at")
+    .select("content_id, metrics_available")
     .eq("platform", "instagram")
     .eq("origin", POST_ORIGIN.api)
-    .order("published_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
-  // Cursores expiram: o incremental usa o timestamp do último post processado.
-  const sinceIso: string | null = lastRow?.published_at ?? null;
+    .limit(1000);
+  // Cursores expiram: guardamos quais mídias já têm métrica boa para não repetir insight.
+  const settled = new Set(
+    (storedRows ?? []).filter((r: any) => r.metrics_available).map((r: any) => String(r.content_id)),
+  );
 
-  const media = await listInstagramMedia(client, igId, sinceIso);
+  // Paginação completa: percorremos todas as páginas de /media (teto de 500).
+  const media = await listInstagramMedia(client, igId);
   if (media.length === 0) return 0;
 
   const groups = new Map<string, IgMedia[]>();
+  const recentCutoff = new Date(Date.now() - 7 * 86_400_000).toISOString();
   for (const item of media) {
     const type = String(item.media_product_type ?? "FEED");
     if (type === "STORY") {
@@ -363,6 +373,9 @@ async function syncInstagramPosts(client: GraphClient, igId: string, notes: stri
       continue;
     }
     if (type === "AD") continue;
+    // Insight só para mídia nova, sem métrica ainda, ou publicada nos últimos 7 dias.
+    const fresh = String(item.timestamp ?? "") >= recentCutoff;
+    if (settled.has(String(item.id)) && !fresh) continue;
     const list = groups.get(type) ?? [];
     list.push(item);
     groups.set(type, list);
@@ -386,20 +399,23 @@ async function syncInstagramPosts(client: GraphClient, igId: string, notes: stri
     }
   }
 
+
   const nowIso = new Date().toISOString();
   const rows = media
     .filter((m) => String(m.media_product_type ?? "FEED") !== "AD")
+    // Mídia antiga já com métrica boa não é regravada: evita zerar valor por falta de insight.
+    .filter((m) => !settled.has(String(m.id)) || insights[String(m.id)] || unavailable[String(m.id)])
     .map((m) => {
       const id = String(m.id);
       const ins = insights[id] ?? {};
       const reason = unavailable[id] ?? null;
-      const caption: string | null = m.caption ?? null;
+      const caption: string | null = safeText(m.caption ?? null);
       return {
         platform: "instagram",
         content_id: id,
         origin: POST_ORIGIN.api,
         caption,
-        title: caption ? caption.slice(0, 140) : null,
+        title: caption ? safeText(caption.slice(0, 140)) : null,
         media_type: m.media_type ?? null,
         media_product_type: m.media_product_type ?? null,
         permalink: m.permalink ?? null,
