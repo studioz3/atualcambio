@@ -6,6 +6,7 @@
 import {
   editorialLineIds,
   emptyMetrics,
+  emptyStateText,
   platformIds,
   socialPlatforms,
   type SocialAccountStatus,
@@ -15,6 +16,7 @@ import {
   type SocialOverview,
   type SocialPostRow,
   type SocialSeriesPoint,
+  type SocialSyncRun,
 } from "./social-shared";
 
 type StaffCtx = { supabase: any; userId: string; claims: Record<string, unknown> };
