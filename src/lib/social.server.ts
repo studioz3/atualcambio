@@ -19,8 +19,16 @@ import {
   type SocialSyncRun,
   dailyMetricColumn,
   deriveContentType,
-  platformProvidesMetric,
 } from "./social-shared";
+import { supabaseAdmin } from "@/integrations/supabase/client.server";
+
+/**
+ * Leituras do cockpit usam o cliente de serviço: o acesso já foi validado por
+ * assertStaff e as tabelas do sync são server-only (sem GRANT para authenticated).
+ */
+function readDb(_ctx: StaffCtx) {
+  return supabaseAdmin as any;
+}
 
 type StaffCtx = { supabase: any; userId: string; claims: Record<string, unknown> };
 
@@ -253,7 +261,7 @@ function mapRun(r: any): SocialSyncRun {
 }
 
 export async function fetchSocialSyncRuns(ctx: StaffCtx, limit = 20): Promise<SocialSyncRun[]> {
-  const { data } = await ctx.supabase
+  const { data } = await readDb(ctx)
     .from("social_sync_runs")
     .select("*")
     .order("started_at", { ascending: false })
@@ -310,7 +318,7 @@ function healthOf(input: {
 
 export async function fetchSocialAccounts(ctx: StaffCtx): Promise<SocialAccountStatus[]> {
   const [{ data }, runs] = await Promise.all([
-    ctx.supabase.from("social_accounts").select("*"),
+    readDb(ctx).from("social_accounts").select("*"),
     fetchSocialSyncRuns(ctx, 60),
   ]);
   const rows = (data ?? []) as any[];
@@ -352,7 +360,7 @@ export async function fetchSocialOverview(
   const lines = filters.editorialLines;
   const types = filters.contentTypes;
 
-  let postQuery = ctx.supabase
+  let postQuery = readDb(ctx)
     .from("social_posts")
     .select(
       "id, platform, editorial_line, content_type, title, caption, url, permalink, thumbnail_url, published_at, campaign, utm_campaign, utm_content, cms_content_id, metrics_available, metrics_unavailable_reason, reach, impressions, views, engagements, likes, comments, shares, saves, clicks, avg_watch_time, editorial_content ( titulo )",
@@ -370,12 +378,12 @@ export async function fetchSocialOverview(
   const postIds = postRows.map((p) => p.id);
 
   const { data: metricData } = postIds.length
-    ? await ctx.supabase.from("social_post_metrics").select("*").in("post_id", postIds)
+    ? await readDb(ctx).from("social_post_metrics").select("*").in("post_id", postIds)
     : { data: [] as any[] };
   const metricRows = (metricData ?? []) as any[];
 
   // Série diária por plataforma: social_metrics_daily é o que o sync grava (long format).
-  let dailyQuery = ctx.supabase
+  let dailyQuery = readDb(ctx)
     .from("social_metrics_daily")
     .select("platform, metric, value, date")
     .in("platform", platforms)
@@ -387,7 +395,7 @@ export async function fetchSocialOverview(
 
 
   // Leads e newsletter — atribuição por UTM já capturada nos formulários do site.
-  let leadQuery = ctx.supabase
+  let leadQuery = readDb(ctx)
     .from("leads")
     .select("created_at, status, utm_source, utm_campaign, utm_content")
     .eq("is_teste", false)
@@ -402,7 +410,7 @@ export async function fetchSocialOverview(
 
   let previousLeads: LeadRow[] = [];
   if (filters.previousFrom && filters.previousTo) {
-    const { data: prev } = await ctx.supabase
+    const { data: prev } = await readDb(ctx)
       .from("leads")
       .select("created_at, status, utm_source, utm_campaign, utm_content")
       .eq("is_teste", false)
@@ -415,7 +423,7 @@ export async function fetchSocialOverview(
     });
   }
 
-  let newsQuery = ctx.supabase
+  let newsQuery = readDb(ctx)
     .from("newsletter_subscribers")
     .select("created_at, utm_source, momento_atual, cripto_wine, vida_atual")
     .eq("is_teste", false);
