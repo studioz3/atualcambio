@@ -118,27 +118,11 @@ export type DailyRow = {
   followers_lost: number | null;
 };
 
-const dailyMetricMap: Record<string, keyof DailyRow> = {
-  reach: "reach",
-  page_total_media_view_unique: "reach",
-  impressions: "impressions",
-  views: "views",
-  total_interactions: "engagements",
-  engagements: "engagements",
-  profile_links_taps: "clicks",
-  clicks: "clicks",
-  shares: "shares",
-  saves: "saves",
-  followers: "followers",
-  fan_count: "followers",
-  page_follows: "followers_gained",
-};
-
 export function foldDailyMetrics(rows: { platform: string; metric: string; value: number | string; date: string }[]): DailyRow[] {
   const map = new Map<string, DailyRow>();
   for (const r of rows) {
-    const column = dailyMetricMap[r.metric];
-    if (!column) continue;
+    const column = dailyMetricColumn(r.platform, r.metric);
+    if (!column || column === "impressions") continue;
     const key = `${r.platform}|${r.date}`;
     let row = map.get(key);
     if (!row) {
@@ -161,10 +145,12 @@ export function foldDailyMetrics(rows: { platform: string; metric: string; value
     const value = Number(r.value);
     if (!Number.isFinite(value)) continue;
     if (column === "followers") row.followers = value;
+    else if (column === "followersGained") row.followers_gained = (row.followers_gained ?? 0) + value;
     else (row[column] as number | null) = ((row[column] as number | null) ?? 0) + value;
   }
   return [...map.values()].sort((a, b) => a.metric_date.localeCompare(b.metric_date));
 }
+
 
 
 const dealStatuses = new Set(["Negócio fechado"]);
