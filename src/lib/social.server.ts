@@ -363,7 +363,7 @@ export async function fetchSocialOverview(
   let postQuery = readDb(ctx)
     .from("social_posts")
     .select(
-      "id, platform, editorial_line, content_type, title, caption, url, permalink, thumbnail_url, published_at, campaign, utm_campaign, utm_content, cms_content_id, metrics_available, metrics_unavailable_reason, reach, impressions, views, engagements, likes, comments, shares, saves, clicks, avg_watch_time, editorial_content ( titulo )",
+      "id, platform, editorial_line, content_type, title, caption, url, permalink, thumbnail_url, published_at, campaign, utm_campaign, utm_content, cms_content_id, metrics_available, metrics_unavailable_reason, media_type, media_product_type, reach, impressions, views, engagements, likes, comments, shares, saves, clicks, avg_watch_time, editorial_content ( titulo )",
     )
     .in("platform", platforms)
     .order("published_at", { ascending: false })
@@ -371,10 +371,17 @@ export async function fetchSocialOverview(
   if (filters.from) postQuery = postQuery.gte("published_at", filters.from);
   if (filters.to) postQuery = postQuery.lte("published_at", filters.to);
   if (lines.length) postQuery = postQuery.in("editorial_line", lines);
-  if (types.length) postQuery = postQuery.in("content_type", types);
+  // Formato NÃO é filtrado no banco: content_type ainda vem "nao_classificada" do sync.
+  // Derivamos de media_product_type/media_type e filtramos em memória.
 
   const { data: postData } = await postQuery;
-  const postRows = (postData ?? []) as any[];
+  const allPostRows = ((postData ?? []) as any[]).map((p) => ({
+    ...p,
+    content_type: deriveContentType(p.media_product_type, p.media_type, p.content_type),
+  }));
+  const postRows = types.length
+    ? allPostRows.filter((p) => types.includes(p.content_type))
+    : allPostRows;
   const postIds = postRows.map((p) => p.id);
 
   const { data: metricData } = postIds.length
