@@ -1,0 +1,1 @@
+REVOKE ALL ON FUNCTION public.run_clarity_snapshot_cron() FROM PUBLIC, anon, authenticated;
