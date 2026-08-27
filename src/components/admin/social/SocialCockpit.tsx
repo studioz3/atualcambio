@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -33,6 +33,19 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const day = 86400000;
+
+/** Respeita prefers-reduced-motion: sem animação de entrada nos gráficos. */
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReduced(mq.matches);
+    const onChange = () => setReduced(mq.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+  return reduced;
+}
 
 function useSocialRange(period: PeriodState) {
   return useMemo(() => {
@@ -77,6 +90,7 @@ export function SocialCockpit() {
   const hasAnyData =
     !!data && (data.posts.length > 0 || data.series.length > 0 || data.kpis.leads > 0);
 
+  const reducedMotion = usePrefersReducedMotion();
   const activePlatforms = data?.byPlatform.map((p) => p.platform) ?? [];
 
   /**
