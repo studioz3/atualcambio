@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
+  getClarityHistory,
   getClarityOverview,
   getCockpitInternal,
   getGa4Overview,
