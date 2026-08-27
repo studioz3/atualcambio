@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
-import { ArrowDownRight, ArrowUpRight, ExternalLink, Minus, PlugZap } from "lucide-react";
+import { AlertTriangle, ArrowDownRight, ArrowUpRight, ExternalLink, Minus, PlugZap } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { formatNumber, variation } from "@/lib/cockpit-shared";
 
 export function useReducedMotion() {

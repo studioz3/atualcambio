@@ -10,7 +10,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { AlertTriangle, ArrowRight, Upload } from "lucide-react";
+import { ArrowRight, Upload } from "lucide-react";
 import { PeriodFilter, defaultPeriod, rangeOf, type PeriodState } from "../PeriodFilter";
 import { BarList, CockpitCard, CockpitSkeleton, KpiCard } from "../cockpit/primitives";
 import { SocialTaxonomyFilters, emptyTaxonomy, type TaxonomyFilters } from "./SocialFilters";
@@ -183,24 +183,7 @@ export function SocialCockpit() {
       {query.isLoading ? <CockpitSkeleton rows={5} /> : null}
 
       {query.isError ? (
-        <section
-          role="alert"
-          className="rounded-2xl border border-destructive/60 bg-destructive/10 p-5 space-y-3"
-        >
-          <div className="flex items-center gap-2">
-            <AlertTriangle className="size-4 text-destructive" aria-hidden />
-            <h2 className="font-semibold text-white">A consulta ao banco falhou</h2>
-          </div>
-          <p className="text-sm text-white/70">
-            Isto <strong>não</strong> significa ausência de dados no período — a leitura retornou erro.
-          </p>
-          <pre className="overflow-x-auto whitespace-pre-wrap rounded-lg bg-black/40 p-3 text-xs text-destructive-foreground/90">
-            {(query.error as Error).message}
-          </pre>
-          <Button size="sm" variant="secondary" onClick={() => query.refetch()}>
-            Tentar novamente
-          </Button>
-        </section>
+        <QueryErrorCard error={query.error} onRetry={() => query.refetch()} />
       ) : null}
 
       {data && !hasAnyData ? (
