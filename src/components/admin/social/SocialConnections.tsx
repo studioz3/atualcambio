@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { AlertTriangle, CheckCircle2, CircleDashed, Clock, ExternalLink, RefreshCw, Settings2, Zap } from "lucide-react";
-import { CockpitCard, CockpitSkeleton , QueryErrorCard } from "../cockpit/primitives";
+import { CockpitCard, CockpitSkeleton, QueryErrorCard } from "../cockpit/primitives";
 import { getSocialAccounts, getSocialSyncRuns, saveSocialAccount } from "@/lib/social.functions";
 import { startSocialOAuth } from "@/lib/social-oauth.functions";
 import {
