@@ -522,14 +522,52 @@ function clarityHost(value: string) {
   }
 }
 
+const CLARITY_SNAPSHOT_KEY = "live-insights-3d";
+
+async function readClaritySnapshot(): Promise<{ at: number; data: ClarityOverview } | null> {
+  try {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data, error } = await supabaseAdmin
+      .from("clarity_snapshots")
+      .select("payload, fetched_at")
+      .eq("key", CLARITY_SNAPSHOT_KEY)
+      .maybeSingle();
+    if (error || !data) return null;
+    return {
+      at: new Date(data.fetched_at as string).getTime(),
+      data: data.payload as unknown as ClarityOverview,
+    };
+  } catch {
+    return null;
+  }
+}
+
+async function writeClaritySnapshot(data: ClarityOverview) {
+  try {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    await supabaseAdmin
+      .from("clarity_snapshots")
+      .upsert(
+        { key: CLARITY_SNAPSHOT_KEY, payload: data as unknown as Record<string, unknown>, fetched_at: new Date().toISOString() },
+        { onConflict: "key" },
+      );
+  } catch {
+    /* cache best-effort */
+  }
+}
+
 export async function fetchClarity(input: { days: number; force: boolean }): Promise<ClarityOverview> {
   const token = process.env["CLARITY_API_TOKEN"];
   if (!token) throw new Error("Clarity não configurado.");
 
   const now = Date.now();
+  // Cache persistente: a API do Clarity tem limite diário baixo e o cache em
+  // memória se perde a cada reinício do servidor.
+  if (!clarityCache) clarityCache = await readClaritySnapshot();
+
   const fresh = clarityCache && now - clarityCache.at < CLARITY_TTL_MS;
   const cooling = now - clarityLastCall < CLARITY_COOLDOWN_MS;
-  if (clarityCache && (fresh || (input.force && cooling))) {
+  if (clarityCache && (fresh || cooling)) {
     return { ...clarityCache.data, stale: !fresh };
   }
 
@@ -541,7 +579,10 @@ export async function fetchClarity(input: { days: number; force: boolean }): Pro
       url.searchParams.set("numOfDays", String(days));
       if (dimension) url.searchParams.set("dimension1", dimension);
       const res = await fetch(url.toString(), { headers: { Authorization: `Bearer ${token}` } });
-      if (!res.ok) throw new Error(`Clarity respondeu ${res.status}`);
+      if (!res.ok) {
+        const body = (await res.text().catch(() => "")).slice(0, 200);
+        throw new Error(`Clarity respondeu ${res.status}${body ? ` — ${body}` : ""}`);
+      }
       return (await res.json()) as ClarityRaw;
     };
 
@@ -556,10 +597,16 @@ export async function fetchClarity(input: { days: number; force: boolean }): Pro
       projectUrl: clarityProjectUrl(),
     };
     clarityCache = { at: now, data };
+    await writeClaritySnapshot(data);
     return data;
   } catch (err) {
-    if (clarityCache) return { ...clarityCache.data, stale: true };
+    const snapshot = clarityCache ?? (await readClaritySnapshot());
+    if (snapshot) {
+      clarityCache = snapshot;
+      return { ...snapshot.data, stale: true, staleReason: (err as Error).message };
+    }
     throw err;
   }
 }
+
 
