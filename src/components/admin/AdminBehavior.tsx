@@ -23,11 +23,11 @@ import { Button } from "@/components/ui/button";
 export function AdminBehavior() {
   const [period, setPeriod] = useState<PeriodState>(defaultPeriod);
   const [selected, setSelected] = useState<string>("todas");
-  const [force, setForce] = useState(false);
 
   const integrations = useIntegrations();
   const clarityEnabled = integrations.data?.clarity === true;
-  const clarity = useClarity(clarityEnabled, force);
+  const clarity = useClarity(clarityEnabled);
+
   const ga4 = useGa4(period, integrations.data?.ga4 === true);
   const internal = useInternal(period);
 
