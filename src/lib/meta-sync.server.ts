@@ -255,7 +255,7 @@ async function backfillInstagramReach(client: GraphClient, igId: string, days: n
 const POST_FIELDS =
   "id,caption,media_type,media_product_type,permalink,thumbnail_url,timestamp,like_count,comments_count,saved_count,shares_count,view_count";
 
-type IgMedia = Record<string, any>;
+type IgMedia = any;
 
 async function listInstagramMedia(client: GraphClient, igId: string, sinceIso: string | null) {
   const items: IgMedia[] = [];
@@ -303,15 +303,8 @@ async function fetchInsightsBatch(
   ids: string[],
   metrics: string[],
 ): Promise<{ byId: Record<string, Record<string, number>>; unavailable: string | null }> {
-  const attempt = async (metricList: string[]) =>
-    client.get("", { ids: ids.join(","), metric: metricList.join(","), fields: undefined } as any);
-
-  const call = async (metricList: string[]) => {
-    const url = new URL(`https://graph.facebook.com/${GRAPH_VERSION}/insights`);
-    void url;
-    return client.get("insights", { ids: ids.join(","), metric: metricList.join(",") });
-  };
-  void attempt;
+  const call = (metricList: string[]) =>
+    client.get("insights", { ids: ids.join(","), metric: metricList.join(",") });
 
   try {
     const payload = await call(metrics);
