@@ -17,6 +17,9 @@ import {
   type SocialPostRow,
   type SocialSeriesPoint,
   type SocialSyncRun,
+  dailyMetricColumn,
+  deriveContentType,
+  platformProvidesMetric,
 } from "./social-shared";
 
 type StaffCtx = { supabase: any; userId: string; claims: Record<string, unknown> };
@@ -146,7 +149,10 @@ export function foldDailyMetrics(rows: { platform: string; metric: string; value
     if (!Number.isFinite(value)) continue;
     if (column === "followers") row.followers = value;
     else if (column === "followersGained") row.followers_gained = (row.followers_gained ?? 0) + value;
-    else (row[column] as number | null) = ((row[column] as number | null) ?? 0) + value;
+    else {
+      const col = column as "reach" | "impressions" | "views" | "engagements" | "clicks" | "shares" | "saves";
+      row[col] = (row[col] ?? 0) + value;
+    }
   }
   return [...map.values()].sort((a, b) => a.metric_date.localeCompare(b.metric_date));
 }
