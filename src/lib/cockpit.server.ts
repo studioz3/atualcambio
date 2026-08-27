@@ -556,57 +556,75 @@ async function writeClaritySnapshot(data: ClarityOverview) {
   }
 }
 
-export async function fetchClarity(input: { days: number; force: boolean }): Promise<ClarityOverview> {
-  const token = process.env["CLARITY_API_TOKEN"];
-  if (!token) throw new Error("Clarity não configurado.");
-
-  const now = Date.now();
-  // Cache persistente: a API do Clarity tem limite diário baixo e o cache em
-  // memória se perde a cada reinício do servidor.
+/**
+ * Leitura do cockpit — NUNCA chama a API do Clarity.
+ * A API da Microsoft libera apenas 10 chamadas por dia e por projeto; cada coleta
+ * gasta 2 chamadas. Por isso a coleta é feita por job agendado (4x/dia = 8 chamadas)
+ * e o cockpit lê somente o último snapshot gravado no banco.
+ */
+export async function fetchClarity(): Promise<ClarityOverview> {
   if (!clarityCache) clarityCache = await readClaritySnapshot();
-
-  const fresh = clarityCache && now - clarityCache.at < CLARITY_TTL_MS;
-  const cooling = now - clarityLastCall < CLARITY_COOLDOWN_MS;
-  if (clarityCache && (fresh || cooling)) {
-    return { ...clarityCache.data, stale: !fresh };
+  const snapshot = clarityCache ?? (await readClaritySnapshot());
+  if (!snapshot) {
+    throw new Error(
+      "Nenhuma coleta do Clarity gravada ainda. A próxima coleta agendada preenche os dados.",
+    );
   }
+  const ageMs = Date.now() - snapshot.at;
+  const stale = ageMs > CLARITY_TTL_MS;
+  return {
+    ...snapshot.data,
+    projectUrl: clarityProjectUrl(),
+    stale,
+    ...(stale
+      ? { staleReason: "última coleta agendada com mais de 8 horas" }
+      : {}),
+  };
+}
 
-  clarityLastCall = now;
+/**
+ * Coleta agendada — única função autorizada a consumir a cota da API do Clarity.
+ * Gasta 2 chamadas (agregado + quebra por URL) e grava o snapshot no banco.
+ */
+export async function collectClaritySnapshot(days = 3): Promise<{
+  ok: boolean;
+  updatedAt?: string;
+  error?: string;
+  apiCalls: number;
+}> {
+  const token = process.env["CLARITY_API_TOKEN"];
+  if (!token) return { ok: false, error: "Clarity não configurado.", apiCalls: 0 };
+
+  let apiCalls = 0;
+  const call = async (dimension?: string) => {
+    const url = new URL("https://www.clarity.ms/export-data/api/v1/project-live-insights");
+    url.searchParams.set("numOfDays", String(Math.min(3, Math.max(1, days))));
+    if (dimension) url.searchParams.set("dimension1", dimension);
+    apiCalls += 1;
+    const res = await fetch(url.toString(), { headers: { Authorization: `Bearer ${token}` } });
+    if (!res.ok) {
+      const body = (await res.text().catch(() => "")).slice(0, 200);
+      throw new Error(`Clarity respondeu ${res.status}${body ? ` — ${body}` : ""}`);
+    }
+    return (await res.json()) as ClarityRaw;
+  };
+
   try {
-    const days = Math.min(3, Math.max(1, input.days));
-    const call = async (dimension?: string) => {
-      const url = new URL("https://www.clarity.ms/export-data/api/v1/project-live-insights");
-      url.searchParams.set("numOfDays", String(days));
-      if (dimension) url.searchParams.set("dimension1", dimension);
-      const res = await fetch(url.toString(), { headers: { Authorization: `Bearer ${token}` } });
-      if (!res.ok) {
-        const body = (await res.text().catch(() => "")).slice(0, 200);
-        throw new Error(`Clarity respondeu ${res.status}${body ? ` — ${body}` : ""}`);
-      }
-      return (await res.json()) as ClarityRaw;
-    };
-
     const base = await call();
     const byUrl = await call("URL").catch(() => [] as ClarityRaw);
-
-    const parsed = parseClarity(base, byUrl);
     const data: ClarityOverview = {
-      ...parsed,
+      ...parseClarity(base, byUrl),
       updatedAt: new Date().toISOString(),
       stale: false,
       projectUrl: clarityProjectUrl(),
     };
-    clarityCache = { at: now, data };
+    clarityCache = { at: Date.now(), data };
     await writeClaritySnapshot(data);
-    return data;
+    return { ok: true, updatedAt: data.updatedAt, apiCalls };
   } catch (err) {
-    const snapshot = clarityCache ?? (await readClaritySnapshot());
-    if (snapshot) {
-      clarityCache = snapshot;
-      return { ...snapshot.data, stale: true, staleReason: (err as Error).message };
-    }
-    throw err;
+    return { ok: false, error: (err as Error).message, apiCalls };
   }
 }
+
 
 
