@@ -33,6 +33,8 @@ export function AdminBehavior() {
   const integrations = useIntegrations();
   const clarityEnabled = integrations.data?.clarity === true;
   const clarity = useClarity(clarityEnabled);
+  const history = useClarityHistory(period, clarityEnabled);
+  const historyPoints = history.data?.configured ? history.data.data : [];
 
   const ga4 = useGa4(period, integrations.data?.ga4 === true);
   const internal = useInternal(period);
