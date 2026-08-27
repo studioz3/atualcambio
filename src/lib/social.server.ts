@@ -190,7 +190,7 @@ export async function fetchSocialOverview(
   let postQuery = ctx.supabase
     .from("social_posts")
     .select(
-      "id, platform, editorial_line, content_type, title, url, thumbnail_url, published_at, campaign, utm_campaign, utm_content, cms_content_id, editorial_content ( titulo )",
+      "id, platform, editorial_line, content_type, title, caption, url, permalink, thumbnail_url, published_at, campaign, utm_campaign, utm_content, cms_content_id, metrics_available, metrics_unavailable_reason, reach, impressions, views, engagements, likes, comments, shares, saves, clicks, avg_watch_time, editorial_content ( titulo )",
     )
     .in("platform", platforms)
     .order("published_at", { ascending: false })
@@ -209,15 +209,17 @@ export async function fetchSocialOverview(
     : { data: [] as any[] };
   const metricRows = (metricData ?? []) as any[];
 
+  // Série diária por plataforma: social_metrics_daily é o que o sync grava (long format).
   let dailyQuery = ctx.supabase
-    .from("social_platform_daily")
-    .select("*")
+    .from("social_metrics_daily")
+    .select("platform, metric, value, date")
     .in("platform", platforms)
-    .order("metric_date", { ascending: true });
-  if (filters.from) dailyQuery = dailyQuery.gte("metric_date", filters.from.slice(0, 10));
-  if (filters.to) dailyQuery = dailyQuery.lte("metric_date", filters.to.slice(0, 10));
+    .order("date", { ascending: true });
+  if (filters.from) dailyQuery = dailyQuery.gte("date", filters.from.slice(0, 10));
+  if (filters.to) dailyQuery = dailyQuery.lte("date", filters.to.slice(0, 10));
   const { data: dailyData } = await dailyQuery;
-  const dailyRows = (dailyData ?? []) as any[];
+  const dailyRows = foldDailyMetrics((dailyData ?? []) as any[]);
+
 
   // Leads e newsletter — atribuição por UTM já capturada nos formulários do site.
   let leadQuery = ctx.supabase
