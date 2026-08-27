@@ -388,13 +388,32 @@ export async function fetchSocialOverview(
   const posts: SocialPostRow[] = postRows.map((p) => {
     const leads = leadsByPost.get(p.id) ?? [];
     const c = countLeads(leads);
+    // Métricas do próprio post (gravadas pelo sync) + eventuais linhas diárias (CSV do Spotify).
+    const base = rowMetrics(metricsByPost.get(p.id) ?? []);
+    const available = p.metrics_available !== false;
+    if (available) {
+      mergeMetrics(base, {
+        ...emptyMetrics,
+        reach: p.reach == null ? null : Number(p.reach),
+        impressions: p.impressions == null ? null : Number(p.impressions),
+        views: p.views == null ? null : Number(p.views),
+        engagements: p.engagements == null ? null : Number(p.engagements),
+        shares: p.shares == null ? null : Number(p.shares),
+        saves: p.saves == null ? null : Number(p.saves),
+        clicks: p.clicks == null ? null : Number(p.clicks),
+      });
+      if (base.avgViewSeconds == null && p.avg_watch_time != null) {
+        base.avgViewSeconds = Number(p.avg_watch_time);
+      }
+    }
     return {
       id: p.id,
       platform: p.platform,
       editorialLine: p.editorial_line,
       contentType: p.content_type,
-      title: p.title,
-      url: p.url,
+      title: p.title ?? p.caption ?? null,
+      caption: p.caption ?? null,
+      url: p.url ?? p.permalink ?? null,
       thumbnailUrl: p.thumbnail_url,
       publishedAt: p.published_at,
       campaign: p.campaign,
@@ -402,7 +421,9 @@ export async function fetchSocialOverview(
       utmCampaign: p.utm_campaign,
       cmsContentId: p.cms_content_id,
       cmsTitle: p.editorial_content?.titulo ?? null,
-      metrics: rowMetrics(metricsByPost.get(p.id) ?? []),
+      metricsAvailable: available,
+      metricsUnavailableReason: p.metrics_unavailable_reason ?? null,
+      metrics: available ? base : { ...emptyMetrics },
       ...c,
     };
   });
@@ -430,7 +451,10 @@ export async function fetchSocialOverview(
       }
       const daily = dailyRows.filter((d) => platformScope.includes(d.platform));
       if (daily.length) {
-        const last = daily[daily.length - 1];
+        // No nível de plataforma a série diária é a fonte oficial:
+        // evita somar duas vezes o que já veio no post.
+        Object.assign(agg, emptyMetrics);
+        const last = daily[daily.length - 1]!;
         agg.followers = last.followers ?? null;
         const gained = daily.reduce<number | null>((a, d) => addMetric(a, d.followers_gained ?? null), null);
         const lost = daily.reduce<number | null>((a, d) => addMetric(a, d.followers_lost ?? null), null);
@@ -442,12 +466,15 @@ export async function fetchSocialOverview(
             impressions: d.impressions ?? null,
             views: d.views ?? null,
             engagements: d.engagements ?? null,
+            shares: d.shares ?? null,
+            saves: d.saves ?? null,
             clicks: d.clicks ?? null,
           });
         }
       }
     }
     return agg;
+
   }
 
   const kpis = { ...aggregate(posts, platforms) } as SocialOverview["kpis"];
