@@ -77,11 +77,12 @@ export function useRealtime(enabled: boolean) {
   });
 }
 
-export function useClarity(enabled: boolean, force = false) {
+export function useClarity(enabled: boolean) {
   return useQuery({
-    queryKey: ["cockpit-clarity", force],
-    queryFn: () => getClarityOverview({ data: { days: 3, force } }),
+    queryKey: ["cockpit-clarity"],
+    queryFn: () => getClarityOverview(),
     enabled,
     staleTime: 1000 * 60 * 30,
   });
 }
+

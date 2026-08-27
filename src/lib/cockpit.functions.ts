@@ -66,22 +66,20 @@ export const getGa4Realtime = createServerFn({ method: "GET" })
 
 export const getClarityOverview = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((data: unknown) =>
-    z.object({ days: z.number().min(1).max(3).default(3), force: z.boolean().default(false) }).parse(data),
-  )
-  .handler(async ({ context, data }): Promise<ClarityResult> => {
+  .handler(async ({ context }): Promise<ClarityResult> => {
     const { assertStaff, clarityConfigured, fetchClarity } = await import("./cockpit.server");
     await assertStaff(context as any);
     if (!clarityConfigured()) {
       return { configured: false, reason: "Conecte o Microsoft Clarity para ver comportamento e mapas de calor." };
     }
     try {
-      return { configured: true, data: await fetchClarity(data) };
+      return { configured: true, data: await fetchClarity() };
     } catch (error) {
       console.error("[cockpit] Clarity falhou", error);
       return { configured: false, reason: (error as Error).message };
     }
   });
+
 
 export const getCockpitInternal = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])

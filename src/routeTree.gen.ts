@@ -58,6 +58,7 @@ import { Route as AdminIntegracoesIndexRouteImport } from './routes/admin.integr
 import { Route as AdminIntegracoesSocialRouteImport } from './routes/admin.integracoes.social'
 import { Route as AdminSocialIndexRouteImport } from './routes/admin.social.index'
 import { Route as ApiAdminSocialSyncRouteImport } from './routes/api/admin/social-sync'
+import { Route as ApiCronClaritySnapshotRouteImport } from './routes/api/cron/clarity-snapshot'
 import { Route as ApiCronSocialSyncRouteImport } from './routes/api/cron/social-sync'
 import { Route as ApiPublicAnalyticsHealthRouteImport } from './routes/api/public/analytics-health'
 import { Route as AdminSocialSpotifyImportarRouteImport } from './routes/admin.social.spotify.importar'
@@ -310,6 +311,11 @@ const ApiAdminSocialSyncRoute = ApiAdminSocialSyncRouteImport.update({
   path: '/api/admin/social-sync',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiCronClaritySnapshotRoute = ApiCronClaritySnapshotRouteImport.update({
+  id: '/api/cron/clarity-snapshot',
+  path: '/api/cron/clarity-snapshot',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiCronSocialSyncRoute = ApiCronSocialSyncRouteImport.update({
   id: '/api/cron/social-sync',
   path: '/api/cron/social-sync',
@@ -387,6 +393,7 @@ export interface FileRoutesByFullPath {
   '/admin/conteudo/novo': typeof AdminConteudoNovoRoute
   '/admin/integracoes/social': typeof AdminIntegracoesSocialRoute
   '/api/admin/social-sync': typeof ApiAdminSocialSyncRoute
+  '/api/cron/clarity-snapshot': typeof ApiCronClaritySnapshotRoute
   '/api/cron/social-sync': typeof ApiCronSocialSyncRoute
   '/api/public/analytics-health': typeof ApiPublicAnalyticsHealthRoute
   '/admin/conteudo/': typeof AdminConteudoIndexRoute
@@ -443,6 +450,7 @@ export interface FileRoutesByTo {
   '/admin/conteudo/novo': typeof AdminConteudoNovoRoute
   '/admin/integracoes/social': typeof AdminIntegracoesSocialRoute
   '/api/admin/social-sync': typeof ApiAdminSocialSyncRoute
+  '/api/cron/clarity-snapshot': typeof ApiCronClaritySnapshotRoute
   '/api/cron/social-sync': typeof ApiCronSocialSyncRoute
   '/api/public/analytics-health': typeof ApiPublicAnalyticsHealthRoute
   '/admin/conteudo': typeof AdminConteudoIndexRoute
@@ -500,6 +508,7 @@ export interface FileRoutesById {
   '/admin/conteudo/novo': typeof AdminConteudoNovoRoute
   '/admin/integracoes/social': typeof AdminIntegracoesSocialRoute
   '/api/admin/social-sync': typeof ApiAdminSocialSyncRoute
+  '/api/cron/clarity-snapshot': typeof ApiCronClaritySnapshotRoute
   '/api/cron/social-sync': typeof ApiCronSocialSyncRoute
   '/api/public/analytics-health': typeof ApiPublicAnalyticsHealthRoute
   '/admin/conteudo/': typeof AdminConteudoIndexRoute
@@ -558,6 +567,7 @@ export interface FileRouteTypes {
     | '/admin/conteudo/novo'
     | '/admin/integracoes/social'
     | '/api/admin/social-sync'
+    | '/api/cron/clarity-snapshot'
     | '/api/cron/social-sync'
     | '/api/public/analytics-health'
     | '/admin/conteudo/'
@@ -614,6 +624,7 @@ export interface FileRouteTypes {
     | '/admin/conteudo/novo'
     | '/admin/integracoes/social'
     | '/api/admin/social-sync'
+    | '/api/cron/clarity-snapshot'
     | '/api/cron/social-sync'
     | '/api/public/analytics-health'
     | '/admin/conteudo'
@@ -670,6 +681,7 @@ export interface FileRouteTypes {
     | '/admin/conteudo/novo'
     | '/admin/integracoes/social'
     | '/api/admin/social-sync'
+    | '/api/cron/clarity-snapshot'
     | '/api/cron/social-sync'
     | '/api/public/analytics-health'
     | '/admin/conteudo/'
@@ -727,6 +739,7 @@ export interface RootRouteChildren {
   AdminConteudoNovoRoute: typeof AdminConteudoNovoRoute
   AdminIntegracoesSocialRoute: typeof AdminIntegracoesSocialRoute
   ApiAdminSocialSyncRoute: typeof ApiAdminSocialSyncRoute
+  ApiCronClaritySnapshotRoute: typeof ApiCronClaritySnapshotRoute
   ApiCronSocialSyncRoute: typeof ApiCronSocialSyncRoute
   ApiPublicAnalyticsHealthRoute: typeof ApiPublicAnalyticsHealthRoute
   AdminConteudoIndexRoute: typeof AdminConteudoIndexRoute
@@ -1082,6 +1095,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminSocialSyncRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/cron/clarity-snapshot': {
+      id: '/api/cron/clarity-snapshot'
+      path: '/api/cron/clarity-snapshot'
+      fullPath: '/api/cron/clarity-snapshot'
+      preLoaderRoute: typeof ApiCronClaritySnapshotRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/cron/social-sync': {
       id: '/api/cron/social-sync'
       path: '/api/cron/social-sync'
@@ -1167,6 +1187,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminConteudoNovoRoute: AdminConteudoNovoRoute,
   AdminIntegracoesSocialRoute: AdminIntegracoesSocialRoute,
   ApiAdminSocialSyncRoute: ApiAdminSocialSyncRoute,
+  ApiCronClaritySnapshotRoute: ApiCronClaritySnapshotRoute,
   ApiCronSocialSyncRoute: ApiCronSocialSyncRoute,
   ApiPublicAnalyticsHealthRoute: ApiPublicAnalyticsHealthRoute,
   AdminConteudoIndexRoute: AdminConteudoIndexRoute,
