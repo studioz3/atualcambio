@@ -509,7 +509,6 @@ async function syncFacebook(client: GraphClient, pageId: string): Promise<Omit<S
     status: "conectado",
   });
 
-  let mirrored = false;
   try {
     const insights = await client.get(`${pageId}/insights`, {
       metric: "page_total_media_view_unique,page_follows",
@@ -523,7 +522,7 @@ async function syncFacebook(client: GraphClient, pageId: string): Promise<Omit<S
       }
     }
     if (rows.length === 0) {
-      mirrored = true;
+      notes.push("Insights de página não retornaram pontos diários neste run.");
     } else {
       items += await saveDaily("facebook", rows);
     }
@@ -535,20 +534,20 @@ async function syncFacebook(client: GraphClient, pageId: string): Promise<Omit<S
   await upsertAccount("facebook", {
     status: "conectado",
     last_sync_at: new Date().toISOString(),
-    last_error: mirrored ? MIRROR_NOTICE : null,
-    last_error_at: mirrored ? new Date().toISOString() : null,
+    last_error: null,
+    last_error_at: null,
   });
-  if (mirrored) notes.push(MIRROR_NOTICE);
 
   return {
     ok: true,
     status: "ok",
-    message: mirrored ? MIRROR_NOTICE : "Facebook sincronizado.",
+    message: "Facebook sincronizado.",
     itemsSynced: items,
     rateLimitPct: client.usagePct(),
     notes,
   };
 }
+
 
 /* ================================ ORQUESTRAÇÃO ================================ */
 
