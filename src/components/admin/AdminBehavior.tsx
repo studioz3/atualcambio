@@ -6,7 +6,13 @@ import {
   EmptyIntegration,
   KpiCard,
 } from "./cockpit/primitives";
-import { useClarity, useGa4, useIntegrations, useInternal } from "./cockpit/useCockpit";
+import {
+  useClarity,
+  useClarityHistory,
+  useGa4,
+  useIntegrations,
+  useInternal,
+} from "./cockpit/useCockpit";
 import { defaultPeriod, PeriodFilter, type PeriodState } from "./PeriodFilter";
 import {
   buildInsights,
