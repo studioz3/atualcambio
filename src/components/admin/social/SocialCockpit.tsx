@@ -12,7 +12,7 @@ import {
 } from "recharts";
 import { ArrowRight, Upload } from "lucide-react";
 import { PeriodFilter, defaultPeriod, rangeOf, type PeriodState } from "../PeriodFilter";
-import { BarList, CockpitCard, CockpitSkeleton, KpiCard } from "../cockpit/primitives";
+import { BarList, CockpitCard, CockpitSkeleton, KpiCard, QueryErrorCard } from "../cockpit/primitives";
 import { SocialTaxonomyFilters, emptyTaxonomy, type TaxonomyFilters } from "./SocialFilters";
 import { SocialPostDialog } from "./SocialPostDialog";
 import { getSocialOverview } from "@/lib/social.functions";
@@ -183,9 +183,7 @@ export function SocialCockpit() {
       {query.isLoading ? <CockpitSkeleton rows={5} /> : null}
 
       {query.isError ? (
-        <CockpitCard title="Não foi possível carregar">
-          <p className="text-sm text-white/60">{(query.error as Error).message}</p>
-        </CockpitCard>
+        <QueryErrorCard error={query.error} onRetry={() => query.refetch()} />
       ) : null}
 
       {data && !hasAnyData ? (

@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { AlertTriangle, CheckCircle2, CircleDashed, Clock, ExternalLink, RefreshCw, Settings2, Zap } from "lucide-react";
-import { CockpitCard, CockpitSkeleton } from "../cockpit/primitives";
+import { CockpitCard, CockpitSkeleton, QueryErrorCard } from "../cockpit/primitives";
 import { getSocialAccounts, getSocialSyncRuns, saveSocialAccount } from "@/lib/social.functions";
 import { startSocialOAuth } from "@/lib/social-oauth.functions";
 import {
@@ -291,6 +291,17 @@ export function SocialConnections() {
       </div>
 
       {accounts.isLoading ? <CockpitSkeleton rows={5} /> : null}
+
+      {accounts.isError ? (
+        <QueryErrorCard error={accounts.error} onRetry={() => accounts.refetch()} />
+      ) : null}
+      {runs.isError ? (
+        <QueryErrorCard
+          title="Não foi possível ler o histórico de sincronizações"
+          error={runs.error}
+          onRetry={() => runs.refetch()}
+        />
+      ) : null}
 
       <div className="grid gap-6 xl:grid-cols-2">
         {groups.map((g) => (

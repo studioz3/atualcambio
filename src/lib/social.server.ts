@@ -30,6 +30,30 @@ function readDb(_ctx: StaffCtx) {
   return supabaseAdmin as any;
 }
 
+/**
+ * Nunca converter erro de banco em lista vazia: a tela precisa distinguir
+ * "sem dado no período" de "a consulta falhou".
+ */
+export class CockpitQueryError extends Error {
+  constructor(
+    readonly query: string,
+    message: string,
+    readonly details?: string | null,
+  ) {
+    super(`[${query}] ${message}`);
+    this.name = "CockpitQueryError";
+  }
+}
+
+async function must<T>(
+  label: string,
+  builder: PromiseLike<{ data: T | null; error: { message: string; details?: string | null } | null }>,
+): Promise<T[]> {
+  const { data, error } = await builder;
+  if (error) throw new CockpitQueryError(label, error.message, error.details ?? null);
+  return (data ?? []) as unknown as T[];
+}
+
 type StaffCtx = { supabase: any; userId: string; claims: Record<string, unknown> };
 
 const metricKeys: (keyof SocialMetrics)[] = [
@@ -261,12 +285,15 @@ function mapRun(r: any): SocialSyncRun {
 }
 
 export async function fetchSocialSyncRuns(ctx: StaffCtx, limit = 20): Promise<SocialSyncRun[]> {
-  const { data } = await readDb(ctx)
-    .from("social_sync_runs")
-    .select("*")
-    .order("started_at", { ascending: false })
-    .limit(limit);
-  return ((data ?? []) as any[]).map(mapRun);
+  const data = await must<any>(
+    "social_sync_runs",
+    readDb(ctx)
+      .from("social_sync_runs")
+      .select("*")
+      .order("started_at", { ascending: false })
+      .limit(limit),
+  );
+  return data.map(mapRun);
 }
 
 function healthOf(input: {
@@ -317,11 +344,10 @@ function healthOf(input: {
 }
 
 export async function fetchSocialAccounts(ctx: StaffCtx): Promise<SocialAccountStatus[]> {
-  const [{ data }, runs] = await Promise.all([
-    readDb(ctx).from("social_accounts").select("*"),
+  const [rows, runs] = await Promise.all([
+    must<any>("social_accounts", readDb(ctx).from("social_accounts").select("*")),
     fetchSocialSyncRuns(ctx, 60),
   ]);
-  const rows = (data ?? []) as any[];
   return socialPlatforms.map((p) => {
     const row = rows.find((r) => r.platform === p.id);
     const lastRun = runs.find((r) => r.platform === p.id) ?? null;
@@ -363,7 +389,7 @@ export async function fetchSocialOverview(
   let postQuery = readDb(ctx)
     .from("social_posts")
     .select(
-      "id, platform, editorial_line, content_type, title, caption, url, permalink, thumbnail_url, published_at, campaign, utm_campaign, utm_content, cms_content_id, metrics_available, metrics_unavailable_reason, media_type, media_product_type, reach, impressions, views, engagements, likes, comments, shares, saves, clicks, avg_watch_time, editorial_content ( titulo )",
+      "id, platform, editorial_line, content_type, title, caption, url, permalink, thumbnail_url, published_at, campaign, utm_campaign, utm_content, cms_content_id, metrics_available, metrics_unavailable_reason, media_type, media_product_type, reach, views, engagements, likes, comments, shares, saves, clicks, avg_watch_time, editorial_content ( titulo )",
     )
     .in("platform", platforms)
     .order("published_at", { ascending: false })
@@ -374,8 +400,8 @@ export async function fetchSocialOverview(
   // Formato NÃO é filtrado no banco: content_type ainda vem "nao_classificada" do sync.
   // Derivamos de media_product_type/media_type e filtramos em memória.
 
-  const { data: postData } = await postQuery;
-  const allPostRows = ((postData ?? []) as any[]).map((p) => ({
+  const postData = await must<any>("social_posts", postQuery);
+  const allPostRows = postData.map((p) => ({
     ...p,
     content_type: deriveContentType(p.media_product_type, p.media_type, p.content_type),
   }));
@@ -384,10 +410,12 @@ export async function fetchSocialOverview(
     : allPostRows;
   const postIds = postRows.map((p) => p.id);
 
-  const { data: metricData } = postIds.length
-    ? await readDb(ctx).from("social_post_metrics").select("*").in("post_id", postIds)
-    : { data: [] as any[] };
-  const metricRows = (metricData ?? []) as any[];
+  const metricRows = postIds.length
+    ? await must<any>(
+        "social_post_metrics",
+        readDb(ctx).from("social_post_metrics").select("*").in("post_id", postIds),
+      )
+    : [];
 
   // Série diária por plataforma: social_metrics_daily é o que o sync grava (long format).
   let dailyQuery = readDb(ctx)
@@ -397,8 +425,8 @@ export async function fetchSocialOverview(
     .order("date", { ascending: true });
   if (filters.from) dailyQuery = dailyQuery.gte("date", filters.from.slice(0, 10));
   if (filters.to) dailyQuery = dailyQuery.lte("date", filters.to.slice(0, 10));
-  const { data: dailyData } = await dailyQuery;
-  const dailyRows = foldDailyMetrics((dailyData ?? []) as any[]);
+  const dailyData = await must<any>("social_metrics_daily", dailyQuery);
+  const dailyRows = foldDailyMetrics(dailyData);
 
 
   // Leads e newsletter — atribuição por UTM já capturada nos formulários do site.
@@ -409,22 +437,25 @@ export async function fetchSocialOverview(
     .not("utm_source", "is", null);
   if (filters.from) leadQuery = leadQuery.gte("created_at", filters.from);
   if (filters.to) leadQuery = leadQuery.lte("created_at", filters.to);
-  const { data: leadData } = await leadQuery;
-  const leadRows = ((leadData ?? []) as LeadRow[]).filter((l) => {
+  const leadData = await must<LeadRow>("leads", leadQuery);
+  const leadRows = leadData.filter((l) => {
     const p = normalizePlatform(l.utm_source);
     return p != null && platforms.includes(p);
   });
 
   let previousLeads: LeadRow[] = [];
   if (filters.previousFrom && filters.previousTo) {
-    const { data: prev } = await readDb(ctx)
-      .from("leads")
-      .select("created_at, status, utm_source, utm_campaign, utm_content")
-      .eq("is_teste", false)
-      .not("utm_source", "is", null)
-      .gte("created_at", filters.previousFrom)
-      .lte("created_at", filters.previousTo);
-    previousLeads = ((prev ?? []) as LeadRow[]).filter((l) => {
+    const prev = await must<LeadRow>(
+      "leads (período anterior)",
+      readDb(ctx)
+        .from("leads")
+        .select("created_at, status, utm_source, utm_campaign, utm_content")
+        .eq("is_teste", false)
+        .not("utm_source", "is", null)
+        .gte("created_at", filters.previousFrom)
+        .lte("created_at", filters.previousTo),
+    );
+    previousLeads = prev.filter((l) => {
       const p = normalizePlatform(l.utm_source);
       return p != null && platforms.includes(p);
     });
@@ -436,8 +467,7 @@ export async function fetchSocialOverview(
     .eq("is_teste", false);
   if (filters.from) newsQuery = newsQuery.gte("created_at", filters.from);
   if (filters.to) newsQuery = newsQuery.lte("created_at", filters.to);
-  const { data: newsData } = await newsQuery;
-  const newsRows = (newsData ?? []) as any[];
+  const newsRows = await must<any>("newsletter_subscribers", newsQuery);
 
   // GA4 (sessões por origem de tráfego) — opcional.
   let ga4Sessions: Record<string, number> | null = null;
