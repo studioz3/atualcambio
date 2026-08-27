@@ -17,8 +17,8 @@ import {
   trackedPages,
 } from "@/lib/cockpit-shared";
 import { cn } from "@/lib/utils";
-import { ExternalLink, MousePointerClick, RefreshCw } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ExternalLink, Info, MousePointerClick } from "lucide-react";
+
 
 export function AdminBehavior() {
   const [period, setPeriod] = useState<PeriodState>(defaultPeriod);
