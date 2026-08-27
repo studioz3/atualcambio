@@ -74,6 +74,9 @@ export type ClarityOverview = {
   updatedAt: string;
   /** true quando a API estava indisponível/limitada e usamos o último dado válido. */
   stale: boolean;
+  /** Motivo técnico do dado estar defasado (ex.: limite diário da API). */
+  staleReason?: string;
+
   totals: ClarityPageMetrics;
   pages: ClarityPageMetrics[];
   devices: { label: string; sessions: number }[];

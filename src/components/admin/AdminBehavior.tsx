@@ -78,7 +78,9 @@ export function AdminBehavior() {
           {data ? (
             <span>
               Clarity atualizado em {new Date(data.updatedAt).toLocaleString("pt-BR")}
-              {data.stale ? " · exibindo último dado válido" : ""}
+              {data.stale
+                ? ` · exibindo último dado válido${data.staleReason ? ` (${data.staleReason})` : ""}`
+                : ""}
             </span>
           ) : null}
           <Button
@@ -113,6 +115,14 @@ export function AdminBehavior() {
 
       {clarity.isLoading ? (
         <CockpitSkeleton rows={6} />
+      ) : clarity.data && !clarity.data.configured ? (
+        <CockpitCard title="Falha ao consultar o Clarity">
+          <p className="text-sm text-red-300/90">{clarity.data.reason}</p>
+          <p className="mt-2 text-xs text-white/45">
+            A API do Clarity tem limite diário de chamadas. Assim que houver saldo, os KPIs voltam
+            automaticamente — o último dado válido fica guardado no banco.
+          </p>
+        </CockpitCard>
       ) : !page ? (
         <CockpitCard title="Sem dados">
           <p className="text-sm text-white/45">
