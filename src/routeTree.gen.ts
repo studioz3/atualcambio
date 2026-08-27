@@ -57,7 +57,6 @@ import { Route as AdminConteudoIdRouteImport } from './routes/admin.conteudo.$id
 import { Route as AdminConteudoNovoRouteImport } from './routes/admin.conteudo.novo'
 import { Route as AdminSocialIndexRouteImport } from './routes/admin.social.index'
 import { Route as ApiAdminSocialSyncRouteImport } from './routes/api/admin/social-sync'
-import { Route as ApiCronSeedSecretRouteImport } from './routes/api/cron/seed-secret'
 import { Route as ApiCronSocialSyncRouteImport } from './routes/api/cron/social-sync'
 import { Route as ApiPublicAnalyticsHealthRouteImport } from './routes/api/public/analytics-health'
 import { Route as AdminSocialSpotifyImportarRouteImport } from './routes/admin.social.spotify.importar'
@@ -305,11 +304,6 @@ const ApiAdminSocialSyncRoute = ApiAdminSocialSyncRouteImport.update({
   path: '/api/admin/social-sync',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiCronSeedSecretRoute = ApiCronSeedSecretRouteImport.update({
-  id: '/api/cron/seed-secret',
-  path: '/api/cron/seed-secret',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiCronSocialSyncRoute = ApiCronSocialSyncRouteImport.update({
   id: '/api/cron/social-sync',
   path: '/api/cron/social-sync',
@@ -387,7 +381,6 @@ export interface FileRoutesByFullPath {
   '/admin/conteudo/$id': typeof AdminConteudoIdRoute
   '/admin/conteudo/novo': typeof AdminConteudoNovoRoute
   '/api/admin/social-sync': typeof ApiAdminSocialSyncRoute
-  '/api/cron/seed-secret': typeof ApiCronSeedSecretRoute
   '/api/cron/social-sync': typeof ApiCronSocialSyncRoute
   '/api/public/analytics-health': typeof ApiPublicAnalyticsHealthRoute
   '/admin/conteudo/': typeof AdminConteudoIndexRoute
@@ -443,7 +436,6 @@ export interface FileRoutesByTo {
   '/admin/conteudo/$id': typeof AdminConteudoIdRoute
   '/admin/conteudo/novo': typeof AdminConteudoNovoRoute
   '/api/admin/social-sync': typeof ApiAdminSocialSyncRoute
-  '/api/cron/seed-secret': typeof ApiCronSeedSecretRoute
   '/api/cron/social-sync': typeof ApiCronSocialSyncRoute
   '/api/public/analytics-health': typeof ApiPublicAnalyticsHealthRoute
   '/admin/conteudo': typeof AdminConteudoIndexRoute
@@ -500,7 +492,6 @@ export interface FileRoutesById {
   '/admin/conteudo/$id': typeof AdminConteudoIdRoute
   '/admin/conteudo/novo': typeof AdminConteudoNovoRoute
   '/api/admin/social-sync': typeof ApiAdminSocialSyncRoute
-  '/api/cron/seed-secret': typeof ApiCronSeedSecretRoute
   '/api/cron/social-sync': typeof ApiCronSocialSyncRoute
   '/api/public/analytics-health': typeof ApiPublicAnalyticsHealthRoute
   '/admin/conteudo/': typeof AdminConteudoIndexRoute
@@ -558,7 +549,6 @@ export interface FileRouteTypes {
     | '/admin/conteudo/$id'
     | '/admin/conteudo/novo'
     | '/api/admin/social-sync'
-    | '/api/cron/seed-secret'
     | '/api/cron/social-sync'
     | '/api/public/analytics-health'
     | '/admin/conteudo/'
@@ -614,7 +604,6 @@ export interface FileRouteTypes {
     | '/admin/conteudo/$id'
     | '/admin/conteudo/novo'
     | '/api/admin/social-sync'
-    | '/api/cron/seed-secret'
     | '/api/cron/social-sync'
     | '/api/public/analytics-health'
     | '/admin/conteudo'
@@ -670,7 +659,6 @@ export interface FileRouteTypes {
     | '/admin/conteudo/$id'
     | '/admin/conteudo/novo'
     | '/api/admin/social-sync'
-    | '/api/cron/seed-secret'
     | '/api/cron/social-sync'
     | '/api/public/analytics-health'
     | '/admin/conteudo/'
@@ -727,7 +715,6 @@ export interface RootRouteChildren {
   AdminConteudoIdRoute: typeof AdminConteudoIdRoute
   AdminConteudoNovoRoute: typeof AdminConteudoNovoRoute
   ApiAdminSocialSyncRoute: typeof ApiAdminSocialSyncRoute
-  ApiCronSeedSecretRoute: typeof ApiCronSeedSecretRoute
   ApiCronSocialSyncRoute: typeof ApiCronSocialSyncRoute
   ApiPublicAnalyticsHealthRoute: typeof ApiPublicAnalyticsHealthRoute
   AdminConteudoIndexRoute: typeof AdminConteudoIndexRoute
@@ -1075,13 +1062,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdminSocialSyncRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/cron/seed-secret': {
-      id: '/api/cron/seed-secret'
-      path: '/api/cron/seed-secret'
-      fullPath: '/api/cron/seed-secret'
-      preLoaderRoute: typeof ApiCronSeedSecretRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/cron/social-sync': {
       id: '/api/cron/social-sync'
       path: '/api/cron/social-sync'
@@ -1167,7 +1147,6 @@ const rootRouteChildren: RootRouteChildren = {
   AdminConteudoIdRoute: AdminConteudoIdRoute,
   AdminConteudoNovoRoute: AdminConteudoNovoRoute,
   ApiAdminSocialSyncRoute: ApiAdminSocialSyncRoute,
-  ApiCronSeedSecretRoute: ApiCronSeedSecretRoute,
   ApiCronSocialSyncRoute: ApiCronSocialSyncRoute,
   ApiPublicAnalyticsHealthRoute: ApiPublicAnalyticsHealthRoute,
   AdminConteudoIndexRoute: AdminConteudoIndexRoute,
