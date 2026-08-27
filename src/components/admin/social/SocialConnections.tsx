@@ -177,25 +177,29 @@ function AccountBlock({ account }: { account: SocialAccountStatus }) {
           <Button size="sm" onClick={() => save.mutate()} disabled={save.isPending}>
             {save.isPending ? "Salvando…" : "Salvar perfil"}
           </Button>
-          <div>
-            <p className="text-[10px] font-semibold tracking-[0.18em] text-white/45 uppercase">O que falta para conectar</p>
-            <ol className="mt-2 space-y-1 text-[11px] text-white/55">
-              {account.requirements.map((r, i) => (
-                <li key={r}>
-                  {i + 1}. {r}
-                </li>
-              ))}
-            </ol>
-            <p className="mt-2 text-[11px] text-white/40">
-              Credenciais no servidor:{" "}
-              {account.credentialsConfigured ? (
-                <span className="text-emerald-400">configuradas</span>
-              ) : (
-                <span className="text-white/50">pendentes</span>
-              )}
-              . Tokens ficam apenas no servidor.
-            </p>
-          </div>
+          {account.health === "verde" ? (
+            <p className="text-[11px] text-white/45">Integração concluída. Tokens ficam apenas no servidor.</p>
+          ) : (
+            <div>
+              <p className="text-[10px] font-semibold tracking-[0.18em] text-white/45 uppercase">O que falta para conectar</p>
+              <ol className="mt-2 space-y-1 text-[11px] text-white/55">
+                {account.requirements.map((r, i) => (
+                  <li key={r}>
+                    {i + 1}. {r}
+                  </li>
+                ))}
+              </ol>
+              <p className="mt-2 text-[11px] text-white/40">
+                Credenciais no servidor:{" "}
+                {account.credentialsConfigured ? (
+                  <span className="text-emerald-400">configuradas</span>
+                ) : (
+                  <span className="text-white/50">pendentes</span>
+                )}
+                . Tokens ficam apenas no servidor.
+              </p>
+            </div>
+          )}
         </div>
       ) : null}
     </div>

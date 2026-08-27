@@ -85,25 +85,33 @@ function AccountCard({
       </Button>
 
       <div className="mt-4 rounded-lg border border-white/10 bg-white/[0.02] p-3">
-        <p className="text-[10px] font-semibold tracking-[0.18em] text-white/45 uppercase">
-          O que falta para conectar
-        </p>
-        <ol className="mt-2 space-y-1 text-[11px] text-white/55">
-          {account.requirements.map((r, i) => (
-            <li key={r}>
-              {i + 1}. {r}
-            </li>
-          ))}
-        </ol>
-        <p className="mt-2 text-[11px] text-white/40">
-          Credenciais no servidor:{" "}
-          {account.credentialsConfigured ? (
-            <span className="text-emerald-400">configuradas</span>
-          ) : (
-            <span className="text-white/50">pendentes</span>
-          )}
-          . Tokens ficam apenas no servidor e nunca aparecem no painel.
-        </p>
+        {account.status === "conectado" ? (
+          <p className="text-[11px] text-white/55">
+            Integração concluída. Tokens ficam apenas no servidor e nunca aparecem no painel.
+          </p>
+        ) : (
+          <>
+            <p className="text-[10px] font-semibold tracking-[0.18em] text-white/45 uppercase">
+              O que falta para conectar
+            </p>
+            <ol className="mt-2 space-y-1 text-[11px] text-white/55">
+              {account.requirements.map((r, i) => (
+                <li key={r}>
+                  {i + 1}. {r}
+                </li>
+              ))}
+            </ol>
+            <p className="mt-2 text-[11px] text-white/40">
+              Credenciais no servidor:{" "}
+              {account.credentialsConfigured ? (
+                <span className="text-emerald-400">configuradas</span>
+              ) : (
+                <span className="text-white/50">pendentes</span>
+              )}
+              . Tokens ficam apenas no servidor e nunca aparecem no painel.
+            </p>
+          </>
+        )}
         {account.lastError ? (
           <p className="mt-2 text-[11px] text-rose-300">Último erro: {account.lastError}</p>
         ) : null}
