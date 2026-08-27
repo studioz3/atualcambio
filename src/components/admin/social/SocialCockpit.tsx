@@ -77,35 +77,54 @@ export function SocialCockpit() {
   const hasAnyData =
     !!data && (data.posts.length > 0 || data.series.length > 0 || data.kpis.leads > 0);
 
+  const activePlatforms = data?.byPlatform.map((p) => p.platform) ?? [];
+
+  /**
+   * Redes que efetivamente entregam a métrica selecionada.
+   * As demais somem do comparativo — nunca são plotadas como zero.
+   */
+  const metricPlatforms = useMemo(
+    () => (data?.byPlatform ?? []).filter((p) => metricValue(p, metric) != null).map((p) => p.platform),
+    [data, metric],
+  );
+  const hiddenPlatforms = activePlatforms.filter((p) => !metricPlatforms.includes(p));
+
   const chartData = useMemo(() => {
     if (!data) return [];
-    const byDate = new Map<string, Record<string, number | string>>();
+    const byDate = new Map<string, Record<string, number | string | null>>();
     for (const p of data.series) {
+      if (!metricPlatforms.includes(p.platform)) continue;
       const row = byDate.get(p.date) ?? { date: p.date };
       const value =
         metric === "leads"
           ? p.leads
           : metric === "followersGrowth"
-            ? (p.followers ?? 0)
-            : ((p[metric as "reach" | "views" | "engagements" | "clicks"] as number | null) ?? 0);
-      row[p.platform] = ((row[p.platform] as number) ?? 0) + (value ?? 0);
+            ? p.followers
+            : (p[metric as "reach" | "views" | "engagements" | "clicks"] as number | null);
+      // null continua null: a série fica sem ponto naquele dia, em vez de virar zero.
+      const current = row[p.platform];
+      row[p.platform] = value == null ? (current ?? null) : ((current as number) ?? 0) + value;
       byDate.set(p.date, row);
     }
     return [...byDate.values()].sort((a, b) => String(a["date"]).localeCompare(String(b["date"])));
-  }, [data, metric]);
-
-  const activePlatforms = data?.byPlatform.map((p) => p.platform) ?? [];
+  }, [data, metric, metricPlatforms]);
 
   const rankedPosts = useMemo(() => {
     if (!data) return [];
+    const score = (p: (typeof data.posts)[number]) =>
+      metric === "leads" ? p.leads : ((p.metrics as any)[metric] as number | null);
     return [...data.posts]
       .sort((a, b) => {
-        const av = metric === "leads" ? a.leads : ((a.metrics as any)[metric] ?? 0);
-        const bv = metric === "leads" ? b.leads : ((b.metrics as any)[metric] ?? 0);
+        const av = score(a);
+        const bv = score(b);
+        if (av == null && bv == null) return b.publishedAt.localeCompare(a.publishedAt);
+        if (av == null) return 1;
+        if (bv == null) return -1;
         return bv - av;
       })
       .slice(0, 12);
   }, [data, metric]);
+
 
   const funnel = data?.funnel;
 
