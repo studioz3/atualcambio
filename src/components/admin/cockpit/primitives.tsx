@@ -246,3 +246,38 @@ export function CockpitSkeleton({ rows = 3 }: { rows?: number }) {
     </div>
   );
 }
+
+/**
+ * Falha de consulta NUNCA pode parecer ausência de dado.
+ * Área restrita a staff autenticado: mostramos a mensagem real do banco.
+ */
+export function QueryErrorCard({
+  title = "A consulta ao banco falhou",
+  error,
+  onRetry,
+}: {
+  title?: string;
+  error: unknown;
+  onRetry?: () => void;
+}) {
+  const message = error instanceof Error ? error.message : String(error);
+  return (
+    <section role="alert" className="space-y-3 rounded-2xl border border-destructive/60 bg-destructive/10 p-5">
+      <div className="flex items-center gap-2">
+        <AlertTriangle className="size-4 text-destructive" aria-hidden />
+        <h2 className="font-semibold text-white">{title}</h2>
+      </div>
+      <p className="text-sm text-white/70">
+        Isto <strong>não</strong> significa ausência de dados no período — a leitura retornou erro.
+      </p>
+      <pre className="overflow-x-auto whitespace-pre-wrap rounded-lg bg-black/40 p-3 text-xs text-white/80">
+        {message}
+      </pre>
+      {onRetry ? (
+        <Button size="sm" variant="secondary" onClick={onRetry}>
+          Tentar novamente
+        </Button>
+      ) : null}
+    </section>
+  );
+}
