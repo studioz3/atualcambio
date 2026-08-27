@@ -152,7 +152,7 @@ function ensureGtag() {
       // eslint-disable-next-line prefer-rest-params
       window.dataLayer!.push(arguments);
     }
-    window.gtag = gtag as unknown as Window["gtag"];
+    window.gtag = gtag as unknown as NonNullable<Window["gtag"]>;
   }
 }
 
