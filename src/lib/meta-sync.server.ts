@@ -625,7 +625,6 @@ export async function runMetaSync(platforms?: string[]): Promise<{ ranAt: string
       });
     } catch (error) {
       const message = sanitize(error instanceof Error ? error.message : String(error));
-      console.error("[meta-sync]", platform, error instanceof Error ? error.stack : error);
       const rateLimited = error instanceof RateLimitAbort;
       if (error instanceof AuthError) await markNeedsReauth(platform, message);
       else {
