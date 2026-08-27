@@ -83,15 +83,8 @@ export function AdminBehavior() {
                 : ""}
             </span>
           ) : null}
-          <Button
-            size="sm"
-            variant="secondary"
-            onClick={() => setForce((f) => !f)}
-            disabled={clarity.isFetching}
-          >
-            <RefreshCw className={cn("mr-1.5 size-3.5", clarity.isFetching && "animate-spin")} />
-            Atualizar
-          </Button>
+          <span className="hidden sm:inline">· coleta automática 4x/dia</span>
+
         </div>
       </div>
 
