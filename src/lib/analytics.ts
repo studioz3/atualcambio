@@ -145,9 +145,14 @@ function ensureGtag() {
   if (typeof window === "undefined") return;
   window.dataLayer = window.dataLayer ?? [];
   if (!window.gtag) {
-    window.gtag = (...args: unknown[]) => {
-      window.dataLayer!.push(args);
-    };
+    // O gtag.js só interpreta comandos quando o item empurrado é o objeto
+    // `arguments`. Não converter para arrow function nem para rest params.
+    // eslint-disable-next-line prefer-rest-params, @typescript-eslint/no-explicit-any
+    function gtag(this: any) {
+      // eslint-disable-next-line prefer-rest-params
+      window.dataLayer!.push(arguments);
+    }
+    window.gtag = gtag as unknown as Window["gtag"];
   }
 }
 
@@ -161,10 +166,12 @@ function startClarity(projectId: string) {
     clarityReady = true;
     return;
   }
-  const stub = ((...args: unknown[]) => {
-    (stub.q = stub.q ?? []).push(args);
-  }) as NonNullable<Window["clarity"]>;
-  window.clarity = window.clarity ?? stub;
+  // eslint-disable-next-line prefer-rest-params, @typescript-eslint/no-explicit-any
+  function stub(this: any) {
+    // eslint-disable-next-line prefer-rest-params
+    ((stub as any).q = (stub as any).q ?? []).push(arguments);
+  }
+  window.clarity = window.clarity ?? (stub as unknown as NonNullable<Window["clarity"]>);
   injectScript("clarity-script", `https://www.clarity.ms/tag/${projectId}`);
   clarityReady = true;
 }
