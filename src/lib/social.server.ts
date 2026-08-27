@@ -30,6 +30,30 @@ function readDb(_ctx: StaffCtx) {
   return supabaseAdmin as any;
 }
 
+/**
+ * Nunca converter erro de banco em lista vazia: a tela precisa distinguir
+ * "sem dado no período" de "a consulta falhou".
+ */
+export class CockpitQueryError extends Error {
+  constructor(
+    readonly query: string,
+    message: string,
+    readonly details?: string | null,
+  ) {
+    super(`[${query}] ${message}`);
+    this.name = "CockpitQueryError";
+  }
+}
+
+async function must<T>(
+  label: string,
+  builder: PromiseLike<{ data: T | null; error: { message: string; details?: string | null } | null }>,
+): Promise<T[]> {
+  const { data, error } = await builder;
+  if (error) throw new CockpitQueryError(label, error.message, error.details ?? null);
+  return (data ?? []) as unknown as T[];
+}
+
 type StaffCtx = { supabase: any; userId: string; claims: Record<string, unknown> };
 
 const metricKeys: (keyof SocialMetrics)[] = [
