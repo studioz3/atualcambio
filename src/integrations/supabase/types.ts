@@ -1244,6 +1244,7 @@ export type Database = {
         Returns: boolean
       }
       is_staff: { Args: { _user_id: string }; Returns: boolean }
+      run_clarity_snapshot_cron: { Args: never; Returns: undefined }
       run_social_sync_cron: { Args: never; Returns: undefined }
     }
     Enums: {
