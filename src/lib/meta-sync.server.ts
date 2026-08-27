@@ -487,8 +487,9 @@ async function syncInstagram(client: GraphClient, igId: string): Promise<Omit<Sy
 
 /* ================================ 5. FACEBOOK ================================ */
 
-const MIRROR_NOTICE =
-  "Métricas de engajamento indisponíveis: conteúdo publicado via espelhamento automático do Instagram não gera insight próprio no Facebook.";
+// Insights de página (page_total_media_view_unique, page_follows) retornam dados reais
+// com o token de System User — o aviso de espelhamento não se aplica mais.
+
 
 async function syncFacebook(client: GraphClient, pageId: string): Promise<Omit<SyncResult, "platform">> {
   const notes: string[] = [];
