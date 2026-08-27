@@ -47,6 +47,24 @@ export type Database = {
         }
         Relationships: []
       }
+      app_config: {
+        Row: {
+          key: string
+          updated_at: string
+          value: string
+        }
+        Insert: {
+          key: string
+          updated_at?: string
+          value: string
+        }
+        Update: {
+          key?: string
+          updated_at?: string
+          value?: string
+        }
+        Relationships: []
+      }
       editorial_authors: {
         Row: {
           ativo: boolean
@@ -1208,6 +1226,7 @@ export type Database = {
         Returns: boolean
       }
       is_staff: { Args: { _user_id: string }; Returns: boolean }
+      run_social_sync_cron: { Args: never; Returns: undefined }
     }
     Enums: {
       app_role: "admin" | "marketing" | "consultor"
