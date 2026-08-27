@@ -261,6 +261,16 @@ async function backfillInstagramReach(client: GraphClient, igId: string, days: n
 
 const POST_FIELDS =
   "id,caption,media_type,media_product_type,permalink,thumbnail_url,timestamp,like_count,comments_count,saved_count,shares_count";
+
+/** Remove bytes nulos e surrogates órfãos (emoji cortado) que quebram o JSON do PostgREST. */
+function safeText(value: string | null): string | null {
+  if (value == null) return null;
+  const cleaned = value
+    .replace(/[\uD800-\uDBFF](?![\uDC00-\uDFFF])/g, "")
+    .replace(/(^|[^\uD800-\uDBFF])[\uDC00-\uDFFF]/g, "$1")
+    .replace(/\u0000/g, "");
+  return cleaned;
+}
 // view_count não é acessível fora da Business Discovery API: views vêm de /insights.
 
 type IgMedia = any;
