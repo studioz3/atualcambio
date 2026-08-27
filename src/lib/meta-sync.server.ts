@@ -265,20 +265,18 @@ const POST_FIELDS =
 
 type IgMedia = any;
 
-async function listInstagramMedia(client: GraphClient, igId: string, sinceIso: string | null) {
+async function listInstagramMedia(client: GraphClient, igId: string) {
   const items: IgMedia[] = [];
   let page = await client.get(`${igId}/media`, { fields: POST_FIELDS, limit: 100 });
   for (;;) {
-    for (const item of page?.data ?? []) {
-      if (sinceIso && item.timestamp && item.timestamp <= sinceIso) return items;
-      items.push(item);
-    }
+    for (const item of page?.data ?? []) items.push(item);
     const next = page?.paging?.next;
     // Só paramos quando paging.next some — nunca por "vieram menos que o limit".
     if (!next || items.length >= 500) return items;
     page = await client.getUrl(next);
   }
 }
+
 
 function insightMetricsFor(productType: string): string[] | null {
   switch (productType) {
