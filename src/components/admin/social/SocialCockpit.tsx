@@ -212,8 +212,12 @@ export function SocialCockpit() {
               </div>
             }
           >
-            {chartData.length === 0 ? (
-              <p className="text-sm text-white/45">Sem série temporal para esta métrica no período.</p>
+            {metricPlatforms.length === 0 || chartData.length === 0 ? (
+              <p className="text-sm text-white/45">
+                Nenhuma rede conectada entrega{" "}
+                {comparableMetrics.find((m) => m.id === metric)?.label.toLowerCase()} no período. Nada é
+                estimado nem plotado como zero.
+              </p>
             ) : (
               <div className="h-64">
                 <ResponsiveContainer width="100%" height="100%">
@@ -229,7 +233,7 @@ export function SocialCockpit() {
                         fontSize: 12,
                       }}
                     />
-                    {activePlatforms.map((p) => (
+                    {metricPlatforms.map((p) => (
                       <Area
                         key={p}
                         type="monotone"
@@ -239,13 +243,22 @@ export function SocialCockpit() {
                         fill={platformDot(p)}
                         fillOpacity={0.12}
                         strokeWidth={2}
+                        connectNulls={false}
+                        isAnimationActive={!reducedMotion}
                       />
                     ))}
                   </AreaChart>
                 </ResponsiveContainer>
               </div>
             )}
+            {hiddenPlatforms.length ? (
+              <p className="mt-3 text-[11px] text-white/40">
+                Fora deste comparativo por não fornecerem esta métrica:{" "}
+                {hiddenPlatforms.map((p) => platformLabel(p)).join(", ")}.
+              </p>
+            ) : null}
           </CockpitCard>
+
 
           <CockpitCard title="Desempenho por rede" subtitle="Somente métricas efetivamente coletadas">
             <div className="overflow-x-auto">
