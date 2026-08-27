@@ -38,7 +38,6 @@ import { Route as TermosRouteImport } from './routes/termos'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminComportamentoRouteImport } from './routes/admin.comportamento'
 import { Route as AdminEditoriasRouteImport } from './routes/admin.editorias'
-import { Route as AdminIntegracoesRouteImport } from './routes/admin.integracoes'
 import { Route as AdminLeadsRouteImport } from './routes/admin.leads'
 import { Route as AdminNewsletterRouteImport } from './routes/admin.newsletter'
 import { Route as AdminTrafegoRouteImport } from './routes/admin.trafego'
@@ -55,6 +54,8 @@ import { Route as AdminAnalyticsHealthRouteImport } from './routes/admin.analyti
 import { Route as AdminConteudoIndexRouteImport } from './routes/admin.conteudo.index'
 import { Route as AdminConteudoIdRouteImport } from './routes/admin.conteudo.$id'
 import { Route as AdminConteudoNovoRouteImport } from './routes/admin.conteudo.novo'
+import { Route as AdminIntegracoesIndexRouteImport } from './routes/admin.integracoes.index'
+import { Route as AdminIntegracoesSocialRouteImport } from './routes/admin.integracoes.social'
 import { Route as AdminSocialIndexRouteImport } from './routes/admin.social.index'
 import { Route as ApiAdminSocialSyncRouteImport } from './routes/api/admin/social-sync'
 import { Route as ApiCronSocialSyncRouteImport } from './routes/api/cron/social-sync'
@@ -208,11 +209,6 @@ const AdminEditoriasRoute = AdminEditoriasRouteImport.update({
   path: '/admin/editorias',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminIntegracoesRoute = AdminIntegracoesRouteImport.update({
-  id: '/admin/integracoes',
-  path: '/admin/integracoes',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AdminLeadsRoute = AdminLeadsRouteImport.update({
   id: '/admin/leads',
   path: '/admin/leads',
@@ -294,6 +290,16 @@ const AdminConteudoNovoRoute = AdminConteudoNovoRouteImport.update({
   path: '/admin/conteudo/novo',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIntegracoesIndexRoute = AdminIntegracoesIndexRouteImport.update({
+  id: '/admin/integracoes/',
+  path: '/admin/integracoes/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIntegracoesSocialRoute = AdminIntegracoesSocialRouteImport.update({
+  id: '/admin/integracoes/social',
+  path: '/admin/integracoes/social',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminSocialIndexRoute = AdminSocialIndexRouteImport.update({
   id: '/admin/social/',
   path: '/admin/social/',
@@ -363,7 +369,6 @@ export interface FileRoutesByFullPath {
   '/termos': typeof TermosRoute
   '/admin/comportamento': typeof AdminComportamentoRoute
   '/admin/editorias': typeof AdminEditoriasRoute
-  '/admin/integracoes': typeof AdminIntegracoesRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/newsletter': typeof AdminNewsletterRoute
   '/admin/trafego': typeof AdminTrafegoRoute
@@ -380,10 +385,12 @@ export interface FileRoutesByFullPath {
   '/admin/analytics/health': typeof AdminAnalyticsHealthRoute
   '/admin/conteudo/$id': typeof AdminConteudoIdRoute
   '/admin/conteudo/novo': typeof AdminConteudoNovoRoute
+  '/admin/integracoes/social': typeof AdminIntegracoesSocialRoute
   '/api/admin/social-sync': typeof ApiAdminSocialSyncRoute
   '/api/cron/social-sync': typeof ApiCronSocialSyncRoute
   '/api/public/analytics-health': typeof ApiPublicAnalyticsHealthRoute
   '/admin/conteudo/': typeof AdminConteudoIndexRoute
+  '/admin/integracoes/': typeof AdminIntegracoesIndexRoute
   '/admin/social/': typeof AdminSocialIndexRoute
   '/admin/social/spotify/importar': typeof AdminSocialSpotifyImportarRoute
   '/api/admin/social-test/$platform': typeof ApiAdminSocialTestPlatformRoute
@@ -418,7 +425,6 @@ export interface FileRoutesByTo {
   '/termos': typeof TermosRoute
   '/admin/comportamento': typeof AdminComportamentoRoute
   '/admin/editorias': typeof AdminEditoriasRoute
-  '/admin/integracoes': typeof AdminIntegracoesRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/newsletter': typeof AdminNewsletterRoute
   '/admin/trafego': typeof AdminTrafegoRoute
@@ -435,10 +441,12 @@ export interface FileRoutesByTo {
   '/admin/analytics/health': typeof AdminAnalyticsHealthRoute
   '/admin/conteudo/$id': typeof AdminConteudoIdRoute
   '/admin/conteudo/novo': typeof AdminConteudoNovoRoute
+  '/admin/integracoes/social': typeof AdminIntegracoesSocialRoute
   '/api/admin/social-sync': typeof ApiAdminSocialSyncRoute
   '/api/cron/social-sync': typeof ApiCronSocialSyncRoute
   '/api/public/analytics-health': typeof ApiPublicAnalyticsHealthRoute
   '/admin/conteudo': typeof AdminConteudoIndexRoute
+  '/admin/integracoes': typeof AdminIntegracoesIndexRoute
   '/admin/social': typeof AdminSocialIndexRoute
   '/admin/social/spotify/importar': typeof AdminSocialSpotifyImportarRoute
   '/api/admin/social-test/$platform': typeof ApiAdminSocialTestPlatformRoute
@@ -474,7 +482,6 @@ export interface FileRoutesById {
   '/termos': typeof TermosRoute
   '/admin/comportamento': typeof AdminComportamentoRoute
   '/admin/editorias': typeof AdminEditoriasRoute
-  '/admin/integracoes': typeof AdminIntegracoesRoute
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/newsletter': typeof AdminNewsletterRoute
   '/admin/trafego': typeof AdminTrafegoRoute
@@ -491,10 +498,12 @@ export interface FileRoutesById {
   '/admin/analytics/health': typeof AdminAnalyticsHealthRoute
   '/admin/conteudo/$id': typeof AdminConteudoIdRoute
   '/admin/conteudo/novo': typeof AdminConteudoNovoRoute
+  '/admin/integracoes/social': typeof AdminIntegracoesSocialRoute
   '/api/admin/social-sync': typeof ApiAdminSocialSyncRoute
   '/api/cron/social-sync': typeof ApiCronSocialSyncRoute
   '/api/public/analytics-health': typeof ApiPublicAnalyticsHealthRoute
   '/admin/conteudo/': typeof AdminConteudoIndexRoute
+  '/admin/integracoes/': typeof AdminIntegracoesIndexRoute
   '/admin/social/': typeof AdminSocialIndexRoute
   '/admin/social/spotify/importar': typeof AdminSocialSpotifyImportarRoute
   '/api/admin/social-test/$platform': typeof ApiAdminSocialTestPlatformRoute
@@ -531,7 +540,6 @@ export interface FileRouteTypes {
     | '/termos'
     | '/admin/comportamento'
     | '/admin/editorias'
-    | '/admin/integracoes'
     | '/admin/leads'
     | '/admin/newsletter'
     | '/admin/trafego'
@@ -548,10 +556,12 @@ export interface FileRouteTypes {
     | '/admin/analytics/health'
     | '/admin/conteudo/$id'
     | '/admin/conteudo/novo'
+    | '/admin/integracoes/social'
     | '/api/admin/social-sync'
     | '/api/cron/social-sync'
     | '/api/public/analytics-health'
     | '/admin/conteudo/'
+    | '/admin/integracoes/'
     | '/admin/social/'
     | '/admin/social/spotify/importar'
     | '/api/admin/social-test/$platform'
@@ -586,7 +596,6 @@ export interface FileRouteTypes {
     | '/termos'
     | '/admin/comportamento'
     | '/admin/editorias'
-    | '/admin/integracoes'
     | '/admin/leads'
     | '/admin/newsletter'
     | '/admin/trafego'
@@ -603,10 +612,12 @@ export interface FileRouteTypes {
     | '/admin/analytics/health'
     | '/admin/conteudo/$id'
     | '/admin/conteudo/novo'
+    | '/admin/integracoes/social'
     | '/api/admin/social-sync'
     | '/api/cron/social-sync'
     | '/api/public/analytics-health'
     | '/admin/conteudo'
+    | '/admin/integracoes'
     | '/admin/social'
     | '/admin/social/spotify/importar'
     | '/api/admin/social-test/$platform'
@@ -641,7 +652,6 @@ export interface FileRouteTypes {
     | '/termos'
     | '/admin/comportamento'
     | '/admin/editorias'
-    | '/admin/integracoes'
     | '/admin/leads'
     | '/admin/newsletter'
     | '/admin/trafego'
@@ -658,10 +668,12 @@ export interface FileRouteTypes {
     | '/admin/analytics/health'
     | '/admin/conteudo/$id'
     | '/admin/conteudo/novo'
+    | '/admin/integracoes/social'
     | '/api/admin/social-sync'
     | '/api/cron/social-sync'
     | '/api/public/analytics-health'
     | '/admin/conteudo/'
+    | '/admin/integracoes/'
     | '/admin/social/'
     | '/admin/social/spotify/importar'
     | '/api/admin/social-test/$platform'
@@ -697,7 +709,6 @@ export interface RootRouteChildren {
   TermosRoute: typeof TermosRoute
   AdminComportamentoRoute: typeof AdminComportamentoRoute
   AdminEditoriasRoute: typeof AdminEditoriasRoute
-  AdminIntegracoesRoute: typeof AdminIntegracoesRoute
   AdminLeadsRoute: typeof AdminLeadsRoute
   AdminNewsletterRoute: typeof AdminNewsletterRoute
   AdminTrafegoRoute: typeof AdminTrafegoRoute
@@ -714,10 +725,12 @@ export interface RootRouteChildren {
   AdminAnalyticsHealthRoute: typeof AdminAnalyticsHealthRoute
   AdminConteudoIdRoute: typeof AdminConteudoIdRoute
   AdminConteudoNovoRoute: typeof AdminConteudoNovoRoute
+  AdminIntegracoesSocialRoute: typeof AdminIntegracoesSocialRoute
   ApiAdminSocialSyncRoute: typeof ApiAdminSocialSyncRoute
   ApiCronSocialSyncRoute: typeof ApiCronSocialSyncRoute
   ApiPublicAnalyticsHealthRoute: typeof ApiPublicAnalyticsHealthRoute
   AdminConteudoIndexRoute: typeof AdminConteudoIndexRoute
+  AdminIntegracoesIndexRoute: typeof AdminIntegracoesIndexRoute
   AdminSocialIndexRoute: typeof AdminSocialIndexRoute
   AdminSocialSpotifyImportarRoute: typeof AdminSocialSpotifyImportarRoute
   ApiAdminSocialTestPlatformRoute: typeof ApiAdminSocialTestPlatformRoute
@@ -929,13 +942,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminEditoriasRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin/integracoes': {
-      id: '/admin/integracoes'
-      path: '/admin/integracoes'
-      fullPath: '/admin/integracoes'
-      preLoaderRoute: typeof AdminIntegracoesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/admin/leads': {
       id: '/admin/leads'
       path: '/admin/leads'
@@ -1048,6 +1054,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminConteudoNovoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/integracoes/': {
+      id: '/admin/integracoes/'
+      path: '/admin/integracoes'
+      fullPath: '/admin/integracoes/'
+      preLoaderRoute: typeof AdminIntegracoesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/integracoes/social': {
+      id: '/admin/integracoes/social'
+      path: '/admin/integracoes/social'
+      fullPath: '/admin/integracoes/social'
+      preLoaderRoute: typeof AdminIntegracoesSocialRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/social/': {
       id: '/admin/social/'
       path: '/admin/social'
@@ -1129,7 +1149,6 @@ const rootRouteChildren: RootRouteChildren = {
   TermosRoute: TermosRoute,
   AdminComportamentoRoute: AdminComportamentoRoute,
   AdminEditoriasRoute: AdminEditoriasRoute,
-  AdminIntegracoesRoute: AdminIntegracoesRoute,
   AdminLeadsRoute: AdminLeadsRoute,
   AdminNewsletterRoute: AdminNewsletterRoute,
   AdminTrafegoRoute: AdminTrafegoRoute,
@@ -1146,10 +1165,12 @@ const rootRouteChildren: RootRouteChildren = {
   AdminAnalyticsHealthRoute: AdminAnalyticsHealthRoute,
   AdminConteudoIdRoute: AdminConteudoIdRoute,
   AdminConteudoNovoRoute: AdminConteudoNovoRoute,
+  AdminIntegracoesSocialRoute: AdminIntegracoesSocialRoute,
   ApiAdminSocialSyncRoute: ApiAdminSocialSyncRoute,
   ApiCronSocialSyncRoute: ApiCronSocialSyncRoute,
   ApiPublicAnalyticsHealthRoute: ApiPublicAnalyticsHealthRoute,
   AdminConteudoIndexRoute: AdminConteudoIndexRoute,
+  AdminIntegracoesIndexRoute: AdminIntegracoesIndexRoute,
   AdminSocialIndexRoute: AdminSocialIndexRoute,
   AdminSocialSpotifyImportarRoute: AdminSocialSpotifyImportarRoute,
   ApiAdminSocialTestPlatformRoute: ApiAdminSocialTestPlatformRoute,

@@ -1,19 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AdminShell } from "@/components/admin/AdminShell";
-import { SocialIntegrations } from "@/components/admin/SocialIntegrations";
+import { SocialConnections } from "@/components/admin/social/SocialConnections";
 
-export const Route = createFileRoute("/admin/integracoes")({
+export const Route = createFileRoute("/admin/integracoes/social")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Integrações | Painel gerencial Atual" },
+      { title: "Conexões das redes sociais | Painel gerencial Atual" },
       { name: "robots", content: "noindex, nofollow" },
       { name: "description", content: "Área interna da Atual Câmbio." },
     ],
   }),
   component: () => (
-    <AdminShell title="Integrações" tone="cockpit">
-      <SocialIntegrations />
+    <AdminShell title="Conexões das redes sociais" tone="cockpit">
+      <SocialConnections />
     </AdminShell>
   ),
 });

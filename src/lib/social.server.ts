@@ -6,6 +6,7 @@
 import {
   editorialLineIds,
   emptyMetrics,
+  emptyStateText,
   platformIds,
   socialPlatforms,
   type SocialAccountStatus,
@@ -15,6 +16,7 @@ import {
   type SocialOverview,
   type SocialPostRow,
   type SocialSeriesPoint,
+  type SocialSyncRun,
 } from "./social-shared";
 
 type StaffCtx = { supabase: any; userId: string; claims: Record<string, unknown> };
@@ -96,6 +98,75 @@ function normalizePlatform(raw?: string | null) {
   return null;
 }
 
+/**
+ * social_metrics_daily é long format (platform, metric, value, date).
+ * Aqui viram linhas diárias com as colunas canônicas do cockpit.
+ * Métrica ausente permanece null — nunca vira zero.
+ */
+export type DailyRow = {
+  platform: string;
+  metric_date: string;
+  reach: number | null;
+  impressions: number | null;
+  views: number | null;
+  engagements: number | null;
+  clicks: number | null;
+  shares: number | null;
+  saves: number | null;
+  followers: number | null;
+  followers_gained: number | null;
+  followers_lost: number | null;
+};
+
+const dailyMetricMap: Record<string, keyof DailyRow> = {
+  reach: "reach",
+  page_total_media_view_unique: "reach",
+  impressions: "impressions",
+  views: "views",
+  total_interactions: "engagements",
+  engagements: "engagements",
+  profile_links_taps: "clicks",
+  clicks: "clicks",
+  shares: "shares",
+  saves: "saves",
+  followers: "followers",
+  fan_count: "followers",
+  page_follows: "followers_gained",
+};
+
+export function foldDailyMetrics(rows: { platform: string; metric: string; value: number | string; date: string }[]): DailyRow[] {
+  const map = new Map<string, DailyRow>();
+  for (const r of rows) {
+    const column = dailyMetricMap[r.metric];
+    if (!column) continue;
+    const key = `${r.platform}|${r.date}`;
+    let row = map.get(key);
+    if (!row) {
+      row = {
+        platform: r.platform,
+        metric_date: r.date,
+        reach: null,
+        impressions: null,
+        views: null,
+        engagements: null,
+        clicks: null,
+        shares: null,
+        saves: null,
+        followers: null,
+        followers_gained: null,
+        followers_lost: null,
+      };
+      map.set(key, row);
+    }
+    const value = Number(r.value);
+    if (!Number.isFinite(value)) continue;
+    if (column === "followers") row.followers = value;
+    else (row[column] as number | null) = ((row[column] as number | null) ?? 0) + value;
+  }
+  return [...map.values()].sort((a, b) => a.metric_date.localeCompare(b.metric_date));
+}
+
+
 const dealStatuses = new Set(["Negócio fechado"]);
 const clientStatuses = new Set(["Cliente", "Negócio fechado"]);
 const qualifiedStatuses = new Set(["Qualificado", "Cliente", "Negócio fechado"]);
@@ -160,24 +231,126 @@ function credentialsConfigured(platform: string) {
   return keys.every((k) => Boolean((process.env[k] ?? "").trim()));
 }
 
+const platformGroup: Record<string, SocialAccountStatus["group"]> = {
+  instagram: "meta",
+  facebook: "meta",
+  linkedin: "linkedin",
+  tiktok: "tiktok",
+  youtube: "youtube",
+  spotify: "spotify",
+};
+
+const DAY = 86400000;
+
+function mapRun(r: any): SocialSyncRun {
+  const items = Number(r.items_synced ?? 0);
+  const status = (r.status ?? null) as string | null;
+  return {
+    id: r.id,
+    platform: r.platform,
+    status,
+    startedAt: r.started_at,
+    finishedAt: r.finished_at ?? null,
+    itemsSynced: items,
+    errorMessage: r.error_message ?? null,
+    note:
+      !r.error_message && items === 0 && (status === "ok" || status === "partial")
+        ? "Execução concluída sem pontos de insight novos nesta plataforma."
+        : null,
+  };
+}
+
+export async function fetchSocialSyncRuns(ctx: StaffCtx, limit = 20): Promise<SocialSyncRun[]> {
+  const { data } = await ctx.supabase
+    .from("social_sync_runs")
+    .select("*")
+    .order("started_at", { ascending: false })
+    .limit(limit);
+  return ((data ?? []) as any[]).map(mapRun);
+}
+
+function healthOf(input: {
+  status: SocialAccountStatus["status"];
+  lastSyncAt: string | null;
+  lastError: string | null;
+  tokenExpiresAt: string | null;
+  dataAccessExpiresAt: string | null;
+  lastRun: SocialSyncRun | null;
+}): { health: SocialAccountStatus["health"]; healthLabel: string; healthReason: string | null } {
+  if (input.status === "nao_conectado") {
+    return { health: "cinza", healthLabel: "Não conectado", healthReason: emptyStateText };
+  }
+
+  const now = Date.now();
+  const staleSync =
+    !input.lastSyncAt || now - new Date(input.lastSyncAt).getTime() > 48 * 60 * 60 * 1000;
+
+  if (input.status === "erro" || input.status === "precisa_reautorizar" || staleSync) {
+    const reason =
+      input.lastError ??
+      input.lastRun?.errorMessage ??
+      (staleSync
+        ? `Sem sincronização bem-sucedida desde ${input.lastSyncAt ? new Date(input.lastSyncAt).toLocaleString("pt-BR") : "sempre"}.`
+        : null);
+    return {
+      health: "vermelho",
+      healthLabel: input.status === "precisa_reautorizar" ? "Precisa reautorizar" : "Com falha",
+      healthReason: reason,
+    };
+  }
+
+  const tokenSoon =
+    input.tokenExpiresAt && new Date(input.tokenExpiresAt).getTime() - now < 7 * DAY;
+  const dataSoon =
+    input.dataAccessExpiresAt && new Date(input.dataAccessExpiresAt).getTime() - now < 14 * DAY;
+  const partial = input.lastRun?.status === "partial";
+  if (tokenSoon || dataSoon || partial) {
+    const reason = tokenSoon
+      ? `Token expira em ${new Date(input.tokenExpiresAt!).toLocaleDateString("pt-BR")}.`
+      : dataSoon
+        ? `Acesso aos dados expira em ${new Date(input.dataAccessExpiresAt!).toLocaleDateString("pt-BR")}.`
+        : (input.lastRun?.errorMessage ?? "Última execução foi parcial.");
+    return { health: "amarelo", healthLabel: "Reconectar em breve", healthReason: reason };
+  }
+
+  return { health: "verde", healthLabel: "Conectado", healthReason: null };
+}
+
 export async function fetchSocialAccounts(ctx: StaffCtx): Promise<SocialAccountStatus[]> {
-  const { data } = await ctx.supabase.from("social_accounts").select("*");
+  const [{ data }, runs] = await Promise.all([
+    ctx.supabase.from("social_accounts").select("*"),
+    fetchSocialSyncRuns(ctx, 60),
+  ]);
   const rows = (data ?? []) as any[];
   return socialPlatforms.map((p) => {
     const row = rows.find((r) => r.platform === p.id);
+    const lastRun = runs.find((r) => r.platform === p.id) ?? null;
+    const status = (row?.status as SocialAccountStatus["status"]) ?? "nao_conectado";
+    const base = {
+      status,
+      lastSyncAt: (row?.last_sync_at ?? null) as string | null,
+      lastError: (row?.last_error ?? null) as string | null,
+      tokenExpiresAt: (row?.token_expires_at ?? null) as string | null,
+      dataAccessExpiresAt: (row?.data_access_expires_at ?? null) as string | null,
+      lastRun,
+    };
     return {
       platform: p.id,
-      displayName: row?.display_name ?? p.label,
+      group: platformGroup[p.id] ?? "meta",
+      displayName: row?.display_name ?? null,
       handle: row?.handle ?? null,
       profileUrl: row?.profile_url ?? null,
-      status: (row?.status as SocialAccountStatus["status"]) ?? "nao_conectado",
-      lastSyncAt: row?.last_sync_at ?? null,
-      lastError: row?.last_error ?? null,
+      profilePictureUrl: row?.profile_picture_url ?? null,
+      ...base,
+      lastErrorAt: row?.last_error_at ?? null,
+      ...healthOf(base),
+      canOauth: p.id !== "spotify",
       credentialsConfigured: credentialsConfigured(p.id),
       requirements: platformRequirements[p.id] ?? [],
     };
   });
 }
+
 
 export async function fetchSocialOverview(
   ctx: StaffCtx,
@@ -190,7 +363,7 @@ export async function fetchSocialOverview(
   let postQuery = ctx.supabase
     .from("social_posts")
     .select(
-      "id, platform, editorial_line, content_type, title, url, thumbnail_url, published_at, campaign, utm_campaign, utm_content, cms_content_id, editorial_content ( titulo )",
+      "id, platform, editorial_line, content_type, title, caption, url, permalink, thumbnail_url, published_at, campaign, utm_campaign, utm_content, cms_content_id, metrics_available, metrics_unavailable_reason, reach, impressions, views, engagements, likes, comments, shares, saves, clicks, avg_watch_time, editorial_content ( titulo )",
     )
     .in("platform", platforms)
     .order("published_at", { ascending: false })
@@ -209,15 +382,17 @@ export async function fetchSocialOverview(
     : { data: [] as any[] };
   const metricRows = (metricData ?? []) as any[];
 
+  // Série diária por plataforma: social_metrics_daily é o que o sync grava (long format).
   let dailyQuery = ctx.supabase
-    .from("social_platform_daily")
-    .select("*")
+    .from("social_metrics_daily")
+    .select("platform, metric, value, date")
     .in("platform", platforms)
-    .order("metric_date", { ascending: true });
-  if (filters.from) dailyQuery = dailyQuery.gte("metric_date", filters.from.slice(0, 10));
-  if (filters.to) dailyQuery = dailyQuery.lte("metric_date", filters.to.slice(0, 10));
+    .order("date", { ascending: true });
+  if (filters.from) dailyQuery = dailyQuery.gte("date", filters.from.slice(0, 10));
+  if (filters.to) dailyQuery = dailyQuery.lte("date", filters.to.slice(0, 10));
   const { data: dailyData } = await dailyQuery;
-  const dailyRows = (dailyData ?? []) as any[];
+  const dailyRows = foldDailyMetrics((dailyData ?? []) as any[]);
+
 
   // Leads e newsletter — atribuição por UTM já capturada nos formulários do site.
   let leadQuery = ctx.supabase
@@ -317,13 +492,32 @@ export async function fetchSocialOverview(
   const posts: SocialPostRow[] = postRows.map((p) => {
     const leads = leadsByPost.get(p.id) ?? [];
     const c = countLeads(leads);
+    // Métricas do próprio post (gravadas pelo sync) + eventuais linhas diárias (CSV do Spotify).
+    const base = rowMetrics(metricsByPost.get(p.id) ?? []);
+    const available = p.metrics_available !== false;
+    if (available) {
+      mergeMetrics(base, {
+        ...emptyMetrics,
+        reach: p.reach == null ? null : Number(p.reach),
+        impressions: p.impressions == null ? null : Number(p.impressions),
+        views: p.views == null ? null : Number(p.views),
+        engagements: p.engagements == null ? null : Number(p.engagements),
+        shares: p.shares == null ? null : Number(p.shares),
+        saves: p.saves == null ? null : Number(p.saves),
+        clicks: p.clicks == null ? null : Number(p.clicks),
+      });
+      if (base.avgViewSeconds == null && p.avg_watch_time != null) {
+        base.avgViewSeconds = Number(p.avg_watch_time);
+      }
+    }
     return {
       id: p.id,
       platform: p.platform,
       editorialLine: p.editorial_line,
       contentType: p.content_type,
-      title: p.title,
-      url: p.url,
+      title: p.title ?? p.caption ?? null,
+      caption: p.caption ?? null,
+      url: p.url ?? p.permalink ?? null,
       thumbnailUrl: p.thumbnail_url,
       publishedAt: p.published_at,
       campaign: p.campaign,
@@ -331,7 +525,9 @@ export async function fetchSocialOverview(
       utmCampaign: p.utm_campaign,
       cmsContentId: p.cms_content_id,
       cmsTitle: p.editorial_content?.titulo ?? null,
-      metrics: rowMetrics(metricsByPost.get(p.id) ?? []),
+      metricsAvailable: available,
+      metricsUnavailableReason: p.metrics_unavailable_reason ?? null,
+      metrics: available ? base : { ...emptyMetrics },
       ...c,
     };
   });
@@ -359,8 +555,10 @@ export async function fetchSocialOverview(
       }
       const daily = dailyRows.filter((d) => platformScope.includes(d.platform));
       if (daily.length) {
-        const last = daily[daily.length - 1];
-        agg.followers = last.followers ?? null;
+        // No nível de plataforma a série diária é a fonte oficial:
+        // evita somar duas vezes o que já veio no post.
+        Object.assign(agg, emptyMetrics);
+        agg.followers = [...daily].reverse().find((d) => d.followers != null)?.followers ?? null;
         const gained = daily.reduce<number | null>((a, d) => addMetric(a, d.followers_gained ?? null), null);
         const lost = daily.reduce<number | null>((a, d) => addMetric(a, d.followers_lost ?? null), null);
         agg.followersGrowth = gained == null && lost == null ? null : (gained ?? 0) - (lost ?? 0);
@@ -371,12 +569,15 @@ export async function fetchSocialOverview(
             impressions: d.impressions ?? null,
             views: d.views ?? null,
             engagements: d.engagements ?? null,
+            shares: d.shares ?? null,
+            saves: d.saves ?? null,
             clicks: d.clicks ?? null,
           });
         }
       }
     }
     return agg;
+
   }
 
   const kpis = { ...aggregate(posts, platforms) } as SocialOverview["kpis"];
@@ -518,6 +719,7 @@ export async function fetchSocialOverview(
     newsletterByEditorial,
     episodes,
     accounts: await fetchSocialAccounts(ctx),
+    syncRuns: await fetchSocialSyncRuns(ctx, 12),
     ga4Configured: ga4On,
     ga4Reason,
     generatedAt: new Date().toISOString(),

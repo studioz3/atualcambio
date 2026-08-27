@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -33,6 +33,19 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const day = 86400000;
+
+/** Respeita prefers-reduced-motion: sem animação de entrada nos gráficos. */
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReduced(mq.matches);
+    const onChange = () => setReduced(mq.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+  return reduced;
+}
 
 function useSocialRange(period: PeriodState) {
   return useMemo(() => {
@@ -77,35 +90,55 @@ export function SocialCockpit() {
   const hasAnyData =
     !!data && (data.posts.length > 0 || data.series.length > 0 || data.kpis.leads > 0);
 
+  const reducedMotion = usePrefersReducedMotion();
+  const activePlatforms = data?.byPlatform.map((p) => p.platform) ?? [];
+
+  /**
+   * Redes que efetivamente entregam a métrica selecionada.
+   * As demais somem do comparativo — nunca são plotadas como zero.
+   */
+  const metricPlatforms = useMemo(
+    () => (data?.byPlatform ?? []).filter((p) => metricValue(p, metric) != null).map((p) => p.platform),
+    [data, metric],
+  );
+  const hiddenPlatforms = activePlatforms.filter((p) => !metricPlatforms.includes(p));
+
   const chartData = useMemo(() => {
     if (!data) return [];
-    const byDate = new Map<string, Record<string, number | string>>();
+    const byDate = new Map<string, Record<string, number | string | null>>();
     for (const p of data.series) {
+      if (!metricPlatforms.includes(p.platform)) continue;
       const row = byDate.get(p.date) ?? { date: p.date };
       const value =
         metric === "leads"
           ? p.leads
           : metric === "followersGrowth"
-            ? (p.followers ?? 0)
-            : ((p[metric as "reach" | "views" | "engagements" | "clicks"] as number | null) ?? 0);
-      row[p.platform] = ((row[p.platform] as number) ?? 0) + (value ?? 0);
+            ? p.followers
+            : (p[metric as "reach" | "views" | "engagements" | "clicks"] as number | null);
+      // null continua null: a série fica sem ponto naquele dia, em vez de virar zero.
+      const current = row[p.platform];
+      row[p.platform] = value == null ? (current ?? null) : ((current as number) ?? 0) + value;
       byDate.set(p.date, row);
     }
     return [...byDate.values()].sort((a, b) => String(a["date"]).localeCompare(String(b["date"])));
-  }, [data, metric]);
-
-  const activePlatforms = data?.byPlatform.map((p) => p.platform) ?? [];
+  }, [data, metric, metricPlatforms]);
 
   const rankedPosts = useMemo(() => {
     if (!data) return [];
+    const score = (p: (typeof data.posts)[number]) =>
+      metric === "leads" ? p.leads : ((p.metrics as any)[metric] as number | null);
     return [...data.posts]
       .sort((a, b) => {
-        const av = metric === "leads" ? a.leads : ((a.metrics as any)[metric] ?? 0);
-        const bv = metric === "leads" ? b.leads : ((b.metrics as any)[metric] ?? 0);
+        const av = score(a);
+        const bv = score(b);
+        if (av == null && bv == null) return b.publishedAt.localeCompare(a.publishedAt);
+        if (av == null) return 1;
+        if (bv == null) return -1;
         return bv - av;
       })
       .slice(0, 12);
   }, [data, metric]);
+
 
   const funnel = data?.funnel;
 
@@ -193,8 +226,12 @@ export function SocialCockpit() {
               </div>
             }
           >
-            {chartData.length === 0 ? (
-              <p className="text-sm text-white/45">Sem série temporal para esta métrica no período.</p>
+            {metricPlatforms.length === 0 || chartData.length === 0 ? (
+              <p className="text-sm text-white/45">
+                Nenhuma rede conectada entrega{" "}
+                {comparableMetrics.find((m) => m.id === metric)?.label.toLowerCase()} no período. Nada é
+                estimado nem plotado como zero.
+              </p>
             ) : (
               <div className="h-64">
                 <ResponsiveContainer width="100%" height="100%">
@@ -210,7 +247,7 @@ export function SocialCockpit() {
                         fontSize: 12,
                       }}
                     />
-                    {activePlatforms.map((p) => (
+                    {metricPlatforms.map((p) => (
                       <Area
                         key={p}
                         type="monotone"
@@ -220,13 +257,22 @@ export function SocialCockpit() {
                         fill={platformDot(p)}
                         fillOpacity={0.12}
                         strokeWidth={2}
+                        connectNulls={false}
+                        isAnimationActive={!reducedMotion}
                       />
                     ))}
                   </AreaChart>
                 </ResponsiveContainer>
               </div>
             )}
+            {hiddenPlatforms.length ? (
+              <p className="mt-3 text-[11px] text-white/40">
+                Fora deste comparativo por não fornecerem esta métrica:{" "}
+                {hiddenPlatforms.map((p) => platformLabel(p)).join(", ")}.
+              </p>
+            ) : null}
           </CockpitCard>
+
 
           <CockpitCard title="Desempenho por rede" subtitle="Somente métricas efetivamente coletadas">
             <div className="overflow-x-auto">
@@ -383,25 +429,49 @@ export function SocialCockpit() {
                   </thead>
                   <tbody className="divide-y divide-white/5">
                     {rankedPosts.map((p) => (
-                      <tr key={p.id} className="text-white/80">
-                        <td className="max-w-[280px] truncate py-2.5">
-                          {p.url ? (
-                            <a href={p.url} target="_blank" rel="noreferrer" className="hover:text-gold">
-                              {p.title ?? p.url}
-                            </a>
-                          ) : (
-                            (p.title ?? "—")
-                          )}
+                      <tr key={p.id} className="align-top text-white/80">
+                        <td className="max-w-[280px] py-2.5">
+                          <div className="flex items-start gap-2">
+                            {p.thumbnailUrl ? (
+                              <img
+                                src={p.thumbnailUrl}
+                                alt=""
+                                loading="lazy"
+                                className="size-9 shrink-0 rounded-md object-cover"
+                              />
+                            ) : null}
+                            <div className="min-w-0">
+                              {p.url ? (
+                                <a href={p.url} target="_blank" rel="noreferrer" className="block truncate hover:text-gold">
+                                  {p.title ?? p.caption ?? p.url}
+                                </a>
+                              ) : (
+                                <span className="block truncate">{p.title ?? p.caption ?? "—"}</span>
+                              )}
+                              {p.caption && p.caption !== p.title ? (
+                                <span className="block truncate text-[11px] text-white/35">{p.caption}</span>
+                              ) : null}
+                            </div>
+                          </div>
                         </td>
                         <td>{platformLabel(p.platform)}</td>
                         <td>{editorialLabel(p.editorialLine)}</td>
                         <td>{contentTypeLabel(p.contentType)}</td>
                         <td>{formatDateTime(p.publishedAt)}</td>
-                        <td><Cell value={p.metrics.reach} /></td>
-                        <td><Cell value={p.metrics.engagements} /></td>
-                        <td className="font-semibold text-white">{p.leads}</td>
+                        {p.metricsAvailable === false ? (
+                          <td colSpan={3} className="text-[11px] text-amber-300/80">
+                            {p.metricsUnavailableReason ?? "Métricas não disponíveis para esta publicação."}
+                          </td>
+                        ) : (
+                          <>
+                            <td><Cell value={p.metrics.reach} /></td>
+                            <td><Cell value={p.metrics.engagements} /></td>
+                            <td className="font-semibold text-white">{p.leads}</td>
+                          </>
+                        )}
                       </tr>
                     ))}
+
                   </tbody>
                 </table>
               </div>

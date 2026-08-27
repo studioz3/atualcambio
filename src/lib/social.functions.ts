@@ -185,3 +185,13 @@ export const getSocialImports = createServerFn({ method: "GET" })
       created_at: string;
     }[];
   });
+
+/** Histórico das execuções do sync — é onde se olha quando algo quebra. */
+export const getSocialSyncRuns = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const { assertStaff } = await import("./cockpit.server");
+    const { fetchSocialSyncRuns } = await import("./social.server");
+    await assertStaff(context as any);
+    return fetchSocialSyncRuns(context as any, 25);
+  });
