@@ -168,18 +168,70 @@ export type SocialSeriesPoint = {
   leads: number;
 };
 
+export type SocialSyncRun = {
+  id: string;
+  platform: string;
+  status: string | null;
+  startedAt: string;
+  finishedAt: string | null;
+  itemsSynced: number;
+  errorMessage: string | null;
+  /** Run concluído sem pontos de insight — nota, não erro. */
+  note: string | null;
+};
+
+export type AccountHealth = "verde" | "amarelo" | "vermelho" | "cinza";
+
 export type SocialAccountStatus = {
   platform: string;
+  /** Agrupamento comercial exibido no card (Meta reúne Instagram + Facebook). */
+  group: "meta" | "linkedin" | "tiktok" | "youtube" | "spotify";
   displayName: string | null;
   handle: string | null;
   profileUrl: string | null;
-  status: "conectado" | "nao_conectado" | "erro";
+  profilePictureUrl: string | null;
+  status: "conectado" | "nao_conectado" | "erro" | "precisa_reautorizar";
   lastSyncAt: string | null;
   lastError: string | null;
+  lastErrorAt: string | null;
+  tokenExpiresAt: string | null;
+  dataAccessExpiresAt: string | null;
+  health: AccountHealth;
+  healthLabel: string;
+  /** Motivo do semáforo em texto real (nunca genérico quando há last_error). */
+  healthReason: string | null;
+  lastRun: SocialSyncRun | null;
+  canOauth: boolean;
   /** Segredos configurados no servidor para esta plataforma (nunca o valor). */
   credentialsConfigured: boolean;
   requirements: string[];
 };
+
+export const groupLabel: Record<SocialAccountStatus["group"], string> = {
+  meta: "Meta (Instagram + Facebook)",
+  linkedin: "LinkedIn",
+  tiktok: "TikTok",
+  youtube: "YouTube",
+  spotify: "Spotify",
+};
+
+export const emptyStateText =
+  "Nenhum dado é exibido até a conexão ser concluída — o cockpit nunca mostra números estimados nem dados de demonstração.";
+
+export function relativeTime(iso: string | null | undefined) {
+  if (!iso) return "nunca";
+  const diff = Date.now() - new Date(iso).getTime();
+  if (!Number.isFinite(diff)) return "nunca";
+  const min = Math.round(diff / 60000);
+  if (min < 1) return "agora";
+  if (min < 60) return `há ${min}min`;
+  const hours = Math.round(min / 60);
+  if (hours < 48) return `há ${hours}h`;
+  const days = Math.round(hours / 24);
+  if (days < 30) return `há ${days}d`;
+  return `há ${Math.round(days / 30)} meses`;
+}
+
 
 export type SocialFunnel = {
   reach: number | null;
