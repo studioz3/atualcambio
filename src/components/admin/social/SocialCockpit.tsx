@@ -18,6 +18,7 @@ import { SocialPostDialog } from "./SocialPostDialog";
 import { getSocialOverview } from "@/lib/social.functions";
 import {
   comparableMetrics,
+  platformProvidesMetric,
   contentTypeLabel,
   editorialLabel,
   formatWatchTime,
@@ -50,12 +51,21 @@ function usePrefersReducedMotion() {
 function useSocialRange(period: PeriodState) {
   return useMemo(() => {
     const r = rangeOf(period);
+    // "Todos": sem janela — o servidor lê tudo e não há período anterior para comparar.
+    if (period.preset === "tudo") {
+      return { from: null, to: null, previousFrom: null, previousTo: null };
+    }
     const fromIso = r.from ?? new Date(Date.now() - 29 * day).toISOString();
     const toIso = r.to ?? new Date().toISOString();
     const span = Math.max(day, new Date(toIso).getTime() - new Date(fromIso).getTime());
     const previousTo = new Date(new Date(fromIso).getTime() - 1000).toISOString();
     const previousFrom = new Date(new Date(previousTo).getTime() - span).toISOString();
-    return { from: fromIso, to: toIso, previousFrom, previousTo };
+    return {
+      from: fromIso as string | null,
+      to: toIso as string | null,
+      previousFrom: previousFrom as string | null,
+      previousTo: previousTo as string | null,
+    };
   }, [period.preset, period.from, period.to]);
 }
 
@@ -87,8 +97,13 @@ export function SocialCockpit() {
   });
 
   const data = query.data;
+  // Empty state só quando a consulta realmente voltou vazia em todas as fontes.
   const hasAnyData =
-    !!data && (data.posts.length > 0 || data.series.length > 0 || data.kpis.leads > 0);
+    !!data &&
+    (data.posts.length > 0 ||
+      data.series.length > 0 ||
+      data.kpis.leads > 0 ||
+      data.byPlatform.some((p) => comparableMetrics.some((m) => metricValue(p, m.id) != null)));
 
   const reducedMotion = usePrefersReducedMotion();
   const activePlatforms = data?.byPlatform.map((p) => p.platform) ?? [];
@@ -101,7 +116,10 @@ export function SocialCockpit() {
     () => (data?.byPlatform ?? []).filter((p) => metricValue(p, metric) != null).map((p) => p.platform),
     [data, metric],
   );
-  const hiddenPlatforms = activePlatforms.filter((p) => !metricPlatforms.includes(p));
+  // Só é "não fornece" quando a plataforma não tem chave mapeada para a métrica.
+  const hiddenPlatforms = activePlatforms.filter(
+    (p) => !metricPlatforms.includes(p) && !platformProvidesMetric(p, metric),
+  );
 
   const chartData = useMemo(() => {
     if (!data) return [];

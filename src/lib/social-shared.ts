@@ -115,6 +115,79 @@ export const comparableMetrics = [
 
 export type ComparableMetricId = (typeof comparableMetrics)[number]["id"];
 
+/* ------------------------------------------------------------------ *
+ * Camada única de tradução: rótulo do cockpit -> chaves reais gravadas
+ * em social_metrics_daily, por plataforma.
+ * Chave ausente = a plataforma realmente não fornece a métrica.
+ * ------------------------------------------------------------------ */
+export type DailyMetricKey =
+  | "reach"
+  | "impressions"
+  | "views"
+  | "engagements"
+  | "shares"
+  | "saves"
+  | "clicks"
+  | "followers"
+  | "followersGained";
+
+export const dailyMetricSources: Record<string, Partial<Record<DailyMetricKey, string[]>>> = {
+  instagram: {
+    reach: ["reach"],
+    views: ["views"],
+    engagements: ["total_interactions"],
+    shares: ["shares"],
+    saves: ["saves"],
+    clicks: ["profile_links_taps"],
+    followers: ["followers_count", "followers"],
+    // impressions: descontinuada pela Meta — nenhuma chave.
+  },
+  facebook: {
+    reach: ["page_total_media_view_unique"],
+    followers: ["fan_count", "followers"],
+    followersGained: ["page_follows"],
+  },
+};
+
+/** Traduz uma chave crua de social_metrics_daily para a coluna canônica do cockpit. */
+export function dailyMetricColumn(platform: string, metric: string): DailyMetricKey | null {
+  const table = dailyMetricSources[platform];
+  if (!table) return null;
+  for (const [column, keys] of Object.entries(table)) {
+    if (keys?.includes(metric)) return column as DailyMetricKey;
+  }
+  return null;
+}
+
+/** A plataforma tem chave mapeada para a métrica do comparativo? */
+export function platformProvidesMetric(platform: string, metric: ComparableMetricId) {
+  if (metric === "leads") return true;
+  const table = dailyMetricSources[platform];
+  if (!table) return true; // plataformas sem série diária dependem dos posts/CSV
+  if (metric === "followersGrowth") return Boolean(table.followersGained ?? table.followers);
+  return Boolean(table[metric as DailyMetricKey]);
+}
+
+/**
+ * A Meta entrega media_product_type (FEED/REELS/STORY) e media_type
+ * (IMAGE/VIDEO/CAROUSEL_ALBUM). Aqui vira o formato exibido nos filtros.
+ */
+export function deriveContentType(
+  mediaProductType?: string | null,
+  mediaType?: string | null,
+  fallback?: string | null,
+): string {
+  const product = (mediaProductType ?? "").toUpperCase();
+  const media = (mediaType ?? "").toUpperCase();
+  if (product === "REELS" || media === "REELS") return "reel";
+  if (product === "STORY") return "story";
+  if (media === "CAROUSEL_ALBUM") return "carrossel";
+  if (product === "FEED" && (media === "IMAGE" || media === "VIDEO")) return "post";
+  const current = (fallback ?? "").trim();
+  return current && current !== "nao_classificada" ? current : "nao_classificada";
+}
+
+
 export type SocialAggregate = SocialMetrics & {
   posts: number;
   leads: number;
