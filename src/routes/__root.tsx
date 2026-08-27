@@ -135,16 +135,10 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const isAdmin = pathname === "/admin" || pathname.startsWith("/admin/");
-  const firstView = useRef(true);
+  // O page_view de troca de rota fica a cargo da Métrica Otimizada do GA4
+  // (alterações de página baseadas em eventos do histórico) — sem disparo manual.
 
-  useEffect(() => {
-    // O primeiro page_view é enviado pelo config do gtag; aqui cobrimos a navegação SPA.
-    if (firstView.current) {
-      firstView.current = false;
-      return;
-    }
-    trackPageView(pathname);
-  }, [pathname]);
+
 
 
   if (isAdmin) {
