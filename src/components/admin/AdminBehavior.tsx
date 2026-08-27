@@ -106,16 +106,32 @@ export function AdminBehavior() {
         ))}
       </div>
 
+      <div className="flex gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-4 text-xs leading-relaxed text-white/55">
+        <Info className="mt-0.5 size-4 shrink-0 text-gold" aria-hidden />
+        <p>
+          <strong className="text-white/80">Por que não existe botão de atualizar:</strong> a API de
+          exportação do Microsoft Clarity é limitada pela própria Microsoft a{" "}
+          <strong className="text-white/80">10 chamadas por dia, por projeto</strong> — não é uma
+          configuração nossa nem existe plano que aumente esse teto. Cada coleta consome 2 chamadas
+          (agregado + quebra por página), então a coleta roda automaticamente em horários fixos —
+          <strong className="text-white/80"> 03h, 09h, 15h e 21h (Brasília)</strong> — totalizando 8
+          chamadas/dia e deixando 2 de folga. O cockpit sempre lê o último snapshot salvo no banco,
+          por isso os números continuam visíveis mesmo quando a API está indisponível. A API também
+          só devolve os últimos 3 dias de sessões.
+        </p>
+      </div>
+
       {clarity.isLoading ? (
         <CockpitSkeleton rows={6} />
       ) : clarity.data && !clarity.data.configured ? (
-        <CockpitCard title="Falha ao consultar o Clarity">
+        <CockpitCard title="Clarity sem coleta disponível">
           <p className="text-sm text-red-300/90">{clarity.data.reason}</p>
           <p className="mt-2 text-xs text-white/45">
-            A API do Clarity tem limite diário de chamadas. Assim que houver saldo, os KPIs voltam
-            automaticamente — o último dado válido fica guardado no banco.
+            O limite de 10 chamadas/dia é imposto pela API da Microsoft. Assim que a próxima coleta
+            agendada rodar, os KPIs voltam automaticamente.
           </p>
         </CockpitCard>
+
       ) : !page ? (
         <CockpitCard title="Sem dados">
           <p className="text-sm text-white/45">
