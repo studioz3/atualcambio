@@ -106,14 +106,21 @@ export function authorizeUrl(platform: OAuthPlatform, state: string, request?: R
   }
 }
 
-/** Sincronização das contas — só executa o que houver credencial no servidor. */
+/** Sincronização das contas — Meta é real; as demais aguardam credenciais. */
 export async function runSocialSync(platforms?: string[]) {
   const db = await admin();
   const targets = (platforms?.length ? platforms : [...oauthPlatforms]).filter(isOAuthPlatform);
   const now = new Date().toISOString();
   const results: { platform: string; ok: boolean; message: string }[] = [];
 
-  for (const platform of targets) {
+  const metaTargets = targets.filter((p) => p === "instagram" || p === "facebook");
+  if (metaTargets.length) {
+    const { runMetaSync } = await import("./meta-sync.server");
+    const meta = await runMetaSync(metaTargets);
+    for (const r of meta.results) results.push({ platform: r.platform, ok: r.ok, message: r.message });
+  }
+
+  for (const platform of targets.filter((p) => p !== "instagram" && p !== "facebook")) {
     const configured = Boolean(authorizeUrl(platform, "probe"));
     const message = configured
       ? "Credenciais presentes. Aguardando token de acesso da plataforma."
@@ -128,11 +135,17 @@ export async function runSocialSync(platforms?: string[]) {
   return { ranAt: now, results };
 }
 
-/** Teste de conexão de uma plataforma (somente leitura de configuração). */
+/** Teste de conexão de uma plataforma. */
 export async function testSocialConnection(platform: OAuthPlatform) {
+  if (platform === "instagram" || platform === "facebook") {
+    const { testMetaConnection } = await import("./meta-sync.server");
+    const result = await testMetaConnection(platform);
+    return { ...result, callbackUrl: callbackUrl(platform) };
+  }
   const configured = Boolean(authorizeUrl(platform, "probe"));
   return {
     platform,
+    ok: false,
     credentialsConfigured: configured,
     callbackUrl: callbackUrl(platform),
     message: configured
@@ -140,3 +153,4 @@ export async function testSocialConnection(platform: OAuthPlatform) {
       : "Faltam credenciais do app desta plataforma no servidor.",
   };
 }
+
