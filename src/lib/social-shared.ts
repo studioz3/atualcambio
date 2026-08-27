@@ -132,6 +132,7 @@ export type SocialPostRow = {
   editorialLine: string;
   contentType: string;
   title: string | null;
+  caption: string | null;
   url: string | null;
   thumbnailUrl: string | null;
   publishedAt: string;
@@ -140,12 +141,16 @@ export type SocialPostRow = {
   utmCampaign: string | null;
   cmsContentId: string | null;
   cmsTitle: string | null;
+  /** false = a plataforma não devolveu métricas para este post. Nunca exibir zero. */
+  metricsAvailable: boolean;
+  metricsUnavailableReason: string | null;
   metrics: SocialMetrics;
   leads: number;
   qualifiedLeads: number;
   clients: number;
   deals: number;
 };
+
 
 export type SocialKpis = SocialAggregate & {
   followers: number | null;
