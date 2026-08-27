@@ -542,18 +542,57 @@ async function readClaritySnapshot(): Promise<{ at: number; data: ClarityOvervie
   }
 }
 
+/** Prefixo das linhas históricas: uma por dia de coleta (última coleta do dia). */
+const CLARITY_HISTORY_PREFIX = "live-insights-3d:";
+
 async function writeClaritySnapshot(data: ClarityOverview) {
   try {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    await supabaseAdmin
-      .from("clarity_snapshots")
-      .upsert(
-        { key: CLARITY_SNAPSHOT_KEY, payload: data as never, fetched_at: new Date().toISOString() },
-        { onConflict: "key" },
-      );
+    const now = new Date().toISOString();
+    const dayKey = `${CLARITY_HISTORY_PREFIX}${now.slice(0, 10)}`;
+    await supabaseAdmin.from("clarity_snapshots").upsert(
+      [
+        { key: CLARITY_SNAPSHOT_KEY, payload: data as never, fetched_at: now },
+        { key: dayKey, payload: data as never, fetched_at: now },
+      ],
+      { onConflict: "key" },
+    );
   } catch {
     /* cache best-effort */
   }
+}
+
+/**
+ * Histórico já coletado — lê apenas o banco, sem consumir cota da API.
+ * Cada ponto é a última coleta gravada naquele dia (janela móvel de 3 dias do Clarity).
+ */
+export async function fetchClarityHistory(
+  from: string,
+  to: string,
+): Promise<ClarityHistoryPoint[]> {
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  const { data, error } = await supabaseAdmin
+    .from("clarity_snapshots")
+    .select("key, payload, fetched_at")
+    .like("key", `${CLARITY_HISTORY_PREFIX}%`)
+    .gte("fetched_at", from)
+    .lte("fetched_at", to)
+    .order("fetched_at", { ascending: true });
+  if (error) throw new Error(error.message);
+  return (data ?? []).map((row) => {
+    const payload = row.payload as unknown as ClarityOverview;
+    const totals = payload?.totals;
+    return {
+      date: String(row.key).slice(CLARITY_HISTORY_PREFIX.length),
+      collectedAt: new Date(row.fetched_at as string).toISOString(),
+      sessions: totals?.sessions ?? 0,
+      averageScrollDepth: totals?.averageScrollDepth ?? null,
+      averageEngagementSeconds: totals?.averageEngagementSeconds ?? null,
+      rageClicks: totals?.rageClicks ?? 0,
+      deadClicks: totals?.deadClicks ?? 0,
+      quickBacks: totals?.quickBacks ?? 0,
+    };
+  });
 }
 
 /**
