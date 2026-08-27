@@ -57,8 +57,15 @@ function isoDate(d: Date) {
   return d.toISOString().slice(0, 10);
 }
 
+function fallbackExternalId(platform: string) {
+  const c = metaCredentials();
+  return (platform === "instagram" ? c.igId : c.pageId) ?? platform;
+}
+
 async function upsertAccount(platform: string, patch: Record<string, unknown>) {
   const db = await admin();
+  // external_id é NOT NULL: em upserts que não trazem o id da API usamos o configurado.
+  if (!("external_id" in patch)) patch = { external_id: fallbackExternalId(platform), ...patch };
   const { error } = await db
     .from("social_accounts")
     .upsert({ platform, ...patch }, { onConflict: "platform" });
@@ -253,7 +260,8 @@ async function backfillInstagramReach(client: GraphClient, igId: string, days: n
 }
 
 const POST_FIELDS =
-  "id,caption,media_type,media_product_type,permalink,thumbnail_url,timestamp,like_count,comments_count,saved_count,shares_count,view_count";
+  "id,caption,media_type,media_product_type,permalink,thumbnail_url,timestamp,like_count,comments_count,saved_count,shares_count";
+// view_count não é acessível fora da Business Discovery API: views vêm de /insights.
 
 type IgMedia = any;
 
@@ -303,33 +311,32 @@ async function fetchInsightsBatch(
   ids: string[],
   metrics: string[],
 ): Promise<{ byId: Record<string, Record<string, number>>; unavailable: string | null }> {
-  const call = (metricList: string[]) =>
-    client.get("insights", { ids: ids.join(","), metric: metricList.join(",") });
+  // O parâmetro ids foi descontinuado na v26.0: pedimos insight por mídia.
+  const byId: Record<string, Record<string, number>> = {};
+  let lastError: string | null = null;
 
-  try {
-    const payload = await call(metrics);
-    const byId: Record<string, Record<string, number>> = {};
-    for (const id of ids) byId[id] = readInsightValues(payload?.[id]);
-    return { byId, unavailable: null };
-  } catch (error) {
-    if (error instanceof RateLimitAbort || error instanceof AuthError) throw error;
-    const code = error instanceof GraphError ? error.code : null;
-    if (code !== 100) throw error;
+  for (const id of ids) {
     try {
-      const payload = await call(BASIC_METRICS);
-      const byId: Record<string, Record<string, number>> = {};
-      for (const id of ids) byId[id] = readInsightValues(payload?.[id]);
-      return { byId, unavailable: null };
-    } catch (fallbackError) {
-      if (fallbackError instanceof RateLimitAbort || fallbackError instanceof AuthError) throw fallbackError;
-      return {
-        byId: {},
-        unavailable: sanitize(
-          fallbackError instanceof Error ? fallbackError.message : "Insights indisponíveis para este lote.",
-        ),
-      };
+      byId[id] = readInsightValues(await client.get(`${id}/insights`, { metric: metrics.join(",") }));
+    } catch (error) {
+      if (error instanceof RateLimitAbort || error instanceof AuthError) throw error;
+      const code = error instanceof GraphError ? error.code : null;
+      if (code !== 100 && code !== 36104) {
+        lastError = sanitize(error instanceof Error ? error.message : String(error));
+        continue;
+      }
+      try {
+        byId[id] = readInsightValues(await client.get(`${id}/insights`, { metric: BASIC_METRICS.join(",") }));
+      } catch (fallbackError) {
+        if (fallbackError instanceof RateLimitAbort || fallbackError instanceof AuthError) throw fallbackError;
+        lastError = sanitize(
+          fallbackError instanceof Error ? fallbackError.message : "Insights indisponíveis para esta mídia.",
+        );
+      }
     }
   }
+
+  return { byId, unavailable: Object.keys(byId).length === 0 ? (lastError ?? "Insights indisponíveis.") : null };
 }
 
 async function syncInstagramPosts(client: GraphClient, igId: string, notes: string[]) {
@@ -403,7 +410,7 @@ async function syncInstagramPosts(client: GraphClient, igId: string, notes: stri
         comments: m.comments_count ?? null,
         saves: m.saved_count ?? ins["saved"] ?? null,
         shares: m.shares_count ?? ins["shares"] ?? null,
-        views: m.view_count ?? ins["views"] ?? null,
+        views: ins["views"] ?? null,
         reach: ins["reach"] ?? null,
         engagements: ins["total_interactions"] ?? null,
         avg_watch_time: ins["ig_reels_avg_watch_time"] ?? null,
@@ -528,6 +535,16 @@ async function syncFacebook(client: GraphClient, pageId: string): Promise<Omit<S
 
 /* ================================ ORQUESTRAÇÃO ================================ */
 
+/** Busca o Page Access Token da página configurada (sem ele, insights retornam #190/#36104). */
+async function resolvePageToken(client: GraphClient, pageId: string | null) {
+  if (!pageId) return null;
+  const payload = await client.get("me/accounts", { fields: "id,access_token", limit: 200 });
+  for (const page of payload?.data ?? []) {
+    if (String(page.id) === String(pageId)) return (page.access_token as string) ?? null;
+  }
+  return null;
+}
+
 async function startRun(platform: string) {
   const db = await admin();
   const { data } = await db
@@ -582,7 +599,15 @@ export async function runMetaSync(platforms?: string[]): Promise<{ ranAt: string
     return { ranAt, results };
   }
 
-  const client = createGraphClient(token!, appSecret!);
+  // Insights (IG e Página) exigem Page Access Token; o token de usuário só serve para leituras básicas.
+  const userClient = createGraphClient(token!, appSecret!);
+  let client = userClient;
+  try {
+    const pageToken = await resolvePageToken(userClient, pageId);
+    if (pageToken) client = createGraphClient(pageToken, appSecret!);
+  } catch (error) {
+    if (error instanceof AuthError || error instanceof RateLimitAbort) throw error;
+  }
 
   for (const platform of configured) {
     const runId = await startRun(platform);
@@ -645,7 +670,11 @@ export async function testMetaConnection(platform: MetaPlatform) {
     return { platform, ok: false, credentialsConfigured: true, message: health.message, health };
   }
 
-  const client = createGraphClient(token!, appSecret!);
+  let client = createGraphClient(token!, appSecret!);
+  try {
+    const pageToken = await resolvePageToken(client, pageId);
+    if (pageToken) client = createGraphClient(pageToken, appSecret!);
+  } catch { /* segue com o token de usuário */ }
   try {
     const profile =
       platform === "instagram"
