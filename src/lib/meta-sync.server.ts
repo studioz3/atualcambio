@@ -393,6 +393,8 @@ async function syncInstagramPosts(client: GraphClient, igId: string, notes: stri
   const nowIso = new Date().toISOString();
   const rows = media
     .filter((m) => String(m.media_product_type ?? "FEED") !== "AD")
+    // Mídia antiga já com métrica boa não é regravada: evita zerar valor por falta de insight.
+    .filter((m) => !settled.has(String(m.id)) || insights[String(m.id)] || unavailable[String(m.id)])
     .map((m) => {
       const id = String(m.id);
       const ins = insights[id] ?? {};
