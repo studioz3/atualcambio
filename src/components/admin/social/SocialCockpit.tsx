@@ -10,7 +10,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { ArrowRight, Upload } from "lucide-react";
+import { AlertTriangle, ArrowRight, Upload } from "lucide-react";
 import { PeriodFilter, defaultPeriod, rangeOf, type PeriodState } from "../PeriodFilter";
 import { BarList, CockpitCard, CockpitSkeleton, KpiCard } from "../cockpit/primitives";
 import { SocialTaxonomyFilters, emptyTaxonomy, type TaxonomyFilters } from "./SocialFilters";
