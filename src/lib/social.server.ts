@@ -96,6 +96,75 @@ function normalizePlatform(raw?: string | null) {
   return null;
 }
 
+/**
+ * social_metrics_daily é long format (platform, metric, value, date).
+ * Aqui viram linhas diárias com as colunas canônicas do cockpit.
+ * Métrica ausente permanece null — nunca vira zero.
+ */
+export type DailyRow = {
+  platform: string;
+  metric_date: string;
+  reach: number | null;
+  impressions: number | null;
+  views: number | null;
+  engagements: number | null;
+  clicks: number | null;
+  shares: number | null;
+  saves: number | null;
+  followers: number | null;
+  followers_gained: number | null;
+  followers_lost: number | null;
+};
+
+const dailyMetricMap: Record<string, keyof DailyRow> = {
+  reach: "reach",
+  page_total_media_view_unique: "reach",
+  impressions: "impressions",
+  views: "views",
+  total_interactions: "engagements",
+  engagements: "engagements",
+  profile_links_taps: "clicks",
+  clicks: "clicks",
+  shares: "shares",
+  saves: "saves",
+  followers: "followers",
+  fan_count: "followers",
+  page_follows: "followers_gained",
+};
+
+export function foldDailyMetrics(rows: { platform: string; metric: string; value: number | string; date: string }[]): DailyRow[] {
+  const map = new Map<string, DailyRow>();
+  for (const r of rows) {
+    const column = dailyMetricMap[r.metric];
+    if (!column) continue;
+    const key = `${r.platform}|${r.date}`;
+    let row = map.get(key);
+    if (!row) {
+      row = {
+        platform: r.platform,
+        metric_date: r.date,
+        reach: null,
+        impressions: null,
+        views: null,
+        engagements: null,
+        clicks: null,
+        shares: null,
+        saves: null,
+        followers: null,
+        followers_gained: null,
+        followers_lost: null,
+      };
+      map.set(key, row);
+    }
+    const value = Number(r.value);
+    if (!Number.isFinite(value)) continue;
+    if (column === "followers") row.followers = value;
+    else (row[column] as number | null) = ((row[column] as number | null) ?? 0) + value;
+  }
+  return [...map.values()].sort((a, b) => a.metric_date.localeCompare(b.metric_date));
+}
+
+
 const dealStatuses = new Set(["Negócio fechado"]);
 const clientStatuses = new Set(["Cliente", "Negócio fechado"]);
 const qualifiedStatuses = new Set(["Qualificado", "Cliente", "Negócio fechado"]);
