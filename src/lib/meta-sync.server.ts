@@ -399,13 +399,13 @@ async function syncInstagramPosts(client: GraphClient, igId: string, notes: stri
       const id = String(m.id);
       const ins = insights[id] ?? {};
       const reason = unavailable[id] ?? null;
-      const caption: string | null = m.caption ?? null;
+      const caption: string | null = safeText(m.caption ?? null);
       return {
         platform: "instagram",
         content_id: id,
         origin: POST_ORIGIN.api,
         caption,
-        title: caption ? caption.slice(0, 140) : null,
+        title: caption ? safeText(caption.slice(0, 140)) : null,
         media_type: m.media_type ?? null,
         media_product_type: m.media_product_type ?? null,
         permalink: m.permalink ?? null,
