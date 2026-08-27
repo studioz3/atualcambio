@@ -8,8 +8,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, useRef, type ReactNode } from "react";
-import { trackPageView } from "@/lib/analytics";
+import { useEffect, type ReactNode } from "react";
 import { orgSchema, robotsContent } from "@/lib/seo";
 
 
