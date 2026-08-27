@@ -143,7 +143,20 @@ export function SocialIntegrations() {
         </Link>
       </CockpitCard>
 
+      <CockpitCard
+        title="Conexões das redes sociais"
+        subtitle="Semáforo por plataforma, erros reais do último sync e histórico de execuções"
+      >
+        <Link
+          to="/admin/integracoes/social"
+          className="inline-block text-xs font-semibold text-gold hover:underline"
+        >
+          Abrir painel de conexões e últimas sincronizações
+        </Link>
+      </CockpitCard>
+
       {accounts.isLoading ? <CockpitSkeleton rows={4} /> : null}
+
       <div className="grid gap-6 xl:grid-cols-2">
         {(accounts.data ?? []).map((a) => (
           <AccountCard key={a.platform} account={a} />
