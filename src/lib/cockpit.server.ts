@@ -548,7 +548,7 @@ async function writeClaritySnapshot(data: ClarityOverview) {
     await supabaseAdmin
       .from("clarity_snapshots")
       .upsert(
-        { key: CLARITY_SNAPSHOT_KEY, payload: data as unknown as Record<string, unknown>, fetched_at: new Date().toISOString() },
+        { key: CLARITY_SNAPSHOT_KEY, payload: data as never, fetched_at: new Date().toISOString() },
         { onConflict: "key" },
       );
   } catch {
