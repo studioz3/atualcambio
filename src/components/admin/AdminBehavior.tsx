@@ -78,7 +78,9 @@ export function AdminBehavior() {
           {data ? (
             <span>
               Clarity atualizado em {new Date(data.updatedAt).toLocaleString("pt-BR")}
-              {data.stale ? " · exibindo último dado válido" : ""}
+              {data.stale
+                ? ` · exibindo último dado válido${data.staleReason ? ` (${data.staleReason})` : ""}`
+                : ""}
             </span>
           ) : null}
           <Button
