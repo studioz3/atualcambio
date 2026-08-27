@@ -48,7 +48,15 @@ export async function fetchCockpitInternal(
       .limit(30),
   ]);
 
-  if (leadsRes.error) throw new Error(leadsRes.error.message);
+  // Nunca engolir erro: falha de consulta não pode virar lista vazia na tela.
+  for (const [label, res] of [
+    ["leads", leadsRes],
+    ["leads (período anterior)", previousRes],
+    ["newsletter_subscribers", subsRes],
+    ["lead_events", eventsRes],
+  ] as [string, { error: { message: string } | null }][]) {
+    if (res?.error) throw new Error(`[${label}] ${res.error.message}`);
+  }
 
   const subs = (subsRes.data ?? []) as {
     id: string;
