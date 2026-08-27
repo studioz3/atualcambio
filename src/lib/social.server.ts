@@ -454,8 +454,7 @@ export async function fetchSocialOverview(
         // No nível de plataforma a série diária é a fonte oficial:
         // evita somar duas vezes o que já veio no post.
         Object.assign(agg, emptyMetrics);
-        const last = daily[daily.length - 1]!;
-        agg.followers = last.followers ?? null;
+        agg.followers = [...daily].reverse().find((d) => d.followers != null)?.followers ?? null;
         const gained = daily.reduce<number | null>((a, d) => addMetric(a, d.followers_gained ?? null), null);
         const lost = daily.reduce<number | null>((a, d) => addMetric(a, d.followers_lost ?? null), null);
         agg.followersGrowth = gained == null && lost == null ? null : (gained ?? 0) - (lost ?? 0);
