@@ -747,7 +747,6 @@ export type Database = {
       social_accounts: {
         Row: {
           access_token: string | null
-          account_name: string | null
           created_at: string
           data_access_expires_at: string | null
           display_name: string | null
@@ -765,11 +764,9 @@ export type Database = {
           status: string
           token_expires_at: string | null
           updated_at: string
-          username: string | null
         }
         Insert: {
           access_token?: string | null
-          account_name?: string | null
           created_at?: string
           data_access_expires_at?: string | null
           display_name?: string | null
@@ -787,11 +784,9 @@ export type Database = {
           status?: string
           token_expires_at?: string | null
           updated_at?: string
-          username?: string | null
         }
         Update: {
           access_token?: string | null
-          account_name?: string | null
           created_at?: string
           data_access_expires_at?: string | null
           display_name?: string | null
@@ -809,7 +804,6 @@ export type Database = {
           status?: string
           token_expires_at?: string | null
           updated_at?: string
-          username?: string | null
         }
         Relationships: []
       }
