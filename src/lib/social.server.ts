@@ -229,24 +229,126 @@ function credentialsConfigured(platform: string) {
   return keys.every((k) => Boolean((process.env[k] ?? "").trim()));
 }
 
+const platformGroup: Record<string, SocialAccountStatus["group"]> = {
+  instagram: "meta",
+  facebook: "meta",
+  linkedin: "linkedin",
+  tiktok: "tiktok",
+  youtube: "youtube",
+  spotify: "spotify",
+};
+
+const DAY = 86400000;
+
+function mapRun(r: any): SocialSyncRun {
+  const items = Number(r.items_synced ?? 0);
+  const status = (r.status ?? null) as string | null;
+  return {
+    id: r.id,
+    platform: r.platform,
+    status,
+    startedAt: r.started_at,
+    finishedAt: r.finished_at ?? null,
+    itemsSynced: items,
+    errorMessage: r.error_message ?? null,
+    note:
+      !r.error_message && items === 0 && (status === "ok" || status === "partial")
+        ? "Execução concluída sem pontos de insight novos nesta plataforma."
+        : null,
+  };
+}
+
+export async function fetchSocialSyncRuns(ctx: StaffCtx, limit = 20): Promise<SocialSyncRun[]> {
+  const { data } = await ctx.supabase
+    .from("social_sync_runs")
+    .select("*")
+    .order("started_at", { ascending: false })
+    .limit(limit);
+  return ((data ?? []) as any[]).map(mapRun);
+}
+
+function healthOf(input: {
+  status: SocialAccountStatus["status"];
+  lastSyncAt: string | null;
+  lastError: string | null;
+  tokenExpiresAt: string | null;
+  dataAccessExpiresAt: string | null;
+  lastRun: SocialSyncRun | null;
+}): { health: SocialAccountStatus["health"]; healthLabel: string; healthReason: string | null } {
+  if (input.status === "nao_conectado") {
+    return { health: "cinza", healthLabel: "Não conectado", healthReason: emptyStateText };
+  }
+
+  const now = Date.now();
+  const staleSync =
+    !input.lastSyncAt || now - new Date(input.lastSyncAt).getTime() > 48 * 60 * 60 * 1000;
+
+  if (input.status === "erro" || input.status === "precisa_reautorizar" || staleSync) {
+    const reason =
+      input.lastError ??
+      input.lastRun?.errorMessage ??
+      (staleSync
+        ? `Sem sincronização bem-sucedida desde ${input.lastSyncAt ? new Date(input.lastSyncAt).toLocaleString("pt-BR") : "sempre"}.`
+        : null);
+    return {
+      health: "vermelho",
+      healthLabel: input.status === "precisa_reautorizar" ? "Precisa reautorizar" : "Com falha",
+      healthReason: reason,
+    };
+  }
+
+  const tokenSoon =
+    input.tokenExpiresAt && new Date(input.tokenExpiresAt).getTime() - now < 7 * DAY;
+  const dataSoon =
+    input.dataAccessExpiresAt && new Date(input.dataAccessExpiresAt).getTime() - now < 14 * DAY;
+  const partial = input.lastRun?.status === "partial";
+  if (tokenSoon || dataSoon || partial) {
+    const reason = tokenSoon
+      ? `Token expira em ${new Date(input.tokenExpiresAt!).toLocaleDateString("pt-BR")}.`
+      : dataSoon
+        ? `Acesso aos dados expira em ${new Date(input.dataAccessExpiresAt!).toLocaleDateString("pt-BR")}.`
+        : (input.lastRun?.errorMessage ?? "Última execução foi parcial.");
+    return { health: "amarelo", healthLabel: "Reconectar em breve", healthReason: reason };
+  }
+
+  return { health: "verde", healthLabel: "Conectado", healthReason: null };
+}
+
 export async function fetchSocialAccounts(ctx: StaffCtx): Promise<SocialAccountStatus[]> {
-  const { data } = await ctx.supabase.from("social_accounts").select("*");
+  const [{ data }, runs] = await Promise.all([
+    ctx.supabase.from("social_accounts").select("*"),
+    fetchSocialSyncRuns(ctx, 60),
+  ]);
   const rows = (data ?? []) as any[];
   return socialPlatforms.map((p) => {
     const row = rows.find((r) => r.platform === p.id);
+    const lastRun = runs.find((r) => r.platform === p.id) ?? null;
+    const status = (row?.status as SocialAccountStatus["status"]) ?? "nao_conectado";
+    const base = {
+      status,
+      lastSyncAt: (row?.last_sync_at ?? null) as string | null,
+      lastError: (row?.last_error ?? null) as string | null,
+      tokenExpiresAt: (row?.token_expires_at ?? null) as string | null,
+      dataAccessExpiresAt: (row?.data_access_expires_at ?? null) as string | null,
+      lastRun,
+    };
     return {
       platform: p.id,
-      displayName: row?.display_name ?? p.label,
+      group: platformGroup[p.id] ?? "meta",
+      displayName: row?.display_name ?? null,
       handle: row?.handle ?? null,
       profileUrl: row?.profile_url ?? null,
-      status: (row?.status as SocialAccountStatus["status"]) ?? "nao_conectado",
-      lastSyncAt: row?.last_sync_at ?? null,
-      lastError: row?.last_error ?? null,
+      profilePictureUrl: row?.profile_picture_url ?? null,
+      ...base,
+      lastErrorAt: row?.last_error_at ?? null,
+      ...healthOf(base),
+      canOauth: p.id !== "spotify",
       credentialsConfigured: credentialsConfigured(p.id),
       requirements: platformRequirements[p.id] ?? [],
     };
   });
 }
+
 
 export async function fetchSocialOverview(
   ctx: StaffCtx,
