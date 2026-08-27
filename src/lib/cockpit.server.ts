@@ -371,11 +371,11 @@ export function clarityProjectUrl() {
   return null;
 }
 
-const CLARITY_TTL_MS = 1000 * 60 * 60 * 3; // 3h — a API tem limite diário de chamadas
-const CLARITY_COOLDOWN_MS = 1000 * 60 * 10; // atualização manual a cada 10 min
+// Coleta agendada 4x/dia; acima de 8h consideramos o snapshot defasado.
+const CLARITY_TTL_MS = 1000 * 60 * 60 * 8;
 
 let clarityCache: { at: number; data: ClarityOverview } | null = null;
-let clarityLastCall = 0;
+
 
 function emptyPageMetrics(path: string): ClarityPageMetrics {
   return {
