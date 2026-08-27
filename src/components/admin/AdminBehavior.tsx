@@ -6,7 +6,13 @@ import {
   EmptyIntegration,
   KpiCard,
 } from "./cockpit/primitives";
-import { useClarity, useGa4, useIntegrations, useInternal } from "./cockpit/useCockpit";
+import {
+  useClarity,
+  useClarityHistory,
+  useGa4,
+  useIntegrations,
+  useInternal,
+} from "./cockpit/useCockpit";
 import { defaultPeriod, PeriodFilter, type PeriodState } from "./PeriodFilter";
 import {
   buildInsights,
@@ -27,6 +33,8 @@ export function AdminBehavior() {
   const integrations = useIntegrations();
   const clarityEnabled = integrations.data?.clarity === true;
   const clarity = useClarity(clarityEnabled);
+  const history = useClarityHistory(period, clarityEnabled);
+  const historyPoints = history.data?.configured ? history.data.data : [];
 
   const ga4 = useGa4(period, integrations.data?.ga4 === true);
   const internal = useInternal(period);
@@ -120,6 +128,55 @@ export function AdminBehavior() {
           só devolve os últimos 3 dias de sessões.
         </p>
       </div>
+
+      <CockpitCard
+        title="Histórico de coletas"
+        subtitle="Snapshots já gravados no banco — respeita o filtro de período e não consome cota da API"
+      >
+        {history.isLoading ? (
+          <CockpitSkeleton rows={3} />
+        ) : historyPoints.length === 0 ? (
+          <p className="text-sm text-white/45">
+            Nenhuma coleta gravada dentro do período selecionado. O histórico começa a partir da
+            primeira coleta agendada — cada execução guarda um ponto por dia, então a série cresce
+            um dia por vez.
+          </p>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[560px] text-left text-xs">
+              <thead className="text-[11px] uppercase tracking-wide text-white/40">
+                <tr>
+                  <th className="py-2 pr-4 font-semibold">Dia da coleta</th>
+                  <th className="py-2 pr-4 font-semibold">Sessões (janela 3 dias)</th>
+                  <th className="py-2 pr-4 font-semibold">Scroll médio</th>
+                  <th className="py-2 pr-4 font-semibold">Tempo ativo</th>
+                  <th className="py-2 pr-4 font-semibold">Rage</th>
+                  <th className="py-2 font-semibold">Dead</th>
+                </tr>
+              </thead>
+              <tbody className="text-white/75">
+                {[...historyPoints].reverse().map((p) => (
+                  <tr key={p.date} className="border-t border-white/10">
+                    <td className="py-2 pr-4">
+                      {new Date(`${p.date}T12:00:00`).toLocaleDateString("pt-BR")}
+                    </td>
+                    <td className="py-2 pr-4">{formatNumber(p.sessions)}</td>
+                    <td className="py-2 pr-4">{formatPercent(p.averageScrollDepth, 0)}</td>
+                    <td className="py-2 pr-4">{formatSeconds(p.averageEngagementSeconds)}</td>
+                    <td className="py-2 pr-4">{formatNumber(p.rageClicks)}</td>
+                    <td className="py-2">{formatNumber(p.deadClicks)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <p className="mt-3 text-[11px] leading-relaxed text-white/40">
+              Cada linha é a última coleta daquele dia. Como a API do Clarity só devolve uma janela
+              móvel dos últimos 3 dias, os valores de dias vizinhos se sobrepõem parcialmente — por
+              isso não somamos as linhas.
+            </p>
+          </div>
+        )}
+      </CockpitCard>
 
       {clarity.isLoading ? (
         <CockpitSkeleton rows={6} />

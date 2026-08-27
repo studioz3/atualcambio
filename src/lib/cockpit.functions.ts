@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import type {
+  ClarityHistoryResult,
   ClarityResult,
   CockpitInternal,
   Ga4RealtimeResult,
@@ -76,6 +77,26 @@ export const getClarityOverview = createServerFn({ method: "POST" })
       return { configured: true, data: await fetchClarity() };
     } catch (error) {
       console.error("[cockpit] Clarity falhou", error);
+      return { configured: false, reason: (error as Error).message };
+    }
+  });
+
+/** Histórico já coletado do Clarity — lê somente o banco, sem gastar cota da API. */
+export const getClarityHistory = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: unknown) =>
+    z.object({ from: z.string(), to: z.string() }).parse(data),
+  )
+  .handler(async ({ context, data }): Promise<ClarityHistoryResult> => {
+    const { assertStaff, clarityConfigured, fetchClarityHistory } = await import("./cockpit.server");
+    await assertStaff(context as any);
+    if (!clarityConfigured()) {
+      return { configured: false, reason: "Microsoft Clarity não conectado." };
+    }
+    try {
+      return { configured: true, data: await fetchClarityHistory(data.from, data.to) };
+    } catch (error) {
+      console.error("[cockpit] Histórico Clarity falhou", error);
       return { configured: false, reason: (error as Error).message };
     }
   });

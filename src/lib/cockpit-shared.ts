@@ -84,6 +84,23 @@ export type ClarityOverview = {
   projectUrl: string | null;
 };
 
+/** Ponto do histórico persistido de coletas do Clarity (sem consumir cota). */
+export type ClarityHistoryPoint = {
+  /** Dia da coleta (YYYY-MM-DD). */
+  date: string;
+  collectedAt: string;
+  sessions: number;
+  averageScrollDepth: number | null;
+  averageEngagementSeconds: number | null;
+  rageClicks: number;
+  deadClicks: number;
+  quickBacks: number;
+};
+
+export type ClarityHistoryResult =
+  | ({ configured: false } & IntegrationState)
+  | { configured: true; data: ClarityHistoryPoint[] };
+
 export type Ga4Result =
   | ({ configured: false } & IntegrationState)
   | { configured: true; data: Ga4Overview };

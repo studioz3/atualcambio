@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
+  getClarityHistory,
   getClarityOverview,
   getCockpitInternal,
   getGa4Overview,
@@ -83,6 +84,19 @@ export function useClarity(enabled: boolean) {
     queryFn: () => getClarityOverview(),
     enabled,
     staleTime: 1000 * 60 * 30,
+  });
+}
+
+/** Histórico persistido das coletas — respeita o filtro de período e não gasta cota. */
+export function useClarityHistory(period: PeriodState, enabled: boolean) {
+  const range = useRange(period);
+  const from = range.internal.from ?? new Date(Date.now() - 29 * day).toISOString();
+  const to = range.internal.to ?? new Date().toISOString();
+  return useQuery({
+    queryKey: ["cockpit-clarity-history", from, to],
+    queryFn: () => getClarityHistory({ data: { from, to } }),
+    enabled,
+    staleTime: 1000 * 60 * 5,
   });
 }
 
