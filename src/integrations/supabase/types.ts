@@ -65,6 +65,24 @@ export type Database = {
         }
         Relationships: []
       }
+      clarity_snapshots: {
+        Row: {
+          fetched_at: string
+          key: string
+          payload: Json
+        }
+        Insert: {
+          fetched_at?: string
+          key: string
+          payload: Json
+        }
+        Update: {
+          fetched_at?: string
+          key?: string
+          payload?: Json
+        }
+        Relationships: []
+      }
       editorial_authors: {
         Row: {
           ativo: boolean
