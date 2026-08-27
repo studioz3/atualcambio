@@ -18,6 +18,7 @@ import { SocialPostDialog } from "./SocialPostDialog";
 import { getSocialOverview } from "@/lib/social.functions";
 import {
   comparableMetrics,
+  platformProvidesMetric,
   contentTypeLabel,
   editorialLabel,
   formatWatchTime,
