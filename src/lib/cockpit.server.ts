@@ -3,6 +3,7 @@
  * Credenciais lidas apenas aqui, dentro de handlers. Nada retorna token ao frontend.
  */
 import type {
+  ClarityHistoryPoint,
   ClarityOverview,
   ClarityPageMetrics,
   Ga4Dim,
