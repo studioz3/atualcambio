@@ -268,6 +268,7 @@ export type SocialOverview = {
     leads: number;
   }[];
   accounts: SocialAccountStatus[];
+  syncRuns: SocialSyncRun[];
   ga4Configured: boolean;
   ga4Reason: string | null;
   generatedAt: string;

@@ -719,6 +719,7 @@ export async function fetchSocialOverview(
     newsletterByEditorial,
     episodes,
     accounts: await fetchSocialAccounts(ctx),
+    syncRuns: await fetchSocialSyncRuns(ctx, 12),
     ga4Configured: ga4On,
     ga4Reason,
     generatedAt: new Date().toISOString(),
