@@ -16,7 +16,7 @@ import type {
 
 type StaffCtx = { supabase: any; userId: string; claims: Record<string, unknown> };
 
-export async function assertStaff(context: StaffCtx) {
+export async function assertStaff(context: StaffCtx, allowed?: readonly string[]) {
   const { data, error } = await context.supabase
     .from("user_roles")
     .select("role")
@@ -24,6 +24,9 @@ export async function assertStaff(context: StaffCtx) {
   if (error) throw new Error("Não foi possível validar o acesso.");
   const roles = (data ?? []).map((r: { role: string }) => r.role);
   if (roles.length === 0) throw new Error("Acesso restrito ao time da Atual.");
+  if (allowed && !roles.some((r: string) => allowed.includes(r))) {
+    throw new Error("Seu nível de acesso não permite esta área.");
+  }
   return { roles: roles as string[], email: (context.claims["email"] as string | undefined) ?? "" };
 }
 

@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { LEADS_ROLES } from "@/lib/roles-shared";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { AdminLeads } from "@/components/admin/AdminLeads";
 
@@ -12,7 +13,7 @@ export const Route = createFileRoute("/admin/leads")({
     ],
   }),
   component: () => (
-    <AdminShell title="Leads">
+    <AdminShell requiredRoles={LEADS_ROLES} title="Leads">
       <AdminLeads />
     </AdminShell>
   ),

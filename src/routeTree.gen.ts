@@ -41,6 +41,7 @@ import { Route as AdminEditoriasRouteImport } from './routes/admin.editorias'
 import { Route as AdminLeadsRouteImport } from './routes/admin.leads'
 import { Route as AdminNewsletterRouteImport } from './routes/admin.newsletter'
 import { Route as AdminTrafegoRouteImport } from './routes/admin.trafego'
+import { Route as AdminUsuariosRouteImport } from './routes/admin.usuarios'
 import { Route as AutoresSlugRouteImport } from './routes/autores.$slug'
 import { Route as CriptoWineIndexRouteImport } from './routes/cripto-wine.index'
 import { Route as CriptoWineSlugRouteImport } from './routes/cripto-wine.$slug'
@@ -225,6 +226,11 @@ const AdminTrafegoRoute = AdminTrafegoRouteImport.update({
   path: '/admin/trafego',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminUsuariosRoute = AdminUsuariosRouteImport.update({
+  id: '/admin/usuarios',
+  path: '/admin/usuarios',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AutoresSlugRoute = AutoresSlugRouteImport.update({
   id: '/autores/$slug',
   path: '/autores/$slug',
@@ -378,6 +384,7 @@ export interface FileRoutesByFullPath {
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/newsletter': typeof AdminNewsletterRoute
   '/admin/trafego': typeof AdminTrafegoRoute
+  '/admin/usuarios': typeof AdminUsuariosRoute
   '/autores/$slug': typeof AutoresSlugRoute
   '/cripto-wine/$slug': typeof CriptoWineSlugRoute
   '/momento-atual/$slug': typeof MomentoAtualSlugRoute
@@ -435,6 +442,7 @@ export interface FileRoutesByTo {
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/newsletter': typeof AdminNewsletterRoute
   '/admin/trafego': typeof AdminTrafegoRoute
+  '/admin/usuarios': typeof AdminUsuariosRoute
   '/autores/$slug': typeof AutoresSlugRoute
   '/cripto-wine/$slug': typeof CriptoWineSlugRoute
   '/momento-atual/$slug': typeof MomentoAtualSlugRoute
@@ -493,6 +501,7 @@ export interface FileRoutesById {
   '/admin/leads': typeof AdminLeadsRoute
   '/admin/newsletter': typeof AdminNewsletterRoute
   '/admin/trafego': typeof AdminTrafegoRoute
+  '/admin/usuarios': typeof AdminUsuariosRoute
   '/autores/$slug': typeof AutoresSlugRoute
   '/cripto-wine/$slug': typeof CriptoWineSlugRoute
   '/momento-atual/$slug': typeof MomentoAtualSlugRoute
@@ -552,6 +561,7 @@ export interface FileRouteTypes {
     | '/admin/leads'
     | '/admin/newsletter'
     | '/admin/trafego'
+    | '/admin/usuarios'
     | '/autores/$slug'
     | '/cripto-wine/$slug'
     | '/momento-atual/$slug'
@@ -609,6 +619,7 @@ export interface FileRouteTypes {
     | '/admin/leads'
     | '/admin/newsletter'
     | '/admin/trafego'
+    | '/admin/usuarios'
     | '/autores/$slug'
     | '/cripto-wine/$slug'
     | '/momento-atual/$slug'
@@ -666,6 +677,7 @@ export interface FileRouteTypes {
     | '/admin/leads'
     | '/admin/newsletter'
     | '/admin/trafego'
+    | '/admin/usuarios'
     | '/autores/$slug'
     | '/cripto-wine/$slug'
     | '/momento-atual/$slug'
@@ -724,6 +736,7 @@ export interface RootRouteChildren {
   AdminLeadsRoute: typeof AdminLeadsRoute
   AdminNewsletterRoute: typeof AdminNewsletterRoute
   AdminTrafegoRoute: typeof AdminTrafegoRoute
+  AdminUsuariosRoute: typeof AdminUsuariosRoute
   AutoresSlugRoute: typeof AutoresSlugRoute
   CriptoWineSlugRoute: typeof CriptoWineSlugRoute
   MomentoAtualSlugRoute: typeof MomentoAtualSlugRoute
@@ -976,6 +989,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminTrafegoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/usuarios': {
+      id: '/admin/usuarios'
+      path: '/admin/usuarios'
+      fullPath: '/admin/usuarios'
+      preLoaderRoute: typeof AdminUsuariosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/autores/$slug': {
       id: '/autores/$slug'
       path: '/autores/$slug'
@@ -1172,6 +1192,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminLeadsRoute: AdminLeadsRoute,
   AdminNewsletterRoute: AdminNewsletterRoute,
   AdminTrafegoRoute: AdminTrafegoRoute,
+  AdminUsuariosRoute: AdminUsuariosRoute,
   AutoresSlugRoute: AutoresSlugRoute,
   CriptoWineSlugRoute: CriptoWineSlugRoute,
   MomentoAtualSlugRoute: MomentoAtualSlugRoute,

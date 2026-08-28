@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
+import { CONTENT_ROLES } from "@/lib/roles-shared";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { listSubscribers } from "@/lib/admin.functions";
 import { formatDateTime } from "@/lib/admin-shared";
@@ -25,7 +26,7 @@ function NewsletterPage() {
   const subs = data?.subscribers ?? [];
 
   return (
-    <AdminShell title="Newsletter">
+    <AdminShell requiredRoles={CONTENT_ROLES} title="Newsletter">
       <p className="text-sm text-muted-foreground">
         Inscritos são mantidos separados dos leads comerciais e não entram no funil.
       </p>

@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { leadStatuses, motivosPerda } from "./admin-shared";
+import { CONTENT_ROLES, LEADS_ROLES, hasAnyRole } from "./roles-shared";
 
 /** Colunas expostas ao painel — minimização: nada além do lead comercial. */
 const LEAD_COLUMNS =
@@ -62,7 +63,7 @@ export type LeadEvent = {
 
 type StaffCtx = { supabase: any; userId: string; claims: Record<string, unknown> };
 
-async function requireStaff(context: StaffCtx) {
+async function requireStaff(context: StaffCtx, allowed?: readonly string[]) {
   const { data, error } = await context.supabase
     .from("user_roles")
     .select("role")
@@ -70,6 +71,9 @@ async function requireStaff(context: StaffCtx) {
   if (error) throw new Error("Não foi possível validar o acesso.");
   const roles = (data ?? []).map((r: { role: string }) => r.role);
   if (roles.length === 0) throw new Error("Acesso restrito ao time da Atual.");
+  if (allowed && !hasAnyRole(roles, allowed)) {
+    throw new Error("Seu nível de acesso não permite esta área.");
+  }
   const email = (context.claims["email"] as string | undefined) ?? "usuário interno";
   return { roles: roles as string[], email };
 }
@@ -101,7 +105,7 @@ export const listLeads = createServerFn({ method: "GET" })
   .inputValidator((d: unknown) => filtersSchema.parse(d ?? {}))
   .handler(async ({ context, data }) => {
     const ctx = context as unknown as StaffCtx;
-    await requireStaff(ctx);
+    await requireStaff(ctx, LEADS_ROLES);
 
     let query = ctx.supabase
       .from("leads")
@@ -137,7 +141,7 @@ export const getLeadDetail = createServerFn({ method: "GET" })
   .inputValidator((d: unknown) => z.object({ id: z.string().uuid() }).parse(d))
   .handler(async ({ context, data }) => {
     const ctx = context as unknown as StaffCtx;
-    await requireStaff(ctx);
+    await requireStaff(ctx, LEADS_ROLES);
     const [lead, notes, events] = await Promise.all([
       ctx.supabase.from("leads").select(LEAD_COLUMNS).eq("id", data.id).maybeSingle(),
       ctx.supabase
@@ -177,7 +181,7 @@ export const updateLead = createServerFn({ method: "POST" })
   .inputValidator((d: unknown) => updateSchema.parse(d))
   .handler(async ({ context, data }) => {
     const ctx = context as unknown as StaffCtx;
-    const { email } = await requireStaff(ctx);
+    const { email } = await requireStaff(ctx, LEADS_ROLES);
 
     const current = await ctx.supabase
       .from("leads")
@@ -244,7 +248,7 @@ export const addLeadNote = createServerFn({ method: "POST" })
   )
   .handler(async ({ context, data }) => {
     const ctx = context as unknown as StaffCtx;
-    const { email } = await requireStaff(ctx);
+    const { email } = await requireStaff(ctx, LEADS_ROLES);
     const { error } = await ctx.supabase
       .from("lead_notes")
       .insert({ lead_id: data.id, texto: data.texto, autor: email });
@@ -277,7 +281,7 @@ export const listSubscribers = createServerFn({ method: "GET" })
   )
   .handler(async ({ context, data }) => {
     const ctx = context as unknown as StaffCtx;
-    await requireStaff(ctx);
+    await requireStaff(ctx, CONTENT_ROLES);
     let query = ctx.supabase
       .from("newsletter_subscribers")
       .select("id, created_at, nome, email, momento_atual, cripto_wine, vida_atual, origem, utm_campaign")

@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+import { CONTENT_ROLES } from "./roles-shared";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import type { SocialAccountStatus, SocialFilters, SocialOverview } from "./social-shared";
 
@@ -8,7 +9,7 @@ export const getSocialOverview = createServerFn({ method: "POST" })
   .handler(async ({ context, data }): Promise<SocialOverview> => {
     const { assertStaff } = await import("./cockpit.server");
     const { fetchSocialOverview } = await import("./social.server");
-    await assertStaff(context as any);
+    await assertStaff(context as any, CONTENT_ROLES);
     return fetchSocialOverview(context as any, data);
   });
 
@@ -17,7 +18,7 @@ export const getSocialAccounts = createServerFn({ method: "GET" })
   .handler(async ({ context }): Promise<SocialAccountStatus[]> => {
     const { assertStaff } = await import("./cockpit.server");
     const { fetchSocialAccounts } = await import("./social.server");
-    await assertStaff(context as any);
+    await assertStaff(context as any, CONTENT_ROLES);
     return fetchSocialAccounts(context as any);
   });
 
@@ -28,7 +29,7 @@ export const saveSocialAccount = createServerFn({ method: "POST" })
   )
   .handler(async ({ context, data }) => {
     const { assertStaff } = await import("./cockpit.server");
-    await assertStaff(context as any);
+    await assertStaff(context as any, CONTENT_ROLES);
     // Pode não existir linha ainda (plataforma nunca conectada): upsert por platform.
     const { error } = await (context as any).supabase.from("social_accounts").upsert(
       {
@@ -73,7 +74,7 @@ export const saveSocialPost = createServerFn({ method: "POST" })
   .inputValidator((data: SocialPostInput) => data)
   .handler(async ({ context, data }) => {
     const { assertStaff } = await import("./cockpit.server");
-    await assertStaff(context as any);
+    await assertStaff(context as any, CONTENT_ROLES);
     const supabase = (context as any).supabase;
     const payload = {
       platform: data.platform,
@@ -135,7 +136,7 @@ export const deleteSocialPost = createServerFn({ method: "POST" })
   .inputValidator((data: { id: string }) => data)
   .handler(async ({ context, data }) => {
     const { assertStaff } = await import("./cockpit.server");
-    await assertStaff(context as any);
+    await assertStaff(context as any, CONTENT_ROLES);
     const { error } = await (context as any).supabase.from("social_posts").delete().eq("id", data.id);
     if (error) throw new Error(error.message);
     return { ok: true };
@@ -160,7 +161,7 @@ export const importSpotifyCsv = createServerFn({ method: "POST" })
   .handler(async ({ context, data }) => {
     const { assertStaff } = await import("./cockpit.server");
     const { importSpotifyRows } = await import("./social.server");
-    await assertStaff(context as any);
+    await assertStaff(context as any, CONTENT_ROLES);
     return importSpotifyRows(context as any, data);
   });
 
@@ -168,7 +169,7 @@ export const getSocialImports = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const { assertStaff } = await import("./cockpit.server");
-    await assertStaff(context as any);
+    await assertStaff(context as any, CONTENT_ROLES);
     const { data } = await (context as any).supabase
       .from("social_imports")
       .select("*")
@@ -192,6 +193,6 @@ export const getSocialSyncRuns = createServerFn({ method: "GET" })
   .handler(async ({ context }) => {
     const { assertStaff } = await import("./cockpit.server");
     const { fetchSocialSyncRuns } = await import("./social.server");
-    await assertStaff(context as any);
+    await assertStaff(context as any, CONTENT_ROLES);
     return fetchSocialSyncRuns(context as any, 25);
   });
