@@ -298,7 +298,7 @@ function ContaAtual() {
             </li>
           ))}
         </ol>
-        <StoreBadges className="mt-10 text-navy" origem="conta-atual" />
+        <StoreBadges tone="dark" className="mt-10" origem="conta-atual" />
       </Section>
 
       {/* Compliance */}

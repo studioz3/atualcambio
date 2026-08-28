@@ -264,7 +264,7 @@ function ContatoPage() {
             <ActionLink size="lg" href={links.account} external event="login_click">
               Acessar minha conta
             </ActionLink>
-            <StoreBadges />
+            <StoreBadges tone="dark" />
           </div>
         </div>
       </Section>

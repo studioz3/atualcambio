@@ -349,7 +349,7 @@ function Stablecoins() {
                 </li>
               ))}
             </ol>
-            <StoreBadges className="mt-8 text-navy" origem="stablecoins" />
+            <StoreBadges tone="dark" className="mt-8" origem="stablecoins" />
           </div>
         </div>
       </Section>
