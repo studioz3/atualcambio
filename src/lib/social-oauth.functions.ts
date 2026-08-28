@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+import { CONTENT_ROLES } from "./roles-shared";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 /** Gera o state anti-CSRF e devolve a URL de consentimento da plataforma. */
@@ -10,7 +11,7 @@ export const startSocialOAuth = createServerFn({ method: "POST" })
     const { authorizeUrl, createOAuthState, isOAuthPlatform } = await import(
       "./social-oauth.server"
     );
-    await assertStaff(context as any);
+    await assertStaff(context as any, CONTENT_ROLES);
 
     const platform = String(data.platform ?? "").toLowerCase();
     if (!isOAuthPlatform(platform)) throw new Error("Plataforma inválida.");

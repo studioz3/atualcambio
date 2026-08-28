@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+import { CONTENT_ROLES } from "./roles-shared";
 import { z } from "zod";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import type {
@@ -23,7 +24,7 @@ export const getIntegrationsStatus = createServerFn({ method: "GET" })
     const { assertStaff, ga4Configured, clarityConfigured, clarityProjectUrl } = await import(
       "./cockpit.server"
     );
-    await assertStaff(context as any);
+    await assertStaff(context as any, CONTENT_ROLES);
     return {
       ga4: ga4Configured(),
       clarity: clarityConfigured(),
@@ -37,7 +38,7 @@ export const getGa4Overview = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => rangeSchema.parse(data))
   .handler(async ({ context, data }): Promise<Ga4Result> => {
     const { assertStaff, ga4Configured, fetchGa4Overview } = await import("./cockpit.server");
-    await assertStaff(context as any);
+    await assertStaff(context as any, CONTENT_ROLES);
     if (!ga4Configured()) {
       return { configured: false, reason: "Conecte o Google Analytics 4 para ver dados de tráfego." };
     }
@@ -53,7 +54,7 @@ export const getGa4Realtime = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }): Promise<Ga4RealtimeResult> => {
     const { assertStaff, ga4Configured, fetchGa4Realtime } = await import("./cockpit.server");
-    await assertStaff(context as any);
+    await assertStaff(context as any, CONTENT_ROLES);
     if (!ga4Configured()) {
       return { configured: false, reason: "Tempo real disponível após conectar o Google Analytics 4." };
     }
@@ -69,7 +70,7 @@ export const getClarityOverview = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }): Promise<ClarityResult> => {
     const { assertStaff, clarityConfigured, fetchClarity } = await import("./cockpit.server");
-    await assertStaff(context as any);
+    await assertStaff(context as any, CONTENT_ROLES);
     if (!clarityConfigured()) {
       return { configured: false, reason: "Conecte o Microsoft Clarity para ver comportamento e mapas de calor." };
     }
@@ -89,7 +90,7 @@ export const getClarityHistory = createServerFn({ method: "POST" })
   )
   .handler(async ({ context, data }): Promise<ClarityHistoryResult> => {
     const { assertStaff, clarityConfigured, fetchClarityHistory } = await import("./cockpit.server");
-    await assertStaff(context as any);
+    await assertStaff(context as any, CONTENT_ROLES);
     if (!clarityConfigured()) {
       return { configured: false, reason: "Microsoft Clarity não conectado." };
     }
@@ -117,6 +118,6 @@ export const getCockpitInternal = createServerFn({ method: "POST" })
   .handler(async ({ context, data }): Promise<CockpitInternal> => {
     const { assertStaff } = await import("./cockpit.server");
     const { fetchCockpitInternal } = await import("./cockpit-internal.server");
-    await assertStaff(context as any);
+    await assertStaff(context as any, CONTENT_ROLES);
     return fetchCockpitInternal(context as any, data);
   });
