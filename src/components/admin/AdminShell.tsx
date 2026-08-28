@@ -20,17 +20,20 @@ import {
   PlugZap,
 } from "lucide-react";
 import { ChangePasswordDialog } from "./ChangePasswordDialog";
+import { ADMIN_ROLES, CONTENT_ROLES, LEADS_ROLES, hasAnyRole, labelRoles } from "@/lib/roles-shared";
+import { Shield } from "lucide-react";
 
 const nav = [
-  { to: "/admin", label: "Visão geral", icon: LayoutDashboard, exact: true },
-  { to: "/admin/trafego", label: "Tráfego", icon: Globe2, exact: false },
-  { to: "/admin/social", label: "Redes sociais", icon: Share2, exact: false },
-  { to: "/admin/comportamento", label: "Comportamento", icon: MousePointerClick, exact: false },
-  { to: "/admin/conteudo", label: "Conteúdo", icon: Newspaper, exact: false },
-  { to: "/admin/leads", label: "Leads", icon: Users, exact: false },
-  { to: "/admin/newsletter", label: "Newsletter", icon: Mail, exact: false },
-  { to: "/admin/integracoes", label: "Integrações", icon: PlugZap, exact: false },
-  { to: "/admin/analytics/health", label: "Saúde", icon: Activity, exact: false },
+  { to: "/admin", label: "Visão geral", icon: LayoutDashboard, exact: true, roles: CONTENT_ROLES },
+  { to: "/admin/trafego", label: "Tráfego", icon: Globe2, exact: false, roles: CONTENT_ROLES },
+  { to: "/admin/social", label: "Redes sociais", icon: Share2, exact: false, roles: CONTENT_ROLES },
+  { to: "/admin/comportamento", label: "Comportamento", icon: MousePointerClick, exact: false, roles: CONTENT_ROLES },
+  { to: "/admin/conteudo", label: "Conteúdo", icon: Newspaper, exact: false, roles: CONTENT_ROLES },
+  { to: "/admin/leads", label: "Leads", icon: Users, exact: false, roles: LEADS_ROLES },
+  { to: "/admin/newsletter", label: "Newsletter", icon: Mail, exact: false, roles: CONTENT_ROLES },
+  { to: "/admin/integracoes", label: "Integrações", icon: PlugZap, exact: false, roles: CONTENT_ROLES },
+  { to: "/admin/analytics/health", label: "Saúde", icon: Activity, exact: false, roles: CONTENT_ROLES },
+  { to: "/admin/usuarios", label: "Usuários", icon: Shield, exact: false, roles: ADMIN_ROLES },
 ] as const;
 
 
@@ -105,10 +108,12 @@ export function AdminShell({
   children,
   title,
   tone = "light",
+  requiredRoles,
 }: {
   children: ReactNode;
   title: string;
   tone?: "light" | "cockpit";
+  requiredRoles?: readonly string[];
 }) {
   const navigate = useNavigate();
   const [hasSession, setHasSession] = useState<boolean | null>(null);
@@ -155,6 +160,10 @@ export function AdminShell({
     );
   }
 
+  const roles = session.data?.roles ?? [];
+  const visibleNav = nav.filter((item) => hasAnyRole(roles, item.roles));
+  const blocked = requiredRoles ? !hasAnyRole(roles, requiredRoles) : false;
+
   return (
     <div
       className={cn(
@@ -170,7 +179,7 @@ export function AdminShell({
           </div>
         </div>
         <nav className="flex gap-1 overflow-x-auto px-3 pb-3 lg:mt-4 lg:flex-col lg:overflow-visible">
-          {nav.map((item) => (
+          {visibleNav.map((item) => (
             <Link
               key={item.to}
               to={item.to}
@@ -186,7 +195,7 @@ export function AdminShell({
         </nav>
         <div className="px-5 pb-5 pt-2 lg:pt-6">
           <p className="text-xs text-white/50">{session.data?.email}</p>
-          <p className="text-[11px] text-white/40">{session.data?.roles.join(", ")}</p>
+          <p className="text-[11px] text-white/40">{labelRoles(roles)}</p>
           <div className="mt-3 flex flex-wrap items-center gap-4">
           <ChangePasswordDialog />
           <button
@@ -213,7 +222,15 @@ export function AdminShell({
         <h1 className={cn("text-2xl font-bold", tone === "cockpit" ? "mt-1 text-white" : "text-navy")}>
           {title}
         </h1>
-        <div className="mt-6">{children}</div>
+        <div className="mt-6">
+          {blocked ? (
+            <p className="rounded-xl border border-border bg-white p-6 text-sm text-navy">
+              Seu nível de acesso não permite ver esta área. Fale com um administrador.
+            </p>
+          ) : (
+            children
+          )}
+        </div>
       </main>
     </div>
   );
