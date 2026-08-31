@@ -338,7 +338,7 @@ export function SocialCockpit() {
           </CockpitCard>
 
 
-          <CockpitCard title="Desempenho por rede" subtitle="Somente métricas efetivamente coletadas">
+          <CockpitCard title="Desempenho por rede" subtitle="Alcance da conta (pessoas únicas) — direto da API de cada rede">
             <div className="overflow-x-auto">
               <table className="w-full min-w-[820px] text-left text-xs">
                 <thead className="text-white/45">
@@ -373,7 +373,7 @@ export function SocialCockpit() {
           </CockpitCard>
 
           <div className="grid gap-6 xl:grid-cols-2">
-            <CockpitCard title="Editorias" subtitle="Momento Atual, Cripto Wine, Vida Atual e demais linhas">
+            <CockpitCard title="Editorias" subtitle="Soma do alcance por publicação — a mesma pessoa conta de novo a cada post">
               <div className="overflow-x-auto">
                 <table className="w-full min-w-[520px] text-left text-xs">
                   <thead className="text-white/45">
@@ -399,7 +399,7 @@ export function SocialCockpit() {
               </div>
             </CockpitCard>
 
-            <CockpitCard title="Formatos" subtitle="Qual formato entrega mais resultado">
+            <CockpitCard title="Formatos" subtitle="Soma do alcance por publicação — a mesma pessoa conta de novo a cada post">
               <BarList
                 data={data.byFormat
                   .map((f) => ({
@@ -413,7 +413,7 @@ export function SocialCockpit() {
             </CockpitCard>
           </div>
 
-          <CockpitCard title="Editoria × rede" subtitle="Onde cada linha editorial performa melhor">
+          <CockpitCard title="Editoria × rede" subtitle="Soma do alcance por publicação — não bate com o alcance da conta, são medidas diferentes">
             <div className="overflow-x-auto">
               <table className="w-full min-w-[720px] text-left text-xs">
                 <thead className="text-white/45">
