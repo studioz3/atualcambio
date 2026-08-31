@@ -198,7 +198,13 @@ export function AdminBehavior() {
         </CockpitCard>
       ) : (
         <>
+          <p className="text-[11px] text-white/45">
+            Os KPIs abaixo são sempre dos <strong className="text-white/70">últimos 3 dias</strong> (janela máxima
+            da API do Clarity) — não respeitam o filtro de período acima, que vale apenas para o histórico de coletas.
+            Comportamento na página, não audiência de redes sociais.
+          </p>
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+
             <KpiCard label="Sessões analisadas" value={page.sessions} />
             <KpiCard
               label="Scroll médio"
