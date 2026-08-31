@@ -211,12 +211,8 @@ export function SocialCockpit() {
             <KpiCard label="Leads originados em redes" value={data.kpis.leads} previous={data.previous?.leads ?? null} />
             <KpiCard label="Leads qualificados" value={data.kpis.qualifiedLeads} previous={data.previous?.qualifiedLeads ?? null} />
             <KpiCard label="Clientes" value={data.kpis.clients} previous={data.previous?.clients ?? null} />
-            <KpiCard
-              label="Seguidores"
-              value={data.kpis.followers}
-              unavailable={data.kpis.followers == null ? "Depende da conexão das APIs" : undefined}
-              hint="Crescimento no período aparece por rede na tabela abaixo."
-            />
+            <FollowersCard kpis={data.kpis} />
+
           </section>
 
           <CockpitCard
