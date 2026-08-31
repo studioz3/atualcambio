@@ -35,6 +35,58 @@ import { cn } from "@/lib/utils";
 
 const day = 86400000;
 
+/**
+ * Seguidores em três níveis: total atual somado das redes que fornecem,
+ * saldo líquido do período e o detalhe ganhou/perdeu quando a API entrega o breakdown.
+ * Sem dois pontos de histórico não mostramos 0 nem "+0": mostramos a limitação.
+ */
+function FollowersCard({
+  kpis,
+}: {
+  kpis: {
+    followers: number | null;
+    followersGrowth: number | null;
+    followersGained: number | null;
+    followersLost: number | null;
+    followersMissing: string[];
+  };
+}) {
+  const growth = kpis.followersGrowth;
+  return (
+    <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/45">Seguidores</p>
+      <p className="mt-2 text-2xl font-semibold text-white">
+        {kpis.followers == null ? (
+          <span className="text-base text-white/45">Depende da conexão das APIs</span>
+        ) : (
+          formatNumber(kpis.followers)
+        )}
+      </p>
+      <p className="mt-1 text-xs">
+        {growth == null ? (
+          <span className="text-white/45">Saldo do período: histórico insuficiente</span>
+        ) : (
+          <span className={cn("font-semibold", growth > 0 ? "text-emerald-400" : growth < 0 ? "text-rose-400" : "text-white/60")}>
+            {growth > 0 ? "+" : ""}
+            {formatNumber(growth)} no período
+          </span>
+        )}
+      </p>
+      {kpis.followersGained != null || kpis.followersLost != null ? (
+        <p className="mt-1 text-[11px] text-white/50">
+          ganhou {formatNumber(kpis.followersGained ?? 0)} · perdeu {formatNumber(kpis.followersLost ?? 0)}
+        </p>
+      ) : null}
+      {kpis.followersMissing.length ? (
+        <p className="mt-1 text-[11px] text-white/40">
+          Fora da soma: {kpis.followersMissing.map(platformLabel).join(", ")} (rede não fornece a contagem no período).
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
+
 /** Respeita prefers-reduced-motion: sem animação de entrada nos gráficos. */
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false);
@@ -211,12 +263,8 @@ export function SocialCockpit() {
             <KpiCard label="Leads originados em redes" value={data.kpis.leads} previous={data.previous?.leads ?? null} />
             <KpiCard label="Leads qualificados" value={data.kpis.qualifiedLeads} previous={data.previous?.qualifiedLeads ?? null} />
             <KpiCard label="Clientes" value={data.kpis.clients} previous={data.previous?.clients ?? null} />
-            <KpiCard
-              label="Seguidores"
-              value={data.kpis.followers}
-              unavailable={data.kpis.followers == null ? "Depende da conexão das APIs" : undefined}
-              hint="Crescimento no período aparece por rede na tabela abaixo."
-            />
+            <FollowersCard kpis={data.kpis} />
+
           </section>
 
           <CockpitCard
@@ -290,7 +338,7 @@ export function SocialCockpit() {
           </CockpitCard>
 
 
-          <CockpitCard title="Desempenho por rede" subtitle="Somente métricas efetivamente coletadas">
+          <CockpitCard title="Desempenho por rede" subtitle="Alcance da conta (pessoas únicas) — direto da API de cada rede">
             <div className="overflow-x-auto">
               <table className="w-full min-w-[820px] text-left text-xs">
                 <thead className="text-white/45">
@@ -325,7 +373,7 @@ export function SocialCockpit() {
           </CockpitCard>
 
           <div className="grid gap-6 xl:grid-cols-2">
-            <CockpitCard title="Editorias" subtitle="Momento Atual, Cripto Wine, Vida Atual e demais linhas">
+            <CockpitCard title="Editorias" subtitle="Soma do alcance por publicação — a mesma pessoa conta de novo a cada post">
               <div className="overflow-x-auto">
                 <table className="w-full min-w-[520px] text-left text-xs">
                   <thead className="text-white/45">
@@ -351,7 +399,7 @@ export function SocialCockpit() {
               </div>
             </CockpitCard>
 
-            <CockpitCard title="Formatos" subtitle="Qual formato entrega mais resultado">
+            <CockpitCard title="Formatos" subtitle="Soma do alcance por publicação — a mesma pessoa conta de novo a cada post">
               <BarList
                 data={data.byFormat
                   .map((f) => ({
@@ -365,7 +413,7 @@ export function SocialCockpit() {
             </CockpitCard>
           </div>
 
-          <CockpitCard title="Editoria × rede" subtitle="Onde cada linha editorial performa melhor">
+          <CockpitCard title="Editoria × rede" subtitle="Soma do alcance por publicação — não bate com o alcance da conta, são medidas diferentes">
             <div className="overflow-x-auto">
               <table className="w-full min-w-[720px] text-left text-xs">
                 <thead className="text-white/45">
