@@ -235,6 +235,51 @@ async function syncInstagramInsightsForDay(client: GraphClient, igId: string, da
   return saveDaily("instagram", rows);
 }
 
+/**
+ * Seguidores ganhos x perdidos.
+ * follows_and_unfollows só devolve total_value quando pedido com breakdown=follow_type.
+ * O enum vem como FOLLOWER (passaram a seguir) e NON_FOLLOWER (deixaram de seguir) —
+ * validado contra a queda de 563 para 560 seguidores em 29-30/08.
+ */
+async function syncInstagramFollowsForDay(client: GraphClient, igId: string, day: Date) {
+  const since = Math.floor(Date.UTC(day.getUTCFullYear(), day.getUTCMonth(), day.getUTCDate()) / 1000);
+  const until = since + 86_400;
+  const date = isoDate(day);
+
+  const payload = await client.get(`${igId}/insights`, {
+    metric: "follows_and_unfollows",
+    period: "day",
+    metric_type: "total_value",
+    breakdown: "follow_type",
+    since,
+    until,
+  });
+
+  const results = payload?.data?.[0]?.total_value?.breakdowns?.[0]?.results ?? [];
+  let gains: number | null = null;
+  let losses: number | null = null;
+  for (const r of results) {
+    const dim = String(r?.dimension_values?.[0] ?? "").toUpperCase();
+    const value = Number(r?.value);
+    if (!Number.isFinite(value)) continue;
+    if (dim === "FOLLOWER") gains = (gains ?? 0) + value;
+    else if (dim === "NON_FOLLOWER") losses = (losses ?? 0) + value;
+  }
+  // Sem breakdown na resposta = sem dado. Nunca gravamos zero inventado.
+  if (gains == null && losses == null) return 0;
+
+  return saveDaily("instagram", [
+    { metric: "follower_gains", date, value: gains },
+    { metric: "follower_losses", date, value: losses },
+    {
+      metric: "follows_and_unfollows",
+      date,
+      value: (gains ?? 0) - (losses ?? 0),
+    },
+  ]);
+}
+
+
 /** reach aceita time_series: usamos para o backfill em blocos de 30 dias. */
 async function backfillInstagramReach(client: GraphClient, igId: string, days: number) {
   let saved = 0;
