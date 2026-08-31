@@ -82,6 +82,9 @@ function blankAggregate(): SocialAggregate {
     sessions: null,
     followers: null,
     followersGrowth: null,
+    followersGained: null,
+    followersLost: null,
+    followersMissing: [],
   };
 }
 
@@ -181,6 +184,7 @@ export function foldDailyMetrics(rows: { platform: string; metric: string; value
     if (!Number.isFinite(value)) continue;
     if (column === "followers") row.followers = value;
     else if (column === "followersGained") row.followers_gained = (row.followers_gained ?? 0) + value;
+    else if (column === "followersLost") row.followers_lost = (row.followers_lost ?? 0) + value;
     else {
       const col = column as "reach" | "impressions" | "views" | "engagements" | "clicks" | "shares" | "saves";
       row[col] = (row[col] ?? 0) + value;
@@ -595,9 +599,21 @@ export async function fetchSocialOverview(
         // No nível de plataforma a série diária é a fonte oficial:
         // evita somar duas vezes o que já veio no post.
         Object.assign(agg, emptyMetrics);
-        agg.followers = [...daily].reverse().find((d) => d.followers != null)?.followers ?? null;
+        // Seguidores é estoque, não fluxo: somamos o último valor conhecido DE CADA rede.
+        // Rede sem contagem fica fora da soma e vira nota — nunca entra como zero.
+        const missing: string[] = [];
+        let total: number | null = null;
+        for (const pl of platformScope) {
+          const last = [...daily].reverse().find((d) => d.platform === pl && d.followers != null)?.followers ?? null;
+          if (last == null) missing.push(pl);
+          else total = (total ?? 0) + last;
+        }
+        agg.followers = total;
+        agg.followersMissing = missing;
         const gained = daily.reduce<number | null>((a, d) => addMetric(a, d.followers_gained ?? null), null);
         const lost = daily.reduce<number | null>((a, d) => addMetric(a, d.followers_lost ?? null), null);
+        agg.followersGained = gained;
+        agg.followersLost = lost;
         agg.followersGrowth = gained == null && lost == null ? null : (gained ?? 0) - (lost ?? 0);
         for (const d of daily) {
           mergeMetrics(agg, {
@@ -626,6 +642,9 @@ export async function fetchSocialOverview(
         ...prevCounts,
         followers: null,
         followersGrowth: null,
+        followersGained: null,
+        followersLost: null,
+        followersMissing: [],
       }
     : null;
 
