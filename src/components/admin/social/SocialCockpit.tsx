@@ -72,11 +72,12 @@ function FollowersCard({
           </span>
         )}
       </p>
-      {kpis.followersGained != null || kpis.followersLost != null ? (
-        <p className="mt-1 text-[11px] text-white/50">
-          ganhou {formatNumber(kpis.followersGained ?? 0)} · perdeu {formatNumber(kpis.followersLost ?? 0)}
-        </p>
-      ) : null}
+      {/*
+        Detalhe "ganhou X / perdeu Y" fica oculto até validarmos o enum follow_type:
+        no teste dia a dia a leitura FOLLOWER=ganhos / NON_FOLLOWER=perdas só fecha no
+        acumulado, não em cada dia. Não exibimos número que não sabemos explicar.
+      */}
+
       {kpis.followersMissing.length ? (
         <p className="mt-1 text-[11px] text-white/40">
           Fora da soma: {kpis.followersMissing.map(platformLabel).join(", ")} (rede não fornece a contagem no período).
