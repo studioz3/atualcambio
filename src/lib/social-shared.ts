@@ -129,7 +129,8 @@ export type DailyMetricKey =
   | "saves"
   | "clicks"
   | "followers"
-  | "followersGained";
+  | "followersGained"
+  | "followersLost";
 
 export const dailyMetricSources: Record<string, Partial<Record<DailyMetricKey, string[]>>> = {
   instagram: {
@@ -140,6 +141,8 @@ export const dailyMetricSources: Record<string, Partial<Record<DailyMetricKey, s
     saves: ["saves"],
     clicks: ["profile_links_taps"],
     followers: ["followers_count", "followers"],
+    followersGained: ["follower_gains"],
+    followersLost: ["follower_losses"],
     // impressions: descontinuada pela Meta — nenhuma chave.
   },
   facebook: {
@@ -197,6 +200,10 @@ export type SocialAggregate = SocialMetrics & {
   sessions: number | null;
   followers?: number | null;
   followersGrowth?: number | null;
+  followersGained?: number | null;
+  followersLost?: number | null;
+  /** Redes no escopo que não fornecem contagem de seguidores — viram nota, nunca zero. */
+  followersMissing?: string[];
 };
 
 export type SocialPostRow = {
@@ -228,6 +235,9 @@ export type SocialPostRow = {
 export type SocialKpis = SocialAggregate & {
   followers: number | null;
   followersGrowth: number | null;
+  followersGained: number | null;
+  followersLost: number | null;
+  followersMissing: string[];
 };
 
 export type SocialSeriesPoint = {
