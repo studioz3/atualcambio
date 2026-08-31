@@ -510,7 +510,10 @@ async function syncInstagram(client: GraphClient, igId: string): Promise<Omit<Sy
 
   // Dados da Meta atrasam até 48h: re-sincronizamos sempre os últimos 3 dias.
   for (let offset = 1; offset <= 3; offset++) {
-    items += await syncInstagramInsightsForDay(client, igId, new Date(Date.now() - offset * DAY_MS));
+    const dayDate = new Date(Date.now() - offset * DAY_MS);
+    items += await syncInstagramInsightsForDay(client, igId, dayDate);
+    items += await syncInstagramFollowsForDay(client, igId, dayDate);
+
   }
 
   items += await syncInstagramPosts(client, igId, notes);
