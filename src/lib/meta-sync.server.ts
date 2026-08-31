@@ -184,8 +184,9 @@ const IG_ACCOUNT_METRICS = [
   "saves",
   "replies",
   "profile_links_taps",
-  "follows_and_unfollows",
+  // follows_and_unfollows não devolve total_value sem breakdown: vai em chamada própria.
 ];
+
 
 async function syncInstagramProfile(client: GraphClient, igId: string) {
   const profile = await client.get(igId, {
