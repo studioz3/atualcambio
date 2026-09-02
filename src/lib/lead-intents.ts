@@ -106,7 +106,7 @@ export const leadIntents: LeadIntentConfig[] = [
   },
   {
     id: "stablecoin",
-    label: "Comprar ou vender USDT/USDC",
+    label: "Comprar ou vender USDt/USDc",
     description: "Stablecoins dentro de um ambiente regulado, com conformidade em cada etapa.",
     produto: "Stablecoins",
     tipoCliente: "ambos",

@@ -25,7 +25,7 @@ const solutionRoutes: Record<string, string> = {
 function toSentenceCase(value: string) {
   return value
     .split(" ")
-    .map((word) => (word === "USDT" ? "USDt" : word === "USDC" ? "USDc" : word.toLowerCase()))
+    .map((word) => (word.toUpperCase() === "USDT" ? "USDt" : word.toUpperCase() === "USDC" ? "USDc" : word.toLowerCase()))
     .join(" ");
 }
 

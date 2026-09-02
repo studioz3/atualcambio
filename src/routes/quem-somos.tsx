@@ -365,7 +365,7 @@ function QuemSomosPage() {
             Remessas internacionais
           </ActionLink>
           <ActionLink to="/stablecoins" variant="secondary" event="about_solutions_click">
-            USDT e USDC
+            USDt e USDc
           </ActionLink>
           <ActionLink to="/cotacoes" variant="secondary" event="about_solutions_click">
             Cotações
