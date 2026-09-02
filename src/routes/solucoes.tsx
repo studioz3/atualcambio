@@ -21,11 +21,11 @@ const solutionRoutes: Record<string, string> = {
   conta: "/conta-atual",
 };
 
-/** Minúsculas preservando siglas (USDT, USDC, PIX...). */
+/** Ajusta o texto do CTA sem alterar a grafia oficial de USDt e USDc. */
 function toSentenceCase(value: string) {
   return value
     .split(" ")
-    .map((word) => (/^[A-Z0-9/]{2,}$/.test(word) ? word : word.toLowerCase()))
+    .map((word) => (word === "USDT" ? "USDt" : word === "USDC" ? "USDc" : word.toLowerCase()))
     .join(" ");
 }
 
