@@ -242,12 +242,12 @@ function Cotacoes() {
                 </p>
                 <div className="mt-4 flex items-baseline gap-2">
                   <span className="display-h4 text-navy">
-                    R$ {item.venda.toFixed(4)}
+                    {formatQuoteValue(item.venda)}
                   </span>
                   <span className="text-xs text-muted-foreground">venda</span>
                 </div>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  Compra: R$ {item.compra.toFixed(4)}
+                  Compra: {formatQuoteValue(item.compra)}
                 </p>
                 <p className="mt-4 text-xs text-muted-foreground">
                   Boletim PTAX de {new Date(item.dataHoraCotacao).toLocaleString("pt-BR")}
