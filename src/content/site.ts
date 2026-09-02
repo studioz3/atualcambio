@@ -274,6 +274,6 @@ export const quotePairs = [
   { code: "USD", name: "Dólar americano" },
   { code: "EUR", name: "Euro" },
   { code: "GBP", name: "Libra esterlina" },
-  { code: "USDt", name: "Tether" },
-  { code: "USDc", name: "USD Coin" },
+  { code: "USDT", name: "Tether" },
+  { code: "USDC", name: "USD Coin" },
 ];

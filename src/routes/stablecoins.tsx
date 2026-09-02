@@ -66,8 +66,8 @@ const pillars = [
 ];
 
 const assets: { id: StablecoinAsset; name: string }[] = [
-  { id: "USDt", name: "Tether" },
-  { id: "USDc", name: "USD Coin" },
+  { id: "USDT", name: "Tether" },
+  { id: "USDC", name: "USD Coin" },
 ];
 
 const buySteps = [
@@ -145,7 +145,7 @@ const faq = [
 
 function Stablecoins() {
   const [operation, setOperation] = useState<StablecoinOperation>("Comprar");
-  const [asset, setAsset] = useState<StablecoinAsset>("USDt");
+  const [asset, setAsset] = useState<StablecoinAsset>("USDT");
 
   useEffect(() => {
     track("stablecoin_page_view", { pagina: "/stablecoins" });
@@ -160,7 +160,7 @@ function Stablecoins() {
   function selectAsset(value: StablecoinAsset) {
     setAsset(value);
     track("stablecoin_asset_selected", { ativo: value });
-    track(value === "USDt" ? "stablecoin_usdt" : "stablecoin_usdc", {
+    track(value === "USDT" ? "stablecoin_usdt" : "stablecoin_usdc", {
       operacao: operation === "Comprar" ? "buy" : "sell",
     });
   }
