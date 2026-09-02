@@ -45,6 +45,7 @@ export function LegalPage({
   updatedNote,
   blocks,
   footnote,
+  download,
 }: {
   eyebrow: string;
   title: string;
@@ -52,6 +53,7 @@ export function LegalPage({
   updatedNote?: string;
   blocks: LegalBlock[];
   footnote?: ReactNode;
+  download?: { href: string; label: string; description?: string; fileName?: string };
 }) {
   const introParagraphs = Array.isArray(intro) ? intro : [intro];
 
