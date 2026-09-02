@@ -21,6 +21,14 @@ const solutionRoutes: Record<string, string> = {
   conta: "/conta-atual",
 };
 
+/** Ajusta o texto do CTA sem alterar a grafia oficial de USDt e USDc. */
+function toSentenceCase(value: string) {
+  return value
+    .split(" ")
+    .map((word) => (word === "USDT" ? "USDt" : word === "USDC" ? "USDc" : word.toLowerCase()))
+    .join(" ");
+}
+
 export const Route = createFileRoute("/solucoes")({
   head: () =>
     pageHead({
@@ -70,7 +78,7 @@ function Solucoes() {
               <div className="mt-8 flex flex-wrap gap-3">
                 {solutionRoutes[item.id] ? (
                   <ActionLink to={solutionRoutes[item.id]!} event="solution_page_click">
-                    Ver {item.title.toLowerCase()}
+                    Ver {toSentenceCase(item.title)}
                   </ActionLink>
                 ) : null}
                 <ActionButton
