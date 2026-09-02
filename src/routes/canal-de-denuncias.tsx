@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { pageHead } from "@/lib/seo";
 import { LegalPage } from "@/components/atual/LegalPage";
+import { DenunciaForm } from "@/components/atual/DenunciaForm";
 import { blocks, intro } from "@/content/legal/canal-de-denuncias";
 
 export const Route = createFileRoute("/canal-de-denuncias")({
@@ -20,6 +21,7 @@ function CanalDeDenunciasPage() {
       title="Canal de Denúncias"
       intro={intro}
       blocks={blocks}
+      afterContent={<DenunciaForm />}
     />
   );
 }

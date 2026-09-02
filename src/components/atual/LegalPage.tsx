@@ -46,6 +46,7 @@ export function LegalPage({
   blocks,
   footnote,
   download,
+  afterContent,
 }: {
   eyebrow: string;
   title: string;
@@ -54,6 +55,7 @@ export function LegalPage({
   blocks: LegalBlock[];
   footnote?: ReactNode;
   download?: { href: string; label: string; description?: string; fileName?: string };
+  afterContent?: ReactNode;
 }) {
   const introParagraphs = Array.isArray(intro) ? intro : [intro];
 
@@ -148,6 +150,8 @@ export function LegalPage({
                 {footnote}
               </p>
             ) : null}
+
+            {afterContent ? <div className="border-t border-navy/10 pt-12">{afterContent}</div> : null}
           </div>
         </div>
       </Section>

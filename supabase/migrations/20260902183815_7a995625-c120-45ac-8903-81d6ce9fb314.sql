@@ -1,0 +1,1 @@
+CREATE POLICY "Denuncias are not directly accessible" ON public.denuncias FOR ALL TO anon, authenticated USING (false) WITH CHECK (false);

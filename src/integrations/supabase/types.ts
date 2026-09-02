@@ -83,6 +83,57 @@ export type Database = {
         }
         Relationships: []
       }
+      denuncias: {
+        Row: {
+          anonima: boolean
+          categoria: string
+          created_at: string
+          email: string | null
+          envolvidos: string | null
+          id: string
+          local: string | null
+          nome: string | null
+          ocorrido_em: string | null
+          protocolo: string
+          relato: string
+          status: string
+          telefone: string | null
+          updated_at: string
+        }
+        Insert: {
+          anonima?: boolean
+          categoria: string
+          created_at?: string
+          email?: string | null
+          envolvidos?: string | null
+          id?: string
+          local?: string | null
+          nome?: string | null
+          ocorrido_em?: string | null
+          protocolo: string
+          relato: string
+          status?: string
+          telefone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          anonima?: boolean
+          categoria?: string
+          created_at?: string
+          email?: string | null
+          envolvidos?: string | null
+          id?: string
+          local?: string | null
+          nome?: string | null
+          ocorrido_em?: string | null
+          protocolo?: string
+          relato?: string
+          status?: string
+          telefone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       editorial_authors: {
         Row: {
           ativo: boolean
