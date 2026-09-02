@@ -117,7 +117,7 @@ export function StablecoinLeadForm({
         <SelectField
           label="Ativo"
           name="ativo"
-          options={["USDt", "USDc"]}
+          options={["USDT", "USDC"]}
           value={asset}
           onChange={(event) => onAssetChange(event.target.value as StablecoinAsset)}
         />

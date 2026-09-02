@@ -31,7 +31,7 @@ export const Route = createFileRoute("/fale-com-especialista")({
     pageHead({
       path: "/fale-com-especialista",
       title: "Fale com um Especialista | Atual Câmbio",
-      description: "Conte o que precisa resolver e fale com um especialista da Atual sobre câmbio, remessas, empresas, USDt, USDc e Conta Atual.",
+      description: "Conte o que precisa resolver e fale com um especialista da Atual sobre câmbio, remessas, empresas, USDT, USDC e Conta Atual.",
     }),
   component: SpecialistPage,
 });

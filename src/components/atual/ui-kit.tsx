@@ -398,7 +398,7 @@ export function AppMockup({
   className,
   screenshot,
   screenshotAlt = "Tela do aplicativo Atual",
-  features = ["Saldo", "Remessas", "USDt e USDc", "Extrato", "Acompanhamento"],
+  features = ["Saldo", "Remessas", "USDT e USDC", "Extrato", "Acompanhamento"],
 }: {
   className?: string;
   screenshot?: string;
