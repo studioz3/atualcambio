@@ -10,7 +10,7 @@ export const intro: string[] = [
 export const blocks: LegalBlock[] = [
   {
     "id": "como-acionar-a-ouvidoria",
-    "title": "📋 Como acionar a Ouvidoria?",
+    "title": "Como acionar a Ouvidoria?",
     "body": [
       {
         "type": "p",
@@ -32,7 +32,7 @@ export const blocks: LegalBlock[] = [
   },
   {
     "id": "prazos-de-atendimento",
-    "title": "⏱️ Prazos de Atendimento",
+    "title": "Prazos de Atendimento",
     "body": [
       {
         "type": "p",
@@ -47,7 +47,7 @@ export const blocks: LegalBlock[] = [
 
   {
     "id": "canais-de-contato-da-ouvidoria",
-    "title": "📞 Canais de Contato da Ouvidoria",
+    "title": "Canais de Contato da Ouvidoria",
     "body": [
       {
         "type": "p",
