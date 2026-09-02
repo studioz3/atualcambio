@@ -166,7 +166,7 @@ export const blocks: LegalBlock[] = [
       },
       {
         "type": "p",
-        "text": "# Atual Câmbio — São José dos Campos"
+        "text": "**Atual Sociedade Corretora de Câmbio Ltda — CNPJ 44.323.831/0001-70**"
       },
       {
         "type": "p",
@@ -182,11 +182,7 @@ export const blocks: LegalBlock[] = [
       },
       {
         "type": "p",
-        "text": "Tel.: (12) 3500-2009"
-      },
-      {
-        "type": "p",
-        "text": "Whatsapp:"
+        "text": "Tel. / WhatsApp: (12) 3500-2009"
       }
     ]
   }
