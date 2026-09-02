@@ -188,9 +188,13 @@ export function Footer() {
           <div>
             <p className="eyebrow text-gold">Regulação</p>
             <p className="mt-5 max-w-xl text-sm leading-relaxed text-white/70">
-              Atual Câmbio — instituição autorizada a operar no mercado de câmbio brasileiro,
-              sujeita à regulação e supervisão do Banco Central do Brasil, e associada à ABRACAM.
+              Atual Sociedade Corretora de Câmbio Ltda — CNPJ 44.323.831/0001-70
+              <br />
+              Instituição autorizada a funcionar pelo Banco Central do Brasil.
+              <br />
+              Associada à ABRACAM.
             </p>
+
             <address className="mt-6 max-w-xl text-sm leading-relaxed text-white/70 not-italic">
               <Link
                 to={UNIT.path}
