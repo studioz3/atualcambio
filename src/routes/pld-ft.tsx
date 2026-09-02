@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import pldPolicyPdf from "@/assets/politica-pld-ft.pdf.asset.json";
 import { pageHead } from "@/lib/seo";
 import { LegalPage } from "@/components/atual/LegalPage";
 import { blocks, intro } from "@/content/legal/pld-ft";
@@ -20,6 +21,12 @@ function PldFtPage() {
       title="Política de Prevenção à Lavagem de Dinheiro e ao Financiamento de Terrorismo (PLD/FT)"
       intro={intro}
       blocks={blocks}
+      download={{
+        href: pldPolicyPdf.url,
+        label: "Baixar a política completa",
+        description: "Consulte ou baixe o documento oficial da Política de Prevenção à Lavagem de Dinheiro e ao Financiamento do Terrorismo.",
+        fileName: "politica-pld-ft-atual-cambio.pdf",
+      }}
     />
   );
 }
