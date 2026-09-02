@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import pldPolicyPdf from "@/assets/politica-pld-ft.pdf.asset.json";
 import { pageHead } from "@/lib/seo";
 import { LegalPage } from "@/components/atual/LegalPage";
 import { blocks, intro } from "@/content/legal/pld-ft";
