@@ -69,14 +69,14 @@ export function DenunciaForm() {
           <code className="rounded-md border border-line bg-white px-4 py-3 text-base font-semibold tracking-wide text-navy">
             {protocolo}
           </code>
-          <button
+          <ActionButton
             type="button"
+            variant="secondary"
             onClick={() => {
               void navigator.clipboard.writeText(protocolo);
               setCopied(true);
               toast.success("Protocolo copiado.");
             }}
-            className="inline-flex items-center gap-2 rounded-full border border-navy/20 px-4 py-2.5 text-sm font-semibold text-navy transition-colors hover:bg-navy/5"
           >
             {copied ? (
               <Check className="size-4 shrink-0" aria-hidden />
@@ -84,7 +84,7 @@ export function DenunciaForm() {
               <Copy className="size-4 shrink-0" aria-hidden />
             )}
             Copiar protocolo
-          </button>
+          </ActionButton>
         </div>
       </div>
     );
