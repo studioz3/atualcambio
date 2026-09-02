@@ -1,6 +1,21 @@
 import type { ReactNode } from "react";
+import { Download } from "lucide-react";
 import { Container, Eyebrow, Section } from "./primitives";
 import { SpecialistCta } from "./blocks";
+
+/** Converte `**trecho**` em <strong> */
+function richText(text: string): ReactNode {
+  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  return parts.map((part, i) =>
+    part.startsWith("**") && part.endsWith("**") && part.length > 4 ? (
+      <strong key={i} className="font-semibold text-navy">
+        {part.slice(2, -2)}
+      </strong>
+    ) : (
+      part
+    ),
+  );
+}
 
 export type LegalNode =
   | { type: "p"; text: string }
