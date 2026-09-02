@@ -84,7 +84,7 @@ const intentCards = [
   },
   {
     id: "stablecoin" as const,
-    title: "Comprar ou vender USDT/USDC",
+    title: "Comprar ou vender USDt/USDc",
     description: "Stablecoins em ambiente regulado, com conformidade em cada etapa.",
     image: cardStablecoins,
     imageAlt: "Pessoa usando um aplicativo financeiro no smartphone",
