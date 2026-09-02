@@ -158,7 +158,7 @@ export function Footer() {
         {/* Atendimento e regulação */}
         <div className="relative grid gap-10 border-t border-white/10 py-12 md:grid-cols-2">
           <div>
-            <p className="eyebrow text-gold">Atendimento e Ouvidoria</p>
+            <p className="eyebrow text-gold">Ouvidoria</p>
             <ul className="mt-5 space-y-2 text-sm text-white/70">
               <li>
                 Ouvidoria:{" "}
