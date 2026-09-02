@@ -37,7 +37,7 @@ import { links } from "@/content/site";
 import { pageHead, faqSchema, serviceSchema } from "@/lib/seo";
 
 const PAGE_DESCRIPTION =
-  "Abra sua Conta Atual pelo aplicativo: saldo em reais, remessas internacionais, USDT e USDC, extrato e acompanhamento das suas operações.";
+  "Abra sua Conta Atual pelo aplicativo: saldo em reais, remessas internacionais, USDt e USDc, extrato e acompanhamento das suas operações.";
 
 export const Route = createFileRoute("/conta-atual")({
   head: () =>
@@ -87,8 +87,8 @@ const features = [
     title: "Remessas internacionais",
     text: "Simule e acompanhe transferências internacionais.",
   },
-  { icon: Coins, title: "USDT", text: "Compre e venda USDT." },
-  { icon: Coins, title: "USDC", text: "Compre e venda USDC." },
+  { icon: Coins, title: "USDt", text: "Compre e venda USDt." },
+  { icon: Coins, title: "USDc", text: "Compre e venda USDc." },
   { icon: ReceiptText, title: "Extrato", text: "Consulte movimentações e histórico." },
   {
     icon: Activity,
@@ -100,7 +100,7 @@ const features = [
 const screens = [
   { src: appInicio.url, alt: "Tela inicial da Conta Atual com saldo em reais", label: "Saldo" },
   { src: appRemessa.url, alt: "Tela de transferência internacional no app da Atual", label: "Transferência internacional" },
-  { src: appMercados.url, alt: "Tela de mercados com USDT e USDC no app da Atual", label: "USDT e USDC" },
+  { src: appMercados.url, alt: "Tela de mercados com USDt e USDc no app da Atual", label: "USDt e USDc" },
   { src: appExtrato.url, alt: "Tela de extrato de operações no app da Atual", label: "Extrato" },
 ];
 
@@ -156,15 +156,15 @@ const faq = [
   },
   {
     q: "O que posso fazer pelo aplicativo?",
-    a: "Consultar seu saldo em reais, adicionar saldo conforme as opções apresentadas no app, iniciar e acompanhar remessas internacionais, comprar e vender USDT e USDC, consultar extrato e acompanhar o status das operações.",
+    a: "Consultar seu saldo em reais, adicionar saldo conforme as opções apresentadas no app, iniciar e acompanhar remessas internacionais, comprar e vender USDt e USDc, consultar extrato e acompanhar o status das operações.",
   },
   {
     q: "Posso fazer remessas internacionais?",
     a: "Sim. Pela Conta Atual você simula, inicia e acompanha as remessas internacionais disponíveis no aplicativo.",
   },
   {
-    q: "Posso comprar e vender USDT e USDC?",
-    a: "Sim. As operações de compra e venda de USDT e USDC são feitas pelo ambiente da Conta Atual.",
+    q: "Posso comprar e vender USDt e USDc?",
+    a: "Sim. As operações de compra e venda de USDt e USDc são feitas pelo ambiente da Conta Atual.",
   },
   {
     q: "Como adiciono saldo?",
@@ -260,7 +260,7 @@ function ContaAtual() {
           tone="light-text"
           eyebrow="Produto real"
           title="Feita para você ver, acompanhar e operar."
-          description="Telas reais da Conta Atual: saldo, transferência internacional, USDT e USDC e extrato."
+          description="Telas reais da Conta Atual: saldo, transferência internacional, USDt e USDc e extrato."
         />
         <ul className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {screens.map((screen, index) => (
@@ -399,23 +399,23 @@ function ContaAtual() {
         </div>
       </Section>
 
-      {/* USDT / USDC */}
+      {/* USDt / USDc */}
       <Section tone="light" id="stablecoins">
         <div className="grid items-center gap-14 lg:grid-cols-[0.95fr_1.05fr]">
           <img
             src={appMercados.url}
-            alt="Tela de mercados com USDT e USDC no app da Atual"
+            alt="Tela de mercados com USDt e USDc no app da Atual"
             loading="lazy"
             className="order-2 mx-auto block h-auto w-full max-w-[300px] rounded-2xl border border-line object-contain lg:order-1"
           />
           <div className="order-1 lg:order-2">
             <SectionHeading
               eyebrow="Stablecoins"
-              title="USDT e USDC pela Conta Atual."
+              title="USDt e USDc pela Conta Atual."
               description="Consulte as soluções disponíveis para comprar e vender stablecoins pelo aplicativo."
             />
             <ActionLink to="/stablecoins" className="mt-10" event="account_stablecoin_click">
-              Conhecer USDT / USDC
+              Conhecer USDt / USDc
             </ActionLink>
           </div>
         </div>

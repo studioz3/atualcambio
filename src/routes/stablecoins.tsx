@@ -27,17 +27,17 @@ import { cn } from "@/lib/utils";
 import { pageHead, faqSchema, serviceSchema } from "@/lib/seo";
 
 const PAGE_DESCRIPTION =
-  "Compre e venda USDT e USDC pela Conta Atual, em uma plataforma digital com suporte especializado quando você precisar.";
+  "Compre e venda USDt e USDc pela Conta Atual, em uma plataforma digital com suporte especializado quando você precisar.";
 
 export const Route = createFileRoute("/stablecoins")({
   head: () =>
     pageHead({
       path: "/stablecoins",
-      title: "USDT e USDC pela Atual | Atual Câmbio",
+      title: "USDt e USDc pela Atual | Atual Câmbio",
       description: PAGE_DESCRIPTION,
       jsonLd: [
         serviceSchema({
-          name: "USDT e USDC",
+          name: "USDt e USDc",
           serviceType: "Compra e venda de stablecoins",
           description: PAGE_DESCRIPTION,
         }),
@@ -66,14 +66,14 @@ const pillars = [
 ];
 
 const assets: { id: StablecoinAsset; name: string }[] = [
-  { id: "USDT", name: "Tether" },
-  { id: "USDC", name: "USD Coin" },
+  { id: "USDt", name: "Tether" },
+  { id: "USDc", name: "USD Coin" },
 ];
 
 const buySteps = [
   "Acesse sua Conta Atual.",
   "Tenha saldo disponível.",
-  "Escolha USDT ou USDC.",
+  "Escolha USDt ou USDc.",
   "Consulte a cotação apresentada no app.",
   "Revise as informações e confirme a operação.",
 ];
@@ -102,19 +102,19 @@ const securityPillars = [
 
 const faq = [
   {
-    q: "O que é USDT?",
-    a: "USDT é uma stablecoin emitida pela Tether, desenhada para acompanhar o valor do dólar americano.",
+    q: "O que é USDt?",
+    a: "USDt é uma stablecoin emitida pela Tether, desenhada para acompanhar o valor do dólar americano.",
   },
   {
-    q: "O que é USDC?",
-    a: "USDC é uma stablecoin emitida pela Circle, também desenhada para acompanhar o valor do dólar americano.",
+    q: "O que é USDc?",
+    a: "USDc é uma stablecoin emitida pela Circle, também desenhada para acompanhar o valor do dólar americano.",
   },
   {
-    q: "Posso comprar USDT e USDC pela Atual?",
+    q: "Posso comprar USDt e USDc pela Atual?",
     a: "Sim. A compra é feita pela Conta Atual, com a cotação apresentada no aplicativo no momento da operação.",
   },
   {
-    q: "Posso vender USDT e USDC?",
+    q: "Posso vender USDt e USDc?",
     a: "Sim. A venda também é conduzida pela Conta Atual, com criação da ordem e instruções apresentadas no aplicativo.",
   },
   {
@@ -145,7 +145,7 @@ const faq = [
 
 function Stablecoins() {
   const [operation, setOperation] = useState<StablecoinOperation>("Comprar");
-  const [asset, setAsset] = useState<StablecoinAsset>("USDT");
+  const [asset, setAsset] = useState<StablecoinAsset>("USDt");
 
   useEffect(() => {
     track("stablecoin_page_view", { pagina: "/stablecoins" });
@@ -160,7 +160,7 @@ function Stablecoins() {
   function selectAsset(value: StablecoinAsset) {
     setAsset(value);
     track("stablecoin_asset_selected", { ativo: value });
-    track(value === "USDT" ? "stablecoin_usdt" : "stablecoin_usdc", {
+    track(value === "USDt" ? "stablecoin_usdt" : "stablecoin_usdc", {
       operacao: operation === "Comprar" ? "buy" : "sell",
     });
   }
@@ -176,12 +176,12 @@ function Stablecoins() {
       <Hero
         title={
           <>
-            USDT e USDC
+            USDt e USDc
             <br />
             pela Atual.
           </>
         }
-        description="Uma stablecoin é um ativo digital desenhado para acompanhar o valor de uma moeda de referência, como o dólar americano. Pela Conta Atual, você compra e vende USDT e USDC em uma plataforma digital, com suporte especializado quando precisar de orientação."
+        description="Uma stablecoin é um ativo digital desenhado para acompanhar o valor de uma moeda de referência, como o dólar americano. Pela Conta Atual, você compra e vende USDt e USDc em uma plataforma digital, com suporte especializado quando precisar de orientação."
         primary={
           <ActionLink
             size="lg"
@@ -199,7 +199,7 @@ function Stablecoins() {
         }
         image={heroDesktop.url}
         mobileImage={heroMobile.url}
-        imageAlt="Moeda dourada de USDT sobre fundo azul escuro"
+        imageAlt="Moeda dourada de USDt sobre fundo azul escuro"
       />
 
       <TrustPillars items={pillars} />
@@ -292,7 +292,7 @@ function Stablecoins() {
           </div>
           <img
             src={appTelas.url}
-            alt="Três telas da Conta Atual: saldo, mercados com USDT e USDC, e extrato de operações"
+            alt="Três telas da Conta Atual: saldo, mercados com USDt e USDc, e extrato de operações"
             className="relative z-0 mx-auto block h-auto w-full min-w-0 max-w-[680px] object-contain lg:max-w-none lg:origin-right lg:scale-[1.08] xl:scale-[1.15]"
             loading="lazy"
           />
@@ -365,7 +365,7 @@ function Stablecoins() {
           <PathCard
             eyebrow="Quero operar pelo app"
             title="Autonomia digital"
-            description="Compra e venda de USDT e USDC pelo ambiente da Conta Atual."
+            description="Compra e venda de USDt e USDc pelo ambiente da Conta Atual."
             items={[
               "Consulta de ativos e cotação no app",
               "Revisão das informações antes de confirmar",
@@ -385,7 +385,7 @@ function Stablecoins() {
             description="Quando a operação envolve contexto, valor ou dúvida, um especialista orienta você."
             items={[
               "Orientação sobre a operação",
-              "Esclarecimento de dúvidas sobre USDT e USDC",
+              "Esclarecimento de dúvidas sobre USDt e USDc",
               "Apoio para operações de maior valor",
               "Atendimento como suporte, não como etapa obrigatória",
             ]}
@@ -440,16 +440,16 @@ function Stablecoins() {
       {/* Educação rápida */}
       <Section tone="offwhite" id="o-que-sao">
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
-          <SectionHeading eyebrow="Conceito" title="USDT e USDC: o que são?" />
+          <SectionHeading eyebrow="Conceito" title="USDt e USDc: o que são?" />
           <div className="grid gap-6 sm:grid-cols-2">
             <article className="rounded-lg border border-line bg-white p-8">
-              <h3 className="display-h4 text-navy">USDT</h3>
+              <h3 className="display-h4 text-navy">USDt</h3>
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                 Stablecoin emitida pela Tether, desenhada para acompanhar o valor do dólar americano.
               </p>
             </article>
             <article className="rounded-lg border border-line bg-white p-8">
-              <h3 className="display-h4 text-navy">USDC</h3>
+              <h3 className="display-h4 text-navy">USDc</h3>
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                 Stablecoin emitida pela Circle, também desenhada para acompanhar o valor do dólar
                 americano.
@@ -462,7 +462,7 @@ function Stablecoins() {
       {/* FAQ */}
       <Section tone="light" id="faq">
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.4fr]">
-          <SectionHeading eyebrow="Perguntas frequentes" title="Dúvidas sobre USDT e USDC" />
+          <SectionHeading eyebrow="Perguntas frequentes" title="Dúvidas sobre USDt e USDc" />
           <Accordion type="single" collapsible className="w-full">
             {faq.map((item) => (
               <AccordionItem key={item.q} value={item.q} className="border-b border-line">
