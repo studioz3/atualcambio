@@ -486,7 +486,7 @@ export function NewsletterCallout({ editoria }: { editoria?: Editoria }) {
             <h2 className="display-h2 mt-4 text-white">Escolha o que quer acompanhar.</h2>
             <p className="body-lg mt-5 text-white/80">
               {editoria
-                ? `Receba ${editoria.name} e outras editoriais da Atual conforme os temas que fazem sentido para você.`
+                ? `Receba ${editoria.name} e outras editorias da Atual conforme os temas que fazem sentido para você.`
                 : "Receba conteúdos da Atual de acordo com os temas que fazem sentido para você."}
             </p>
           </div>
