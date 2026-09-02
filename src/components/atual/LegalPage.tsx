@@ -104,7 +104,7 @@ export function LegalPage({
                       key={`${block.id}-p-${i}`}
                       className="mt-4 text-base leading-[1.65] text-muted-foreground"
                     >
-                      {node.text}
+                      {richText(node.text)}
                     </p>
                   ) : (
                     <ul key={`${block.id}-ul-${i}`} className="mt-5 space-y-3">
@@ -113,7 +113,7 @@ export function LegalPage({
                           key={item}
                           className="border-l-2 border-gold/60 pl-4 text-sm leading-relaxed text-muted-foreground"
                         >
-                          {item}
+                          {richText(item)}
                         </li>
                       ))}
                     </ul>
@@ -121,6 +121,27 @@ export function LegalPage({
                 )}
               </article>
             ))}
+
+            {download ? (
+              <div className="rounded-2xl border border-navy/10 bg-navy/[0.03] p-6 md:p-8">
+                <h2 className="text-xl font-bold text-navy">Documento oficial</h2>
+                {download.description ? (
+                  <p className="mt-3 text-base leading-[1.65] text-muted-foreground">
+                    {download.description}
+                  </p>
+                ) : null}
+                <a
+                  href={download.href}
+                  download={download.fileName}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-6 inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 text-sm font-semibold text-gold-foreground transition-opacity hover:opacity-90"
+                >
+                  <Download className="size-4 shrink-0" aria-hidden="true" />
+                  {download.label}
+                </a>
+              </div>
+            ) : null}
 
             {footnote ? (
               <p className="border-t border-navy/10 pt-8 text-xs leading-relaxed text-muted-foreground">
