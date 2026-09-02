@@ -70,7 +70,7 @@ function Solucoes() {
               <div className="mt-8 flex flex-wrap gap-3">
                 {solutionRoutes[item.id] ? (
                   <ActionLink to={solutionRoutes[item.id]!} event="solution_page_click">
-                    Ver {item.title.toLowerCase()}
+                    Ver {toSentenceCase(item.title)}
                   </ActionLink>
                 ) : null}
                 <ActionButton
