@@ -37,9 +37,14 @@ export const blocks: LegalBlock[] = [
       {
         "type": "p",
         "text": "Cumprindo rigorosamente a regulamentação do Banco Central, a Ouvidoria da Atual Câmbio tem o prazo máximo de 10 (dez) dias úteis para analisar sua solicitação, apurar os fatos internamente e enviar uma resposta conclusiva e transparente."
+      },
+      {
+        "type": "p",
+        "text": "Excepcionalmente, quando a complexidade do caso exigir apuração adicional, esse prazo poderá ser prorrogado uma única vez, por até 10 (dez) dias úteis. Nessa hipótese, você será comunicado antes do vencimento do prazo original, com a justificativa do motivo da prorrogação e a nova data prevista para a resposta conclusiva."
       }
     ]
   },
+
   {
     "id": "canais-de-contato-da-ouvidoria",
     "title": "📞 Canais de Contato da Ouvidoria",
