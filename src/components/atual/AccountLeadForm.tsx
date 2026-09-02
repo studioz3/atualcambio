@@ -10,7 +10,7 @@ import { links } from "@/content/site";
 export const accountSubjects = [
   "Conta Atual",
   "Remessa Internacional",
-  "USDT / USDC",
+  "USDt / USDc",
   "Operação empresarial",
   "Câmbio Turismo",
   "Outro",

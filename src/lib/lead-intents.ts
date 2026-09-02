@@ -71,7 +71,7 @@ export const leadIntents: LeadIntentConfig[] = [
         ],
         required: true,
       },
-      { name: "moeda", label: "Moeda", type: "select", options: ["USD", "EUR", "GBP", "CNY", "USDT", "USDC", "Outra"], required: true },
+      { name: "moeda", label: "Moeda", type: "select", options: ["USD", "EUR", "GBP", "CNY", "USDt", "USDc", "Outra"], required: true },
       { name: "faixa_valor", label: "Faixa de valor", type: "select", options: valueRanges, required: true },
       { name: "prazo", label: "Prazo aproximado", type: "select", options: deadlines },
     ],
@@ -114,7 +114,7 @@ export const leadIntents: LeadIntentConfig[] = [
     to: "/stablecoins",
     formTitle: "Operação com stablecoins",
     fields: [
-      { name: "moeda", label: "Ativo", type: "select", options: ["USDT", "USDC"], required: true },
+      { name: "moeda", label: "Ativo", type: "select", options: ["USDt", "USDc"], required: true },
       { name: "operacao", label: "Operação", type: "select", options: ["Comprar", "Vender"], required: true },
       { name: "faixa_valor", label: "Valor aproximado", type: "select", options: valueRanges, required: true },
     ],
@@ -144,7 +144,7 @@ export const leadIntents: LeadIntentConfig[] = [
     to: "/cotacoes",
     formTitle: "Cotação da sua operação",
     fields: [
-      { name: "moeda", label: "Moeda", type: "select", options: ["USD", "EUR", "GBP", "USDT", "USDC", "Outra"], required: true },
+      { name: "moeda", label: "Moeda", type: "select", options: ["USD", "EUR", "GBP", "USDt", "USDc", "Outra"], required: true },
       { name: "faixa_valor", label: "Faixa de valor", type: "select", options: valueRanges },
     ],
   },

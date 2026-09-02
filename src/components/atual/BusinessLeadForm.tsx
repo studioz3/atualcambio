@@ -19,7 +19,7 @@ export const businessOperations = [
 
 export type BusinessOperation = (typeof businessOperations)[number];
 
-const currencies = ["USD", "EUR", "GBP", "CNY", "JPY", "USDT", "USDC", "Outra"];
+const currencies = ["USD", "EUR", "GBP", "CNY", "JPY", "USDt", "USDc", "Outra"];
 const deadlines = ["Hoje", "Esta semana", "Este mês", "Sem data definida"];
 
 export function BusinessLeadForm({

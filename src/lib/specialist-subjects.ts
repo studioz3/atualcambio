@@ -73,7 +73,7 @@ export const specialistSubjects: SpecialistSubject[] = [
         label: "Moeda",
         type: "select",
         required: true,
-        options: ["USD", "EUR", "GBP", "CNY", "USDT", "USDC", "Outra"],
+        options: ["USD", "EUR", "GBP", "CNY", "USDt", "USDc", "Outra"],
       },
       {
         name: "faixa_valor",
@@ -127,7 +127,7 @@ export const specialistSubjects: SpecialistSubject[] = [
     description: "Compra ou venda de stablecoins.",
     produto: "Stablecoins",
     fields: [
-      { name: "moeda", label: "Ativo", type: "select", required: true, options: ["USDT", "USDC"] },
+      { name: "moeda", label: "Ativo", type: "select", required: true, options: ["USDt", "USDc"] },
       {
         name: "operacao",
         label: "Operação",
