@@ -21,6 +21,14 @@ const solutionRoutes: Record<string, string> = {
   conta: "/conta-atual",
 };
 
+/** Minúsculas preservando siglas (USDT, USDC, PIX...). */
+function toSentenceCase(value: string) {
+  return value
+    .split(" ")
+    .map((word) => (/^[A-Z0-9/]{2,}$/.test(word) ? word : word.toLowerCase()))
+    .join(" ");
+}
+
 export const Route = createFileRoute("/solucoes")({
   head: () =>
     pageHead({
