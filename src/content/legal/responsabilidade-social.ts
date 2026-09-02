@@ -88,10 +88,6 @@ export const blocks: LegalBlock[] = [
       {
         "type": "p",
         "text": "Convidamos você a ler o documento oficial que rege nossas diretrizes socioambientais."
-      },
-      {
-        "type": "p",
-        "text": "Baixar o PDF da PRSAC"
       }
     ]
   }
