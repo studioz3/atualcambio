@@ -40,7 +40,7 @@ const columns: { title: string; items: FooterLink[] }[] = [
     items: [
       { label: "Consultoria cambial", to: "/fale-com-especialista" },
       { label: "Remessas internacionais", to: "/remessas-internacionais" },
-      { label: "USDT / USDC", to: "/stablecoins" },
+      { label: "USDt / USDc", to: "/stablecoins" },
       { label: "Conta Atual", to: "/conta-atual" },
     ],
   },

@@ -149,9 +149,10 @@ export function ArticleCard({
           <Link
             to={slugRoute(editoria.path)}
             params={{ slug: article.slug }}
+            aria-label={`Ler: ${article.titulo}`}
             className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-navy hover:text-gold-soft"
           >
-            Ler<span className="sr-only">: {article.titulo}</span>{" "}
+            Ler
             <ArrowUpRight className="size-4 text-gold" aria-hidden />
           </Link>
           <span className="text-xs text-muted-foreground">{formatDate(article.data)}</span>
@@ -202,8 +203,9 @@ export function FeaturedArticle({ article }: { article: Article }) {
             to={editoriaRoute(`${editoria.path}/${article.slug}`)}
             variant="secondary"
             event="article_view"
+            aria-label={`Ler matéria: ${article.titulo}`}
           >
-            Ler matéria<span className="sr-only">: {article.titulo}</span>
+            Ler matéria
           </ActionLink>
         </div>
       </div>

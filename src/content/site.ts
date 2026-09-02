@@ -63,7 +63,7 @@ export const nav = [
     to: "/solucoes",
     items: [
       { label: "Remessas internacionais", to: "/remessas-internacionais", hash: "" },
-      { label: "USDT / USDC", to: "/stablecoins", hash: "" },
+      { label: "USDt / USDc", to: "/stablecoins", hash: "" },
       { label: "Câmbio turismo", to: "/cambio-turismo", hash: "" },
       { label: "Conta Atual", to: "/conta-atual", hash: "" },
     ],
@@ -104,7 +104,7 @@ export const intents = [
     event: "remittance_start",
   },
   {
-    title: "Quero comprar USDT",
+    title: "Quero comprar USDt",
     description: "Stablecoins com processo claro e liquidação transparente.",
     to: "/stablecoins",
     event: "stablecoin_buy",
@@ -131,11 +131,11 @@ export const solutions = [
   },
   {
     id: "stablecoins",
-    title: "USDT e USDC",
+    title: "USDt e USDc",
     summary:
       "Operações com stablecoins dentro de um ambiente regulado, com o mesmo padrão de atendimento do câmbio tradicional.",
     bullets: [
-      "Compra e venda de USDT e USDC",
+      "Compra e venda de USDt e USDc",
       "Processo com identificação e conformidade",
       "Acompanhamento consultivo quando necessário",
     ],
@@ -238,8 +238,8 @@ export const faq = [
     a: "A documentação varia conforme o tipo de operação, o valor e o perfil do cliente. Um especialista indica exatamente o que é necessário antes de qualquer envio de documento.",
   },
   {
-    q: "Posso comprar e vender USDT e USDC?",
-    a: "Sim. As operações com USDT e USDC seguem o mesmo padrão de identificação, conformidade e atendimento das demais operações da Atual.",
+    q: "Posso comprar e vender USDt e USDc?",
+    a: "Sim. As operações com USDt e USDc seguem o mesmo padrão de identificação, conformidade e atendimento das demais operações da Atual.",
   },
   {
     q: "Como abro minha Conta Atual?",
@@ -263,7 +263,7 @@ export const editorial = [
   },
   {
     category: "Stablecoins",
-    title: "USDT e USDC dentro de um ambiente regulado",
+    title: "USDt e USDc dentro de um ambiente regulado",
     date: "Conteúdo editorial",
     excerpt: "O que diferencia uma operação com stablecoin conduzida por uma instituição de câmbio.",
   },

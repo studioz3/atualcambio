@@ -123,7 +123,7 @@ export const specialistSubjects: SpecialistSubject[] = [
   },
   {
     id: "stablecoins",
-    label: "USDT / USDC",
+    label: "USDt / USDc",
     description: "Compra ou venda de stablecoins.",
     produto: "Stablecoins",
     fields: [

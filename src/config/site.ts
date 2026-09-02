@@ -103,7 +103,7 @@ export const organizationSchema = {
   logo: absoluteUrl("/brand/simbolo.png"),
   image: OG_IMAGE,
   description:
-    "Instituição autorizada a operar no mercado de câmbio brasileiro, oferecendo câmbio turismo, remessas internacionais, operações empresariais de comércio exterior e stablecoins USDT e USDC.",
+    "Instituição autorizada a operar no mercado de câmbio brasileiro, oferecendo câmbio turismo, remessas internacionais, operações empresariais de comércio exterior e stablecoins USDt e USDc.",
   areaServed: { "@type": "Country", name: "Brasil" },
   address: postalAddressSchema,
   openingHoursSpecification: openingHoursSchema,

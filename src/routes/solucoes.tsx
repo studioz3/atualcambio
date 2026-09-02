@@ -25,7 +25,7 @@ const solutionRoutes: Record<string, string> = {
 function toSentenceCase(value: string) {
   return value
     .split(" ")
-    .map((word) => (word === "USDT" ? "USDt" : word === "USDC" ? "USDc" : word.toLowerCase()))
+    .map((word) => (word.toUpperCase() === "USDT" ? "USDt" : word.toUpperCase() === "USDC" ? "USDc" : word.toLowerCase()))
     .join(" ");
 }
 
@@ -35,7 +35,7 @@ export const Route = createFileRoute("/solucoes")({
       path: "/solucoes",
       title: "Soluções | Atual Câmbio",
       description:
-        "Remessas internacionais, USDT e USDC, câmbio turismo e Conta Atual: soluções de câmbio com atendimento consultivo.",
+        "Remessas internacionais, USDT e USDC, câmbio turismo e Conta Atual: soluções de câmbio com atendimento consultivo",
       jsonLd: [faqSchema(faq)],
     }),
   component: Solucoes,

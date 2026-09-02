@@ -97,7 +97,7 @@ export const ctaOptions: { value: CmsCtaKey; label: string }[] = [
   { value: "nenhum", label: "Nenhum" },
   { value: "empresas", label: "Empresas" },
   { value: "remessas", label: "Remessas internacionais" },
-  { value: "stablecoins", label: "USDT / USDC" },
+  { value: "stablecoins", label: "USDt / USDc" },
   { value: "conta-atual", label: "Conta Atual" },
   { value: "turismo", label: "Câmbio Turismo" },
   { value: "especialista", label: "Falar com especialista" },
@@ -117,7 +117,7 @@ const ctaMap: Record<Exclude<CmsCtaKey, "nenhum">, NonNullable<ArticleCta>> = {
     to: "/remessas-internacionais",
   },
   stablecoins: {
-    title: "Conheça as soluções em USDT e USDC da Atual.",
+    title: "Conheça as soluções em USDt e USDc da Atual.",
     description: "Operações com stablecoins dentro de um ambiente regulado.",
     label: "Ver stablecoins",
     to: "/stablecoins",

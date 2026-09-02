@@ -84,7 +84,7 @@ const intentCards = [
   },
   {
     id: "stablecoin" as const,
-    title: "Comprar ou vender USDT/USDC",
+    title: "Comprar ou vender USDt/USDc",
     description: "Stablecoins em ambiente regulado, com conformidade em cada etapa.",
     image: cardStablecoins,
     imageAlt: "Pessoa usando um aplicativo financeiro no smartphone",
@@ -138,7 +138,7 @@ function Home() {
             Câmbio, remessas e stablecoins em uma plataforma digital, com atendimento
             especializado quando você precisar.
             <span className="mt-3 block text-sm text-white/70">
-              Câmbio turismo, remessas internacionais, comércio exterior e USDT/USDC — tudo em
+              Câmbio turismo, remessas internacionais, comércio exterior e USDt/USDc — tudo em
               um só lugar.
             </span>
           </>
@@ -267,7 +267,7 @@ function Home() {
               tone="light-text"
               eyebrow="Conta Atual"
               title="Sua operação internacional no aplicativo"
-              description="Acompanhe saldo, remessas, USDT, USDC e extrato com autonomia — e chame um especialista quando precisar."
+              description="Acompanhe saldo, remessas, USDt, USDc e extrato com autonomia — e chame um especialista quando precisar."
             />
             <ul className="mt-9 grid gap-3 sm:grid-cols-2">
               {["Saldo", "Remessas", "USDT", "USDC", "Extrato", "Acompanhamento"].map((item) => (

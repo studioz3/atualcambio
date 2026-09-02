@@ -144,12 +144,14 @@ export function ActionLink({
   event,
   external,
   onClick,
+  "aria-label": ariaLabel,
 }: ButtonBaseProps & {
   to?: string;
   href?: string;
   search?: Record<string, string | undefined>;
   external?: boolean;
   onClick?: React.MouseEventHandler<HTMLAnchorElement>;
+  "aria-label"?: string;
 }) {
   const classes = cn(buttonVariants({ variant, size }), className);
   if (to) {
@@ -160,6 +162,7 @@ export function ActionLink({
         data-event={event}
         className={classes}
         onClick={onClick}
+        aria-label={ariaLabel}
       >
         {children}
       </Link>
@@ -171,6 +174,7 @@ export function ActionLink({
       data-event={event}
       className={classes}
       onClick={onClick}
+      aria-label={ariaLabel}
       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
     >
       {children}
