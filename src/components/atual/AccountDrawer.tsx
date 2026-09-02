@@ -15,7 +15,7 @@ const BRAND_SYMBOL = "/brand/simbolo.png";
 const purposes = [
   { id: "pessoal", label: "Uso pessoal" },
   { id: "remessas", label: "Remessas internacionais" },
-  { id: "stablecoins", label: "USDT / USDC" },
+  { id: "stablecoins", label: "USDt / USDc" },
   { id: "empresa", label: "Operações da empresa" },
   { id: "outro", label: "Outro" },
 ] as const;

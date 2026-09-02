@@ -30,7 +30,7 @@ export const Route = createFileRoute("/cotacoes")({
   head: () => ({
     ...pageHead({
       path: "/cotacoes",
-      title: "Cotação de Câmbio, Dólar, Euro, USDT e USDC | Atual Câmbio",
+      title: "Cotação de Câmbio, Dólar, Euro, USDt e USDc | Atual Câmbio",
       description:
         "Consulte informações sobre moedas e stablecoins e encontre o melhor caminho para realizar sua operação com a Atual Câmbio.",
       jsonLd: [
@@ -341,7 +341,7 @@ function Cotacoes() {
           <SectionHeading
             tone="light-text"
             eyebrow="Stablecoins"
-            title="USDT e USDC"
+            title="USDt e USDc"
             description="Consulte as soluções disponíveis para compra e venda de stablecoins pela Conta Atual."
           />
           <div>
