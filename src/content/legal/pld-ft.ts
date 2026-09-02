@@ -9,27 +9,27 @@ export const blocks: LegalBlock[] = [
     "body": [
       {
         "type": "p",
-        "text": "Aprovador: Diretoria Executiva"
+        "text": "**Aprovador:** Diretoria Executiva"
       },
       {
         "type": "p",
-        "text": "Data da Aprovação: 20 de janeiro de 2026"
+        "text": "**Data da Aprovação:** 20 de janeiro de 2026"
       },
       {
         "type": "p",
-        "text": "Data de Revisão: 20 de janeiro de 2026"
+        "text": "**Data de Revisão:** 20 de janeiro de 2026"
       },
       {
         "type": "p",
-        "text": "Versão: 2"
+        "text": "**Versão:** 2"
       },
       {
         "type": "p",
-        "text": "Área Responsável: Diretoria Executiva | Área de Compliance | Área de Controles Internos"
+        "text": "**Área Responsável:** Diretoria Executiva | Área de Compliance | Área de Controles Internos"
       },
       {
         "type": "p",
-        "text": "Principais Regulamentações: Lei nº 9.613/1988 • Circular nº 3.978/2020 • Carta Circular nº 4.001/2020 • Instrução CVM 617 • Lei nº 14.478/2022 (Marco Legal dos Criptoativos) • Resolução BCB nº 519/2025 • Resolução BCB nº 520/2025 • Resolução BCB nº 521/2025"
+        "text": "**Principais Regulamentações:** Lei nº 9.613/1988 • Circular nº 3.978/2020 • Carta Circular nº 4.001/2020 • Instrução CVM 617 • Lei nº 14.478/2022 (Marco Legal dos Criptoativos) • Resolução BCB nº 519/2025 • Resolução BCB nº 520/2025 • Resolução BCB nº 521/2025"
       }
     ]
   },
@@ -104,7 +104,7 @@ export const blocks: LegalBlock[] = [
       },
       {
         "type": "p",
-        "text": "Os principais objetivos desta Política são:"
+        "text": "**Os principais objetivos desta Política são:**"
       },
       {
         "type": "ul",
@@ -131,7 +131,7 @@ export const blocks: LegalBlock[] = [
       },
       {
         "type": "p",
-        "text": "Oferece os Produtos e Serviços: Importação/Exportação, Financeiro Compra/Financeiro Venda, Compra e Venda de Papel Moeda para Pessoas Jurídicas (PJ) e para Pessoas Físicas (PF)."
+        "text": "**Oferece os Produtos e Serviços:** Importação/Exportação, Financeiro Compra/Financeiro Venda, Compra e Venda de Papel Moeda para Pessoas Jurídicas (PJ) e para Pessoas Físicas (PF)."
       },
       {
         "type": "p",
@@ -256,7 +256,7 @@ export const blocks: LegalBlock[] = [
       },
       {
         "type": "p",
-        "text": "São considerados os perfis de risco das atividades de:"
+        "text": "**São considerados os perfis de risco das atividades de:**"
       },
       {
         "type": "ul",
@@ -308,7 +308,7 @@ export const blocks: LegalBlock[] = [
       },
       {
         "type": "p",
-        "text": "Terceiros vinculados à Atual Câmbio:"
+        "text": "**Terceiros vinculados à Atual Câmbio:**"
       },
       {
         "type": "ul",
@@ -419,7 +419,7 @@ export const blocks: LegalBlock[] = [
       },
       {
         "type": "p",
-        "text": "Além disso é atribuído ao Compliance:"
+        "text": "**Além disso é atribuído ao Compliance:**"
       },
       {
         "type": "ul",
@@ -687,7 +687,7 @@ export const blocks: LegalBlock[] = [
       },
       {
         "type": "p",
-        "text": "23.1 A metodologia adotada na avaliação de efetividade:"
+        "text": "**23.1 A metodologia adotada na avaliação de efetividade:**"
       },
       {
         "type": "ul",
@@ -699,7 +699,7 @@ export const blocks: LegalBlock[] = [
       },
       {
         "type": "p",
-        "text": "23.2 Avaliação dos Perfis de Risco de:"
+        "text": "**23.2 Avaliação dos Perfis de Risco de:**"
       },
       {
         "type": "ul",
@@ -722,7 +722,7 @@ export const blocks: LegalBlock[] = [
       },
       {
         "type": "p",
-        "text": "23.3 O Plano de Ação deverá:"
+        "text": "**23.3 O Plano de Ação deverá:**"
       },
       {
         "type": "ul",
