@@ -1,7 +1,7 @@
 import type { LegalBlock } from "@/components/atual/LegalPage";
 
 export const intro: string[] = [
-  "O nosso canal de última instância para garantir os seus direitos.",
+  "O nosso canal de segunda instância para garantir os seus direitos.",
   "A Ouvidoria da Atual Câmbio é um canal de comunicação de segunda instância, imparcial e independente, criado para mediar conflitos e garantir a defesa dos direitos dos nossos clientes.",
   "Trabalhamos em total conformidade com as diretrizes do Banco Central do Brasil para assegurar que sua voz seja ouvida e respeitada.",
   "Este canal deve ser acionado apenas se você já entrou em contato com os nossos canais primários de atendimento (SAC, Lojas Físicas ou Central de Relacionamento) e a solução apresentada não foi satisfatória, ou se o prazo informado expirou sem retorno."

@@ -220,7 +220,7 @@ function Home() {
             description="Você opera direto pelo aplicativo, no seu tempo, com acompanhamento das operações em um só lugar."
             items={[
               "Remessas internacionais",
-              "Compra e venda de USDT e USDC",
+              "Compra e venda de USDt e USDc",
               "Acompanhamento das suas operações",
               "Histórico e comprovantes disponíveis no app",
             ]}
@@ -270,7 +270,7 @@ function Home() {
               description="Acompanhe saldo, remessas, USDt, USDc e extrato com autonomia — e chame um especialista quando precisar."
             />
             <ul className="mt-9 grid gap-3 sm:grid-cols-2">
-              {["Saldo", "Remessas", "USDT", "USDC", "Extrato", "Acompanhamento"].map((item) => (
+              {["Saldo", "Remessas", "USDt", "USDc", "Extrato", "Acompanhamento"].map((item) => (
                 <li
                   key={item}
                   className="flex items-center gap-3 rounded-md border border-white/12 px-4 py-3 text-sm text-white/80"

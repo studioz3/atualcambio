@@ -35,7 +35,7 @@ export const Route = createFileRoute("/solucoes")({
       path: "/solucoes",
       title: "Soluções | Atual Câmbio",
       description:
-        "Remessas internacionais, USDT e USDC, câmbio turismo e Conta Atual: soluções de câmbio com atendimento consultivo.",
+        "Remessas internacionais, USDt e USDc, câmbio turismo e Conta Atual: soluções de câmbio com atendimento consultivo.",
       jsonLd: [faqSchema(faq)],
     }),
   component: Solucoes,
