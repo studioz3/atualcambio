@@ -5,7 +5,9 @@ import { pageHead, faqSchema } from "@/lib/seo";
 import { getPtaxCotacoes, type PtaxCotacao } from "@/lib/ptax.functions";
 import { getOnzQuotes } from "@/lib/onz-quotes.functions";
 import { getPublishedList } from "@/lib/editorial.functions";
-import heroCotacoes from "@/assets/hero-cotacoes.jpg";
+import heroCotacoesDesktop from "@/assets/cotacoes-hero-desktop.jpg.asset.json";
+import heroCotacoesMobile from "@/assets/cotacoes-hero-mobile.jpg.asset.json";
+
 import {
   Section,
   SectionHeading,
