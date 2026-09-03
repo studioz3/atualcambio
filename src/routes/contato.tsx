@@ -11,7 +11,8 @@ import {
   ShieldCheck,
   MessageCircle,
 } from "lucide-react";
-import especialistas from "@/assets/especialistas.jpg";
+import contatoHeroDesktop from "@/assets/contato-hero-desktop.jpg.asset.json";
+import contatoHeroMobile from "@/assets/contato-hero-mobile.jpg.asset.json";
 import {
   Section,
   SectionHeading,
@@ -74,14 +75,15 @@ function ContatoPage() {
       {/* Hero */}
       <section className="relative overflow-hidden surface-ink">
         <div className="absolute inset-0">
-          <img
-            src={especialistas}
-            alt="Equipe da Atual Câmbio em atendimento"
-            width={1408}
-            height={1008}
-            className="size-full object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/45" />
+          <picture>
+            <source media="(min-width: 768px)" srcSet={contatoHeroDesktop.url} />
+            <img
+              src={contatoHeroMobile.url}
+              alt="Executivo em atendimento por telefone"
+              className="size-full object-cover object-center"
+            />
+          </picture>
+          <div className="absolute inset-0 bg-gradient-to-b from-navy-deep/70 via-navy-deep/30 to-transparent md:bg-gradient-to-r md:from-navy-deep/85 md:via-navy-deep/45 md:to-transparent" />
         </div>
         <Container>
           <div className="relative max-w-3xl pt-[130px] pb-16 md:py-24">
