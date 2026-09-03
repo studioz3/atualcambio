@@ -11,7 +11,7 @@ import {
   ShieldCheck,
   MessageCircle,
 } from "lucide-react";
-import contatoHeroDesktop from "@/assets/contato-hero-desktop.jpg.asset.json";
+import contatoHeroDesktop from "@/assets/contato-hero-desktop-v2.jpg.asset.json";
 import contatoHeroMobile from "@/assets/contato-hero-mobile.jpg.asset.json";
 import {
   Section,
