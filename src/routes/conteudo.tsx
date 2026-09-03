@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { pageHead } from "@/lib/seo";
 import { absoluteUrl } from "@/config/site";
-import edtHub from "@/assets/edt-hub.jpg";
+import conteudoHeroDesktop from "@/assets/conteudo-hero-desktop.jpg.asset.json";
+import conteudoHeroMobile from "@/assets/conteudo-hero-mobile.jpg.asset.json";
+
 import { Container, Section, SectionHeading } from "@/components/atual/primitives";
 import {
   ArticleCard,
@@ -70,15 +72,19 @@ function Conteudo() {
 
   return (
     <>
-      <section className="relative overflow-hidden bg-black">
-        <img
-          src={edtHub}
-          alt="Pessoas lendo e conversando em um espaço contemporâneo com um mapa-múndi ao fundo"
-          width={1600}
-          height={1000}
-          className="absolute inset-0 size-full object-cover opacity-50"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/25" />
+      <section className="relative overflow-hidden surface-ink">
+        <div className="absolute inset-0">
+          <picture>
+            <source media="(min-width: 768px)" srcSet={conteudoHeroDesktop.url} />
+            <img
+              src={conteudoHeroMobile.url}
+              alt="Executivo lendo conteúdos no celular em um ambiente corporativo"
+              className="size-full object-cover object-center"
+            />
+          </picture>
+          <div className="absolute inset-0 bg-gradient-to-b from-navy-deep/70 via-navy-deep/30 to-transparent md:bg-gradient-to-r md:from-navy-deep/85 md:via-navy-deep/45 md:to-transparent" />
+        </div>
+
         <Container>
           <div className="relative max-w-2xl pt-[140px] pb-20 md:pt-[190px] md:pb-28">
             <p className="font-display text-xs font-bold tracking-[0.14em] text-gold uppercase sm:text-sm">
