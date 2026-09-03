@@ -166,26 +166,16 @@ export const editorias: Editoria[] = [
     tone: "cultural",
     image: edtCriptoWine,
     imageAlt: "Conversa em uma vinícola com vista para os vinhedos ao entardecer",
-    categories: [
-      "Vinho",
-      "Regiões produtoras",
-      "Mercado",
-      "Cultura",
-      "Gastronomia",
-      "Tecnologia",
-      "Negócios",
-    ],
+    categories: ["Vinho", "Regiões produtoras", "Mercado", "Cultura", "Gastronomia", "Tecnologia", "Negócios"],
     upcoming: [
       {
         title: "Conversas com produtores",
-        description:
-          "Formato de entrevista sobre o ofício, a região e o mercado de quem faz vinho.",
+        description: "Formato de entrevista sobre o ofício, a região e o mercado de quem faz vinho.",
         categoria: "Cultura",
       },
       {
         title: "Vinho e tecnologia",
-        description:
-          "Rastreabilidade, logística e o que a tecnologia muda na cadeia do vinho.",
+        description: "Rastreabilidade, logística e o que a tecnologia muda na cadeia do vinho.",
         categoria: "Tecnologia",
       },
       {
@@ -208,8 +198,7 @@ export const editorias: Editoria[] = [
         id: "conversas",
         label: "Conversas",
         title: "Conversas",
-        description:
-          "Encontros com quem vive o vinho de perto — produção, importação, curadoria e serviço.",
+        description: "Encontros com quem vive o vinho de perto — produção, importação, curadoria e serviço.",
         image: cwCultura,
         imageAlt: "Mesa longa ao entardecer com pessoas conversando à luz de velas",
       },
@@ -217,15 +206,13 @@ export const editorias: Editoria[] = [
         id: "mercado",
         label: "Mercado",
         title: "Mercado",
-        description:
-          "Importação, exportação, câmbio e comportamento de consumo: o vinho como negócio internacional.",
+        description: "Importação, exportação, câmbio e comportamento de consumo: o vinho como negócio internacional.",
       },
       {
         id: "tecnologia",
         label: "Tecnologia",
         title: "Tecnologia",
-        description:
-          "Rastreabilidade, logística, dados e o que muda na cadeia do vinho quando a tecnologia entra.",
+        description: "Rastreabilidade, logística, dados e o que muda na cadeia do vinho quando a tecnologia entra.",
         image: cwTecnologia,
         imageAlt: "Profissional com tablet ao lado de tanques de inox em vinícola contemporânea",
       },
@@ -233,15 +220,13 @@ export const editorias: Editoria[] = [
         id: "cultura",
         label: "Cultura",
         title: "Cultura",
-        description:
-          "Rituais, gastronomia, viagem e o lugar do vinho na conversa contemporânea.",
+        description: "Rituais, gastronomia, viagem e o lugar do vinho na conversa contemporânea.",
       },
       {
         id: "vinho",
         label: "Vinho",
         title: "Vinho",
-        description:
-          "Regiões, safras, castas e vocabulário — o básico bem explicado, sem esnobismo.",
+        description: "Regiões, safras, castas e vocabulário — o básico bem explicado, sem esnobismo.",
       },
     ],
   },
@@ -255,16 +240,10 @@ export const editorias: Editoria[] = [
     promise: "Informação para viver melhor em um mundo que muda rápido.",
     shortDescription: "Wellness, comportamento e qualidade de vida.",
     tone: "wellness",
-    image: edtVidaAtual,
+    image: "https://i.postimg.cc/hGv1xgPx/edt-vida-atual-jpg.jpg",
+    mobileImage: "https://i.postimg.cc/wjfh9P5f/edt-vida-atual-mobile.jpg",
     imageAlt: "Mulher se alongando ao ar livre em uma manhã clara na cidade",
-    categories: [
-      "Saúde e wellness",
-      "Comportamento",
-      "Longevidade",
-      "Tecnologia",
-      "Trabalho",
-      "Viagens",
-    ],
+    categories: ["Saúde e wellness", "Comportamento", "Longevidade", "Tecnologia", "Trabalho", "Viagens"],
     upcoming: [
       {
         title: "Rotinas que atravessam fusos",
@@ -273,8 +252,7 @@ export const editorias: Editoria[] = [
       },
       {
         title: "Longevidade com fontes confiáveis",
-        description:
-          "Curadoria de pesquisas e especialistas — a Atual atua como curadora, não como autoridade médica.",
+        description: "Curadoria de pesquisas e especialistas — a Atual atua como curadora, não como autoridade médica.",
         categoria: "Longevidade",
       },
     ],
@@ -301,15 +279,13 @@ export const editorias: Editoria[] = [
         id: "comportamento",
         label: "Comportamento",
         title: "Comportamento",
-        description:
-          "Como as pessoas trabalham, se relacionam e organizam a vida em um mundo que muda rápido.",
+        description: "Como as pessoas trabalham, se relacionam e organizam a vida em um mundo que muda rápido.",
       },
       {
         id: "movimento",
         label: "Movimento",
         title: "Movimento",
-        description:
-          "Exercício, deslocamento e corpo em atividade como parte da rotina, não como exceção.",
+        description: "Exercício, deslocamento e corpo em atividade como parte da rotina, não como exceção.",
         image: vaMovimento,
         imageAlt: "Pessoa correndo à beira-mar em uma manhã ensolarada na cidade",
       },
@@ -317,23 +293,19 @@ export const editorias: Editoria[] = [
         id: "tecnologia-e-saude",
         label: "Tecnologia e saúde",
         title: "Tecnologia e saúde",
-        description:
-          "Dispositivos, dados pessoais e o que a tecnologia realmente muda no cuidado com a saúde.",
+        description: "Dispositivos, dados pessoais e o que a tecnologia realmente muda no cuidado com a saúde.",
       },
       {
         id: "qualidade-de-vida",
         label: "Qualidade de vida",
         title: "Qualidade de vida",
-        description:
-          "Tempo, cidade, viagem e escolhas cotidianas de quem vive entre lugares e fusos.",
+        description: "Tempo, cidade, viagem e escolhas cotidianas de quem vive entre lugares e fusos.",
       },
     ],
   },
 ];
 
-export const editoriaMap: Record<string, Editoria> = Object.fromEntries(
-  editorias.map((e) => [e.id, e]),
-);
+export const editoriaMap: Record<string, Editoria> = Object.fromEntries(editorias.map((e) => [e.id, e]));
 
 /* ---------------- Helpers ---------------- */
 
