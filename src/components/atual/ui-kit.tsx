@@ -2,25 +2,12 @@ import bancoCentral from "@/assets/banco-central.png.asset.json";
 import abracam from "@/assets/abracam.png.asset.json";
 import type { ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
-import {
-  ArrowRight,
-  ArrowUpRight,
-  ShieldCheck,
-  MonitorSmartphone,
-  Headset,
-  Check,
-} from "lucide-react";
+import { ArrowRight, ArrowUpRight, ShieldCheck, MonitorSmartphone, Headset, Check } from "lucide-react";
 import { Container, Eyebrow, ActionButton, ActionLink, Section, SectionHeading } from "./primitives";
 import { cn } from "@/lib/utils";
 
 /* ---------- AccreditationSeals ---------- */
-export function AccreditationSeals({
-  className,
-  size = "md",
-}: {
-  className?: string;
-  size?: "sm" | "md";
-}) {
+export function AccreditationSeals({ className, size = "md" }: { className?: string; size?: "sm" | "md" }) {
   const bc = size === "sm" ? "h-10" : "h-14";
   const ab = size === "sm" ? "h-7" : "h-10";
   return (
@@ -97,13 +84,11 @@ export function Hero({
             height={1080}
             className={cn(
               "size-full object-right",
-              imageFit === "contain" ? "object-contain" : "object-cover",
+              imageFit === "cover" ? "object-contain" : "object-cover",
               !rawImage && navyScrim && "contrast-[1.1] saturate-[1.08] brightness-[1.03]",
-              !rawImage && navyScrim && zoomImage &&
-                "origin-right scale-[1.03]",
+              !rawImage && navyScrim && zoomImage && "origin-right scale-[1.03]",
             )}
           />
-
 
           {/* scrim para legibilidade */}
           {rawImage ? null : softScrim ? (
@@ -149,9 +134,6 @@ export function Hero({
         </div>
       ) : null}
 
-
-
-
       <div className="hero-container">
         <div
           className={cn(
@@ -159,13 +141,9 @@ export function Hero({
             imageFit === "contain" ? "lg:min-h-0" : "lg:min-h-[680px]",
           )}
         >
-
-
           <div className="w-full max-w-none lg:max-w-2xl">
             {eyebrow ? (
-              <p className="font-display text-sm font-bold tracking-[0.01em] text-gold sm:text-base">
-                {eyebrow}
-              </p>
+              <p className="font-display text-sm font-bold tracking-[0.01em] text-gold sm:text-base">{eyebrow}</p>
             ) : null}
             <h1 className="hero-title mt-2 text-white md:mt-6 xl:whitespace-nowrap">{title}</h1>
             <p className="hero-copy mt-5 text-white/85 md:mt-8">{description}</p>
@@ -176,9 +154,7 @@ export function Hero({
                 {secondary}
               </div>
             ) : null}
-            {seals ? (
-              <AccreditationSeals size="sm" className="mt-11 border-t border-white/12 pt-9 md:mt-14" />
-            ) : null}
+            {seals ? <AccreditationSeals size="sm" className="mt-11 border-t border-white/12 pt-9 md:mt-14" /> : null}
           </div>
 
           {image && !mobileImage ? (
@@ -193,11 +169,9 @@ export function Hero({
             </div>
           ) : null}
 
-
           {children}
         </div>
       </div>
-
     </section>
   );
 }
@@ -314,23 +288,12 @@ export function PathCard({
     >
       <p className={cn("eyebrow", dark ? "text-gold" : "text-gold-soft")}>{eyebrow}</p>
       <h3 className={cn("display-h3 mt-4", dark ? "text-white" : "text-navy")}>{title}</h3>
-      <p
-        className={cn(
-          "mt-4 text-base leading-relaxed",
-          dark ? "text-white/72" : "text-muted-foreground",
-        )}
-      >
+      <p className={cn("mt-4 text-base leading-relaxed", dark ? "text-white/72" : "text-muted-foreground")}>
         {description}
       </p>
       <ul className="mt-7 space-y-3">
         {items.map((item) => (
-          <li
-            key={item}
-            className={cn(
-              "flex gap-3 text-sm leading-relaxed",
-              dark ? "text-white/80" : "text-graphite",
-            )}
-          >
+          <li key={item} className={cn("flex gap-3 text-sm leading-relaxed", dark ? "text-white/80" : "text-graphite")}>
             <Check className="mt-0.5 size-4 shrink-0 text-gold" aria-hidden />
             {item}
           </li>
@@ -531,7 +494,13 @@ export function CTASection({
   return (
     <Section tone="navy" id="cta">
       <div className="grid items-start gap-10">
-        <SectionHeading tone="light-text" eyebrow="Atendimento" title={title} description={description} className="max-w-3xl" />
+        <SectionHeading
+          tone="light-text"
+          eyebrow="Atendimento"
+          title={title}
+          description={description}
+          className="max-w-3xl"
+        />
         <div className="flex flex-wrap gap-4">
           <ActionButton size="lg" event="open_account_click" onClick={onPrimary}>
             {primaryLabel}
