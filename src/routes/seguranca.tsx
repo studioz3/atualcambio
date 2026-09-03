@@ -20,7 +20,8 @@ import {
   Activity,
   Database,
 } from "lucide-react";
-import heroSeguranca from "@/assets/hero-seguranca.jpg";
+import heroSegurancaDesktop from "@/assets/seguranca-hero-desktop.jpg.asset.json";
+import heroSegurancaMobile from "@/assets/seguranca-hero-mobile.jpg.asset.json";
 import especialistas from "@/assets/especialistas.jpg";
 import {
   Section,
@@ -248,8 +249,9 @@ function SegurancaPage() {
           </>
         }
         description="Tecnologia, processos de compliance e atendimento responsável para proteger cada etapa da relação com a Atual."
-        image={heroSeguranca}
-        imageAlt="Fachada de vidro de um edifício corporativo ao anoitecer"
+        image={heroSegurancaDesktop.url}
+        mobileImage={heroSegurancaMobile.url}
+        imageAlt="Profissional usando notebook com escudo de segurança financeira em destaque"
         primary={
           <ActionLink size="lg" href="#processos" event="security_bacen_click">
             Conhecer nossos processos
