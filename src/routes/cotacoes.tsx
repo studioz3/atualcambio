@@ -5,7 +5,9 @@ import { pageHead, faqSchema } from "@/lib/seo";
 import { getPtaxCotacoes, type PtaxCotacao } from "@/lib/ptax.functions";
 import { getOnzQuotes } from "@/lib/onz-quotes.functions";
 import { getPublishedList } from "@/lib/editorial.functions";
-import heroCotacoes from "@/assets/hero-cotacoes.jpg";
+import heroCotacoesDesktop from "@/assets/cotacoes-hero-desktop.jpg.asset.json";
+import heroCotacoesMobile from "@/assets/cotacoes-hero-mobile.jpg.asset.json";
+
 import {
   Section,
   SectionHeading,
@@ -184,8 +186,10 @@ function Cotacoes() {
             Falar com especialista
           </ActionButton>
         }
-        image={heroCotacoes}
-        imageAlt="Painel financeiro global com mapa de conexões e skyline noturno"
+        image={heroCotacoesDesktop.url}
+        mobileImage={heroCotacoesMobile.url}
+        imageAlt="Nota de cem dólares com gráficos de mercado sobrepostos"
+
       />
 
       <Section tone="light" id="consultar">
