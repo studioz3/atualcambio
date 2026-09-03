@@ -186,8 +186,10 @@ function Cotacoes() {
             Falar com especialista
           </ActionButton>
         }
-        image={heroCotacoes}
-        imageAlt="Painel financeiro global com mapa de conexões e skyline noturno"
+        image={heroCotacoesDesktop.url}
+        mobileImage={heroCotacoesMobile.url}
+        imageAlt="Nota de cem dólares com gráficos de mercado sobrepostos"
+
       />
 
       <Section tone="light" id="consultar">
